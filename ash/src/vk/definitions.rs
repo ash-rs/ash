@@ -63,7 +63,7 @@ pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_API_VERSION_1_4.html>"]
 pub const API_VERSION_1_4: u32 = make_api_version(0, 1, 4, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 360;
+pub const HEADER_VERSION: u32 = 361;
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 4, HEADER_VERSION);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSampleMask.html>"]
@@ -10589,6 +10589,46 @@ impl<'a> PhysicalDevicePrivateDataFeatures<'a> {
     #[inline]
     pub fn private_data(mut self, private_data: bool) -> Self {
         self.private_data = private_data.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDevicePrivateDataBaseHandleFeaturesNV.html>"]
+#[must_use]
+pub struct PhysicalDevicePrivateDataBaseHandleFeaturesNV<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub private_data_base_handle: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDevicePrivateDataBaseHandleFeaturesNV<'_> {}
+unsafe impl Sync for PhysicalDevicePrivateDataBaseHandleFeaturesNV<'_> {}
+impl ::core::default::Default for PhysicalDevicePrivateDataBaseHandleFeaturesNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            private_data_base_handle: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePrivateDataBaseHandleFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_PRIVATE_DATA_BASE_HANDLE_FEATURES_NV;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
+    for PhysicalDevicePrivateDataBaseHandleFeaturesNV<'_>
+{
+}
+unsafe impl Extends<DeviceCreateInfo<'_>> for PhysicalDevicePrivateDataBaseHandleFeaturesNV<'_> {}
+impl<'a> PhysicalDevicePrivateDataBaseHandleFeaturesNV<'a> {
+    #[inline]
+    pub fn private_data_base_handle(mut self, private_data_base_handle: bool) -> Self {
+        self.private_data_base_handle = private_data_base_handle.into();
         self
     }
 }

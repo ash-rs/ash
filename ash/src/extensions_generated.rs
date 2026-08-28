@@ -24759,6 +24759,13 @@ pub mod nv {
             crate::vk::NV_COOPERATIVE_MATRIX_DECODE_VECTOR_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_NV_private_data_base_handle"]
+    pub mod private_data_base_handle {
+        pub use {
+            crate::vk::NV_PRIVATE_DATA_BASE_HANDLE_NAME as NAME,
+            crate::vk::NV_PRIVATE_DATA_BASE_HANDLE_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
 }
 #[doc = "Extensions tagged NVX"]
 pub mod nvx {

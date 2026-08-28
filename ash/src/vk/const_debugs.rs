@@ -5662,7 +5662,10 @@ impl fmt::Debug for PrimitiveTopology {
 }
 impl fmt::Debug for PrivateDataSlotCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[];
+        const KNOWN: &[(Flags, &str)] = &[(
+            PrivateDataSlotCreateFlags::BASE_OBJECT_HANDLE_NV.0,
+            "BASE_OBJECT_HANDLE_NV",
+        )];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -8940,6 +8943,9 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_DECODE_VECTOR_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_COOPERATIVE_MATRIX_DECODE_VECTOR_FEATURES_NV")
+            }
+            Self::PHYSICAL_DEVICE_PRIVATE_DATA_BASE_HANDLE_FEATURES_NV => {
+                Some("PHYSICAL_DEVICE_PRIVATE_DATA_BASE_HANDLE_FEATURES_NV")
             }
             Self::BIND_BUFFER_MEMORY_INFO => Some("BIND_BUFFER_MEMORY_INFO"),
             Self::BIND_IMAGE_MEMORY_INFO => Some("BIND_IMAGE_MEMORY_INFO"),

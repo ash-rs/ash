@@ -5752,6 +5752,14 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_COOPERATIVE_MATRIX_DECODE_VECTOR_FEATURES_NV: Self =
         Self(1_000_689_000);
 }
+#[doc = "Generated from 'VK_NV_private_data_base_handle'"]
+impl PrivateDataSlotCreateFlags {
+    pub const BASE_OBJECT_HANDLE_NV: Self = Self(0b1);
+}
+#[doc = "Generated from 'VK_NV_private_data_base_handle'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PRIVATE_DATA_BASE_HANDLE_FEATURES_NV: Self = Self(1_000_707_000);
+}
 pub const KHR_SURFACE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_surface\0") };
 pub const KHR_SURFACE_SPEC_VERSION: u32 = 25u32;
@@ -10181,7 +10189,7 @@ pub const KHR_INTERNALLY_SYNCHRONIZED_QUEUES_NAME: &CStr =
 pub const KHR_INTERNALLY_SYNCHRONIZED_QUEUES_SPEC_VERSION: u32 = 1u32;
 pub const NV_LOW_LATENCY2_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_low_latency2\0") };
-pub const NV_LOW_LATENCY2_SPEC_VERSION: u32 = 2u32;
+pub const NV_LOW_LATENCY2_SPEC_VERSION: u32 = 3u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkSetLatencySleepModeNV = unsafe extern "system" fn(
     device: crate::vk::Device,
@@ -10891,3 +10899,6 @@ pub const EXT_IMAGE_TILING_CONTROL_SPEC_VERSION: u32 = 1u32;
 pub const NV_COOPERATIVE_MATRIX_DECODE_VECTOR_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_cooperative_matrix_decode_vector\0") };
 pub const NV_COOPERATIVE_MATRIX_DECODE_VECTOR_SPEC_VERSION: u32 = 1u32;
+pub const NV_PRIVATE_DATA_BASE_HANDLE_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_private_data_base_handle\0") };
+pub const NV_PRIVATE_DATA_BASE_HANDLE_SPEC_VERSION: u32 = 1u32;
