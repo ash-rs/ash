@@ -63,7 +63,7 @@ pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_API_VERSION_1_4.html>"]
 pub const API_VERSION_1_4: u32 = make_api_version(0, 1, 4, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 361;
+pub const HEADER_VERSION: u32 = 362;
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 4, HEADER_VERSION);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSampleMask.html>"]
@@ -61293,17 +61293,17 @@ impl<'a> PhysicalDeviceFaultPropertiesKHR<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
-#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT.html>"]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDevicePipelineLibraryGroupHandlesFeaturesKHR.html>"]
 #[must_use]
-pub struct PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
+pub struct PhysicalDevicePipelineLibraryGroupHandlesFeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub pipeline_library_group_handles: Bool32,
     pub _marker: PhantomData<&'a ()>,
 }
-unsafe impl Send for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {}
-unsafe impl Sync for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {}
-impl ::core::default::Default for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {
+unsafe impl Send for PhysicalDevicePipelineLibraryGroupHandlesFeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDevicePipelineLibraryGroupHandlesFeaturesKHR<'_> {}
+impl ::core::default::Default for PhysicalDevicePipelineLibraryGroupHandlesFeaturesKHR<'_> {
     #[inline]
     fn default() -> Self {
         Self {
@@ -61314,19 +61314,19 @@ impl ::core::default::Default for PhysicalDevicePipelineLibraryGroupHandlesFeatu
         }
     }
 }
-unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDevicePipelineLibraryGroupHandlesFeaturesKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
-        StructureType::PHYSICAL_DEVICE_PIPELINE_LIBRARY_GROUP_HANDLES_FEATURES_EXT;
+        StructureType::PHYSICAL_DEVICE_PIPELINE_LIBRARY_GROUP_HANDLES_FEATURES_KHR;
 }
 unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
-    for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_>
+    for PhysicalDevicePipelineLibraryGroupHandlesFeaturesKHR<'_>
 {
 }
 unsafe impl Extends<DeviceCreateInfo<'_>>
-    for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_>
+    for PhysicalDevicePipelineLibraryGroupHandlesFeaturesKHR<'_>
 {
 }
-impl<'a> PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
+impl<'a> PhysicalDevicePipelineLibraryGroupHandlesFeaturesKHR<'a> {
     #[inline]
     pub fn pipeline_library_group_handles(mut self, pipeline_library_group_handles: bool) -> Self {
         self.pipeline_library_group_handles = pipeline_library_group_handles.into();
@@ -76755,6 +76755,141 @@ impl<'a> PhysicalDeviceCooperativeMatrixMaintenance1FeaturesEXT<'a> {
         cooperative_matrix_get_coordinate: bool,
     ) -> Self {
         self.cooperative_matrix_get_coordinate = cooperative_matrix_get_coordinate.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceBufferDeviceAddressAllocationAlignmentFeaturesVALVE.html>"]
+#[must_use]
+pub struct PhysicalDeviceBufferDeviceAddressAllocationAlignmentFeaturesVALVE<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub buffer_device_address_allocation_alignment: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceBufferDeviceAddressAllocationAlignmentFeaturesVALVE<'_> {}
+unsafe impl Sync for PhysicalDeviceBufferDeviceAddressAllocationAlignmentFeaturesVALVE<'_> {}
+impl ::core::default::Default
+    for PhysicalDeviceBufferDeviceAddressAllocationAlignmentFeaturesVALVE<'_>
+{
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            buffer_device_address_allocation_alignment: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a>
+    for PhysicalDeviceBufferDeviceAddressAllocationAlignmentFeaturesVALVE<'a>
+{
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_ALLOCATION_ALIGNMENT_FEATURES_VALVE;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
+    for PhysicalDeviceBufferDeviceAddressAllocationAlignmentFeaturesVALVE<'_>
+{
+}
+unsafe impl Extends<DeviceCreateInfo<'_>>
+    for PhysicalDeviceBufferDeviceAddressAllocationAlignmentFeaturesVALVE<'_>
+{
+}
+impl<'a> PhysicalDeviceBufferDeviceAddressAllocationAlignmentFeaturesVALVE<'a> {
+    #[inline]
+    pub fn buffer_device_address_allocation_alignment(
+        mut self,
+        buffer_device_address_allocation_alignment: bool,
+    ) -> Self {
+        self.buffer_device_address_allocation_alignment =
+            buffer_device_address_allocation_alignment.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceBufferDeviceAddressAllocationAlignmentPropertiesVALVE.html>"]
+#[must_use]
+pub struct PhysicalDeviceBufferDeviceAddressAllocationAlignmentPropertiesVALVE<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_buffer_device_address_allocation_alignment: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceBufferDeviceAddressAllocationAlignmentPropertiesVALVE<'_> {}
+unsafe impl Sync for PhysicalDeviceBufferDeviceAddressAllocationAlignmentPropertiesVALVE<'_> {}
+impl ::core::default::Default
+    for PhysicalDeviceBufferDeviceAddressAllocationAlignmentPropertiesVALVE<'_>
+{
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            max_buffer_device_address_allocation_alignment: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a>
+    for PhysicalDeviceBufferDeviceAddressAllocationAlignmentPropertiesVALVE<'a>
+{
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_ALLOCATION_ALIGNMENT_PROPERTIES_VALVE;
+}
+unsafe impl Extends<PhysicalDeviceProperties2<'_>>
+    for PhysicalDeviceBufferDeviceAddressAllocationAlignmentPropertiesVALVE<'_>
+{
+}
+impl<'a> PhysicalDeviceBufferDeviceAddressAllocationAlignmentPropertiesVALVE<'a> {
+    #[inline]
+    pub fn max_buffer_device_address_allocation_alignment(
+        mut self,
+        max_buffer_device_address_allocation_alignment: u32,
+    ) -> Self {
+        self.max_buffer_device_address_allocation_alignment =
+            max_buffer_device_address_allocation_alignment;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkBufferDeviceAddressAlignmentAllocateInfoVALVE.html>"]
+#[must_use]
+pub struct BufferDeviceAddressAlignmentAllocateInfoVALVE<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub alignment: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for BufferDeviceAddressAlignmentAllocateInfoVALVE<'_> {}
+unsafe impl Sync for BufferDeviceAddressAlignmentAllocateInfoVALVE<'_> {}
+impl ::core::default::Default for BufferDeviceAddressAlignmentAllocateInfoVALVE<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            alignment: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for BufferDeviceAddressAlignmentAllocateInfoVALVE<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::BUFFER_DEVICE_ADDRESS_ALIGNMENT_ALLOCATE_INFO_VALVE;
+}
+unsafe impl Extends<BufferCreateInfo<'_>> for BufferDeviceAddressAlignmentAllocateInfoVALVE<'_> {}
+unsafe impl Extends<MemoryAllocateInfo<'_>> for BufferDeviceAddressAlignmentAllocateInfoVALVE<'_> {}
+impl<'a> BufferDeviceAddressAlignmentAllocateInfoVALVE<'a> {
+    #[inline]
+    pub fn alignment(mut self, alignment: u32) -> Self {
+        self.alignment = alignment;
         self
     }
 }

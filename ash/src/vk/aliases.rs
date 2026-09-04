@@ -374,6 +374,8 @@ pub type PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> =
 pub type DeviceFaultAddressInfoEXT = DeviceFaultAddressInfoKHR;
 pub type DeviceFaultVendorInfoEXT = DeviceFaultVendorInfoKHR;
 pub type DeviceFaultVendorBinaryHeaderVersionOneEXT = DeviceFaultVendorBinaryHeaderVersionOneKHR;
+pub type PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> =
+    PhysicalDevicePipelineLibraryGroupHandlesFeaturesKHR<'a>;
 pub type SurfacePresentModeEXT<'a> = SurfacePresentModeKHR<'a>;
 pub type SurfacePresentScalingCapabilitiesEXT<'a> = SurfacePresentScalingCapabilitiesKHR<'a>;
 pub type SurfacePresentModeCompatibilityEXT<'a> = SurfacePresentModeCompatibilityKHR<'a>;
