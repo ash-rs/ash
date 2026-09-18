@@ -63,7 +63,7 @@ pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_API_VERSION_1_4.html>"]
 pub const API_VERSION_1_4: u32 = make_api_version(0, 1, 4, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 362;
+pub const HEADER_VERSION: u32 = 363;
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 4, HEADER_VERSION);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSampleMask.html>"]
@@ -5414,7 +5414,6 @@ impl<'a> PipelineBinaryKeysAndDataKHR<'a> {
     }
 }
 #[repr(C)]
-#[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPipelineBinaryKeyKHR.html>"]
 #[must_use]
@@ -5427,6 +5426,17 @@ pub struct PipelineBinaryKeyKHR<'a> {
 }
 unsafe impl Send for PipelineBinaryKeyKHR<'_> {}
 unsafe impl Sync for PipelineBinaryKeyKHR<'_> {}
+#[cfg(feature = "debug")]
+impl fmt::Debug for PipelineBinaryKeyKHR<'_> {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
+        fmt.debug_struct("PipelineBinaryKeyKHR")
+            .field("s_type", &self.s_type)
+            .field("p_next", &self.p_next)
+            .field("key_size", &self.key_size)
+            .field("key", &self.key_as_slice())
+            .finish()
+    }
+}
 impl ::core::default::Default for PipelineBinaryKeyKHR<'_> {
     #[inline]
     fn default() -> Self {
@@ -5444,14 +5454,14 @@ unsafe impl<'a> TaggedStructure<'a> for PipelineBinaryKeyKHR<'a> {
 }
 impl<'a> PipelineBinaryKeyKHR<'a> {
     #[inline]
-    pub fn key_size(mut self, key_size: u32) -> Self {
-        self.key_size = key_size;
+    pub fn key(mut self, key: &'_ [u8]) -> Self {
+        self.key_size = key.len() as _;
+        self.key[..key.len()].copy_from_slice(key);
         self
     }
     #[inline]
-    pub fn key(mut self, key: [u8; MAX_PIPELINE_BINARY_KEY_SIZE_KHR]) -> Self {
-        self.key = key;
-        self
+    pub fn key_as_slice(&self) -> &[u8] {
+        &self.key[..self.key_size as _]
     }
 }
 #[repr(C)]
@@ -76890,6 +76900,55 @@ impl<'a> BufferDeviceAddressAlignmentAllocateInfoVALVE<'a> {
     #[inline]
     pub fn alignment(mut self, alignment: u32) -> Self {
         self.alignment = alignment;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceInfoPropertiesINTEL.html>"]
+#[must_use]
+pub struct PhysicalDeviceInfoPropertiesINTEL<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub device_ip_version_arch: u32,
+    pub device_ip_version_release: u32,
+    pub device_ip_version_revision: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceInfoPropertiesINTEL<'_> {}
+unsafe impl Sync for PhysicalDeviceInfoPropertiesINTEL<'_> {}
+impl ::core::default::Default for PhysicalDeviceInfoPropertiesINTEL<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            device_ip_version_arch: u32::default(),
+            device_ip_version_release: u32::default(),
+            device_ip_version_revision: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceInfoPropertiesINTEL<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PHYSICAL_DEVICE_INFO_PROPERTIES_INTEL;
+}
+unsafe impl Extends<PhysicalDeviceProperties2<'_>> for PhysicalDeviceInfoPropertiesINTEL<'_> {}
+impl<'a> PhysicalDeviceInfoPropertiesINTEL<'a> {
+    #[inline]
+    pub fn device_ip_version_arch(mut self, device_ip_version_arch: u32) -> Self {
+        self.device_ip_version_arch = device_ip_version_arch;
+        self
+    }
+    #[inline]
+    pub fn device_ip_version_release(mut self, device_ip_version_release: u32) -> Self {
+        self.device_ip_version_release = device_ip_version_release;
+        self
+    }
+    #[inline]
+    pub fn device_ip_version_revision(mut self, device_ip_version_revision: u32) -> Self {
+        self.device_ip_version_revision = device_ip_version_revision;
         self
     }
 }
