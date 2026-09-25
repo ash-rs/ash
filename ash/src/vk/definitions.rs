@@ -63,7 +63,7 @@ pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_API_VERSION_1_4.html>"]
 pub const API_VERSION_1_4: u32 = make_api_version(0, 1, 4, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 363;
+pub const HEADER_VERSION: u32 = 364;
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 4, HEADER_VERSION);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSampleMask.html>"]
@@ -4013,6 +4013,7 @@ impl ::core::default::Default for ComputePipelineCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure<'a> for ComputePipelineCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::COMPUTE_PIPELINE_CREATE_INFO;
 }
+unsafe impl Extends<PipelineCreateInfoKHR<'_>> for ComputePipelineCreateInfo<'_> {}
 impl<'a> ComputePipelineCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: PipelineCreateFlags) -> Self {
@@ -4965,6 +4966,7 @@ impl ::core::default::Default for GraphicsPipelineCreateInfo<'_> {
 unsafe impl<'a> TaggedStructure<'a> for GraphicsPipelineCreateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::GRAPHICS_PIPELINE_CREATE_INFO;
 }
+unsafe impl Extends<PipelineCreateInfoKHR<'_>> for GraphicsPipelineCreateInfo<'_> {}
 impl<'a> GraphicsPipelineCreateInfo<'a> {
     #[inline]
     pub fn flags(mut self, flags: PipelineCreateFlags) -> Self {
@@ -27783,6 +27785,7 @@ impl ::core::default::Default for RayTracingPipelineCreateInfoKHR<'_> {
 unsafe impl<'a> TaggedStructure<'a> for RayTracingPipelineCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::RAY_TRACING_PIPELINE_CREATE_INFO_KHR;
 }
+unsafe impl Extends<PipelineCreateInfoKHR<'_>> for RayTracingPipelineCreateInfoKHR<'_> {}
 impl<'a> RayTracingPipelineCreateInfoKHR<'a> {
     #[inline]
     pub fn flags(mut self, flags: PipelineCreateFlags) -> Self {
@@ -43958,7 +43961,8 @@ unsafe impl<'a> TaggedStructure<'a> for MemoryBarrierAccessFlags3KHR<'a> {
 unsafe impl Extends<SubpassDependency2<'_>> for MemoryBarrierAccessFlags3KHR<'_> {}
 unsafe impl Extends<BufferMemoryBarrier2<'_>> for MemoryBarrierAccessFlags3KHR<'_> {}
 unsafe impl Extends<ImageMemoryBarrier2<'_>> for MemoryBarrierAccessFlags3KHR<'_> {}
-unsafe impl Extends<MemoryRangeBarriersInfoKHR<'_>> for MemoryBarrierAccessFlags3KHR<'_> {}
+unsafe impl Extends<MemoryBarrier2<'_>> for MemoryBarrierAccessFlags3KHR<'_> {}
+unsafe impl Extends<MemoryRangeBarrierKHR<'_>> for MemoryBarrierAccessFlags3KHR<'_> {}
 impl<'a> MemoryBarrierAccessFlags3KHR<'a> {
     #[inline]
     pub fn src_access_mask3(mut self, src_access_mask3: AccessFlags3KHR) -> Self {
@@ -64224,6 +64228,8 @@ impl ::core::default::Default for ExecutionGraphPipelineCreateInfoAMDX<'_> {
 unsafe impl<'a> TaggedStructure<'a> for ExecutionGraphPipelineCreateInfoAMDX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::EXECUTION_GRAPH_PIPELINE_CREATE_INFO_AMDX;
 }
+#[cfg(feature = "provisional")]
+unsafe impl Extends<PipelineCreateInfoKHR<'_>> for ExecutionGraphPipelineCreateInfoAMDX<'_> {}
 #[cfg(feature = "provisional")]
 impl<'a> ExecutionGraphPipelineCreateInfoAMDX<'a> {
     #[inline]
