@@ -2513,6 +2513,13 @@ pub mod arm {
             }
         }
     }
+    #[doc = "VK_ARM_cooperative_matrix_layouts"]
+    pub mod cooperative_matrix_layouts {
+        pub use {
+            crate::vk::ARM_COOPERATIVE_MATRIX_LAYOUTS_NAME as NAME,
+            crate::vk::ARM_COOPERATIVE_MATRIX_LAYOUTS_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_ARM_data_graph_neural_accelerator_statistics"]
     pub mod data_graph_neural_accelerator_statistics {
         pub use {

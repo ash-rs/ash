@@ -63,7 +63,7 @@ pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_API_VERSION_1_4.html>"]
 pub const API_VERSION_1_4: u32 = make_api_version(0, 1, 4, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 364;
+pub const HEADER_VERSION: u32 = 365;
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 4, HEADER_VERSION);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSampleMask.html>"]
@@ -76955,6 +76955,49 @@ impl<'a> PhysicalDeviceInfoPropertiesINTEL<'a> {
     #[inline]
     pub fn device_ip_version_revision(mut self, device_ip_version_revision: u32) -> Self {
         self.device_ip_version_revision = device_ip_version_revision;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceCooperativeMatrixLayoutsFeaturesARM.html>"]
+#[must_use]
+pub struct PhysicalDeviceCooperativeMatrixLayoutsFeaturesARM<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub cooperative_matrix_arm_layouts: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceCooperativeMatrixLayoutsFeaturesARM<'_> {}
+unsafe impl Sync for PhysicalDeviceCooperativeMatrixLayoutsFeaturesARM<'_> {}
+impl ::core::default::Default for PhysicalDeviceCooperativeMatrixLayoutsFeaturesARM<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            cooperative_matrix_arm_layouts: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceCooperativeMatrixLayoutsFeaturesARM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_COOPERATIVE_MATRIX_LAYOUTS_FEATURES_ARM;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
+    for PhysicalDeviceCooperativeMatrixLayoutsFeaturesARM<'_>
+{
+}
+unsafe impl Extends<DeviceCreateInfo<'_>>
+    for PhysicalDeviceCooperativeMatrixLayoutsFeaturesARM<'_>
+{
+}
+impl<'a> PhysicalDeviceCooperativeMatrixLayoutsFeaturesARM<'a> {
+    #[inline]
+    pub fn cooperative_matrix_arm_layouts(mut self, cooperative_matrix_arm_layouts: bool) -> Self {
+        self.cooperative_matrix_arm_layouts = cooperative_matrix_arm_layouts.into();
         self
     }
 }
