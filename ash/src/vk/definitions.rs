@@ -9559,13 +9559,66 @@ impl<'a> LayerSettingEXT<'a> {
             Some(CStr::from_ptr(self.p_setting_name))
         }
     }
+    #[doc = "Also sets `ty` to [`LayerSettingTypeEXT::BOOL32`]."]
     #[inline]
-    pub fn ty(mut self, ty: LayerSettingTypeEXT) -> Self {
-        self.ty = ty;
+    pub fn values_bool32(mut self, values: &'a [Bool32]) -> Self {
+        self.ty = LayerSettingTypeEXT::BOOL32;
+        self.value_count = values.len() as _;
+        self.p_values = values.as_ptr().cast();
         self
     }
+    #[doc = "Also sets `ty` to [`LayerSettingTypeEXT::INT32`]."]
     #[inline]
-    pub fn values(mut self, values: &'a [u8]) -> Self {
+    pub fn values_int32(mut self, values: &'a [i32]) -> Self {
+        self.ty = LayerSettingTypeEXT::INT32;
+        self.value_count = values.len() as _;
+        self.p_values = values.as_ptr().cast();
+        self
+    }
+    #[doc = "Also sets `ty` to [`LayerSettingTypeEXT::INT64`]."]
+    #[inline]
+    pub fn values_int64(mut self, values: &'a [i64]) -> Self {
+        self.ty = LayerSettingTypeEXT::INT64;
+        self.value_count = values.len() as _;
+        self.p_values = values.as_ptr().cast();
+        self
+    }
+    #[doc = "Also sets `ty` to [`LayerSettingTypeEXT::UINT32`]."]
+    #[inline]
+    pub fn values_uint32(mut self, values: &'a [u32]) -> Self {
+        self.ty = LayerSettingTypeEXT::UINT32;
+        self.value_count = values.len() as _;
+        self.p_values = values.as_ptr().cast();
+        self
+    }
+    #[doc = "Also sets `ty` to [`LayerSettingTypeEXT::UINT64`]."]
+    #[inline]
+    pub fn values_uint64(mut self, values: &'a [u64]) -> Self {
+        self.ty = LayerSettingTypeEXT::UINT64;
+        self.value_count = values.len() as _;
+        self.p_values = values.as_ptr().cast();
+        self
+    }
+    #[doc = "Also sets `ty` to [`LayerSettingTypeEXT::FLOAT32`]."]
+    #[inline]
+    pub fn values_float32(mut self, values: &'a [f32]) -> Self {
+        self.ty = LayerSettingTypeEXT::FLOAT32;
+        self.value_count = values.len() as _;
+        self.p_values = values.as_ptr().cast();
+        self
+    }
+    #[doc = "Also sets `ty` to [`LayerSettingTypeEXT::FLOAT64`]."]
+    #[inline]
+    pub fn values_float64(mut self, values: &'a [f64]) -> Self {
+        self.ty = LayerSettingTypeEXT::FLOAT64;
+        self.value_count = values.len() as _;
+        self.p_values = values.as_ptr().cast();
+        self
+    }
+    #[doc = "Also sets `ty` to [`LayerSettingTypeEXT::STRING`]."]
+    #[inline]
+    pub fn values_string(mut self, values: &'a [*const c_char]) -> Self {
+        self.ty = LayerSettingTypeEXT::STRING;
         self.value_count = values.len() as _;
         self.p_values = values.as_ptr().cast();
         self

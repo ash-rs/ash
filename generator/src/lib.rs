@@ -2183,6 +2183,42 @@ fn derive_getters_and_setters(
             });
         }
 
+        // `valueCount` counts values of the type selected by `type`, not bytes, so replace the
+        // generic `&[u8]` setter with one setter per `VkLayerSettingTypeEXT` that also sets `type`:
+        // https://github.com/ash-rs/ash/issues/985
+        if struct_.name == "VkLayerSettingEXT" && name == "type" {
+            return None;
+        }
+
+        if struct_.name == "VkLayerSettingEXT" && name == "pValues" {
+            let setters = [
+                ("bool32", quote!(Bool32)),
+                ("int32", quote!(i32)),
+                ("int64", quote!(i64)),
+                ("uint32", quote!(u32)),
+                ("uint64", quote!(u64)),
+                ("float32", quote!(f32)),
+                ("float64", quote!(f64)),
+                ("string", quote!(*const c_char)),
+            ]
+            .map(|(type_name, value_ty)| {
+                let setter = format_ident!("values_{type_name}");
+                let ty = format_ident!("{}", type_name.to_uppercase());
+                let doc = format!("Also sets `ty` to [`LayerSettingTypeEXT::{ty}`].");
+                quote! {
+                    #[doc = #doc]
+                    #[inline]
+                    pub fn #setter(mut self, values: &'a [#value_ty]) -> Self {
+                        self.ty = LayerSettingTypeEXT::#ty;
+                        self.value_count = values.len() as _;
+                        self.p_values = values.as_ptr().cast();
+                        self
+                    }
+                }
+            });
+            return Some(quote!(#(#setters)*));
+        }
+
         if field.basetype == "char" {
             let param_ident_as_c_str = format_ident!("{}_as_c_str", param_ident_short);
             if matches!(field.reference, Some(vkxml::ReferenceType::Pointer)) {
