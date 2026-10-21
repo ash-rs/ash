@@ -2183,40 +2183,18 @@ fn derive_getters_and_setters(
             });
         }
 
-        // `valueCount` counts values of the type selected by `type`, not bytes, so replace the
-        // generic `&[u8]` setter with one setter per `VkLayerSettingTypeEXT` that also sets `type`:
-        // https://github.com/ash-rs/ash/issues/985
-        if struct_.name == "VkLayerSettingEXT" && name == "type" {
-            return None;
-        }
-
+        // `valueCount` counts values of the type selected by `type`, not bytes, so take a slice of
+        // that type instead of the generic `&[u8]`: https://github.com/ash-rs/ash/issues/985
         if struct_.name == "VkLayerSettingEXT" && name == "pValues" {
-            let setters = [
-                ("bool32", quote!(Bool32)),
-                ("int32", quote!(i32)),
-                ("int64", quote!(i64)),
-                ("uint32", quote!(u32)),
-                ("uint64", quote!(u64)),
-                ("float32", quote!(f32)),
-                ("float64", quote!(f64)),
-                ("string", quote!(*const c_char)),
-            ]
-            .map(|(type_name, value_ty)| {
-                let setter = format_ident!("values_{type_name}");
-                let ty = format_ident!("{}", type_name.to_uppercase());
-                let doc = format!("Also sets `ty` to [`LayerSettingTypeEXT::{ty}`].");
-                quote! {
-                    #[doc = #doc]
-                    #[inline]
-                    pub fn #setter(mut self, values: &'a [#value_ty]) -> Self {
-                        self.ty = LayerSettingTypeEXT::#ty;
-                        self.value_count = values.len() as _;
-                        self.p_values = values.as_ptr().cast();
-                        self
-                    }
+            return Some(quote! {
+                /// Set [`Self::ty()`] to the type of `values` as well, see [`LayerSettingValue`].
+                #[inline]
+                pub fn values<T: LayerSettingValue>(mut self, values: &'a [T]) -> Self {
+                    self.value_count = values.len() as _;
+                    self.p_values = values.as_ptr().cast();
+                    self
                 }
             });
-            return Some(quote!(#(#setters)*));
         }
 
         if field.basetype == "char" {
@@ -3696,7 +3674,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         use super::platform_types::*;
         use super::{
             wrap_c_str_slice_until_nul, write_c_str_slice_with_nul, CStrTooLargeForStaticArray, Extends,
-            Handle, Packed24_5_3, Packed24_8, Packed9_9_6_4_4, TaggedStructure,
+            Handle, LayerSettingValue, Packed24_5_3, Packed24_8, Packed9_9_6_4_4, TaggedStructure,
         };
         use core::ffi::*;
         use core::fmt;

@@ -140,6 +140,26 @@ pub unsafe trait TaggedStructure<'a>: Sized {
 /// [1]: https://registry.khronos.org/vulkan/specs/latest/styleguide.html#extensions-interactions
 pub unsafe trait Extends<B> {}
 
+/// Implemented for the type of the values of each [`LayerSettingTypeEXT`], so that
+/// [`LayerSettingEXT::values()`] can take a slice of them:
+///
+/// - `BOOL32`: [`Bool32`]
+/// - `INT32` and `INT64`: [`i32`] and [`i64`]
+/// - `UINT32` and `UINT64`: [`u32`] and [`u64`]
+/// - `FLOAT32` and `FLOAT64`: [`f32`] and [`f64`]
+/// - `STRING`: `*const c_char`, each pointing to a `NUL`-terminated string
+///
+/// [`Bool32`] is an alias of [`u32`], so `BOOL32` and `UINT32` settings take the same type and
+/// [`LayerSettingEXT::values()`] cannot set `ty`: set it with [`LayerSettingEXT::ty()`].
+pub trait LayerSettingValue {}
+impl LayerSettingValue for u32 {}
+impl LayerSettingValue for i32 {}
+impl LayerSettingValue for i64 {}
+impl LayerSettingValue for u64 {}
+impl LayerSettingValue for f32 {}
+impl LayerSettingValue for f64 {}
+impl LayerSettingValue for *const core::ffi::c_char {}
+
 /// Holds 24 bits in the least significant bits of memory,
 /// and 8 bytes in the most significant bits of that memory,
 /// occupying a single [`u32`] in total. This is commonly used in
