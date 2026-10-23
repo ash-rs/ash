@@ -2183,6 +2183,20 @@ fn derive_getters_and_setters(
             });
         }
 
+        // `valueCount` counts values of the type selected by `type`, not bytes, so take a slice of
+        // that type instead of the generic `&[u8]`: https://github.com/ash-rs/ash/issues/985
+        if struct_.name == "VkLayerSettingEXT" && name == "pValues" {
+            return Some(quote! {
+                /// Set [`Self::ty()`] to the type of `values` as well, see [`LayerSettingValue`].
+                #[inline]
+                pub fn values<T: LayerSettingValue>(mut self, values: &'a [T]) -> Self {
+                    self.value_count = values.len() as _;
+                    self.p_values = values.as_ptr().cast();
+                    self
+                }
+            });
+        }
+
         if field.basetype == "char" {
             let param_ident_as_c_str = format_ident!("{}_as_c_str", param_ident_short);
             if matches!(field.reference, Some(vkxml::ReferenceType::Pointer)) {
@@ -3660,7 +3674,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         use super::platform_types::*;
         use super::{
             wrap_c_str_slice_until_nul, write_c_str_slice_with_nul, CStrTooLargeForStaticArray, Extends,
-            Handle, Packed24_5_3, Packed24_8, Packed9_9_6_4_4, TaggedStructure,
+            Handle, LayerSettingValue, Packed24_5_3, Packed24_8, Packed9_9_6_4_4, TaggedStructure,
         };
         use core::ffi::*;
         use core::fmt;

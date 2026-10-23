@@ -7,7 +7,7 @@ use super::native::*;
 use super::platform_types::*;
 use super::{
     wrap_c_str_slice_until_nul, write_c_str_slice_with_nul, CStrTooLargeForStaticArray, Extends,
-    Handle, Packed24_5_3, Packed24_8, Packed9_9_6_4_4, TaggedStructure,
+    Handle, LayerSettingValue, Packed24_5_3, Packed24_8, Packed9_9_6_4_4, TaggedStructure,
 };
 use core::ffi::*;
 use core::fmt;
@@ -9564,8 +9564,9 @@ impl<'a> LayerSettingEXT<'a> {
         self.ty = ty;
         self
     }
+    #[doc = r" Set [`Self::ty()`] to the type of `values` as well, see [`LayerSettingValue`]."]
     #[inline]
-    pub fn values(mut self, values: &'a [u8]) -> Self {
+    pub fn values<T: LayerSettingValue>(mut self, values: &'a [T]) -> Self {
         self.value_count = values.len() as _;
         self.p_values = values.as_ptr().cast();
         self
