@@ -2092,6 +2092,13 @@ pub mod arm {
             }
         }
     }
+    #[doc = "VK_ARM_tensor_controls"]
+    pub mod tensor_controls {
+        pub use {
+            crate::vk::ARM_TENSOR_CONTROLS_NAME as NAME,
+            crate::vk::ARM_TENSOR_CONTROLS_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_ARM_pipeline_opacity_micromap"]
     pub mod pipeline_opacity_micromap {
         pub use {
@@ -2505,6 +2512,13 @@ pub mod arm {
                 }
             }
         }
+    }
+    #[doc = "VK_ARM_cooperative_matrix_layouts"]
+    pub mod cooperative_matrix_layouts {
+        pub use {
+            crate::vk::ARM_COOPERATIVE_MATRIX_LAYOUTS_NAME as NAME,
+            crate::vk::ARM_COOPERATIVE_MATRIX_LAYOUTS_SPEC_VERSION as SPEC_VERSION,
+        };
     }
     #[doc = "VK_ARM_data_graph_neural_accelerator_statistics"]
     pub mod data_graph_neural_accelerator_statistics {
@@ -7935,10 +7949,15 @@ pub mod ext {
             pub create_micromap_ext: PFN_vkCreateMicromapEXT,
             pub destroy_micromap_ext: PFN_vkDestroyMicromapEXT,
             pub cmd_build_micromaps_ext: PFN_vkCmdBuildMicromapsEXT,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
             pub build_micromaps_ext: PFN_vkBuildMicromapsEXT,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
             pub copy_micromap_ext: PFN_vkCopyMicromapEXT,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
             pub copy_micromap_to_memory_ext: PFN_vkCopyMicromapToMemoryEXT,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
             pub copy_memory_to_micromap_ext: PFN_vkCopyMemoryToMicromapEXT,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
             pub write_micromaps_properties_ext: PFN_vkWriteMicromapsPropertiesEXT,
             pub cmd_copy_micromap_ext: PFN_vkCmdCopyMicromapEXT,
             pub cmd_copy_micromap_to_memory_ext: PFN_vkCmdCopyMicromapToMemoryEXT,
@@ -10984,6 +11003,13 @@ pub mod ext {
             crate::vk::EXT_VERTEX_ATTRIBUTE_ROBUSTNESS_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_EXT_multisampled_render_to_swapchain"]
+    pub mod multisampled_render_to_swapchain {
+        pub use {
+            crate::vk::EXT_MULTISAMPLED_RENDER_TO_SWAPCHAIN_NAME as NAME,
+            crate::vk::EXT_MULTISAMPLED_RENDER_TO_SWAPCHAIN_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_EXT_fragment_density_map_offset"]
     pub mod fragment_density_map_offset {
         use crate::vk::*;
@@ -11145,11 +11171,89 @@ pub mod ext {
             crate::vk::EXT_SHADER_UNIFORM_BUFFER_UNSIZED_ARRAY_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_EXT_cooperative_matrix_maintenance1"]
+    pub mod cooperative_matrix_maintenance1 {
+        use crate::vk::*;
+        use core::ffi::*;
+        pub use {
+            crate::vk::EXT_COOPERATIVE_MATRIX_MAINTENANCE1_NAME as NAME,
+            crate::vk::EXT_COOPERATIVE_MATRIX_MAINTENANCE1_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_EXT_cooperative_matrix_maintenance1 instance-level functions"]
+        #[derive(Clone)]
+        pub struct Instance {
+            pub(crate) fp: InstanceFn,
+            pub(crate) handle: crate::vk::Instance,
+        }
+        impl Instance {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+                let handle = instance.handle;
+                let fp = InstanceFn::load(|name| unsafe {
+                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &InstanceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn instance(&self) -> crate::vk::Instance {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_EXT_cooperative_matrix_maintenance1 instance-level function pointers"]
+        pub struct InstanceFn {
+            pub get_physical_device_cooperative_matrix_properties2_ext:
+                PFN_vkGetPhysicalDeviceCooperativeMatrixProperties2EXT,
+        }
+        unsafe impl Send for InstanceFn {}
+        unsafe impl Sync for InstanceFn {}
+        impl InstanceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    get_physical_device_cooperative_matrix_properties2_ext: unsafe {
+                        unsafe extern "system" fn get_physical_device_cooperative_matrix_properties2_ext(
+                            _physical_device: PhysicalDevice,
+                            _p_cooperative_matrix_info : * const PhysicalDeviceCooperativeMatrixInfo2EXT < '_ >,
+                            _p_property_count: *mut u32,
+                            _p_properties: *mut CooperativeMatrixProperties2EXT<'_>,
+                        ) -> Result {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_physical_device_cooperative_matrix_properties2_ext)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetPhysicalDeviceCooperativeMatrixProperties2EXT\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_physical_device_cooperative_matrix_properties2_ext
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+    }
     #[doc = "VK_EXT_shader_subgroup_partitioned"]
     pub mod shader_subgroup_partitioned {
         pub use {
             crate::vk::EXT_SHADER_SUBGROUP_PARTITIONED_NAME as NAME,
             crate::vk::EXT_SHADER_SUBGROUP_PARTITIONED_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_EXT_shader_ocp_microscaling_types"]
+    pub mod shader_ocp_microscaling_types {
+        pub use {
+            crate::vk::EXT_SHADER_OCP_MICROSCALING_TYPES_NAME as NAME,
+            crate::vk::EXT_SHADER_OCP_MICROSCALING_TYPES_SPEC_VERSION as SPEC_VERSION,
         };
     }
     #[doc = "VK_EXT_primitive_restart_index"]
@@ -11219,6 +11323,13 @@ pub mod ext {
                 }
             }
         }
+    }
+    #[doc = "VK_EXT_image_tiling_control"]
+    pub mod image_tiling_control {
+        pub use {
+            crate::vk::EXT_IMAGE_TILING_CONTROL_NAME as NAME,
+            crate::vk::EXT_IMAGE_TILING_CONTROL_SPEC_VERSION as SPEC_VERSION,
+        };
     }
 }
 #[doc = "Extensions tagged FUCHSIA"]
@@ -12124,6 +12235,13 @@ pub mod img {
             crate::vk::IMG_RELAXED_LINE_RASTERIZATION_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_IMG_filter_linear_2d"]
+    pub mod filter_linear_2d {
+        pub use {
+            crate::vk::IMG_FILTER_LINEAR_2D_NAME as NAME,
+            crate::vk::IMG_FILTER_LINEAR_2D_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
 }
 #[doc = "Extensions tagged INTEL"]
 pub mod intel {
@@ -12372,6 +12490,13 @@ pub mod intel {
             }
         }
     }
+    #[doc = "VK_INTEL_device_info"]
+    pub mod device_info {
+        pub use {
+            crate::vk::INTEL_DEVICE_INFO_NAME as NAME,
+            crate::vk::INTEL_DEVICE_INFO_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
 }
 #[doc = "Extensions tagged KHR"]
 pub mod khr {
@@ -12411,8 +12536,10 @@ pub mod khr {
         pub struct InstanceFn {
             pub destroy_surface_khr: PFN_vkDestroySurfaceKHR,
             pub get_physical_device_surface_support_khr: PFN_vkGetPhysicalDeviceSurfaceSupportKHR,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdsc2>"]
             pub get_physical_device_surface_capabilities_khr:
                 PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-gpdsc2>"]
             pub get_physical_device_surface_formats_khr: PFN_vkGetPhysicalDeviceSurfaceFormatsKHR,
             pub get_physical_device_surface_present_modes_khr:
                 PFN_vkGetPhysicalDeviceSurfacePresentModesKHR,
@@ -16472,12 +16599,17 @@ pub mod khr {
             pub cmd_build_acceleration_structures_khr: PFN_vkCmdBuildAccelerationStructuresKHR,
             pub cmd_build_acceleration_structures_indirect_khr:
                 PFN_vkCmdBuildAccelerationStructuresIndirectKHR,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
             pub build_acceleration_structures_khr: PFN_vkBuildAccelerationStructuresKHR,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
             pub copy_acceleration_structure_khr: PFN_vkCopyAccelerationStructureKHR,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
             pub copy_acceleration_structure_to_memory_khr:
                 PFN_vkCopyAccelerationStructureToMemoryKHR,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
             pub copy_memory_to_acceleration_structure_khr:
                 PFN_vkCopyMemoryToAccelerationStructureKHR,
+            #[doc = "Deprecated: <https://docs.vulkan.org/spec/latest/appendices/legacy.html#legacy-host-builds>"]
             pub write_acceleration_structures_properties_khr:
                 PFN_vkWriteAccelerationStructuresPropertiesKHR,
             pub cmd_copy_acceleration_structure_khr: PFN_vkCmdCopyAccelerationStructureKHR,
@@ -20872,6 +21004,13 @@ pub mod khr {
             crate::vk::KHR_VIDEO_MAINTENANCE2_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_KHR_video_encode_feedback2"]
+    pub mod video_encode_feedback2 {
+        pub use {
+            crate::vk::KHR_VIDEO_ENCODE_FEEDBACK2_NAME as NAME,
+            crate::vk::KHR_VIDEO_ENCODE_FEEDBACK2_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_KHR_depth_clamp_zero_one"]
     pub mod depth_clamp_zero_one {
         pub use {
@@ -20966,11 +21105,25 @@ pub mod khr {
             }
         }
     }
+    #[doc = "VK_KHR_pipeline_library_group_handles"]
+    pub mod pipeline_library_group_handles {
+        pub use {
+            crate::vk::KHR_PIPELINE_LIBRARY_GROUP_HANDLES_NAME as NAME,
+            crate::vk::KHR_PIPELINE_LIBRARY_GROUP_HANDLES_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
     #[doc = "VK_KHR_maintenance11"]
     pub mod maintenance11 {
         pub use {
             crate::vk::KHR_MAINTENANCE11_NAME as NAME,
             crate::vk::KHR_MAINTENANCE11_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_KHR_extended_flags"]
+    pub mod extended_flags {
+        pub use {
+            crate::vk::KHR_EXTENDED_FLAGS_NAME as NAME,
+            crate::vk::KHR_EXTENDED_FLAGS_SPEC_VERSION as SPEC_VERSION,
         };
     }
 }
@@ -22836,10 +22989,195 @@ pub mod nv {
     }
     #[doc = "VK_NV_low_latency"]
     pub mod low_latency {
+        use crate::vk::*;
+        use core::ffi::*;
         pub use {
             crate::vk::NV_LOW_LATENCY_NAME as NAME,
             crate::vk::NV_LOW_LATENCY_SPEC_VERSION as SPEC_VERSION,
         };
+        #[doc = "VK_NV_low_latency device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle;
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_NV_low_latency device-level function pointers"]
+        pub struct DeviceFn {
+            pub set_latency_sleep_mode_legacy_nv: PFN_vkSetLatencySleepModeLegacyNV,
+            pub latency_sleep_legacy_nv: PFN_vkLatencySleepLegacyNV,
+            pub set_latency_marker_legacy_nv: PFN_vkSetLatencyMarkerLegacyNV,
+            pub get_latency_timings_legacy_nv: PFN_vkGetLatencyTimingsLegacyNV,
+            pub queue_notify_out_of_band_legacy_nv: PFN_vkQueueNotifyOutOfBandLegacyNV,
+            pub get_sleep_status_legacy_nv: PFN_vkGetSleepStatusLegacyNV,
+            pub shutdown_latency_device_legacy_nv: PFN_vkShutdownLatencyDeviceLegacyNV,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    set_latency_sleep_mode_legacy_nv: unsafe {
+                        unsafe extern "system" fn set_latency_sleep_mode_legacy_nv(
+                            _device: crate::vk::Device,
+                            _low_latency_mode: Bool32,
+                            _low_latency_boost: Bool32,
+                            _minimum_interval_us: u32,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(set_latency_sleep_mode_legacy_nv)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkSetLatencySleepModeLegacyNV\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            set_latency_sleep_mode_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    latency_sleep_legacy_nv: unsafe {
+                        unsafe extern "system" fn latency_sleep_legacy_nv(
+                            _device: crate::vk::Device,
+                            _signal_semaphore: Semaphore,
+                            _value: u64,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(latency_sleep_legacy_nv)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkLatencySleepLegacyNV\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            latency_sleep_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    set_latency_marker_legacy_nv: unsafe {
+                        unsafe extern "system" fn set_latency_marker_legacy_nv(
+                            _device: crate::vk::Device,
+                            _frame_id: u64,
+                            _marker: u32,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(set_latency_marker_legacy_nv)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkSetLatencyMarkerLegacyNV\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            set_latency_marker_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_latency_timings_legacy_nv: unsafe {
+                        unsafe extern "system" fn get_latency_timings_legacy_nv(
+                            _device: crate::vk::Device,
+                            _p_timings: *mut c_void,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_latency_timings_legacy_nv)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkGetLatencyTimingsLegacyNV\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_latency_timings_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    queue_notify_out_of_band_legacy_nv: unsafe {
+                        unsafe extern "system" fn queue_notify_out_of_band_legacy_nv(
+                            _queue: Queue,
+                            _queue_type: u32,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(queue_notify_out_of_band_legacy_nv)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkQueueNotifyOutOfBandLegacyNV\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            queue_notify_out_of_band_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_sleep_status_legacy_nv: unsafe {
+                        unsafe extern "system" fn get_sleep_status_legacy_nv(
+                            _device: crate::vk::Device,
+                            _p_low_latency_mode: *mut Bool32,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_sleep_status_legacy_nv)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkGetSleepStatusLegacyNV\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_sleep_status_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    shutdown_latency_device_legacy_nv: unsafe {
+                        unsafe extern "system" fn shutdown_latency_device_legacy_nv(
+                            _device: crate::vk::Device,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(shutdown_latency_device_legacy_nv)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkShutdownLatencyDeviceLegacyNV\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            shutdown_latency_device_legacy_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
     }
     #[doc = "VK_NV_fragment_shading_rate_enums"]
     pub mod fragment_shading_rate_enums {
@@ -24442,6 +24780,13 @@ pub mod nv {
             crate::vk::NV_COOPERATIVE_MATRIX_DECODE_VECTOR_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_NV_private_data_base_handle"]
+    pub mod private_data_base_handle {
+        pub use {
+            crate::vk::NV_PRIVATE_DATA_BASE_HANDLE_NAME as NAME,
+            crate::vk::NV_PRIVATE_DATA_BASE_HANDLE_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
 }
 #[doc = "Extensions tagged NVX"]
 pub mod nvx {
@@ -25744,6 +26089,13 @@ pub mod valve {
         pub use {
             crate::vk::VALVE_SHADER_MIXED_FLOAT_DOT_PRODUCT_NAME as NAME,
             crate::vk::VALVE_SHADER_MIXED_FLOAT_DOT_PRODUCT_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
+    #[doc = "VK_VALVE_buffer_device_address_allocation_alignment"]
+    pub mod buffer_device_address_allocation_alignment {
+        pub use {
+            crate::vk::VALVE_BUFFER_DEVICE_ADDRESS_ALLOCATION_ALIGNMENT_NAME as NAME,
+            crate::vk::VALVE_BUFFER_DEVICE_ADDRESS_ALLOCATION_ALIGNMENT_SPEC_VERSION as SPEC_VERSION,
         };
     }
 }
