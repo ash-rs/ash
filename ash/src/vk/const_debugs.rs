@@ -2362,6 +2362,9 @@ impl fmt::Debug for DriverId {
             Self::MESA_GFXSTREAM => Some("MESA_GFXSTREAM"),
             Self::APE_SOFT => Some("APE_SOFT"),
             Self::RESERVED_31 => Some("RESERVED_31"),
+            Self::APEX => Some("APEX"),
+            Self::NIKKI => Some("NIKKI"),
+            Self::MOMOTEN => Some("MOMOTEN"),
             _ => None,
         };
         if let Some(x) = name {
@@ -3383,6 +3386,20 @@ impl fmt::Debug for GraphicsPipelineLibraryFlagsEXT {
             ),
         ];
         debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for HdrSmpteSt209450PowerPreferenceGOOGLE {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = match *self {
+            Self::COLOR_ACCURACY => Some("COLOR_ACCURACY"),
+            Self::LOW_POWER => Some("LOW_POWER"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
     }
 }
 impl fmt::Debug for HeadlessSurfaceCreateFlagsEXT {
@@ -8962,6 +8979,13 @@ impl fmt::Debug for StructureType {
             Self::BUFFER_DEVICE_ADDRESS_ALIGNMENT_ALLOCATE_INFO_VALVE => {
                 Some("BUFFER_DEVICE_ADDRESS_ALIGNMENT_ALLOCATE_INFO_VALVE")
             }
+            Self::PHYSICAL_DEVICE_HDR_SMPTE_ST_209450_FEATURES_GOOGLE => {
+                Some("PHYSICAL_DEVICE_HDR_SMPTE_ST_209450_FEATURES_GOOGLE")
+            }
+            Self::HDR_SMPTE_ST_209450_GOOGLE => Some("HDR_SMPTE_ST_209450_GOOGLE"),
+            Self::SURFACE_CAPABILITIES_HDR_SMPTE_ST_209450_GOOGLE => {
+                Some("SURFACE_CAPABILITIES_HDR_SMPTE_ST_209450_GOOGLE")
+            }
             Self::BIND_BUFFER_MEMORY_INFO => Some("BIND_BUFFER_MEMORY_INFO"),
             Self::BIND_IMAGE_MEMORY_INFO => Some("BIND_IMAGE_MEMORY_INFO"),
             Self::MEMORY_DEDICATED_REQUIREMENTS => Some("MEMORY_DEDICATED_REQUIREMENTS"),
@@ -9846,6 +9870,7 @@ impl fmt::Debug for VendorId {
             Self::POCL => Some("POCL"),
             Self::MOBILEYE => Some("MOBILEYE"),
             Self::APE => Some("APE"),
+            Self::APEX => Some("APEX"),
             _ => None,
         };
         if let Some(x) = name {

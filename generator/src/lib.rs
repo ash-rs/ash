@@ -1672,17 +1672,17 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
         .unwrap_or("");
     let struct_name = struct_name.strip_suffix(vendor).unwrap();
     let struct_name = TRAILING_NUMBER.replace(struct_name, "_$1");
+    // H264 doesn't change, but ST209450 does
+    let struct_name = struct_name.replace("ST209450", "ST_209450");
     let variant_name = variant_name.strip_suffix(vendor).unwrap_or(&variant_name);
 
-    let new_variant_name = variant_name
-        .strip_prefix(struct_name.as_ref())
-        .unwrap_or_else(|| {
-            if enum_name == "VkResult" {
-                variant_name.strip_prefix("VK").unwrap()
-            } else {
-                panic!("Failed to strip {struct_name} prefix from enum variant {variant_name}")
-            }
-        });
+    let new_variant_name = variant_name.strip_prefix(&struct_name).unwrap_or_else(|| {
+        if enum_name == "VkResult" {
+            variant_name.strip_prefix("VK").unwrap()
+        } else {
+            panic!("Failed to strip {struct_name} prefix from enum variant {variant_name}")
+        }
+    });
 
     // Both of the above strip_prefix leave a leading `_`:
     let new_variant_name = new_variant_name.strip_prefix('_').unwrap();
