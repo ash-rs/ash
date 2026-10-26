@@ -5781,6 +5781,12 @@ impl StructureType {
         Self(1_000_709_001);
     pub const BUFFER_DEVICE_ADDRESS_ALIGNMENT_ALLOCATE_INFO_VALVE: Self = Self(1_000_709_002);
 }
+#[doc = "Generated from 'VK_GOOGLE_hdr_smpte_st_209450_metadata'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_HDR_SMPTE_ST_209450_FEATURES_GOOGLE: Self = Self(1_000_718_000);
+    pub const HDR_SMPTE_ST_209450_GOOGLE: Self = Self(1_000_718_001);
+    pub const SURFACE_CAPABILITIES_HDR_SMPTE_ST_209450_GOOGLE: Self = Self(1_000_718_002);
+}
 pub const KHR_SURFACE_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_surface\0") };
 pub const KHR_SURFACE_SPEC_VERSION: u32 = 25u32;
@@ -10936,3 +10942,6 @@ pub const VALVE_BUFFER_DEVICE_ADDRESS_ALLOCATION_ALIGNMENT_NAME: &CStr = unsafe 
     CStr::from_bytes_with_nul_unchecked(b"VK_VALVE_buffer_device_address_allocation_alignment\0")
 };
 pub const VALVE_BUFFER_DEVICE_ADDRESS_ALLOCATION_ALIGNMENT_SPEC_VERSION: u32 = 1u32;
+pub const GOOGLE_HDR_SMPTE_ST_209450_METADATA_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_GOOGLE_hdr_smpte_st_209450_metadata\0") };
+pub const GOOGLE_HDR_SMPTE_ST_209450_METADATA_SPEC_VERSION: u32 = 1u32;

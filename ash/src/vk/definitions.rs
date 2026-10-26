@@ -63,7 +63,7 @@ pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_API_VERSION_1_4.html>"]
 pub const API_VERSION_1_4: u32 = make_api_version(0, 1, 4, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 365;
+pub const HEADER_VERSION: u32 = 366;
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 4, HEADER_VERSION);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSampleMask.html>"]
@@ -16868,6 +16868,90 @@ impl<'a> HdrVividDynamicMetadataHUAWEI<'a> {
     pub fn dynamic_metadata(mut self, dynamic_metadata: &'a [u8]) -> Self {
         self.dynamic_metadata_size = dynamic_metadata.len();
         self.p_dynamic_metadata = dynamic_metadata.as_ptr().cast();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkHdrSmpteSt209450GOOGLE.html>"]
+#[must_use]
+pub struct HdrSmpteSt209450GOOGLE<'a> {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub metadata_size: usize,
+    pub p_metadata: *const c_void,
+    pub power_preference: HdrSmpteSt209450PowerPreferenceGOOGLE,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for HdrSmpteSt209450GOOGLE<'_> {}
+unsafe impl Sync for HdrSmpteSt209450GOOGLE<'_> {}
+impl ::core::default::Default for HdrSmpteSt209450GOOGLE<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null(),
+            metadata_size: usize::default(),
+            p_metadata: ::core::ptr::null(),
+            power_preference: HdrSmpteSt209450PowerPreferenceGOOGLE::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for HdrSmpteSt209450GOOGLE<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::HDR_SMPTE_ST_209450_GOOGLE;
+}
+unsafe impl Extends<HdrMetadataEXT<'_>> for HdrSmpteSt209450GOOGLE<'_> {}
+impl<'a> HdrSmpteSt209450GOOGLE<'a> {
+    #[inline]
+    pub fn metadata(mut self, metadata: &'a [u8]) -> Self {
+        self.metadata_size = metadata.len();
+        self.p_metadata = metadata.as_ptr().cast();
+        self
+    }
+    #[inline]
+    pub fn power_preference(
+        mut self,
+        power_preference: HdrSmpteSt209450PowerPreferenceGOOGLE,
+    ) -> Self {
+        self.power_preference = power_preference;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSurfaceCapabilitiesHdrSmpteSt209450GOOGLE.html>"]
+#[must_use]
+pub struct SurfaceCapabilitiesHdrSmpteSt209450GOOGLE<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub hdr_smpte_st209450_supported: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for SurfaceCapabilitiesHdrSmpteSt209450GOOGLE<'_> {}
+unsafe impl Sync for SurfaceCapabilitiesHdrSmpteSt209450GOOGLE<'_> {}
+impl ::core::default::Default for SurfaceCapabilitiesHdrSmpteSt209450GOOGLE<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            hdr_smpte_st209450_supported: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for SurfaceCapabilitiesHdrSmpteSt209450GOOGLE<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::SURFACE_CAPABILITIES_HDR_SMPTE_ST_209450_GOOGLE;
+}
+unsafe impl Extends<SurfaceCapabilities2KHR<'_>> for SurfaceCapabilitiesHdrSmpteSt209450GOOGLE<'_> {}
+impl<'a> SurfaceCapabilitiesHdrSmpteSt209450GOOGLE<'a> {
+    #[inline]
+    pub fn hdr_smpte_st209450_supported(mut self, hdr_smpte_st209450_supported: bool) -> Self {
+        self.hdr_smpte_st209450_supported = hdr_smpte_st209450_supported.into();
         self
     }
 }
@@ -68091,6 +68175,46 @@ impl<'a> PhysicalDeviceHdrVividFeaturesHUAWEI<'a> {
     #[inline]
     pub fn hdr_vivid(mut self, hdr_vivid: bool) -> Self {
         self.hdr_vivid = hdr_vivid.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceHdrSmpteSt209450FeaturesGOOGLE.html>"]
+#[must_use]
+pub struct PhysicalDeviceHdrSmpteSt209450FeaturesGOOGLE<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub hdr_smpte_st209450: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceHdrSmpteSt209450FeaturesGOOGLE<'_> {}
+unsafe impl Sync for PhysicalDeviceHdrSmpteSt209450FeaturesGOOGLE<'_> {}
+impl ::core::default::Default for PhysicalDeviceHdrSmpteSt209450FeaturesGOOGLE<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            hdr_smpte_st209450: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceHdrSmpteSt209450FeaturesGOOGLE<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_HDR_SMPTE_ST_209450_FEATURES_GOOGLE;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
+    for PhysicalDeviceHdrSmpteSt209450FeaturesGOOGLE<'_>
+{
+}
+unsafe impl Extends<DeviceCreateInfo<'_>> for PhysicalDeviceHdrSmpteSt209450FeaturesGOOGLE<'_> {}
+impl<'a> PhysicalDeviceHdrSmpteSt209450FeaturesGOOGLE<'a> {
+    #[inline]
+    pub fn hdr_smpte_st209450(mut self, hdr_smpte_st209450: bool) -> Self {
+        self.hdr_smpte_st209450 = hdr_smpte_st209450.into();
         self
     }
 }
