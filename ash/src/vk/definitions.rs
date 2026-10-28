@@ -6,8 +6,9 @@ use super::enums::*;
 use super::native::*;
 use super::platform_types::*;
 use super::{
-    wrap_c_str_slice_until_nul, write_c_str_slice_with_nul, CStrTooLargeForStaticArray, Extends,
-    Handle, LayerSettingValue, Packed24_5_3, Packed24_8, Packed9_9_6_4_4, TaggedStructure,
+    init_tagged_structure, wrap_c_str_slice_until_nul, write_c_str_slice_with_nul,
+    CStrTooLargeForStaticArray, Extends, Handle, LayerSettingValue, Packed24_5_3, Packed24_8,
+    Packed9_9_6_4_4, TaggedStructure,
 };
 use core::ffi::*;
 use core::fmt;
@@ -1275,10 +1276,7 @@ unsafe impl Sync for ApplicationInfo<'_> {}
 impl ApplicationInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ApplicationInfo<'_> {
@@ -1441,10 +1439,7 @@ unsafe impl Sync for DeviceQueueCreateInfo<'_> {}
 impl DeviceQueueCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceQueueCreateInfo<'_> {
@@ -1499,10 +1494,7 @@ unsafe impl Sync for DeviceCreateInfo<'_> {}
 impl DeviceCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceCreateInfo<'_> {
@@ -1573,10 +1565,7 @@ unsafe impl Sync for InstanceCreateInfo<'_> {}
 impl InstanceCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for InstanceCreateInfo<'_> {
@@ -1735,10 +1724,7 @@ unsafe impl Sync for MemoryAllocateInfo<'_> {}
 impl MemoryAllocateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryAllocateInfo<'_> {
@@ -1978,10 +1964,7 @@ unsafe impl Sync for MappedMemoryRange<'_> {}
 impl MappedMemoryRange<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MappedMemoryRange<'_> {
@@ -2207,10 +2190,7 @@ unsafe impl Sync for WriteDescriptorSet<'_> {}
 impl WriteDescriptorSet<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for WriteDescriptorSet<'_> {
@@ -2289,10 +2269,7 @@ unsafe impl Sync for CopyDescriptorSet<'_> {}
 impl CopyDescriptorSet<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CopyDescriptorSet<'_> {
@@ -2357,10 +2334,7 @@ unsafe impl Sync for BufferUsageFlags2CreateInfo<'_> {}
 impl BufferUsageFlags2CreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BufferUsageFlags2CreateInfo<'_> {
@@ -2404,10 +2378,7 @@ unsafe impl Sync for BufferCreateInfo<'_> {}
 impl BufferCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BufferCreateInfo<'_> {
@@ -2467,10 +2438,7 @@ unsafe impl Sync for BufferViewCreateInfo<'_> {}
 impl BufferViewCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BufferViewCreateInfo<'_> {
@@ -2661,10 +2629,7 @@ unsafe impl Sync for MemoryBarrier<'_> {}
 impl MemoryBarrier<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryBarrier<'_> {
@@ -2710,10 +2675,7 @@ unsafe impl Sync for BufferMemoryBarrier<'_> {}
 impl BufferMemoryBarrier<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BufferMemoryBarrier<'_> {
@@ -2785,10 +2747,7 @@ unsafe impl Sync for ImageMemoryBarrier<'_> {}
 impl ImageMemoryBarrier<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageMemoryBarrier<'_> {
@@ -2870,10 +2829,7 @@ unsafe impl Sync for ImageCreateInfo<'_> {}
 impl ImageCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageCreateInfo<'_> {
@@ -3020,10 +2976,7 @@ unsafe impl Sync for ImageViewCreateInfo<'_> {}
 impl ImageViewCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageViewCreateInfo<'_> {
@@ -3353,10 +3306,7 @@ unsafe impl Sync for BindSparseInfo<'_> {}
 impl BindSparseInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BindSparseInfo<'_> {
@@ -3656,10 +3606,7 @@ unsafe impl Sync for CopyMemoryIndirectInfoKHR<'_> {}
 impl CopyMemoryIndirectInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CopyMemoryIndirectInfoKHR<'_> {
@@ -3774,10 +3721,7 @@ unsafe impl Sync for CopyMemoryToImageIndirectInfoKHR<'_> {}
 impl CopyMemoryToImageIndirectInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CopyMemoryToImageIndirectInfoKHR<'_> {
@@ -3892,10 +3836,7 @@ unsafe impl Sync for ShaderModuleCreateInfo<'_> {}
 impl ShaderModuleCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ShaderModuleCreateInfo<'_> {
@@ -3995,10 +3936,7 @@ unsafe impl Sync for DescriptorSetLayoutCreateInfo<'_> {}
 impl DescriptorSetLayoutCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DescriptorSetLayoutCreateInfo<'_> {
@@ -4075,10 +4013,7 @@ unsafe impl Sync for DescriptorPoolCreateInfo<'_> {}
 impl DescriptorPoolCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DescriptorPoolCreateInfo<'_> {
@@ -4126,10 +4061,7 @@ unsafe impl Sync for DescriptorSetAllocateInfo<'_> {}
 impl DescriptorSetAllocateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DescriptorSetAllocateInfo<'_> {
@@ -4253,10 +4185,7 @@ unsafe impl Sync for PipelineShaderStageCreateInfo<'_> {}
 impl PipelineShaderStageCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineShaderStageCreateInfo<'_> {
@@ -4327,9 +4256,8 @@ impl ComputePipelineCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
         Self {
-            s_type: Self::STRUCTURE_TYPE,
             stage: PipelineShaderStageCreateInfo::new(),
-            ..unsafe { ::core::mem::zeroed() }
+            ..init_tagged_structure()
         }
     }
 }
@@ -4387,10 +4315,7 @@ unsafe impl Sync for ComputePipelineIndirectBufferInfoNV<'_> {}
 impl ComputePipelineIndirectBufferInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ComputePipelineIndirectBufferInfoNV<'_> {
@@ -4439,10 +4364,7 @@ unsafe impl Sync for PipelineCreateFlags2CreateInfo<'_> {}
 impl PipelineCreateFlags2CreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineCreateFlags2CreateInfo<'_> {
@@ -4569,10 +4491,7 @@ unsafe impl Sync for PipelineVertexInputStateCreateInfo<'_> {}
 impl PipelineVertexInputStateCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineVertexInputStateCreateInfo<'_> {
@@ -4627,10 +4546,7 @@ unsafe impl Sync for PipelineInputAssemblyStateCreateInfo<'_> {}
 impl PipelineInputAssemblyStateCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineInputAssemblyStateCreateInfo<'_> {
@@ -4676,10 +4592,7 @@ unsafe impl Sync for PipelineTessellationStateCreateInfo<'_> {}
 impl PipelineTessellationStateCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineTessellationStateCreateInfo<'_> {
@@ -4723,10 +4636,7 @@ unsafe impl Sync for PipelineViewportStateCreateInfo<'_> {}
 impl PipelineViewportStateCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineViewportStateCreateInfo<'_> {
@@ -4793,10 +4703,7 @@ unsafe impl Sync for PipelineRasterizationStateCreateInfo<'_> {}
 impl PipelineRasterizationStateCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineRasterizationStateCreateInfo<'_> {
@@ -4887,10 +4794,7 @@ unsafe impl Sync for PipelineMultisampleStateCreateInfo<'_> {}
 impl PipelineMultisampleStateCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineMultisampleStateCreateInfo<'_> {
@@ -5038,10 +4942,7 @@ unsafe impl Sync for PipelineColorBlendStateCreateInfo<'_> {}
 impl PipelineColorBlendStateCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineColorBlendStateCreateInfo<'_> {
@@ -5102,10 +5003,7 @@ unsafe impl Sync for PipelineDynamicStateCreateInfo<'_> {}
 impl PipelineDynamicStateCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineDynamicStateCreateInfo<'_> {
@@ -5218,10 +5116,7 @@ unsafe impl Sync for PipelineDepthStencilStateCreateInfo<'_> {}
 impl PipelineDepthStencilStateCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineDepthStencilStateCreateInfo<'_> {
@@ -5317,10 +5212,7 @@ unsafe impl Sync for GraphicsPipelineCreateInfo<'_> {}
 impl GraphicsPipelineCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for GraphicsPipelineCreateInfo<'_> {
@@ -5460,10 +5352,7 @@ unsafe impl Sync for PipelineCacheCreateInfo<'_> {}
 impl PipelineCacheCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineCacheCreateInfo<'_> {
@@ -5650,10 +5539,7 @@ unsafe impl Sync for PipelineBinaryCreateInfoKHR<'_> {}
 impl PipelineBinaryCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineBinaryCreateInfoKHR<'_> {
@@ -5705,10 +5591,7 @@ unsafe impl Sync for PipelineBinaryHandlesInfoKHR<'_> {}
 impl PipelineBinaryHandlesInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineBinaryHandlesInfoKHR<'_> {
@@ -5822,10 +5705,7 @@ unsafe impl Sync for PipelineBinaryKeyKHR<'_> {}
 impl PipelineBinaryKeyKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineBinaryKeyKHR<'_> {
@@ -5866,10 +5746,7 @@ unsafe impl Sync for PipelineBinaryInfoKHR<'_> {}
 impl PipelineBinaryInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineBinaryInfoKHR<'_> {
@@ -5908,10 +5785,7 @@ unsafe impl Sync for ReleaseCapturedPipelineDataInfoKHR<'_> {}
 impl ReleaseCapturedPipelineDataInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ReleaseCapturedPipelineDataInfoKHR<'_> {
@@ -5946,10 +5820,7 @@ unsafe impl Sync for PipelineBinaryDataInfoKHR<'_> {}
 impl PipelineBinaryDataInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineBinaryDataInfoKHR<'_> {
@@ -5983,10 +5854,7 @@ unsafe impl Sync for PipelineCreateInfoKHR<'_> {}
 impl PipelineCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineCreateInfoKHR<'_> {
@@ -6019,10 +5887,7 @@ unsafe impl Sync for PipelineLayoutCreateInfo<'_> {}
 impl PipelineLayoutCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineLayoutCreateInfo<'_> {
@@ -6097,10 +5962,7 @@ unsafe impl Sync for SamplerCreateInfo<'_> {}
 impl SamplerCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SamplerCreateInfo<'_> {
@@ -6211,10 +6073,7 @@ unsafe impl Sync for CommandPoolCreateInfo<'_> {}
 impl CommandPoolCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CommandPoolCreateInfo<'_> {
@@ -6256,10 +6115,7 @@ unsafe impl Sync for CommandBufferAllocateInfo<'_> {}
 impl CommandBufferAllocateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CommandBufferAllocateInfo<'_> {
@@ -6309,10 +6165,7 @@ unsafe impl Sync for CommandBufferInheritanceInfo<'_> {}
 impl CommandBufferInheritanceInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CommandBufferInheritanceInfo<'_> {
@@ -6376,10 +6229,7 @@ unsafe impl Sync for CommandBufferBeginInfo<'_> {}
 impl CommandBufferBeginInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CommandBufferBeginInfo<'_> {
@@ -6439,10 +6289,7 @@ impl fmt::Debug for RenderPassBeginInfo<'_> {
 impl RenderPassBeginInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderPassBeginInfo<'_> {
@@ -6857,10 +6704,7 @@ unsafe impl Sync for RenderPassCreateInfo<'_> {}
 impl RenderPassCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderPassCreateInfo<'_> {
@@ -6913,10 +6757,7 @@ unsafe impl Sync for EventCreateInfo<'_> {}
 impl EventCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for EventCreateInfo<'_> {
@@ -6951,10 +6792,7 @@ unsafe impl Sync for FenceCreateInfo<'_> {}
 impl FenceCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for FenceCreateInfo<'_> {
@@ -8273,10 +8111,7 @@ unsafe impl Sync for SemaphoreCreateInfo<'_> {}
 impl SemaphoreCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SemaphoreCreateInfo<'_> {
@@ -8314,10 +8149,7 @@ unsafe impl Sync for QueryPoolCreateInfo<'_> {}
 impl QueryPoolCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for QueryPoolCreateInfo<'_> {
@@ -8376,10 +8208,7 @@ unsafe impl Sync for FramebufferCreateInfo<'_> {}
 impl FramebufferCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for FramebufferCreateInfo<'_> {
@@ -8658,10 +8487,7 @@ unsafe impl Sync for SubmitInfo<'_> {}
 impl SubmitInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SubmitInfo<'_> {
@@ -8895,10 +8721,7 @@ unsafe impl Sync for DisplayModeCreateInfoKHR<'_> {}
 impl DisplayModeCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DisplayModeCreateInfoKHR<'_> {
@@ -9020,10 +8843,7 @@ unsafe impl Sync for DisplaySurfaceCreateInfoKHR<'_> {}
 impl DisplaySurfaceCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DisplaySurfaceCreateInfoKHR<'_> {
@@ -9093,10 +8913,7 @@ unsafe impl Sync for DisplaySurfaceStereoCreateInfoNV<'_> {}
 impl DisplaySurfaceStereoCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DisplaySurfaceStereoCreateInfoNV<'_> {
@@ -9134,10 +8951,7 @@ unsafe impl Sync for DisplayPresentInfoKHR<'_> {}
 impl DisplayPresentInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DisplayPresentInfoKHR<'_> {
@@ -9271,10 +9085,7 @@ unsafe impl Sync for AndroidSurfaceCreateInfoKHR<'_> {}
 impl AndroidSurfaceCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AndroidSurfaceCreateInfoKHR<'_> {
@@ -9315,10 +9126,7 @@ unsafe impl Sync for ViSurfaceCreateInfoNN<'_> {}
 impl ViSurfaceCreateInfoNN<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ViSurfaceCreateInfoNN<'_> {
@@ -9360,10 +9168,7 @@ unsafe impl Sync for WaylandSurfaceCreateInfoKHR<'_> {}
 impl WaylandSurfaceCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for WaylandSurfaceCreateInfoKHR<'_> {
@@ -9410,10 +9215,7 @@ unsafe impl Sync for UbmSurfaceCreateInfoSEC<'_> {}
 impl UbmSurfaceCreateInfoSEC<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for UbmSurfaceCreateInfoSEC<'_> {
@@ -9460,10 +9262,7 @@ unsafe impl Sync for Win32SurfaceCreateInfoKHR<'_> {}
 impl Win32SurfaceCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for Win32SurfaceCreateInfoKHR<'_> {
@@ -9510,10 +9309,7 @@ unsafe impl Sync for XlibSurfaceCreateInfoKHR<'_> {}
 impl XlibSurfaceCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for XlibSurfaceCreateInfoKHR<'_> {
@@ -9560,10 +9356,7 @@ unsafe impl Sync for XcbSurfaceCreateInfoKHR<'_> {}
 impl XcbSurfaceCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for XcbSurfaceCreateInfoKHR<'_> {
@@ -9610,10 +9403,7 @@ unsafe impl Sync for DirectFBSurfaceCreateInfoEXT<'_> {}
 impl DirectFBSurfaceCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DirectFBSurfaceCreateInfoEXT<'_> {
@@ -9659,10 +9449,7 @@ unsafe impl Sync for ImagePipeSurfaceCreateInfoFUCHSIA<'_> {}
 impl ImagePipeSurfaceCreateInfoFUCHSIA<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImagePipeSurfaceCreateInfoFUCHSIA<'_> {
@@ -9703,10 +9490,7 @@ unsafe impl Sync for StreamDescriptorSurfaceCreateInfoGGP<'_> {}
 impl StreamDescriptorSurfaceCreateInfoGGP<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for StreamDescriptorSurfaceCreateInfoGGP<'_> {
@@ -9748,10 +9532,7 @@ unsafe impl Sync for ScreenSurfaceCreateInfoQNX<'_> {}
 impl ScreenSurfaceCreateInfoQNX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ScreenSurfaceCreateInfoQNX<'_> {
@@ -9844,10 +9625,7 @@ unsafe impl Sync for SwapchainCreateInfoKHR<'_> {}
 impl SwapchainCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SwapchainCreateInfoKHR<'_> {
@@ -9958,10 +9736,7 @@ unsafe impl Sync for PresentInfoKHR<'_> {}
 impl PresentInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PresentInfoKHR<'_> {
@@ -10028,10 +9803,7 @@ impl fmt::Debug for DebugReportCallbackCreateInfoEXT<'_> {
 impl DebugReportCallbackCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DebugReportCallbackCreateInfoEXT<'_> {
@@ -10078,10 +9850,7 @@ unsafe impl Sync for ValidationFlagsEXT<'_> {}
 impl ValidationFlagsEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ValidationFlagsEXT<'_> {
@@ -10124,10 +9893,7 @@ unsafe impl Sync for ValidationFeaturesEXT<'_> {}
 impl ValidationFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ValidationFeaturesEXT<'_> {
@@ -10179,10 +9945,7 @@ unsafe impl Sync for LayerSettingsCreateInfoEXT<'_> {}
 impl LayerSettingsCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for LayerSettingsCreateInfoEXT<'_> {
@@ -10286,10 +10049,7 @@ unsafe impl Sync for PipelineRasterizationStateRasterizationOrderAMD<'_> {}
 impl PipelineRasterizationStateRasterizationOrderAMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineRasterizationStateRasterizationOrderAMD<'_> {
@@ -10331,10 +10091,7 @@ unsafe impl Sync for DebugMarkerObjectNameInfoEXT<'_> {}
 impl DebugMarkerObjectNameInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DebugMarkerObjectNameInfoEXT<'_> {
@@ -10391,10 +10148,7 @@ unsafe impl Sync for DebugMarkerObjectTagInfoEXT<'_> {}
 impl DebugMarkerObjectTagInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DebugMarkerObjectTagInfoEXT<'_> {
@@ -10446,10 +10200,7 @@ unsafe impl Sync for DebugMarkerMarkerInfoEXT<'_> {}
 impl DebugMarkerMarkerInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DebugMarkerMarkerInfoEXT<'_> {
@@ -10497,10 +10248,7 @@ unsafe impl Sync for DedicatedAllocationImageCreateInfoNV<'_> {}
 impl DedicatedAllocationImageCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DedicatedAllocationImageCreateInfoNV<'_> {
@@ -10536,10 +10284,7 @@ unsafe impl Sync for DedicatedAllocationBufferCreateInfoNV<'_> {}
 impl DedicatedAllocationBufferCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DedicatedAllocationBufferCreateInfoNV<'_> {
@@ -10576,10 +10321,7 @@ unsafe impl Sync for DedicatedAllocationMemoryAllocateInfoNV<'_> {}
 impl DedicatedAllocationMemoryAllocateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DedicatedAllocationMemoryAllocateInfoNV<'_> {
@@ -10678,10 +10420,7 @@ unsafe impl Sync for ExternalMemoryImageCreateInfoNV<'_> {}
 impl ExternalMemoryImageCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExternalMemoryImageCreateInfoNV<'_> {
@@ -10717,10 +10456,7 @@ unsafe impl Sync for ExportMemoryAllocateInfoNV<'_> {}
 impl ExportMemoryAllocateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExportMemoryAllocateInfoNV<'_> {
@@ -10757,10 +10493,7 @@ unsafe impl Sync for ImportMemoryWin32HandleInfoNV<'_> {}
 impl ImportMemoryWin32HandleInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImportMemoryWin32HandleInfoNV<'_> {
@@ -10802,10 +10535,7 @@ unsafe impl Sync for ExportMemoryWin32HandleInfoNV<'_> {}
 impl ExportMemoryWin32HandleInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExportMemoryWin32HandleInfoNV<'_> {
@@ -10852,10 +10582,7 @@ unsafe impl Sync for Win32KeyedMutexAcquireReleaseInfoNV<'_> {}
 impl Win32KeyedMutexAcquireReleaseInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for Win32KeyedMutexAcquireReleaseInfoNV<'_> {
@@ -10920,10 +10647,7 @@ unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'_> {}
 impl PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'_> {
@@ -10964,10 +10688,7 @@ unsafe impl Sync for PushConstantBankInfoNV<'_> {}
 impl PushConstantBankInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PushConstantBankInfoNV<'_> {
@@ -11006,10 +10727,7 @@ unsafe impl Sync for PhysicalDevicePushConstantBankFeaturesNV<'_> {}
 impl PhysicalDevicePushConstantBankFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePushConstantBankFeaturesNV<'_> {
@@ -11050,10 +10768,7 @@ unsafe impl Sync for PhysicalDevicePushConstantBankPropertiesNV<'_> {}
 impl PhysicalDevicePushConstantBankPropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePushConstantBankPropertiesNV<'_> {
@@ -11116,10 +10831,7 @@ unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_> 
 impl PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'_> {
@@ -11180,10 +10892,7 @@ unsafe impl Sync for DevicePrivateDataCreateInfo<'_> {}
 impl DevicePrivateDataCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DevicePrivateDataCreateInfo<'_> {
@@ -11222,10 +10931,7 @@ unsafe impl Sync for PrivateDataSlotCreateInfo<'_> {}
 impl PrivateDataSlotCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PrivateDataSlotCreateInfo<'_> {
@@ -11260,10 +10966,7 @@ unsafe impl Sync for PhysicalDevicePrivateDataFeatures<'_> {}
 impl PhysicalDevicePrivateDataFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePrivateDataFeatures<'_> {
@@ -11308,10 +11011,7 @@ unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'_> {}
 impl PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'_> {
@@ -11418,10 +11118,7 @@ unsafe impl Sync for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'_> {}
 impl PhysicalDeviceClusterAccelerationStructureFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'_> {
@@ -11475,10 +11172,7 @@ unsafe impl Sync for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'_> 
 impl PhysicalDeviceClusterAccelerationStructurePropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'_> {
@@ -11598,10 +11292,7 @@ unsafe impl Sync for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<
 impl RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'_> {
@@ -11860,10 +11551,7 @@ unsafe impl Sync for ClusterAccelerationStructureClustersBottomLevelInputNV<'_> 
 impl ClusterAccelerationStructureClustersBottomLevelInputNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ClusterAccelerationStructureClustersBottomLevelInputNV<'_> {
@@ -11915,10 +11603,7 @@ unsafe impl Sync for ClusterAccelerationStructureTriangleClusterInputNV<'_> {}
 impl ClusterAccelerationStructureTriangleClusterInputNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ClusterAccelerationStructureTriangleClusterInputNV<'_> {
@@ -11997,10 +11682,7 @@ unsafe impl Sync for ClusterAccelerationStructureMoveObjectsInputNV<'_> {}
 impl ClusterAccelerationStructureMoveObjectsInputNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ClusterAccelerationStructureMoveObjectsInputNV<'_> {
@@ -12080,10 +11762,7 @@ impl fmt::Debug for ClusterAccelerationStructureInputInfoNV<'_> {
 impl ClusterAccelerationStructureInputInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ClusterAccelerationStructureInputInfoNV<'_> {
@@ -12150,9 +11829,8 @@ impl ClusterAccelerationStructureCommandsInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
         Self {
-            s_type: Self::STRUCTURE_TYPE,
             input: ClusterAccelerationStructureInputInfoNV::new(),
-            ..unsafe { ::core::mem::zeroed() }
+            ..init_tagged_structure()
         }
     }
 }
@@ -12230,10 +11908,7 @@ unsafe impl Sync for PhysicalDeviceMultiDrawPropertiesEXT<'_> {}
 impl PhysicalDeviceMultiDrawPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMultiDrawPropertiesEXT<'_> {
@@ -12272,10 +11947,7 @@ unsafe impl Sync for GraphicsShaderGroupCreateInfoNV<'_> {}
 impl GraphicsShaderGroupCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for GraphicsShaderGroupCreateInfoNV<'_> {
@@ -12330,10 +12002,7 @@ unsafe impl Sync for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {}
 impl GraphicsPipelineShaderGroupsCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {
@@ -12557,10 +12226,7 @@ unsafe impl Sync for IndirectCommandsLayoutTokenNV<'_> {}
 impl IndirectCommandsLayoutTokenNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for IndirectCommandsLayoutTokenNV<'_> {
@@ -12666,10 +12332,7 @@ unsafe impl Sync for IndirectCommandsLayoutCreateInfoNV<'_> {}
 impl IndirectCommandsLayoutCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for IndirectCommandsLayoutCreateInfoNV<'_> {
@@ -12733,10 +12396,7 @@ unsafe impl Sync for GeneratedCommandsInfoNV<'_> {}
 impl GeneratedCommandsInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for GeneratedCommandsInfoNV<'_> {
@@ -12833,10 +12493,7 @@ unsafe impl Sync for GeneratedCommandsMemoryRequirementsInfoNV<'_> {}
 impl GeneratedCommandsMemoryRequirementsInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for GeneratedCommandsMemoryRequirementsInfoNV<'_> {
@@ -12891,10 +12548,7 @@ unsafe impl Sync for PipelineIndirectDeviceAddressInfoNV<'_> {}
 impl PipelineIndirectDeviceAddressInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineIndirectDeviceAddressInfoNV<'_> {
@@ -12961,10 +12615,7 @@ unsafe impl Sync for PhysicalDeviceFeatures2<'_> {}
 impl PhysicalDeviceFeatures2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFeatures2<'_> {
@@ -13000,10 +12651,7 @@ unsafe impl Sync for PhysicalDeviceProperties2<'_> {}
 impl PhysicalDeviceProperties2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceProperties2<'_> {
@@ -13038,10 +12686,7 @@ unsafe impl Sync for FormatProperties2<'_> {}
 impl FormatProperties2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for FormatProperties2<'_> {
@@ -13076,10 +12721,7 @@ unsafe impl Sync for ImageFormatProperties2<'_> {}
 impl ImageFormatProperties2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageFormatProperties2<'_> {
@@ -13121,10 +12763,7 @@ unsafe impl Sync for PhysicalDeviceImageFormatInfo2<'_> {}
 impl PhysicalDeviceImageFormatInfo2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceImageFormatInfo2<'_> {
@@ -13179,10 +12818,7 @@ unsafe impl Sync for QueueFamilyProperties2<'_> {}
 impl QueueFamilyProperties2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for QueueFamilyProperties2<'_> {
@@ -13220,10 +12856,7 @@ unsafe impl Sync for PhysicalDeviceMemoryProperties2<'_> {}
 impl PhysicalDeviceMemoryProperties2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMemoryProperties2<'_> {
@@ -13261,10 +12894,7 @@ unsafe impl Sync for SparseImageFormatProperties2<'_> {}
 impl SparseImageFormatProperties2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SparseImageFormatProperties2<'_> {
@@ -13303,10 +12933,7 @@ unsafe impl Sync for PhysicalDeviceSparseImageFormatInfo2<'_> {}
 impl PhysicalDeviceSparseImageFormatInfo2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceSparseImageFormatInfo2<'_> {
@@ -13361,10 +12988,7 @@ unsafe impl Sync for PhysicalDevicePushDescriptorProperties<'_> {}
 impl PhysicalDevicePushDescriptorProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePushDescriptorProperties<'_> {
@@ -13460,10 +13084,7 @@ impl fmt::Debug for PhysicalDeviceDriverProperties<'_> {
 impl PhysicalDeviceDriverProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDriverProperties<'_> {
@@ -13531,10 +13152,7 @@ unsafe impl Sync for PresentRegionsKHR<'_> {}
 impl PresentRegionsKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PresentRegionsKHR<'_> {
@@ -13643,10 +13261,7 @@ unsafe impl Sync for PhysicalDeviceVariablePointersFeatures<'_> {}
 impl PhysicalDeviceVariablePointersFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVariablePointersFeatures<'_> {
@@ -13739,10 +13354,7 @@ unsafe impl Sync for PhysicalDeviceExternalImageFormatInfo<'_> {}
 impl PhysicalDeviceExternalImageFormatInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceExternalImageFormatInfo<'_> {
@@ -13781,10 +13393,7 @@ unsafe impl Sync for ExternalImageFormatProperties<'_> {}
 impl ExternalImageFormatProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExternalImageFormatProperties<'_> {
@@ -13825,10 +13434,7 @@ unsafe impl Sync for PhysicalDeviceExternalBufferInfo<'_> {}
 impl PhysicalDeviceExternalBufferInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceExternalBufferInfo<'_> {
@@ -13873,10 +13479,7 @@ unsafe impl Sync for ExternalBufferProperties<'_> {}
 impl ExternalBufferProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExternalBufferProperties<'_> {
@@ -13918,10 +13521,7 @@ unsafe impl Sync for PhysicalDeviceIDProperties<'_> {}
 impl PhysicalDeviceIDProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceIDProperties<'_> {
@@ -13977,10 +13577,7 @@ unsafe impl Sync for ExternalMemoryImageCreateInfo<'_> {}
 impl ExternalMemoryImageCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExternalMemoryImageCreateInfo<'_> {
@@ -14016,10 +13613,7 @@ unsafe impl Sync for ExternalMemoryBufferCreateInfo<'_> {}
 impl ExternalMemoryBufferCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExternalMemoryBufferCreateInfo<'_> {
@@ -14055,10 +13649,7 @@ unsafe impl Sync for ExportMemoryAllocateInfo<'_> {}
 impl ExportMemoryAllocateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExportMemoryAllocateInfo<'_> {
@@ -14096,10 +13687,7 @@ unsafe impl Sync for ImportMemoryWin32HandleInfoKHR<'_> {}
 impl ImportMemoryWin32HandleInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImportMemoryWin32HandleInfoKHR<'_> {
@@ -14147,10 +13735,7 @@ unsafe impl Sync for ExportMemoryWin32HandleInfoKHR<'_> {}
 impl ExportMemoryWin32HandleInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExportMemoryWin32HandleInfoKHR<'_> {
@@ -14197,10 +13782,7 @@ unsafe impl Sync for ImportMemoryZirconHandleInfoFUCHSIA<'_> {}
 impl ImportMemoryZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImportMemoryZirconHandleInfoFUCHSIA<'_> {
@@ -14241,10 +13823,7 @@ unsafe impl Sync for MemoryZirconHandlePropertiesFUCHSIA<'_> {}
 impl MemoryZirconHandlePropertiesFUCHSIA<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryZirconHandlePropertiesFUCHSIA<'_> {
@@ -14280,10 +13859,7 @@ unsafe impl Sync for MemoryGetZirconHandleInfoFUCHSIA<'_> {}
 impl MemoryGetZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryGetZirconHandleInfoFUCHSIA<'_> {
@@ -14323,10 +13899,7 @@ unsafe impl Sync for MemoryWin32HandlePropertiesKHR<'_> {}
 impl MemoryWin32HandlePropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryWin32HandlePropertiesKHR<'_> {
@@ -14362,10 +13935,7 @@ unsafe impl Sync for MemoryGetWin32HandleInfoKHR<'_> {}
 impl MemoryGetWin32HandleInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryGetWin32HandleInfoKHR<'_> {
@@ -14406,10 +13976,7 @@ unsafe impl Sync for ImportMemoryFdInfoKHR<'_> {}
 impl ImportMemoryFdInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImportMemoryFdInfoKHR<'_> {
@@ -14450,10 +14017,7 @@ unsafe impl Sync for MemoryFdPropertiesKHR<'_> {}
 impl MemoryFdPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryFdPropertiesKHR<'_> {
@@ -14489,10 +14053,7 @@ unsafe impl Sync for MemoryGetFdInfoKHR<'_> {}
 impl MemoryGetFdInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryGetFdInfoKHR<'_> {
@@ -14538,10 +14099,7 @@ unsafe impl Sync for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {}
 impl Win32KeyedMutexAcquireReleaseInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {
@@ -14604,10 +14162,7 @@ unsafe impl Sync for ImportMemoryMetalHandleInfoEXT<'_> {}
 impl ImportMemoryMetalHandleInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImportMemoryMetalHandleInfoEXT<'_> {
@@ -14648,10 +14203,7 @@ unsafe impl Sync for MemoryMetalHandlePropertiesEXT<'_> {}
 impl MemoryMetalHandlePropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryMetalHandlePropertiesEXT<'_> {
@@ -14687,10 +14239,7 @@ unsafe impl Sync for MemoryGetMetalHandleInfoEXT<'_> {}
 impl MemoryGetMetalHandleInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryGetMetalHandleInfoEXT<'_> {
@@ -14730,10 +14279,7 @@ unsafe impl Sync for PhysicalDeviceExternalSemaphoreInfo<'_> {}
 impl PhysicalDeviceExternalSemaphoreInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceExternalSemaphoreInfo<'_> {
@@ -14770,10 +14316,7 @@ unsafe impl Sync for ExternalSemaphoreProperties<'_> {}
 impl ExternalSemaphoreProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExternalSemaphoreProperties<'_> {
@@ -14827,10 +14370,7 @@ unsafe impl Sync for ExportSemaphoreCreateInfo<'_> {}
 impl ExportSemaphoreCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExportSemaphoreCreateInfo<'_> {
@@ -14870,10 +14410,7 @@ unsafe impl Sync for ImportSemaphoreWin32HandleInfoKHR<'_> {}
 impl ImportSemaphoreWin32HandleInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImportSemaphoreWin32HandleInfoKHR<'_> {
@@ -14930,10 +14467,7 @@ unsafe impl Sync for ExportSemaphoreWin32HandleInfoKHR<'_> {}
 impl ExportSemaphoreWin32HandleInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExportSemaphoreWin32HandleInfoKHR<'_> {
@@ -14982,10 +14516,7 @@ unsafe impl Sync for D3D12FenceSubmitInfoKHR<'_> {}
 impl D3D12FenceSubmitInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for D3D12FenceSubmitInfoKHR<'_> {
@@ -15029,10 +14560,7 @@ unsafe impl Sync for SemaphoreGetWin32HandleInfoKHR<'_> {}
 impl SemaphoreGetWin32HandleInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SemaphoreGetWin32HandleInfoKHR<'_> {
@@ -15075,10 +14603,7 @@ unsafe impl Sync for ImportSemaphoreFdInfoKHR<'_> {}
 impl ImportSemaphoreFdInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImportSemaphoreFdInfoKHR<'_> {
@@ -15129,10 +14654,7 @@ unsafe impl Sync for SemaphoreGetFdInfoKHR<'_> {}
 impl SemaphoreGetFdInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SemaphoreGetFdInfoKHR<'_> {
@@ -15175,10 +14697,7 @@ unsafe impl Sync for ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {}
 impl ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {
@@ -15230,10 +14749,7 @@ unsafe impl Sync for SemaphoreGetZirconHandleInfoFUCHSIA<'_> {}
 impl SemaphoreGetZirconHandleInfoFUCHSIA<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SemaphoreGetZirconHandleInfoFUCHSIA<'_> {
@@ -15273,10 +14789,7 @@ unsafe impl Sync for PhysicalDeviceExternalFenceInfo<'_> {}
 impl PhysicalDeviceExternalFenceInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceExternalFenceInfo<'_> {
@@ -15313,10 +14826,7 @@ unsafe impl Sync for ExternalFenceProperties<'_> {}
 impl ExternalFenceProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExternalFenceProperties<'_> {
@@ -15370,10 +14880,7 @@ unsafe impl Sync for ExportFenceCreateInfo<'_> {}
 impl ExportFenceCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExportFenceCreateInfo<'_> {
@@ -15413,10 +14920,7 @@ unsafe impl Sync for ImportFenceWin32HandleInfoKHR<'_> {}
 impl ImportFenceWin32HandleInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImportFenceWin32HandleInfoKHR<'_> {
@@ -15473,10 +14977,7 @@ unsafe impl Sync for ExportFenceWin32HandleInfoKHR<'_> {}
 impl ExportFenceWin32HandleInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExportFenceWin32HandleInfoKHR<'_> {
@@ -15523,10 +15024,7 @@ unsafe impl Sync for FenceGetWin32HandleInfoKHR<'_> {}
 impl FenceGetWin32HandleInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for FenceGetWin32HandleInfoKHR<'_> {
@@ -15569,10 +15067,7 @@ unsafe impl Sync for ImportFenceFdInfoKHR<'_> {}
 impl ImportFenceFdInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImportFenceFdInfoKHR<'_> {
@@ -15623,10 +15118,7 @@ unsafe impl Sync for FenceGetFdInfoKHR<'_> {}
 impl FenceGetFdInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for FenceGetFdInfoKHR<'_> {
@@ -15668,10 +15160,7 @@ unsafe impl Sync for PhysicalDeviceMultiviewFeatures<'_> {}
 impl PhysicalDeviceMultiviewFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMultiviewFeatures<'_> {
@@ -15722,10 +15211,7 @@ unsafe impl Sync for PhysicalDeviceMultiviewProperties<'_> {}
 impl PhysicalDeviceMultiviewProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMultiviewProperties<'_> {
@@ -15771,10 +15257,7 @@ unsafe impl Sync for RenderPassMultiviewCreateInfo<'_> {}
 impl RenderPassMultiviewCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderPassMultiviewCreateInfo<'_> {
@@ -15833,10 +15316,7 @@ unsafe impl Sync for SurfaceCapabilities2EXT<'_> {}
 impl SurfaceCapabilities2EXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SurfaceCapabilities2EXT<'_> {
@@ -15930,10 +15410,7 @@ unsafe impl Sync for DisplayPowerInfoEXT<'_> {}
 impl DisplayPowerInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DisplayPowerInfoEXT<'_> {
@@ -15968,10 +15445,7 @@ unsafe impl Sync for DeviceEventInfoEXT<'_> {}
 impl DeviceEventInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceEventInfoEXT<'_> {
@@ -16006,10 +15480,7 @@ unsafe impl Sync for DisplayEventInfoEXT<'_> {}
 impl DisplayEventInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DisplayEventInfoEXT<'_> {
@@ -16044,10 +15515,7 @@ unsafe impl Sync for SwapchainCounterCreateInfoEXT<'_> {}
 impl SwapchainCounterCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SwapchainCounterCreateInfoEXT<'_> {
@@ -16096,10 +15564,7 @@ impl fmt::Debug for PhysicalDeviceGroupProperties<'_> {
 impl PhysicalDeviceGroupProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceGroupProperties<'_> {
@@ -16145,10 +15610,7 @@ unsafe impl Sync for MemoryAllocateFlagsInfo<'_> {}
 impl MemoryAllocateFlagsInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryAllocateFlagsInfo<'_> {
@@ -16191,10 +15653,7 @@ unsafe impl Sync for BindBufferMemoryInfo<'_> {}
 impl BindBufferMemoryInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BindBufferMemoryInfo<'_> {
@@ -16240,10 +15699,7 @@ unsafe impl Sync for BindBufferMemoryDeviceGroupInfo<'_> {}
 impl BindBufferMemoryDeviceGroupInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BindBufferMemoryDeviceGroupInfo<'_> {
@@ -16282,10 +15738,7 @@ unsafe impl Sync for BindImageMemoryInfo<'_> {}
 impl BindImageMemoryInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BindImageMemoryInfo<'_> {
@@ -16333,10 +15786,7 @@ unsafe impl Sync for BindImageMemoryDeviceGroupInfo<'_> {}
 impl BindImageMemoryDeviceGroupInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BindImageMemoryDeviceGroupInfo<'_> {
@@ -16384,10 +15834,7 @@ unsafe impl Sync for DeviceGroupRenderPassBeginInfo<'_> {}
 impl DeviceGroupRenderPassBeginInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceGroupRenderPassBeginInfo<'_> {
@@ -16430,10 +15877,7 @@ unsafe impl Sync for DeviceGroupCommandBufferBeginInfo<'_> {}
 impl DeviceGroupCommandBufferBeginInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceGroupCommandBufferBeginInfo<'_> {
@@ -16474,10 +15918,7 @@ unsafe impl Sync for DeviceGroupSubmitInfo<'_> {}
 impl DeviceGroupSubmitInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceGroupSubmitInfo<'_> {
@@ -16536,10 +15977,7 @@ unsafe impl Sync for DeviceGroupBindSparseInfo<'_> {}
 impl DeviceGroupBindSparseInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceGroupBindSparseInfo<'_> {
@@ -16581,10 +16019,7 @@ unsafe impl Sync for DeviceGroupPresentCapabilitiesKHR<'_> {}
 impl DeviceGroupPresentCapabilitiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceGroupPresentCapabilitiesKHR<'_> {
@@ -16624,10 +16059,7 @@ unsafe impl Sync for ImageSwapchainCreateInfoKHR<'_> {}
 impl ImageSwapchainCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageSwapchainCreateInfoKHR<'_> {
@@ -16664,10 +16096,7 @@ unsafe impl Sync for BindImageMemorySwapchainInfoKHR<'_> {}
 impl BindImageMemorySwapchainInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BindImageMemorySwapchainInfoKHR<'_> {
@@ -16712,10 +16141,7 @@ unsafe impl Sync for AcquireNextImageInfoKHR<'_> {}
 impl AcquireNextImageInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AcquireNextImageInfoKHR<'_> {
@@ -16772,10 +16198,7 @@ unsafe impl Sync for DeviceGroupPresentInfoKHR<'_> {}
 impl DeviceGroupPresentInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceGroupPresentInfoKHR<'_> {
@@ -16818,10 +16241,7 @@ unsafe impl Sync for DeviceGroupDeviceCreateInfo<'_> {}
 impl DeviceGroupDeviceCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceGroupDeviceCreateInfo<'_> {
@@ -16858,10 +16278,7 @@ unsafe impl Sync for DeviceGroupSwapchainCreateInfoKHR<'_> {}
 impl DeviceGroupSwapchainCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceGroupSwapchainCreateInfoKHR<'_> {
@@ -16961,10 +16378,7 @@ unsafe impl Sync for DescriptorUpdateTemplateCreateInfo<'_> {}
 impl DescriptorUpdateTemplateCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DescriptorUpdateTemplateCreateInfo<'_> {
@@ -17069,10 +16483,7 @@ unsafe impl Sync for PhysicalDevicePresentIdFeaturesKHR<'_> {}
 impl PhysicalDevicePresentIdFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePresentIdFeaturesKHR<'_> {
@@ -17110,10 +16521,7 @@ unsafe impl Sync for PresentIdKHR<'_> {}
 impl PresentIdKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PresentIdKHR<'_> {
@@ -17150,10 +16558,7 @@ unsafe impl Sync for PhysicalDevicePresentId2FeaturesKHR<'_> {}
 impl PhysicalDevicePresentId2FeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePresentId2FeaturesKHR<'_> {
@@ -17191,10 +16596,7 @@ unsafe impl Sync for PresentId2KHR<'_> {}
 impl PresentId2KHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PresentId2KHR<'_> {
@@ -17232,10 +16634,7 @@ unsafe impl Sync for PresentWait2InfoKHR<'_> {}
 impl PresentWait2InfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PresentWait2InfoKHR<'_> {
@@ -17275,10 +16674,7 @@ unsafe impl Sync for PhysicalDevicePresentWaitFeaturesKHR<'_> {}
 impl PhysicalDevicePresentWaitFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePresentWaitFeaturesKHR<'_> {
@@ -17315,10 +16711,7 @@ unsafe impl Sync for PhysicalDevicePresentWait2FeaturesKHR<'_> {}
 impl PhysicalDevicePresentWait2FeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePresentWait2FeaturesKHR<'_> {
@@ -17358,10 +16751,7 @@ unsafe impl Sync for PhysicalDevicePresentTimingFeaturesEXT<'_> {}
 impl PhysicalDevicePresentTimingFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePresentTimingFeaturesEXT<'_> {
@@ -17412,10 +16802,7 @@ unsafe impl Sync for PresentTimingSurfaceCapabilitiesEXT<'_> {}
 impl PresentTimingSurfaceCapabilitiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PresentTimingSurfaceCapabilitiesEXT<'_> {
@@ -17476,10 +16863,7 @@ unsafe impl Sync for SwapchainTimingPropertiesEXT<'_> {}
 impl SwapchainTimingPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SwapchainTimingPropertiesEXT<'_> {
@@ -17521,10 +16905,7 @@ unsafe impl Sync for SwapchainTimeDomainPropertiesEXT<'_> {}
 impl SwapchainTimeDomainPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SwapchainTimeDomainPropertiesEXT<'_> {
@@ -17600,10 +16981,7 @@ unsafe impl Sync for PastPresentationTimingInfoEXT<'_> {}
 impl PastPresentationTimingInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PastPresentationTimingInfoEXT<'_> {
@@ -17646,10 +17024,7 @@ unsafe impl Sync for PastPresentationTimingPropertiesEXT<'_> {}
 impl PastPresentationTimingPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PastPresentationTimingPropertiesEXT<'_> {
@@ -17704,10 +17079,7 @@ unsafe impl Sync for PastPresentationTimingEXT<'_> {}
 impl PastPresentationTimingEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PastPresentationTimingEXT<'_> {
@@ -17769,10 +17141,7 @@ unsafe impl Sync for PresentTimingsInfoEXT<'_> {}
 impl PresentTimingsInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PresentTimingsInfoEXT<'_> {
@@ -17813,10 +17182,7 @@ unsafe impl Sync for PresentTimingInfoEXT<'_> {}
 impl PresentTimingInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PresentTimingInfoEXT<'_> {
@@ -17879,10 +17245,7 @@ unsafe impl Sync for SwapchainCalibratedTimestampInfoEXT<'_> {}
 impl SwapchainCalibratedTimestampInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SwapchainCalibratedTimestampInfoEXT<'_> {
@@ -17935,10 +17298,7 @@ unsafe impl Sync for HdrMetadataEXT<'_> {}
 impl HdrMetadataEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for HdrMetadataEXT<'_> {
@@ -18012,10 +17372,7 @@ unsafe impl Sync for HdrVividDynamicMetadataHUAWEI<'_> {}
 impl HdrVividDynamicMetadataHUAWEI<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for HdrVividDynamicMetadataHUAWEI<'_> {
@@ -18052,10 +17409,7 @@ unsafe impl Sync for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {}
 impl DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {
@@ -18092,10 +17446,7 @@ unsafe impl Sync for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {}
 impl SwapchainDisplayNativeHdrCreateInfoAMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {
@@ -18211,10 +17562,7 @@ unsafe impl Sync for PresentTimesInfoGOOGLE<'_> {}
 impl PresentTimesInfoGOOGLE<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PresentTimesInfoGOOGLE<'_> {
@@ -18285,10 +17633,7 @@ unsafe impl Sync for IOSSurfaceCreateInfoMVK<'_> {}
 impl IOSSurfaceCreateInfoMVK<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for IOSSurfaceCreateInfoMVK<'_> {
@@ -18329,10 +17674,7 @@ unsafe impl Sync for MacOSSurfaceCreateInfoMVK<'_> {}
 impl MacOSSurfaceCreateInfoMVK<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MacOSSurfaceCreateInfoMVK<'_> {
@@ -18373,10 +17715,7 @@ unsafe impl Sync for MetalSurfaceCreateInfoEXT<'_> {}
 impl MetalSurfaceCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MetalSurfaceCreateInfoEXT<'_> {
@@ -18451,10 +17790,7 @@ unsafe impl Sync for PipelineViewportWScalingStateCreateInfoNV<'_> {}
 impl PipelineViewportWScalingStateCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineViewportWScalingStateCreateInfoNV<'_> {
@@ -18550,10 +17886,7 @@ unsafe impl Sync for PipelineViewportSwizzleStateCreateInfoNV<'_> {}
 impl PipelineViewportSwizzleStateCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineViewportSwizzleStateCreateInfoNV<'_> {
@@ -18599,10 +17932,7 @@ unsafe impl Sync for PhysicalDeviceDiscardRectanglePropertiesEXT<'_> {}
 impl PhysicalDeviceDiscardRectanglePropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDiscardRectanglePropertiesEXT<'_> {
@@ -18645,10 +17975,7 @@ unsafe impl Sync for PipelineDiscardRectangleStateCreateInfoEXT<'_> {}
 impl PipelineDiscardRectangleStateCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineDiscardRectangleStateCreateInfoEXT<'_> {
@@ -18702,10 +18029,7 @@ unsafe impl Sync for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'_> {
 impl PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'_> {
@@ -18788,10 +18112,7 @@ unsafe impl Sync for RenderPassInputAttachmentAspectCreateInfo<'_> {}
 impl RenderPassInputAttachmentAspectCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderPassInputAttachmentAspectCreateInfo<'_> {
@@ -18832,10 +18153,7 @@ unsafe impl Sync for PhysicalDeviceSurfaceInfo2KHR<'_> {}
 impl PhysicalDeviceSurfaceInfo2KHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceSurfaceInfo2KHR<'_> {
@@ -18870,10 +18188,7 @@ unsafe impl Sync for SurfaceCapabilities2KHR<'_> {}
 impl SurfaceCapabilities2KHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SurfaceCapabilities2KHR<'_> {
@@ -18911,10 +18226,7 @@ unsafe impl Sync for SurfaceFormat2KHR<'_> {}
 impl SurfaceFormat2KHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SurfaceFormat2KHR<'_> {
@@ -18949,10 +18261,7 @@ unsafe impl Sync for DisplayProperties2KHR<'_> {}
 impl DisplayProperties2KHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DisplayProperties2KHR<'_> {
@@ -18990,10 +18299,7 @@ unsafe impl Sync for DisplayPlaneProperties2KHR<'_> {}
 impl DisplayPlaneProperties2KHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DisplayPlaneProperties2KHR<'_> {
@@ -19031,10 +18337,7 @@ unsafe impl Sync for DisplayModeProperties2KHR<'_> {}
 impl DisplayModeProperties2KHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DisplayModeProperties2KHR<'_> {
@@ -19072,10 +18375,7 @@ unsafe impl Sync for DisplayModeStereoPropertiesNV<'_> {}
 impl DisplayModeStereoPropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DisplayModeStereoPropertiesNV<'_> {
@@ -19112,10 +18412,7 @@ unsafe impl Sync for DisplayPlaneInfo2KHR<'_> {}
 impl DisplayPlaneInfo2KHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DisplayPlaneInfo2KHR<'_> {
@@ -19155,10 +18452,7 @@ unsafe impl Sync for DisplayPlaneCapabilities2KHR<'_> {}
 impl DisplayPlaneCapabilities2KHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DisplayPlaneCapabilities2KHR<'_> {
@@ -19193,10 +18487,7 @@ unsafe impl Sync for SharedPresentSurfaceCapabilitiesKHR<'_> {}
 impl SharedPresentSurfaceCapabilitiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SharedPresentSurfaceCapabilitiesKHR<'_> {
@@ -19238,10 +18529,7 @@ unsafe impl Sync for PhysicalDevice16BitStorageFeatures<'_> {}
 impl PhysicalDevice16BitStorageFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevice16BitStorageFeatures<'_> {
@@ -19300,10 +18588,7 @@ unsafe impl Sync for PhysicalDeviceSubgroupProperties<'_> {}
 impl PhysicalDeviceSubgroupProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceSubgroupProperties<'_> {
@@ -19360,10 +18645,7 @@ unsafe impl Sync for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'_> {}
 impl PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'_> {
@@ -19410,10 +18692,7 @@ unsafe impl Sync for BufferMemoryRequirementsInfo2<'_> {}
 impl BufferMemoryRequirementsInfo2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BufferMemoryRequirementsInfo2<'_> {
@@ -19448,10 +18727,7 @@ unsafe impl Sync for DeviceBufferMemoryRequirements<'_> {}
 impl DeviceBufferMemoryRequirements<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceBufferMemoryRequirements<'_> {
@@ -19486,10 +18762,7 @@ unsafe impl Sync for ImageMemoryRequirementsInfo2<'_> {}
 impl ImageMemoryRequirementsInfo2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageMemoryRequirementsInfo2<'_> {
@@ -19524,10 +18797,7 @@ unsafe impl Sync for ImageSparseMemoryRequirementsInfo2<'_> {}
 impl ImageSparseMemoryRequirementsInfo2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageSparseMemoryRequirementsInfo2<'_> {
@@ -19563,10 +18833,7 @@ unsafe impl Sync for DeviceImageMemoryRequirements<'_> {}
 impl DeviceImageMemoryRequirements<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceImageMemoryRequirements<'_> {
@@ -19606,10 +18873,7 @@ unsafe impl Sync for MemoryRequirements2<'_> {}
 impl MemoryRequirements2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryRequirements2<'_> {
@@ -19644,10 +18908,7 @@ unsafe impl Sync for SparseImageMemoryRequirements2<'_> {}
 impl SparseImageMemoryRequirements2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SparseImageMemoryRequirements2<'_> {
@@ -19685,10 +18946,7 @@ unsafe impl Sync for PhysicalDevicePointClippingProperties<'_> {}
 impl PhysicalDevicePointClippingProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePointClippingProperties<'_> {
@@ -19728,10 +18986,7 @@ unsafe impl Sync for MemoryDedicatedRequirements<'_> {}
 impl MemoryDedicatedRequirements<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryDedicatedRequirements<'_> {
@@ -19779,10 +19034,7 @@ unsafe impl Sync for MemoryDedicatedAllocateInfo<'_> {}
 impl MemoryDedicatedAllocateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryDedicatedAllocateInfo<'_> {
@@ -19823,10 +19075,7 @@ unsafe impl Sync for ImageViewUsageCreateInfo<'_> {}
 impl ImageViewUsageCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageViewUsageCreateInfo<'_> {
@@ -19863,10 +19112,7 @@ unsafe impl Sync for ImageViewSlicedCreateInfoEXT<'_> {}
 impl ImageViewSlicedCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageViewSlicedCreateInfoEXT<'_> {
@@ -19907,10 +19153,7 @@ unsafe impl Sync for PipelineTessellationDomainOriginStateCreateInfo<'_> {}
 impl PipelineTessellationDomainOriginStateCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineTessellationDomainOriginStateCreateInfo<'_> {
@@ -19950,10 +19193,7 @@ unsafe impl Sync for SamplerYcbcrConversionInfo<'_> {}
 impl SamplerYcbcrConversionInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SamplerYcbcrConversionInfo<'_> {
@@ -19997,10 +19237,7 @@ unsafe impl Sync for SamplerYcbcrConversionCreateInfo<'_> {}
 impl SamplerYcbcrConversionCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SamplerYcbcrConversionCreateInfo<'_> {
@@ -20073,10 +19310,7 @@ unsafe impl Sync for BindImagePlaneMemoryInfo<'_> {}
 impl BindImagePlaneMemoryInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BindImagePlaneMemoryInfo<'_> {
@@ -20112,10 +19346,7 @@ unsafe impl Sync for ImagePlaneMemoryRequirementsInfo<'_> {}
 impl ImagePlaneMemoryRequirementsInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImagePlaneMemoryRequirementsInfo<'_> {
@@ -20151,10 +19382,7 @@ unsafe impl Sync for PhysicalDeviceSamplerYcbcrConversionFeatures<'_> {}
 impl PhysicalDeviceSamplerYcbcrConversionFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceSamplerYcbcrConversionFeatures<'_> {
@@ -20195,10 +19423,7 @@ unsafe impl Sync for SamplerYcbcrConversionImageFormatProperties<'_> {}
 impl SamplerYcbcrConversionImageFormatProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SamplerYcbcrConversionImageFormatProperties<'_> {
@@ -20241,10 +19466,7 @@ unsafe impl Sync for TextureLODGatherFormatPropertiesAMD<'_> {}
 impl TextureLODGatherFormatPropertiesAMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for TextureLODGatherFormatPropertiesAMD<'_> {
@@ -20285,10 +19507,7 @@ unsafe impl Sync for ConditionalRenderingBeginInfoEXT<'_> {}
 impl ConditionalRenderingBeginInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ConditionalRenderingBeginInfoEXT<'_> {
@@ -20333,10 +19552,7 @@ unsafe impl Sync for ProtectedSubmitInfo<'_> {}
 impl ProtectedSubmitInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ProtectedSubmitInfo<'_> {
@@ -20372,10 +19588,7 @@ unsafe impl Sync for PhysicalDeviceProtectedMemoryFeatures<'_> {}
 impl PhysicalDeviceProtectedMemoryFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceProtectedMemoryFeatures<'_> {
@@ -20412,10 +19625,7 @@ unsafe impl Sync for PhysicalDeviceProtectedMemoryProperties<'_> {}
 impl PhysicalDeviceProtectedMemoryProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceProtectedMemoryProperties<'_> {
@@ -20454,10 +19664,7 @@ unsafe impl Sync for DeviceQueueInfo2<'_> {}
 impl DeviceQueueInfo2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceQueueInfo2<'_> {
@@ -20504,10 +19711,7 @@ unsafe impl Sync for PipelineCoverageToColorStateCreateInfoNV<'_> {}
 impl PipelineCoverageToColorStateCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineCoverageToColorStateCreateInfoNV<'_> {
@@ -20558,10 +19762,7 @@ unsafe impl Sync for PhysicalDeviceSamplerFilterMinmaxProperties<'_> {}
 impl PhysicalDeviceSamplerFilterMinmaxProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceSamplerFilterMinmaxProperties<'_> {
@@ -20650,10 +19851,7 @@ unsafe impl Sync for SampleLocationsInfoEXT<'_> {}
 impl SampleLocationsInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SampleLocationsInfoEXT<'_> {
@@ -20787,10 +19985,7 @@ unsafe impl Sync for RenderPassSampleLocationsBeginInfoEXT<'_> {}
 impl RenderPassSampleLocationsBeginInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderPassSampleLocationsBeginInfoEXT<'_> {
@@ -20843,9 +20038,8 @@ impl PipelineSampleLocationsStateCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
         Self {
-            s_type: Self::STRUCTURE_TYPE,
             sample_locations_info: SampleLocationsInfoEXT::new(),
-            ..unsafe { ::core::mem::zeroed() }
+            ..init_tagged_structure()
         }
     }
 }
@@ -20898,10 +20092,7 @@ unsafe impl Sync for PhysicalDeviceSampleLocationsPropertiesEXT<'_> {}
 impl PhysicalDeviceSampleLocationsPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceSampleLocationsPropertiesEXT<'_> {
@@ -20973,10 +20164,7 @@ unsafe impl Sync for MultisamplePropertiesEXT<'_> {}
 impl MultisamplePropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MultisamplePropertiesEXT<'_> {
@@ -21014,10 +20202,7 @@ unsafe impl Sync for SamplerReductionModeCreateInfo<'_> {}
 impl SamplerReductionModeCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SamplerReductionModeCreateInfo<'_> {
@@ -21053,10 +20238,7 @@ unsafe impl Sync for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'_> {}
 impl PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'_> {
@@ -21100,10 +20282,7 @@ unsafe impl Sync for PhysicalDeviceMultiDrawFeaturesEXT<'_> {}
 impl PhysicalDeviceMultiDrawFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMultiDrawFeaturesEXT<'_> {
@@ -21145,10 +20324,7 @@ unsafe impl Sync for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'_> {}
 impl PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'_> {
@@ -21235,10 +20411,7 @@ unsafe impl Sync for PipelineColorBlendAdvancedStateCreateInfoEXT<'_> {}
 impl PipelineColorBlendAdvancedStateCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineColorBlendAdvancedStateCreateInfoEXT<'_> {
@@ -21289,10 +20462,7 @@ unsafe impl Sync for PhysicalDeviceInlineUniformBlockFeatures<'_> {}
 impl PhysicalDeviceInlineUniformBlockFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceInlineUniformBlockFeatures<'_> {
@@ -21343,10 +20513,7 @@ unsafe impl Sync for PhysicalDeviceInlineUniformBlockProperties<'_> {}
 impl PhysicalDeviceInlineUniformBlockProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceInlineUniformBlockProperties<'_> {
@@ -21425,10 +20592,7 @@ unsafe impl Sync for WriteDescriptorSetInlineUniformBlock<'_> {}
 impl WriteDescriptorSetInlineUniformBlock<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for WriteDescriptorSetInlineUniformBlock<'_> {
@@ -21465,10 +20629,7 @@ unsafe impl Sync for DescriptorPoolInlineUniformBlockCreateInfo<'_> {}
 impl DescriptorPoolInlineUniformBlockCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DescriptorPoolInlineUniformBlockCreateInfo<'_> {
@@ -21515,10 +20676,7 @@ unsafe impl Sync for PipelineCoverageModulationStateCreateInfoNV<'_> {}
 impl PipelineCoverageModulationStateCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineCoverageModulationStateCreateInfoNV<'_> {
@@ -21581,10 +20739,7 @@ unsafe impl Sync for ImageFormatListCreateInfo<'_> {}
 impl ImageFormatListCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageFormatListCreateInfo<'_> {
@@ -21625,10 +20780,7 @@ unsafe impl Sync for ValidationCacheCreateInfoEXT<'_> {}
 impl ValidationCacheCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ValidationCacheCreateInfoEXT<'_> {
@@ -21669,10 +20821,7 @@ unsafe impl Sync for ShaderModuleValidationCacheCreateInfoEXT<'_> {}
 impl ShaderModuleValidationCacheCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ShaderModuleValidationCacheCreateInfoEXT<'_> {
@@ -21714,10 +20863,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance3Properties<'_> {}
 impl PhysicalDeviceMaintenance3Properties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMaintenance3Properties<'_> {
@@ -21761,10 +20907,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance4Features<'_> {}
 impl PhysicalDeviceMaintenance4Features<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMaintenance4Features<'_> {
@@ -21801,10 +20944,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance4Properties<'_> {}
 impl PhysicalDeviceMaintenance4Properties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMaintenance4Properties<'_> {
@@ -21840,10 +20980,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance5Features<'_> {}
 impl PhysicalDeviceMaintenance5Features<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMaintenance5Features<'_> {
@@ -21885,10 +21022,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance5Properties<'_> {}
 impl PhysicalDeviceMaintenance5Properties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMaintenance5Properties<'_> {
@@ -21968,10 +21102,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance6Features<'_> {}
 impl PhysicalDeviceMaintenance6Features<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMaintenance6Features<'_> {
@@ -22010,10 +21141,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance6Properties<'_> {}
 impl PhysicalDeviceMaintenance6Properties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMaintenance6Properties<'_> {
@@ -22071,10 +21199,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance7FeaturesKHR<'_> {}
 impl PhysicalDeviceMaintenance7FeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMaintenance7FeaturesKHR<'_> {
@@ -22118,10 +21243,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance7PropertiesKHR<'_> {}
 impl PhysicalDeviceMaintenance7PropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMaintenance7PropertiesKHR<'_> {
@@ -22225,10 +21347,7 @@ unsafe impl Sync for PhysicalDeviceLayeredApiPropertiesListKHR<'_> {}
 impl PhysicalDeviceLayeredApiPropertiesListKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceLayeredApiPropertiesListKHR<'_> {
@@ -22287,10 +21406,7 @@ impl fmt::Debug for PhysicalDeviceLayeredApiPropertiesKHR<'_> {
 impl PhysicalDeviceLayeredApiPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceLayeredApiPropertiesKHR<'_> {
@@ -22349,9 +21465,8 @@ impl PhysicalDeviceLayeredApiVulkanPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
         Self {
-            s_type: Self::STRUCTURE_TYPE,
             properties: PhysicalDeviceProperties2::new(),
-            ..unsafe { ::core::mem::zeroed() }
+            ..init_tagged_structure()
         }
     }
 }
@@ -22392,10 +21507,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance8FeaturesKHR<'_> {}
 impl PhysicalDeviceMaintenance8FeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMaintenance8FeaturesKHR<'_> {
@@ -22432,10 +21544,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance9FeaturesKHR<'_> {}
 impl PhysicalDeviceMaintenance9FeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMaintenance9FeaturesKHR<'_> {
@@ -22473,10 +21582,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance9PropertiesKHR<'_> {}
 impl PhysicalDeviceMaintenance9PropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMaintenance9PropertiesKHR<'_> {
@@ -22521,10 +21627,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance11FeaturesKHR<'_> {}
 impl PhysicalDeviceMaintenance11FeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMaintenance11FeaturesKHR<'_> {
@@ -22564,10 +21667,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance10PropertiesKHR<'_> {}
 impl PhysicalDeviceMaintenance10PropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMaintenance10PropertiesKHR<'_> {
@@ -22625,10 +21725,7 @@ unsafe impl Sync for PhysicalDeviceMaintenance10FeaturesKHR<'_> {}
 impl PhysicalDeviceMaintenance10FeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMaintenance10FeaturesKHR<'_> {
@@ -22666,10 +21763,7 @@ unsafe impl Sync for QueueFamilyOwnershipTransferPropertiesKHR<'_> {}
 impl QueueFamilyOwnershipTransferPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for QueueFamilyOwnershipTransferPropertiesKHR<'_> {
@@ -22709,10 +21803,7 @@ unsafe impl Sync for QueueFamilyOptimalImageTransferGranularityPropertiesKHR<'_>
 impl QueueFamilyOptimalImageTransferGranularityPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for QueueFamilyOptimalImageTransferGranularityPropertiesKHR<'_> {
@@ -22761,10 +21852,7 @@ unsafe impl Sync for RenderingAreaInfo<'_> {}
 impl RenderingAreaInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderingAreaInfo<'_> {
@@ -22818,10 +21906,7 @@ unsafe impl Sync for DescriptorSetLayoutSupport<'_> {}
 impl DescriptorSetLayoutSupport<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DescriptorSetLayoutSupport<'_> {
@@ -22856,10 +21941,7 @@ unsafe impl Sync for PhysicalDeviceShaderDrawParametersFeatures<'_> {}
 impl PhysicalDeviceShaderDrawParametersFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderDrawParametersFeatures<'_> {
@@ -22901,10 +21983,7 @@ unsafe impl Sync for PhysicalDeviceShaderFloat16Int8Features<'_> {}
 impl PhysicalDeviceShaderFloat16Int8Features<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderFloat16Int8Features<'_> {
@@ -22963,10 +22042,7 @@ unsafe impl Sync for PhysicalDeviceFloatControlsProperties<'_> {}
 impl PhysicalDeviceFloatControlsProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFloatControlsProperties<'_> {
@@ -23136,10 +22212,7 @@ unsafe impl Sync for PhysicalDeviceHostQueryResetFeatures<'_> {}
 impl PhysicalDeviceHostQueryResetFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceHostQueryResetFeatures<'_> {
@@ -23213,10 +22286,7 @@ unsafe impl Sync for NativeBufferANDROID<'_> {}
 impl NativeBufferANDROID<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for NativeBufferANDROID<'_> {
@@ -23273,10 +22343,7 @@ unsafe impl Sync for SwapchainImageCreateInfoANDROID<'_> {}
 impl SwapchainImageCreateInfoANDROID<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SwapchainImageCreateInfoANDROID<'_> {
@@ -23312,10 +22379,7 @@ unsafe impl Sync for PhysicalDevicePresentationPropertiesANDROID<'_> {}
 impl PhysicalDevicePresentationPropertiesANDROID<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePresentationPropertiesANDROID<'_> {
@@ -23472,10 +22536,7 @@ unsafe impl Sync for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'_> {}
 impl PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'_> {
@@ -23516,10 +22577,7 @@ unsafe impl Sync for DeviceQueueGlobalPriorityCreateInfo<'_> {}
 impl DeviceQueueGlobalPriorityCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceQueueGlobalPriorityCreateInfo<'_> {
@@ -23555,10 +22613,7 @@ unsafe impl Sync for PhysicalDeviceGlobalPriorityQueryFeatures<'_> {}
 impl PhysicalDeviceGlobalPriorityQueryFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceGlobalPriorityQueryFeatures<'_> {
@@ -23607,10 +22662,7 @@ impl fmt::Debug for QueueFamilyGlobalPriorityProperties<'_> {
 impl QueueFamilyGlobalPriorityProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for QueueFamilyGlobalPriorityProperties<'_> {
@@ -23653,10 +22705,7 @@ unsafe impl Sync for DebugUtilsObjectNameInfoEXT<'_> {}
 impl DebugUtilsObjectNameInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DebugUtilsObjectNameInfoEXT<'_> {
@@ -23712,10 +22761,7 @@ unsafe impl Sync for DebugUtilsObjectTagInfoEXT<'_> {}
 impl DebugUtilsObjectTagInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DebugUtilsObjectTagInfoEXT<'_> {
@@ -23763,10 +22809,7 @@ unsafe impl Sync for DebugUtilsLabelEXT<'_> {}
 impl DebugUtilsLabelEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DebugUtilsLabelEXT<'_> {
@@ -23834,10 +22877,7 @@ impl fmt::Debug for DebugUtilsMessengerCreateInfoEXT<'_> {
 impl DebugUtilsMessengerCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DebugUtilsMessengerCreateInfoEXT<'_> {
@@ -23908,10 +22948,7 @@ unsafe impl Sync for DebugUtilsMessengerCallbackDataEXT<'_> {}
 impl DebugUtilsMessengerCallbackDataEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DebugUtilsMessengerCallbackDataEXT<'_> {
@@ -23995,10 +23032,7 @@ unsafe impl Sync for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_> {}
 impl PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_> {
@@ -24055,10 +23089,7 @@ impl fmt::Debug for DeviceDeviceMemoryReportCreateInfoEXT<'_> {
 impl DeviceDeviceMemoryReportCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceDeviceMemoryReportCreateInfoEXT<'_> {
@@ -24114,10 +23145,7 @@ unsafe impl Sync for DeviceMemoryReportCallbackDataEXT<'_> {}
 impl DeviceMemoryReportCallbackDataEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceMemoryReportCallbackDataEXT<'_> {
@@ -24179,10 +23207,7 @@ unsafe impl Sync for ImportMemoryHostPointerInfoEXT<'_> {}
 impl ImportMemoryHostPointerInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImportMemoryHostPointerInfoEXT<'_> {
@@ -24223,10 +23248,7 @@ unsafe impl Sync for MemoryHostPointerPropertiesEXT<'_> {}
 impl MemoryHostPointerPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryHostPointerPropertiesEXT<'_> {
@@ -24261,10 +23283,7 @@ unsafe impl Sync for PhysicalDeviceExternalMemoryHostPropertiesEXT<'_> {}
 impl PhysicalDeviceExternalMemoryHostPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceExternalMemoryHostPropertiesEXT<'_> {
@@ -24315,10 +23334,7 @@ unsafe impl Sync for PhysicalDeviceConservativeRasterizationPropertiesEXT<'_> {}
 impl PhysicalDeviceConservativeRasterizationPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceConservativeRasterizationPropertiesEXT<'_> {
@@ -24423,10 +23439,7 @@ unsafe impl Sync for CalibratedTimestampInfoKHR<'_> {}
 impl CalibratedTimestampInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CalibratedTimestampInfoKHR<'_> {
@@ -24474,10 +23487,7 @@ unsafe impl Sync for PhysicalDeviceShaderCorePropertiesAMD<'_> {}
 impl PhysicalDeviceShaderCorePropertiesAMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderCorePropertiesAMD<'_> {
@@ -24585,10 +23595,7 @@ unsafe impl Sync for PhysicalDeviceShaderCoreProperties2AMD<'_> {}
 impl PhysicalDeviceShaderCoreProperties2AMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderCoreProperties2AMD<'_> {
@@ -24635,10 +23642,7 @@ unsafe impl Sync for PipelineRasterizationConservativeStateCreateInfoEXT<'_> {}
 impl PipelineRasterizationConservativeStateCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineRasterizationConservativeStateCreateInfoEXT<'_> {
@@ -24716,10 +23720,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorIndexingFeatures<'_> {}
 impl PhysicalDeviceDescriptorIndexingFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDescriptorIndexingFeatures<'_> {
@@ -24949,10 +23950,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorIndexingProperties<'_> {}
 impl PhysicalDeviceDescriptorIndexingProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDescriptorIndexingProperties<'_> {
@@ -25190,10 +24188,7 @@ unsafe impl Sync for DescriptorSetLayoutBindingFlagsCreateInfo<'_> {}
 impl DescriptorSetLayoutBindingFlagsCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DescriptorSetLayoutBindingFlagsCreateInfo<'_> {
@@ -25235,10 +24230,7 @@ unsafe impl Sync for DescriptorSetVariableDescriptorCountAllocateInfo<'_> {}
 impl DescriptorSetVariableDescriptorCountAllocateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DescriptorSetVariableDescriptorCountAllocateInfo<'_> {
@@ -25279,10 +24271,7 @@ unsafe impl Sync for DescriptorSetVariableDescriptorCountLayoutSupport<'_> {}
 impl DescriptorSetVariableDescriptorCountLayoutSupport<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DescriptorSetVariableDescriptorCountLayoutSupport<'_> {
@@ -25333,10 +24322,7 @@ unsafe impl Sync for AttachmentDescription2<'_> {}
 impl AttachmentDescription2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AttachmentDescription2<'_> {
@@ -25413,10 +24399,7 @@ unsafe impl Sync for AttachmentReference2<'_> {}
 impl AttachmentReference2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AttachmentReference2<'_> {
@@ -25471,10 +24454,7 @@ unsafe impl Sync for SubpassDescription2<'_> {}
 impl SubpassDescription2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SubpassDescription2<'_> {
@@ -25567,10 +24547,7 @@ unsafe impl Sync for SubpassDependency2<'_> {}
 impl SubpassDependency2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SubpassDependency2<'_> {
@@ -25648,10 +24625,7 @@ unsafe impl Sync for RenderPassCreateInfo2<'_> {}
 impl RenderPassCreateInfo2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderPassCreateInfo2<'_> {
@@ -25710,10 +24684,7 @@ unsafe impl Sync for SubpassBeginInfo<'_> {}
 impl SubpassBeginInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SubpassBeginInfo<'_> {
@@ -25747,10 +24718,7 @@ unsafe impl Sync for SubpassEndInfo<'_> {}
 impl SubpassEndInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SubpassEndInfo<'_> {
@@ -25779,10 +24747,7 @@ unsafe impl Sync for PhysicalDeviceTimelineSemaphoreFeatures<'_> {}
 impl PhysicalDeviceTimelineSemaphoreFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceTimelineSemaphoreFeatures<'_> {
@@ -25820,10 +24785,7 @@ unsafe impl Sync for PhysicalDeviceTimelineSemaphoreProperties<'_> {}
 impl PhysicalDeviceTimelineSemaphoreProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceTimelineSemaphoreProperties<'_> {
@@ -25867,10 +24829,7 @@ unsafe impl Sync for SemaphoreTypeCreateInfo<'_> {}
 impl SemaphoreTypeCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SemaphoreTypeCreateInfo<'_> {
@@ -25915,10 +24874,7 @@ unsafe impl Sync for TimelineSemaphoreSubmitInfo<'_> {}
 impl TimelineSemaphoreSubmitInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for TimelineSemaphoreSubmitInfo<'_> {
@@ -25965,10 +24921,7 @@ unsafe impl Sync for SemaphoreWaitInfo<'_> {}
 impl SemaphoreWaitInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SemaphoreWaitInfo<'_> {
@@ -26016,10 +24969,7 @@ unsafe impl Sync for SemaphoreSignalInfo<'_> {}
 impl SemaphoreSignalInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SemaphoreSignalInfo<'_> {
@@ -26093,10 +25043,7 @@ unsafe impl Sync for PipelineVertexInputDivisorStateCreateInfo<'_> {}
 impl PipelineVertexInputDivisorStateCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineVertexInputDivisorStateCreateInfo<'_> {
@@ -26140,10 +25087,7 @@ unsafe impl Sync for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'_> {}
 impl PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'_> {
@@ -26184,10 +25128,7 @@ unsafe impl Sync for PhysicalDeviceVertexAttributeDivisorProperties<'_> {}
 impl PhysicalDeviceVertexAttributeDivisorProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorProperties<'_> {
@@ -26238,10 +25179,7 @@ unsafe impl Sync for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {}
 impl PhysicalDevicePCIBusInfoPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {
@@ -26293,10 +25231,7 @@ unsafe impl Sync for ImportAndroidHardwareBufferInfoANDROID<'_> {}
 impl ImportAndroidHardwareBufferInfoANDROID<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImportAndroidHardwareBufferInfoANDROID<'_> {
@@ -26333,10 +25268,7 @@ unsafe impl Sync for AndroidHardwareBufferUsageANDROID<'_> {}
 impl AndroidHardwareBufferUsageANDROID<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AndroidHardwareBufferUsageANDROID<'_> {
@@ -26376,10 +25308,7 @@ unsafe impl Sync for AndroidHardwareBufferPropertiesANDROID<'_> {}
 impl AndroidHardwareBufferPropertiesANDROID<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AndroidHardwareBufferPropertiesANDROID<'_> {
@@ -26419,10 +25348,7 @@ unsafe impl Sync for MemoryGetAndroidHardwareBufferInfoANDROID<'_> {}
 impl MemoryGetAndroidHardwareBufferInfoANDROID<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryGetAndroidHardwareBufferInfoANDROID<'_> {
@@ -26465,10 +25391,7 @@ unsafe impl Sync for AndroidHardwareBufferFormatPropertiesANDROID<'_> {}
 impl AndroidHardwareBufferFormatPropertiesANDROID<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AndroidHardwareBufferFormatPropertiesANDROID<'_> {
@@ -26555,10 +25478,7 @@ unsafe impl Sync for CommandBufferInheritanceConditionalRenderingInfoEXT<'_> {}
 impl CommandBufferInheritanceConditionalRenderingInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CommandBufferInheritanceConditionalRenderingInfoEXT<'_> {
@@ -26601,10 +25521,7 @@ unsafe impl Sync for ExternalFormatANDROID<'_> {}
 impl ExternalFormatANDROID<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExternalFormatANDROID<'_> {
@@ -26646,10 +25563,7 @@ unsafe impl Sync for PhysicalDevice8BitStorageFeatures<'_> {}
 impl PhysicalDevice8BitStorageFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevice8BitStorageFeatures<'_> {
@@ -26701,10 +25615,7 @@ unsafe impl Sync for PhysicalDeviceConditionalRenderingFeaturesEXT<'_> {}
 impl PhysicalDeviceConditionalRenderingFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceConditionalRenderingFeaturesEXT<'_> {
@@ -26755,10 +25666,7 @@ unsafe impl Sync for PhysicalDeviceVulkanMemoryModelFeatures<'_> {}
 impl PhysicalDeviceVulkanMemoryModelFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVulkanMemoryModelFeatures<'_> {
@@ -26814,10 +25722,7 @@ unsafe impl Sync for PhysicalDeviceShaderAtomicInt64Features<'_> {}
 impl PhysicalDeviceShaderAtomicInt64Features<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderAtomicInt64Features<'_> {
@@ -26871,10 +25776,7 @@ unsafe impl Sync for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> {}
 impl PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_> {
@@ -27017,10 +25919,7 @@ unsafe impl Sync for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_> {}
 impl PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_> {
@@ -27153,10 +26052,7 @@ unsafe impl Sync for PhysicalDeviceVertexAttributeDivisorFeatures<'_> {}
 impl PhysicalDeviceVertexAttributeDivisorFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorFeatures<'_> {
@@ -27210,10 +26106,7 @@ unsafe impl Sync for QueueFamilyCheckpointPropertiesNV<'_> {}
 impl QueueFamilyCheckpointPropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for QueueFamilyCheckpointPropertiesNV<'_> {
@@ -27253,10 +26146,7 @@ unsafe impl Sync for CheckpointDataNV<'_> {}
 impl CheckpointDataNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CheckpointDataNV<'_> {
@@ -27299,10 +26189,7 @@ unsafe impl Sync for PhysicalDeviceDepthStencilResolveProperties<'_> {}
 impl PhysicalDeviceDepthStencilResolveProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDepthStencilResolveProperties<'_> {
@@ -27365,10 +26252,7 @@ unsafe impl Sync for SubpassDescriptionDepthStencilResolve<'_> {}
 impl SubpassDescriptionDepthStencilResolve<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SubpassDescriptionDepthStencilResolve<'_> {
@@ -27417,10 +26301,7 @@ unsafe impl Sync for ImageViewASTCDecodeModeEXT<'_> {}
 impl ImageViewASTCDecodeModeEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageViewASTCDecodeModeEXT<'_> {
@@ -27456,10 +26337,7 @@ unsafe impl Sync for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {}
 impl PhysicalDeviceASTCDecodeFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {
@@ -27497,10 +26375,7 @@ unsafe impl Sync for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> {}
 impl PhysicalDeviceTransformFeedbackFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceTransformFeedbackFeaturesEXT<'_> {
@@ -27555,10 +26430,7 @@ unsafe impl Sync for PhysicalDeviceTransformFeedbackPropertiesEXT<'_> {}
 impl PhysicalDeviceTransformFeedbackPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceTransformFeedbackPropertiesEXT<'_> {
@@ -27670,10 +26542,7 @@ unsafe impl Sync for PipelineRasterizationStateStreamCreateInfoEXT<'_> {}
 impl PipelineRasterizationStateStreamCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineRasterizationStateStreamCreateInfoEXT<'_> {
@@ -27718,10 +26587,7 @@ unsafe impl Sync for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'_> {}
 impl PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'_> {
@@ -27768,10 +26634,7 @@ unsafe impl Sync for PipelineRepresentativeFragmentTestStateCreateInfoNV<'_> {}
 impl PipelineRepresentativeFragmentTestStateCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineRepresentativeFragmentTestStateCreateInfoNV<'_> {
@@ -27814,10 +26677,7 @@ unsafe impl Sync for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {}
 impl PhysicalDeviceExclusiveScissorFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {
@@ -27856,10 +26716,7 @@ unsafe impl Sync for PipelineViewportExclusiveScissorStateCreateInfoNV<'_> {}
 impl PipelineViewportExclusiveScissorStateCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineViewportExclusiveScissorStateCreateInfoNV<'_> {
@@ -27900,10 +26757,7 @@ unsafe impl Sync for PhysicalDeviceCornerSampledImageFeaturesNV<'_> {}
 impl PhysicalDeviceCornerSampledImageFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCornerSampledImageFeaturesNV<'_> {
@@ -27945,10 +26799,7 @@ unsafe impl Sync for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'_> {}
 impl PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'_> {
@@ -28003,10 +26854,7 @@ unsafe impl Sync for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'_> {}
 impl PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'_> {
@@ -28049,10 +26897,7 @@ unsafe impl Sync for PhysicalDeviceShaderImageFootprintFeaturesNV<'_> {}
 impl PhysicalDeviceShaderImageFootprintFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderImageFootprintFeaturesNV<'_> {
@@ -28093,10 +26938,7 @@ unsafe impl Sync for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'_
 impl PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'_> {
@@ -28146,10 +26988,7 @@ unsafe impl Sync for PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'_> {}
 impl PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'_> {
@@ -28198,10 +27037,7 @@ unsafe impl Sync for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {}
 impl PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_> {
@@ -28242,10 +27078,7 @@ unsafe impl Sync for PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'_> {}
 impl PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectPropertiesKHR<'_> {
@@ -28285,10 +27118,7 @@ unsafe impl Sync for PhysicalDeviceMemoryDecompressionFeaturesEXT<'_> {}
 impl PhysicalDeviceMemoryDecompressionFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMemoryDecompressionFeaturesEXT<'_> {
@@ -28330,10 +27160,7 @@ unsafe impl Sync for PhysicalDeviceMemoryDecompressionPropertiesEXT<'_> {}
 impl PhysicalDeviceMemoryDecompressionPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMemoryDecompressionPropertiesEXT<'_> {
@@ -28421,10 +27248,7 @@ unsafe impl Sync for PipelineViewportShadingRateImageStateCreateInfoNV<'_> {}
 impl PipelineViewportShadingRateImageStateCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineViewportShadingRateImageStateCreateInfoNV<'_> {
@@ -28474,10 +27298,7 @@ unsafe impl Sync for PhysicalDeviceShadingRateImageFeaturesNV<'_> {}
 impl PhysicalDeviceShadingRateImageFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShadingRateImageFeaturesNV<'_> {
@@ -28525,10 +27346,7 @@ unsafe impl Sync for PhysicalDeviceShadingRateImagePropertiesNV<'_> {}
 impl PhysicalDeviceShadingRateImagePropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShadingRateImagePropertiesNV<'_> {
@@ -28581,10 +27399,7 @@ unsafe impl Sync for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> {}
 impl PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_> {
@@ -28713,10 +27528,7 @@ unsafe impl Sync for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'_> {}
 impl PipelineViewportCoarseSampleOrderStateCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'_> {
@@ -28766,10 +27578,7 @@ unsafe impl Sync for PhysicalDeviceMeshShaderFeaturesNV<'_> {}
 impl PhysicalDeviceMeshShaderFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMeshShaderFeaturesNV<'_> {
@@ -28823,10 +27632,7 @@ unsafe impl Sync for PhysicalDeviceMeshShaderPropertiesNV<'_> {}
 impl PhysicalDeviceMeshShaderPropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMeshShaderPropertiesNV<'_> {
@@ -28974,10 +27780,7 @@ unsafe impl Sync for PhysicalDeviceMeshShaderFeaturesEXT<'_> {}
 impl PhysicalDeviceMeshShaderFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMeshShaderFeaturesEXT<'_> {
@@ -29065,10 +27868,7 @@ unsafe impl Sync for PhysicalDeviceMeshShaderPropertiesEXT<'_> {}
 impl PhysicalDeviceMeshShaderPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMeshShaderPropertiesEXT<'_> {
@@ -29332,10 +28132,7 @@ unsafe impl Sync for RayTracingShaderGroupCreateInfoNV<'_> {}
 impl RayTracingShaderGroupCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RayTracingShaderGroupCreateInfoNV<'_> {
@@ -29395,10 +28192,7 @@ unsafe impl Sync for RayTracingShaderGroupCreateInfoKHR<'_> {}
 impl RayTracingShaderGroupCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RayTracingShaderGroupCreateInfoKHR<'_> {
@@ -29469,10 +28263,7 @@ unsafe impl Sync for RayTracingPipelineCreateInfoNV<'_> {}
 impl RayTracingPipelineCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RayTracingPipelineCreateInfoNV<'_> {
@@ -29550,10 +28341,7 @@ unsafe impl Sync for RayTracingPipelineCreateInfoKHR<'_> {}
 impl RayTracingPipelineCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RayTracingPipelineCreateInfoKHR<'_> {
@@ -29657,10 +28445,7 @@ unsafe impl Sync for GeometryTrianglesNV<'_> {}
 impl GeometryTrianglesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for GeometryTrianglesNV<'_> {
@@ -29748,10 +28533,7 @@ unsafe impl Sync for GeometryAABBNV<'_> {}
 impl GeometryAABBNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for GeometryAABBNV<'_> {
@@ -29842,9 +28624,8 @@ impl GeometryNV<'_> {
     #[inline]
     pub const fn new() -> Self {
         Self {
-            s_type: Self::STRUCTURE_TYPE,
             geometry: GeometryDataNV::new(),
-            ..unsafe { ::core::mem::zeroed() }
+            ..init_tagged_structure()
         }
     }
 }
@@ -29894,10 +28675,7 @@ unsafe impl Sync for AccelerationStructureInfoNV<'_> {}
 impl AccelerationStructureInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AccelerationStructureInfoNV<'_> {
@@ -29950,9 +28728,8 @@ impl AccelerationStructureCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
         Self {
-            s_type: Self::STRUCTURE_TYPE,
             info: AccelerationStructureInfoNV::new(),
-            ..unsafe { ::core::mem::zeroed() }
+            ..init_tagged_structure()
         }
     }
 }
@@ -29997,10 +28774,7 @@ unsafe impl Sync for BindAccelerationStructureMemoryInfoNV<'_> {}
 impl BindAccelerationStructureMemoryInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BindAccelerationStructureMemoryInfoNV<'_> {
@@ -30055,10 +28829,7 @@ unsafe impl Sync for WriteDescriptorSetAccelerationStructureKHR<'_> {}
 impl WriteDescriptorSetAccelerationStructureKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for WriteDescriptorSetAccelerationStructureKHR<'_> {
@@ -30100,10 +28871,7 @@ unsafe impl Sync for WriteDescriptorSetAccelerationStructureNV<'_> {}
 impl WriteDescriptorSetAccelerationStructureNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for WriteDescriptorSetAccelerationStructureNV<'_> {
@@ -30145,10 +28913,7 @@ unsafe impl Sync for AccelerationStructureMemoryRequirementsInfoNV<'_> {}
 impl AccelerationStructureMemoryRequirementsInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AccelerationStructureMemoryRequirementsInfoNV<'_> {
@@ -30196,10 +28961,7 @@ unsafe impl Sync for PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {}
 impl PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceAccelerationStructureFeaturesKHR<'_> {
@@ -30279,10 +29041,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_> {}
 impl PhysicalDeviceRayTracingPipelineFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_> {
@@ -30358,10 +29117,7 @@ unsafe impl Sync for PhysicalDeviceRayQueryFeaturesKHR<'_> {}
 impl PhysicalDeviceRayQueryFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRayQueryFeaturesKHR<'_> {
@@ -30405,10 +29161,7 @@ unsafe impl Sync for PhysicalDeviceAccelerationStructurePropertiesKHR<'_> {}
 impl PhysicalDeviceAccelerationStructurePropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceAccelerationStructurePropertiesKHR<'_> {
@@ -30510,10 +29263,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingPipelinePropertiesKHR<'_> {}
 impl PhysicalDeviceRayTracingPipelinePropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRayTracingPipelinePropertiesKHR<'_> {
@@ -30604,10 +29354,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingPropertiesNV<'_> {}
 impl PhysicalDeviceRayTracingPropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRayTracingPropertiesNV<'_> {
@@ -30899,10 +29646,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {}
 impl PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'_> {
@@ -30953,10 +29697,7 @@ unsafe impl Sync for DrmFormatModifierPropertiesListEXT<'_> {}
 impl DrmFormatModifierPropertiesListEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DrmFormatModifierPropertiesListEXT<'_> {
@@ -31044,10 +29785,7 @@ unsafe impl Sync for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_> {}
 impl PhysicalDeviceImageDrmFormatModifierInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_> {
@@ -31099,10 +29837,7 @@ unsafe impl Sync for ImageDrmFormatModifierListCreateInfoEXT<'_> {}
 impl ImageDrmFormatModifierListCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageDrmFormatModifierListCreateInfoEXT<'_> {
@@ -31142,10 +29877,7 @@ unsafe impl Sync for ImageDrmFormatModifierExplicitCreateInfoEXT<'_> {}
 impl ImageDrmFormatModifierExplicitCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageDrmFormatModifierExplicitCreateInfoEXT<'_> {
@@ -31188,10 +29920,7 @@ unsafe impl Sync for ImageDrmFormatModifierPropertiesEXT<'_> {}
 impl ImageDrmFormatModifierPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageDrmFormatModifierPropertiesEXT<'_> {
@@ -31226,10 +29955,7 @@ unsafe impl Sync for ImageStencilUsageCreateInfo<'_> {}
 impl ImageStencilUsageCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageStencilUsageCreateInfo<'_> {
@@ -31266,10 +29992,7 @@ unsafe impl Sync for DeviceMemoryOverallocationCreateInfoAMD<'_> {}
 impl DeviceMemoryOverallocationCreateInfoAMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceMemoryOverallocationCreateInfoAMD<'_> {
@@ -31311,10 +30034,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_> {}
 impl PhysicalDeviceFragmentDensityMapFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_> {
@@ -31372,10 +30092,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_> {}
 impl PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'_> {
@@ -31419,10 +30136,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'_> {}
 impl PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'_> {
@@ -31468,10 +30182,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapPropertiesEXT<'_> {}
 impl PhysicalDeviceFragmentDensityMapPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapPropertiesEXT<'_> {
@@ -31533,10 +30244,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'_> {}
 impl PhysicalDeviceFragmentDensityMap2PropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'_> {
@@ -31598,10 +30306,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'_> {}
 impl PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'_> {
@@ -31644,10 +30349,7 @@ unsafe impl Sync for RenderPassFragmentDensityMapCreateInfoEXT<'_> {}
 impl RenderPassFragmentDensityMapCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderPassFragmentDensityMapCreateInfoEXT<'_> {
@@ -31689,10 +30391,7 @@ unsafe impl Sync for RenderPassFragmentDensityMapOffsetEndInfoEXT<'_> {}
 impl RenderPassFragmentDensityMapOffsetEndInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderPassFragmentDensityMapOffsetEndInfoEXT<'_> {
@@ -31734,10 +30433,7 @@ unsafe impl Sync for PhysicalDeviceScalarBlockLayoutFeatures<'_> {}
 impl PhysicalDeviceScalarBlockLayoutFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceScalarBlockLayoutFeatures<'_> {
@@ -31775,10 +30471,7 @@ unsafe impl Sync for SurfaceProtectedCapabilitiesKHR<'_> {}
 impl SurfaceProtectedCapabilitiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SurfaceProtectedCapabilitiesKHR<'_> {
@@ -31814,10 +30507,7 @@ unsafe impl Sync for PhysicalDeviceUniformBufferStandardLayoutFeatures<'_> {}
 impl PhysicalDeviceUniformBufferStandardLayoutFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceUniformBufferStandardLayoutFeatures<'_> {
@@ -31864,10 +30554,7 @@ unsafe impl Sync for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {}
 impl PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {
@@ -31906,10 +30593,7 @@ unsafe impl Sync for PipelineRasterizationDepthClipStateCreateInfoEXT<'_> {}
 impl PipelineRasterizationDepthClipStateCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineRasterizationDepthClipStateCreateInfoEXT<'_> {
@@ -31955,10 +30639,7 @@ unsafe impl Sync for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {}
 impl PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {
@@ -32003,10 +30684,7 @@ unsafe impl Sync for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {}
 impl PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {
@@ -32044,10 +30722,7 @@ unsafe impl Sync for MemoryPriorityAllocateInfoEXT<'_> {}
 impl MemoryPriorityAllocateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryPriorityAllocateInfoEXT<'_> {
@@ -32083,10 +30758,7 @@ unsafe impl Sync for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'_> {}
 impl PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'_> {
@@ -32135,10 +30807,7 @@ unsafe impl Sync for PhysicalDeviceBufferDeviceAddressFeatures<'_> {}
 impl PhysicalDeviceBufferDeviceAddressFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceBufferDeviceAddressFeatures<'_> {
@@ -32194,10 +30863,7 @@ unsafe impl Sync for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_> {}
 impl PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'_> {
@@ -32254,10 +30920,7 @@ unsafe impl Sync for BufferDeviceAddressInfo<'_> {}
 impl BufferDeviceAddressInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BufferDeviceAddressInfo<'_> {
@@ -32292,10 +30955,7 @@ unsafe impl Sync for BufferOpaqueCaptureAddressCreateInfo<'_> {}
 impl BufferOpaqueCaptureAddressCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BufferOpaqueCaptureAddressCreateInfo<'_> {
@@ -32331,10 +30991,7 @@ unsafe impl Sync for BufferDeviceAddressCreateInfoEXT<'_> {}
 impl BufferDeviceAddressCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BufferDeviceAddressCreateInfoEXT<'_> {
@@ -32370,10 +31027,7 @@ unsafe impl Sync for PhysicalDeviceImageViewImageFormatInfoEXT<'_> {}
 impl PhysicalDeviceImageViewImageFormatInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceImageViewImageFormatInfoEXT<'_> {
@@ -32414,10 +31068,7 @@ unsafe impl Sync for FilterCubicImageViewImageFormatPropertiesEXT<'_> {}
 impl FilterCubicImageViewImageFormatPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for FilterCubicImageViewImageFormatPropertiesEXT<'_> {
@@ -32462,10 +31113,7 @@ unsafe impl Sync for PhysicalDeviceImagelessFramebufferFeatures<'_> {}
 impl PhysicalDeviceImagelessFramebufferFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceImagelessFramebufferFeatures<'_> {
@@ -32507,10 +31155,7 @@ unsafe impl Sync for FramebufferAttachmentsCreateInfo<'_> {}
 impl FramebufferAttachmentsCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for FramebufferAttachmentsCreateInfo<'_> {
@@ -32556,10 +31201,7 @@ unsafe impl Sync for FramebufferAttachmentImageInfo<'_> {}
 impl FramebufferAttachmentImageInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for FramebufferAttachmentImageInfo<'_> {
@@ -32621,10 +31263,7 @@ unsafe impl Sync for RenderPassAttachmentBeginInfo<'_> {}
 impl RenderPassAttachmentBeginInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderPassAttachmentBeginInfo<'_> {
@@ -32661,10 +31300,7 @@ unsafe impl Sync for PhysicalDeviceTextureCompressionASTCHDRFeatures<'_> {}
 impl PhysicalDeviceTextureCompressionASTCHDRFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceTextureCompressionASTCHDRFeatures<'_> {
@@ -32709,10 +31345,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {}
 impl PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> {
@@ -32759,10 +31392,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixPropertiesNV<'_> {}
 impl PhysicalDeviceCooperativeMatrixPropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixPropertiesNV<'_> {
@@ -32812,10 +31442,7 @@ unsafe impl Sync for CooperativeMatrixPropertiesNV<'_> {}
 impl CooperativeMatrixPropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CooperativeMatrixPropertiesNV<'_> {
@@ -32885,10 +31512,7 @@ unsafe impl Sync for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {}
 impl PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> {
@@ -32928,10 +31552,7 @@ unsafe impl Sync for ImageViewHandleInfoNVX<'_> {}
 impl ImageViewHandleInfoNVX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageViewHandleInfoNVX<'_> {
@@ -32977,10 +31598,7 @@ unsafe impl Sync for ImageViewAddressPropertiesNVX<'_> {}
 impl ImageViewAddressPropertiesNVX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageViewAddressPropertiesNVX<'_> {
@@ -33020,10 +31638,7 @@ unsafe impl Sync for PresentFrameTokenGGP<'_> {}
 impl PresentFrameTokenGGP<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PresentFrameTokenGGP<'_> {
@@ -33094,10 +31709,7 @@ unsafe impl Sync for PipelineCreationFeedbackCreateInfo<'_> {}
 impl PipelineCreationFeedbackCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineCreationFeedbackCreateInfo<'_> {
@@ -33157,10 +31769,7 @@ unsafe impl Sync for SurfaceFullScreenExclusiveInfoEXT<'_> {}
 impl SurfaceFullScreenExclusiveInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SurfaceFullScreenExclusiveInfoEXT<'_> {
@@ -33200,10 +31809,7 @@ unsafe impl Sync for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {}
 impl SurfaceFullScreenExclusiveWin32InfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {
@@ -33244,10 +31850,7 @@ unsafe impl Sync for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {}
 impl SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> {
@@ -33287,10 +31890,7 @@ unsafe impl Sync for PhysicalDevicePresentBarrierFeaturesNV<'_> {}
 impl PhysicalDevicePresentBarrierFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePresentBarrierFeaturesNV<'_> {
@@ -33328,10 +31928,7 @@ unsafe impl Sync for SurfaceCapabilitiesPresentBarrierNV<'_> {}
 impl SurfaceCapabilitiesPresentBarrierNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SurfaceCapabilitiesPresentBarrierNV<'_> {
@@ -33367,10 +31964,7 @@ unsafe impl Sync for SwapchainPresentBarrierCreateInfoNV<'_> {}
 impl SwapchainPresentBarrierCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SwapchainPresentBarrierCreateInfoNV<'_> {
@@ -33407,10 +32001,7 @@ unsafe impl Sync for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {}
 impl PhysicalDevicePerformanceQueryFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePerformanceQueryFeaturesKHR<'_> {
@@ -33460,10 +32051,7 @@ unsafe impl Sync for PhysicalDevicePerformanceQueryPropertiesKHR<'_> {}
 impl PhysicalDevicePerformanceQueryPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePerformanceQueryPropertiesKHR<'_> {
@@ -33509,10 +32097,7 @@ unsafe impl Sync for PerformanceCounterKHR<'_> {}
 impl PerformanceCounterKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PerformanceCounterKHR<'_> {
@@ -33577,10 +32162,7 @@ impl fmt::Debug for PerformanceCounterDescriptionKHR<'_> {
 impl PerformanceCounterDescriptionKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PerformanceCounterDescriptionKHR<'_> {
@@ -33649,10 +32231,7 @@ unsafe impl Sync for QueryPoolPerformanceCreateInfoKHR<'_> {}
 impl QueryPoolPerformanceCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for QueryPoolPerformanceCreateInfoKHR<'_> {
@@ -33712,10 +32291,7 @@ unsafe impl Sync for AcquireProfilingLockInfoKHR<'_> {}
 impl AcquireProfilingLockInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AcquireProfilingLockInfoKHR<'_> {
@@ -33755,10 +32331,7 @@ unsafe impl Sync for PerformanceQuerySubmitInfoKHR<'_> {}
 impl PerformanceQuerySubmitInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PerformanceQuerySubmitInfoKHR<'_> {
@@ -33795,10 +32368,7 @@ unsafe impl Sync for HeadlessSurfaceCreateInfoEXT<'_> {}
 impl HeadlessSurfaceCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for HeadlessSurfaceCreateInfoEXT<'_> {
@@ -33833,10 +32403,7 @@ unsafe impl Sync for PhysicalDeviceCoverageReductionModeFeaturesNV<'_> {}
 impl PhysicalDeviceCoverageReductionModeFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCoverageReductionModeFeaturesNV<'_> {
@@ -33878,10 +32445,7 @@ unsafe impl Sync for PipelineCoverageReductionStateCreateInfoNV<'_> {}
 impl PipelineCoverageReductionStateCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineCoverageReductionStateCreateInfoNV<'_> {
@@ -33932,10 +32496,7 @@ unsafe impl Sync for FramebufferMixedSamplesCombinationNV<'_> {}
 impl FramebufferMixedSamplesCombinationNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for FramebufferMixedSamplesCombinationNV<'_> {
@@ -33988,10 +32549,7 @@ unsafe impl Sync for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'_> {}
 impl PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'_> {
@@ -34092,10 +32650,7 @@ unsafe impl Sync for InitializePerformanceApiInfoINTEL<'_> {}
 impl InitializePerformanceApiInfoINTEL<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for InitializePerformanceApiInfoINTEL<'_> {
@@ -34130,10 +32685,7 @@ unsafe impl Sync for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {}
 impl QueryPoolPerformanceQueryCreateInfoINTEL<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {
@@ -34173,10 +32725,7 @@ unsafe impl Sync for PerformanceMarkerInfoINTEL<'_> {}
 impl PerformanceMarkerInfoINTEL<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PerformanceMarkerInfoINTEL<'_> {
@@ -34211,10 +32760,7 @@ unsafe impl Sync for PerformanceStreamMarkerInfoINTEL<'_> {}
 impl PerformanceStreamMarkerInfoINTEL<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PerformanceStreamMarkerInfoINTEL<'_> {
@@ -34251,10 +32797,7 @@ unsafe impl Sync for PerformanceOverrideInfoINTEL<'_> {}
 impl PerformanceOverrideInfoINTEL<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PerformanceOverrideInfoINTEL<'_> {
@@ -34299,10 +32842,7 @@ unsafe impl Sync for PerformanceConfigurationAcquireInfoINTEL<'_> {}
 impl PerformanceConfigurationAcquireInfoINTEL<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PerformanceConfigurationAcquireInfoINTEL<'_> {
@@ -34339,10 +32879,7 @@ unsafe impl Sync for PhysicalDeviceShaderClockFeaturesKHR<'_> {}
 impl PhysicalDeviceShaderClockFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderClockFeaturesKHR<'_> {
@@ -34384,10 +32921,7 @@ unsafe impl Sync for PhysicalDeviceIndexTypeUint8Features<'_> {}
 impl PhysicalDeviceIndexTypeUint8Features<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceIndexTypeUint8Features<'_> {
@@ -34425,10 +32959,7 @@ unsafe impl Sync for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> {}
 impl PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_> {
@@ -34473,10 +33004,7 @@ unsafe impl Sync for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {}
 impl PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {
@@ -34516,10 +33044,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'_> {}
 impl PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'_> {
@@ -34580,10 +33105,7 @@ unsafe impl Sync for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'_> {}
 impl PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'_> {
@@ -34630,10 +33152,7 @@ unsafe impl Sync for AttachmentReferenceStencilLayout<'_> {}
 impl AttachmentReferenceStencilLayout<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AttachmentReferenceStencilLayout<'_> {
@@ -34670,10 +33189,7 @@ unsafe impl Sync for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'_> {
 impl PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'_> {
@@ -34730,10 +33246,7 @@ unsafe impl Sync for AttachmentDescriptionStencilLayout<'_> {}
 impl AttachmentDescriptionStencilLayout<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AttachmentDescriptionStencilLayout<'_> {
@@ -34774,10 +33287,7 @@ unsafe impl Sync for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'_> {
 impl PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'_> {
@@ -34821,10 +33331,7 @@ unsafe impl Sync for PipelineInfoKHR<'_> {}
 impl PipelineInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineInfoKHR<'_> {
@@ -34874,10 +33381,7 @@ impl fmt::Debug for PipelineExecutablePropertiesKHR<'_> {
 impl PipelineExecutablePropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineExecutablePropertiesKHR<'_> {
@@ -34939,10 +33443,7 @@ unsafe impl Sync for PipelineExecutableInfoKHR<'_> {}
 impl PipelineExecutableInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineExecutableInfoKHR<'_> {
@@ -35012,10 +33513,7 @@ impl fmt::Debug for PipelineExecutableStatisticKHR<'_> {
 impl PipelineExecutableStatisticKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineExecutableStatisticKHR<'_> {
@@ -35093,10 +33591,7 @@ impl fmt::Debug for PipelineExecutableInternalRepresentationKHR<'_> {
 impl PipelineExecutableInternalRepresentationKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineExecutableInternalRepresentationKHR<'_> {
@@ -35159,10 +33654,7 @@ unsafe impl Sync for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'_> {}
 impl PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'_> {
@@ -35209,10 +33701,7 @@ unsafe impl Sync for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'_> {}
 impl PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'_> {
@@ -35256,10 +33745,7 @@ unsafe impl Sync for PhysicalDeviceTexelBufferAlignmentProperties<'_> {}
 impl PhysicalDeviceTexelBufferAlignmentProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceTexelBufferAlignmentProperties<'_> {
@@ -35331,10 +33817,7 @@ unsafe impl Sync for PhysicalDeviceSubgroupSizeControlFeatures<'_> {}
 impl PhysicalDeviceSubgroupSizeControlFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceSubgroupSizeControlFeatures<'_> {
@@ -35380,10 +33863,7 @@ unsafe impl Sync for PhysicalDeviceSubgroupSizeControlProperties<'_> {}
 impl PhysicalDeviceSubgroupSizeControlProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceSubgroupSizeControlProperties<'_> {
@@ -35444,10 +33924,7 @@ unsafe impl Sync for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_> {}
 impl PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineShaderStageRequiredSubgroupSizeCreateInfo<'_> {
@@ -35492,10 +33969,7 @@ unsafe impl Sync for SubpassShadingPipelineCreateInfoHUAWEI<'_> {}
 impl SubpassShadingPipelineCreateInfoHUAWEI<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SubpassShadingPipelineCreateInfoHUAWEI<'_> {
@@ -35537,10 +34011,7 @@ unsafe impl Sync for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_> {}
 impl PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'_> {
@@ -35587,10 +34058,7 @@ unsafe impl Sync for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_> {}
 impl PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'_> {
@@ -35648,10 +34116,7 @@ unsafe impl Sync for MemoryOpaqueCaptureAddressAllocateInfo<'_> {}
 impl MemoryOpaqueCaptureAddressAllocateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryOpaqueCaptureAddressAllocateInfo<'_> {
@@ -35688,10 +34153,7 @@ unsafe impl Sync for DeviceMemoryOpaqueCaptureAddressInfo<'_> {}
 impl DeviceMemoryOpaqueCaptureAddressInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceMemoryOpaqueCaptureAddressInfo<'_> {
@@ -35731,10 +34193,7 @@ unsafe impl Sync for PhysicalDeviceLineRasterizationFeatures<'_> {}
 impl PhysicalDeviceLineRasterizationFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceLineRasterizationFeatures<'_> {
@@ -35797,10 +34256,7 @@ unsafe impl Sync for PhysicalDeviceLineRasterizationProperties<'_> {}
 impl PhysicalDeviceLineRasterizationProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceLineRasterizationProperties<'_> {
@@ -35846,10 +34302,7 @@ unsafe impl Sync for PipelineRasterizationLineStateCreateInfo<'_> {}
 impl PipelineRasterizationLineStateCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineRasterizationLineStateCreateInfo<'_> {
@@ -35907,10 +34360,7 @@ unsafe impl Sync for PhysicalDevicePipelineCreationCacheControlFeatures<'_> {}
 impl PhysicalDevicePipelineCreationCacheControlFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePipelineCreationCacheControlFeatures<'_> {
@@ -35968,10 +34418,7 @@ unsafe impl Sync for PhysicalDeviceVulkan11Features<'_> {}
 impl PhysicalDeviceVulkan11Features<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVulkan11Features<'_> {
@@ -36087,10 +34534,7 @@ unsafe impl Sync for PhysicalDeviceVulkan11Properties<'_> {}
 impl PhysicalDeviceVulkan11Properties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVulkan11Properties<'_> {
@@ -36258,10 +34702,7 @@ unsafe impl Sync for PhysicalDeviceVulkan12Features<'_> {}
 impl PhysicalDeviceVulkan12Features<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVulkan12Features<'_> {
@@ -36887,10 +35328,7 @@ impl fmt::Debug for PhysicalDeviceVulkan12Properties<'_> {
 impl PhysicalDeviceVulkan12Properties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVulkan12Properties<'_> {
@@ -37372,10 +35810,7 @@ unsafe impl Sync for PhysicalDeviceVulkan13Features<'_> {}
 impl PhysicalDeviceVulkan13Features<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVulkan13Features<'_> {
@@ -37544,10 +35979,7 @@ unsafe impl Sync for PhysicalDeviceVulkan13Properties<'_> {}
 impl PhysicalDeviceVulkan13Properties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVulkan13Properties<'_> {
@@ -37989,10 +36421,7 @@ unsafe impl Sync for PhysicalDeviceVulkan14Features<'_> {}
 impl PhysicalDeviceVulkan14Features<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVulkan14Features<'_> {
@@ -38167,10 +36596,7 @@ unsafe impl Sync for PhysicalDeviceVulkan14Properties<'_> {}
 impl PhysicalDeviceVulkan14Properties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVulkan14Properties<'_> {
@@ -38381,10 +36807,7 @@ unsafe impl Sync for PipelineCompilerControlCreateInfoAMD<'_> {}
 impl PipelineCompilerControlCreateInfoAMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineCompilerControlCreateInfoAMD<'_> {
@@ -38429,10 +36852,7 @@ unsafe impl Sync for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {}
 impl PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {
@@ -38536,10 +36956,7 @@ unsafe impl Sync for PhysicalDeviceGpaFeaturesAMD<'_> {}
 impl PhysicalDeviceGpaFeaturesAMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceGpaFeaturesAMD<'_> {
@@ -38595,10 +37012,7 @@ unsafe impl Sync for PhysicalDeviceGpaPropertiesAMD<'_> {}
 impl PhysicalDeviceGpaPropertiesAMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceGpaPropertiesAMD<'_> {
@@ -38650,10 +37064,7 @@ unsafe impl Sync for PhysicalDeviceGpaProperties2AMD<'_> {}
 impl PhysicalDeviceGpaProperties2AMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceGpaProperties2AMD<'_> {
@@ -38741,10 +37152,7 @@ unsafe impl Sync for GpaSampleBeginInfoAMD<'_> {}
 impl GpaSampleBeginInfoAMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for GpaSampleBeginInfoAMD<'_> {
@@ -38858,10 +37266,7 @@ unsafe impl Sync for GpaDeviceClockModeInfoAMD<'_> {}
 impl GpaDeviceClockModeInfoAMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for GpaDeviceClockModeInfoAMD<'_> {
@@ -38909,10 +37314,7 @@ unsafe impl Sync for GpaDeviceGetClockInfoAMD<'_> {}
 impl GpaDeviceGetClockInfoAMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for GpaDeviceGetClockInfoAMD<'_> {
@@ -38962,10 +37364,7 @@ unsafe impl Sync for GpaSessionCreateInfoAMD<'_> {}
 impl GpaSessionCreateInfoAMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for GpaSessionCreateInfoAMD<'_> {
@@ -39017,10 +37416,7 @@ impl fmt::Debug for PhysicalDeviceToolProperties<'_> {
 impl PhysicalDeviceToolProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceToolProperties<'_> {
@@ -39106,10 +37502,7 @@ impl fmt::Debug for SamplerCustomBorderColorCreateInfoEXT<'_> {
 impl SamplerCustomBorderColorCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SamplerCustomBorderColorCreateInfoEXT<'_> {
@@ -39151,10 +37544,7 @@ unsafe impl Sync for PhysicalDeviceCustomBorderColorPropertiesEXT<'_> {}
 impl PhysicalDeviceCustomBorderColorPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCustomBorderColorPropertiesEXT<'_> {
@@ -39198,10 +37588,7 @@ unsafe impl Sync for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> {}
 impl PhysicalDeviceCustomBorderColorFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCustomBorderColorFeaturesEXT<'_> {
@@ -39251,10 +37638,7 @@ unsafe impl Sync for SamplerBorderColorComponentMappingCreateInfoEXT<'_> {}
 impl SamplerBorderColorComponentMappingCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SamplerBorderColorComponentMappingCreateInfoEXT<'_> {
@@ -39297,10 +37681,7 @@ unsafe impl Sync for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_> {}
 impl PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_> {
@@ -39411,10 +37792,7 @@ impl fmt::Debug for AccelerationStructureGeometryTrianglesDataKHR<'_> {
 impl AccelerationStructureGeometryTrianglesDataKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AccelerationStructureGeometryTrianglesDataKHR<'_> {
@@ -39491,10 +37869,7 @@ impl fmt::Debug for AccelerationStructureGeometryAabbsDataKHR<'_> {
 impl AccelerationStructureGeometryAabbsDataKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AccelerationStructureGeometryAabbsDataKHR<'_> {
@@ -39546,10 +37921,7 @@ impl fmt::Debug for AccelerationStructureGeometryInstancesDataKHR<'_> {
 impl AccelerationStructureGeometryInstancesDataKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AccelerationStructureGeometryInstancesDataKHR<'_> {
@@ -39619,10 +37991,7 @@ impl fmt::Debug for AccelerationStructureGeometryLinearSweptSpheresDataNV<'_> {
 impl AccelerationStructureGeometryLinearSweptSpheresDataNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AccelerationStructureGeometryLinearSweptSpheresDataNV<'_> {
@@ -39740,10 +38109,7 @@ impl fmt::Debug for AccelerationStructureGeometrySpheresDataNV<'_> {
 impl AccelerationStructureGeometrySpheresDataNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AccelerationStructureGeometrySpheresDataNV<'_> {
@@ -39850,10 +38216,7 @@ impl fmt::Debug for AccelerationStructureGeometryKHR<'_> {
 impl AccelerationStructureGeometryKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AccelerationStructureGeometryKHR<'_> {
@@ -39929,10 +38292,7 @@ impl fmt::Debug for AccelerationStructureBuildGeometryInfoKHR<'_> {
 impl AccelerationStructureBuildGeometryInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AccelerationStructureBuildGeometryInfoKHR<'_> {
@@ -40067,10 +38427,7 @@ unsafe impl Sync for AccelerationStructureCreateInfoKHR<'_> {}
 impl AccelerationStructureCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AccelerationStructureCreateInfoKHR<'_> {
@@ -40239,10 +38596,7 @@ unsafe impl Sync for AccelerationStructureDeviceAddressInfoKHR<'_> {}
 impl AccelerationStructureDeviceAddressInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AccelerationStructureDeviceAddressInfoKHR<'_> {
@@ -40281,10 +38635,7 @@ unsafe impl Sync for AccelerationStructureVersionInfoKHR<'_> {}
 impl AccelerationStructureVersionInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AccelerationStructureVersionInfoKHR<'_> {
@@ -40321,10 +38672,7 @@ unsafe impl Sync for CopyAccelerationStructureInfoKHR<'_> {}
 impl CopyAccelerationStructureInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CopyAccelerationStructureInfoKHR<'_> {
@@ -40382,10 +38730,7 @@ impl fmt::Debug for CopyAccelerationStructureToMemoryInfoKHR<'_> {
 impl CopyAccelerationStructureToMemoryInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CopyAccelerationStructureToMemoryInfoKHR<'_> {
@@ -40444,10 +38789,7 @@ impl fmt::Debug for CopyMemoryToAccelerationStructureInfoKHR<'_> {
 impl CopyMemoryToAccelerationStructureInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CopyMemoryToAccelerationStructureInfoKHR<'_> {
@@ -40494,10 +38836,7 @@ unsafe impl Sync for RayTracingPipelineInterfaceCreateInfoKHR<'_> {}
 impl RayTracingPipelineInterfaceCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RayTracingPipelineInterfaceCreateInfoKHR<'_> {
@@ -40545,10 +38884,7 @@ unsafe impl Sync for PipelineLibraryCreateInfoKHR<'_> {}
 impl PipelineLibraryCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineLibraryCreateInfoKHR<'_> {
@@ -40585,10 +38921,7 @@ unsafe impl Sync for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'_> {}
 impl PhysicalDeviceExtendedDynamicStateFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'_> {
@@ -40631,10 +38964,7 @@ unsafe impl Sync for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'_> {}
 impl PhysicalDeviceExtendedDynamicState2FeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'_> {
@@ -40722,10 +39052,7 @@ unsafe impl Sync for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {}
 impl PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'_> {
@@ -41038,10 +39365,7 @@ unsafe impl Sync for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'_> {}
 impl PhysicalDeviceExtendedDynamicState3PropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'_> {
@@ -41193,10 +39517,7 @@ unsafe impl Sync for RenderPassTransformBeginInfoQCOM<'_> {}
 impl RenderPassTransformBeginInfoQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderPassTransformBeginInfoQCOM<'_> {
@@ -41232,10 +39553,7 @@ unsafe impl Sync for CopyCommandTransformInfoQCOM<'_> {}
 impl CopyCommandTransformInfoQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CopyCommandTransformInfoQCOM<'_> {
@@ -41274,10 +39592,7 @@ unsafe impl Sync for CommandBufferInheritanceRenderPassTransformInfoQCOM<'_> {}
 impl CommandBufferInheritanceRenderPassTransformInfoQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CommandBufferInheritanceRenderPassTransformInfoQCOM<'_> {
@@ -41322,10 +39637,7 @@ unsafe impl Sync for PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'_
 impl PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'_> {
@@ -41374,10 +39686,7 @@ unsafe impl Sync for PhysicalDevicePartitionedAccelerationStructurePropertiesNV<
 impl PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'_> {
@@ -41458,10 +39767,7 @@ unsafe impl Sync for PartitionedAccelerationStructureFlagsNV<'_> {}
 impl PartitionedAccelerationStructureFlagsNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PartitionedAccelerationStructureFlagsNV<'_> {
@@ -41661,10 +39967,7 @@ unsafe impl Sync for WriteDescriptorSetPartitionedAccelerationStructureNV<'_> {}
 impl WriteDescriptorSetPartitionedAccelerationStructureNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for WriteDescriptorSetPartitionedAccelerationStructureNV<'_> {
@@ -41712,10 +40015,7 @@ unsafe impl Sync for PartitionedAccelerationStructureInstancesInputNV<'_> {}
 impl PartitionedAccelerationStructureInstancesInputNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PartitionedAccelerationStructureInstancesInputNV<'_> {
@@ -41783,9 +40083,8 @@ impl BuildPartitionedAccelerationStructureInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
         Self {
-            s_type: Self::STRUCTURE_TYPE,
             input: PartitionedAccelerationStructureInstancesInputNV::new(),
-            ..unsafe { ::core::mem::zeroed() }
+            ..init_tagged_structure()
         }
     }
 }
@@ -41856,10 +40155,7 @@ unsafe impl Sync for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {}
 impl PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> {
@@ -41897,10 +40193,7 @@ unsafe impl Sync for DeviceDiagnosticsConfigCreateInfoNV<'_> {}
 impl DeviceDiagnosticsConfigCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceDiagnosticsConfigCreateInfoNV<'_> {
@@ -41936,10 +40229,7 @@ unsafe impl Sync for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'_> {}
 impl PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'_> {
@@ -41987,10 +40277,7 @@ unsafe impl Sync for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'
 impl PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'_> {
@@ -42041,10 +40328,7 @@ unsafe impl Sync for PhysicalDeviceRobustness2FeaturesKHR<'_> {}
 impl PhysicalDeviceRobustness2FeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRobustness2FeaturesKHR<'_> {
@@ -42092,10 +40376,7 @@ unsafe impl Sync for PhysicalDeviceRobustness2PropertiesKHR<'_> {}
 impl PhysicalDeviceRobustness2PropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRobustness2PropertiesKHR<'_> {
@@ -42145,10 +40426,7 @@ unsafe impl Sync for PhysicalDeviceImageRobustnessFeatures<'_> {}
 impl PhysicalDeviceImageRobustnessFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceImageRobustnessFeatures<'_> {
@@ -42188,10 +40466,7 @@ unsafe impl Sync for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'_> 
 impl PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'_> {
@@ -42283,10 +40558,7 @@ unsafe impl Sync for PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {}
 impl PhysicalDevicePortabilitySubsetFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -42420,10 +40692,7 @@ unsafe impl Sync for PhysicalDevicePortabilitySubsetPropertiesKHR<'_> {}
 impl PhysicalDevicePortabilitySubsetPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -42471,10 +40740,7 @@ unsafe impl Sync for PhysicalDevice4444FormatsFeaturesEXT<'_> {}
 impl PhysicalDevice4444FormatsFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevice4444FormatsFeaturesEXT<'_> {
@@ -42516,10 +40782,7 @@ unsafe impl Sync for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> {}
 impl PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_> {
@@ -42561,10 +40824,7 @@ unsafe impl Sync for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {}
 impl PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'_> {
@@ -42613,10 +40873,7 @@ unsafe impl Sync for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'_> {}
 impl PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'_> {
@@ -42658,10 +40915,7 @@ unsafe impl Sync for BufferCopy2<'_> {}
 impl BufferCopy2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BufferCopy2<'_> {
@@ -42710,10 +40964,7 @@ unsafe impl Sync for ImageCopy2<'_> {}
 impl ImageCopy2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageCopy2<'_> {
@@ -42771,10 +41022,7 @@ unsafe impl Sync for ImageBlit2<'_> {}
 impl ImageBlit2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageBlit2<'_> {
@@ -42829,10 +41077,7 @@ unsafe impl Sync for BufferImageCopy2<'_> {}
 impl BufferImageCopy2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BufferImageCopy2<'_> {
@@ -42896,10 +41141,7 @@ unsafe impl Sync for ImageResolve2<'_> {}
 impl ImageResolve2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageResolve2<'_> {
@@ -42957,10 +41199,7 @@ unsafe impl Sync for CopyBufferInfo2<'_> {}
 impl CopyBufferInfo2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CopyBufferInfo2<'_> {
@@ -43011,10 +41250,7 @@ unsafe impl Sync for CopyImageInfo2<'_> {}
 impl CopyImageInfo2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CopyImageInfo2<'_> {
@@ -43076,10 +41312,7 @@ unsafe impl Sync for BlitImageInfo2<'_> {}
 impl BlitImageInfo2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BlitImageInfo2<'_> {
@@ -43144,10 +41377,7 @@ unsafe impl Sync for CopyBufferToImageInfo2<'_> {}
 impl CopyBufferToImageInfo2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CopyBufferToImageInfo2<'_> {
@@ -43202,10 +41432,7 @@ unsafe impl Sync for CopyImageToBufferInfo2<'_> {}
 impl CopyImageToBufferInfo2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CopyImageToBufferInfo2<'_> {
@@ -43261,10 +41488,7 @@ unsafe impl Sync for ResolveImageInfo2<'_> {}
 impl ResolveImageInfo2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ResolveImageInfo2<'_> {
@@ -43321,10 +41545,7 @@ unsafe impl Sync for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'_> {}
 impl PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'_> {
@@ -43371,10 +41592,7 @@ unsafe impl Sync for FragmentShadingRateAttachmentInfoKHR<'_> {}
 impl FragmentShadingRateAttachmentInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for FragmentShadingRateAttachmentInfoKHR<'_> {
@@ -43422,10 +41640,7 @@ unsafe impl Sync for PipelineFragmentShadingRateStateCreateInfoKHR<'_> {}
 impl PipelineFragmentShadingRateStateCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineFragmentShadingRateStateCreateInfoKHR<'_> {
@@ -43475,10 +41690,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShadingRateFeaturesKHR<'_> {}
 impl PhysicalDeviceFragmentShadingRateFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRateFeaturesKHR<'_> {
@@ -43554,10 +41766,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShadingRatePropertiesKHR<'_> {}
 impl PhysicalDeviceFragmentShadingRatePropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRatePropertiesKHR<'_> {
@@ -43740,10 +41949,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShadingRateKHR<'_> {}
 impl PhysicalDeviceFragmentShadingRateKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRateKHR<'_> {
@@ -43783,10 +41989,7 @@ unsafe impl Sync for PhysicalDeviceShaderTerminateInvocationFeatures<'_> {}
 impl PhysicalDeviceShaderTerminateInvocationFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderTerminateInvocationFeatures<'_> {
@@ -43829,10 +42032,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'_> {}
 impl PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'_> {
@@ -43889,10 +42089,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'_> {}
 impl PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'_> {
@@ -43938,10 +42135,7 @@ unsafe impl Sync for PipelineFragmentShadingRateEnumStateCreateInfoNV<'_> {}
 impl PipelineFragmentShadingRateEnumStateCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineFragmentShadingRateEnumStateCreateInfoNV<'_> {
@@ -43996,10 +42190,7 @@ unsafe impl Sync for AccelerationStructureBuildSizesInfoKHR<'_> {}
 impl AccelerationStructureBuildSizesInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AccelerationStructureBuildSizesInfoKHR<'_> {
@@ -44049,10 +42240,7 @@ unsafe impl Sync for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {}
 impl PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {
@@ -44095,10 +42283,7 @@ unsafe impl Sync for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {}
 impl PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'_> {
@@ -44139,10 +42324,7 @@ unsafe impl Sync for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT
 impl PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'_> {
@@ -44192,10 +42374,7 @@ unsafe impl Sync for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'_> {}
 impl PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'_> {
@@ -44236,10 +42415,7 @@ unsafe impl Sync for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'_> {}
 impl PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'_> {
@@ -44282,10 +42458,7 @@ unsafe impl Sync for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {}
 impl PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'_> {
@@ -44359,10 +42532,7 @@ unsafe impl Sync for MutableDescriptorTypeCreateInfoEXT<'_> {}
 impl MutableDescriptorTypeCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MutableDescriptorTypeCreateInfoEXT<'_> {
@@ -44403,10 +42573,7 @@ unsafe impl Sync for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {}
 impl PhysicalDeviceDepthClipControlFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDepthClipControlFeaturesEXT<'_> {
@@ -44444,10 +42611,7 @@ unsafe impl Sync for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'_> {}
 impl PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'_> {
@@ -44493,10 +42657,7 @@ unsafe impl Sync for BeginCustomResolveInfoEXT<'_> {}
 impl BeginCustomResolveInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BeginCustomResolveInfoEXT<'_> {
@@ -44525,10 +42686,7 @@ unsafe impl Sync for PhysicalDeviceCustomResolveFeaturesEXT<'_> {}
 impl PhysicalDeviceCustomResolveFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCustomResolveFeaturesEXT<'_> {
@@ -44570,10 +42728,7 @@ unsafe impl Sync for CustomResolveCreateInfoEXT<'_> {}
 impl CustomResolveCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CustomResolveCreateInfoEXT<'_> {
@@ -44631,10 +42786,7 @@ unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'_> {}
 impl PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'_> {
@@ -44694,10 +42846,7 @@ unsafe impl Sync for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'_> {}
 impl PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'_> {
@@ -44826,10 +42975,7 @@ unsafe impl Sync for GeneratedCommandsPipelineInfoEXT<'_> {}
 impl GeneratedCommandsPipelineInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for GeneratedCommandsPipelineInfoEXT<'_> {
@@ -44870,10 +43016,7 @@ unsafe impl Sync for GeneratedCommandsShaderInfoEXT<'_> {}
 impl GeneratedCommandsShaderInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for GeneratedCommandsShaderInfoEXT<'_> {
@@ -44917,10 +43060,7 @@ unsafe impl Sync for GeneratedCommandsMemoryRequirementsInfoEXT<'_> {}
 impl GeneratedCommandsMemoryRequirementsInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for GeneratedCommandsMemoryRequirementsInfoEXT<'_> {
@@ -44978,10 +43118,7 @@ unsafe impl Sync for IndirectExecutionSetPipelineInfoEXT<'_> {}
 impl IndirectExecutionSetPipelineInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for IndirectExecutionSetPipelineInfoEXT<'_> {
@@ -45022,10 +43159,7 @@ unsafe impl Sync for IndirectExecutionSetShaderLayoutInfoEXT<'_> {}
 impl IndirectExecutionSetShaderLayoutInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for IndirectExecutionSetShaderLayoutInfoEXT<'_> {
@@ -45067,10 +43201,7 @@ unsafe impl Sync for IndirectExecutionSetShaderInfoEXT<'_> {}
 impl IndirectExecutionSetShaderInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for IndirectExecutionSetShaderInfoEXT<'_> {
@@ -45153,10 +43284,7 @@ impl fmt::Debug for IndirectExecutionSetCreateInfoEXT<'_> {
 impl IndirectExecutionSetCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for IndirectExecutionSetCreateInfoEXT<'_> {
@@ -45205,10 +43333,7 @@ unsafe impl Sync for GeneratedCommandsInfoEXT<'_> {}
 impl GeneratedCommandsInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for GeneratedCommandsInfoEXT<'_> {
@@ -45295,10 +43420,7 @@ unsafe impl Sync for WriteIndirectExecutionSetPipelineEXT<'_> {}
 impl WriteIndirectExecutionSetPipelineEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for WriteIndirectExecutionSetPipelineEXT<'_> {
@@ -45339,10 +43461,7 @@ unsafe impl Sync for WriteIndirectExecutionSetShaderEXT<'_> {}
 impl WriteIndirectExecutionSetShaderEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for WriteIndirectExecutionSetShaderEXT<'_> {
@@ -45387,10 +43506,7 @@ unsafe impl Sync for IndirectCommandsLayoutCreateInfoEXT<'_> {}
 impl IndirectCommandsLayoutCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for IndirectCommandsLayoutCreateInfoEXT<'_> {
@@ -45459,10 +43575,7 @@ impl fmt::Debug for IndirectCommandsLayoutTokenEXT<'_> {
 impl IndirectCommandsLayoutTokenEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for IndirectCommandsLayoutTokenEXT<'_> {
@@ -45753,10 +43866,7 @@ unsafe impl Sync for PipelineViewportDepthClipControlCreateInfoEXT<'_> {}
 impl PipelineViewportDepthClipControlCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineViewportDepthClipControlCreateInfoEXT<'_> {
@@ -45796,10 +43906,7 @@ unsafe impl Sync for PhysicalDeviceDepthClampControlFeaturesEXT<'_> {}
 impl PhysicalDeviceDepthClampControlFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDepthClampControlFeaturesEXT<'_> {
@@ -45841,10 +43948,7 @@ unsafe impl Sync for PipelineViewportDepthClampControlCreateInfoEXT<'_> {}
 impl PipelineViewportDepthClampControlCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineViewportDepthClampControlCreateInfoEXT<'_> {
@@ -45889,10 +43993,7 @@ unsafe impl Sync for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'_> {}
 impl PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'_> {
@@ -45933,10 +44034,7 @@ unsafe impl Sync for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> {}
 impl PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_> {
@@ -45977,10 +44075,7 @@ unsafe impl Sync for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'
 impl PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'_> {
@@ -46032,10 +44127,7 @@ unsafe impl Sync for VertexInputBindingDescription2EXT<'_> {}
 impl VertexInputBindingDescription2EXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VertexInputBindingDescription2EXT<'_> {
@@ -46088,10 +44180,7 @@ unsafe impl Sync for VertexInputAttributeDescription2EXT<'_> {}
 impl VertexInputAttributeDescription2EXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VertexInputAttributeDescription2EXT<'_> {
@@ -46141,10 +44230,7 @@ unsafe impl Sync for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {}
 impl PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> {
@@ -46183,10 +44269,7 @@ unsafe impl Sync for PipelineColorWriteCreateInfoEXT<'_> {}
 impl PipelineColorWriteCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineColorWriteCreateInfoEXT<'_> {
@@ -46226,10 +44309,7 @@ unsafe impl Sync for MemoryBarrier2<'_> {}
 impl MemoryBarrier2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryBarrier2<'_> {
@@ -46289,10 +44369,7 @@ unsafe impl Sync for ImageMemoryBarrier2<'_> {}
 impl ImageMemoryBarrier2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageMemoryBarrier2<'_> {
@@ -46380,10 +44457,7 @@ unsafe impl Sync for BufferMemoryBarrier2<'_> {}
 impl BufferMemoryBarrier2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BufferMemoryBarrier2<'_> {
@@ -46459,10 +44533,7 @@ unsafe impl Sync for MemoryBarrierAccessFlags3KHR<'_> {}
 impl MemoryBarrierAccessFlags3KHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryBarrierAccessFlags3KHR<'_> {
@@ -46512,10 +44583,7 @@ unsafe impl Sync for DependencyInfo<'_> {}
 impl DependencyInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DependencyInfo<'_> {
@@ -46577,10 +44645,7 @@ unsafe impl Sync for SemaphoreSubmitInfo<'_> {}
 impl SemaphoreSubmitInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SemaphoreSubmitInfo<'_> {
@@ -46631,10 +44696,7 @@ unsafe impl Sync for CommandBufferSubmitInfo<'_> {}
 impl CommandBufferSubmitInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CommandBufferSubmitInfo<'_> {
@@ -46680,10 +44742,7 @@ unsafe impl Sync for SubmitInfo2<'_> {}
 impl SubmitInfo2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SubmitInfo2<'_> {
@@ -46745,10 +44804,7 @@ unsafe impl Sync for QueueFamilyCheckpointProperties2NV<'_> {}
 impl QueueFamilyCheckpointProperties2NV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for QueueFamilyCheckpointProperties2NV<'_> {
@@ -46788,10 +44844,7 @@ unsafe impl Sync for CheckpointData2NV<'_> {}
 impl CheckpointData2NV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CheckpointData2NV<'_> {
@@ -46831,10 +44884,7 @@ unsafe impl Sync for PhysicalDeviceSynchronization2Features<'_> {}
 impl PhysicalDeviceSynchronization2Features<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceSynchronization2Features<'_> {
@@ -46872,10 +44922,7 @@ unsafe impl Sync for PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'_> {}
 impl PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'_> {
@@ -46921,10 +44968,7 @@ unsafe impl Sync for PhysicalDeviceHostImageCopyFeatures<'_> {}
 impl PhysicalDeviceHostImageCopyFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceHostImageCopyFeatures<'_> {
@@ -46966,10 +45010,7 @@ unsafe impl Sync for PhysicalDeviceHostImageCopyProperties<'_> {}
 impl PhysicalDeviceHostImageCopyProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceHostImageCopyProperties<'_> {
@@ -47033,10 +45074,7 @@ unsafe impl Sync for MemoryToImageCopy<'_> {}
 impl MemoryToImageCopy<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryToImageCopy<'_> {
@@ -47101,10 +45139,7 @@ unsafe impl Sync for ImageToMemoryCopy<'_> {}
 impl ImageToMemoryCopy<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageToMemoryCopy<'_> {
@@ -47168,10 +45203,7 @@ unsafe impl Sync for CopyMemoryToImageInfo<'_> {}
 impl CopyMemoryToImageInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CopyMemoryToImageInfo<'_> {
@@ -47226,10 +45258,7 @@ unsafe impl Sync for CopyImageToMemoryInfo<'_> {}
 impl CopyImageToMemoryInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CopyImageToMemoryInfo<'_> {
@@ -47286,10 +45315,7 @@ unsafe impl Sync for CopyImageToImageInfo<'_> {}
 impl CopyImageToImageInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CopyImageToImageInfo<'_> {
@@ -47353,10 +45379,7 @@ unsafe impl Sync for HostImageLayoutTransitionInfo<'_> {}
 impl HostImageLayoutTransitionInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for HostImageLayoutTransitionInfo<'_> {
@@ -47406,10 +45429,7 @@ unsafe impl Sync for SubresourceHostMemcpySize<'_> {}
 impl SubresourceHostMemcpySize<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SubresourceHostMemcpySize<'_> {
@@ -47446,10 +45466,7 @@ unsafe impl Sync for HostImageCopyDevicePerformanceQuery<'_> {}
 impl HostImageCopyDevicePerformanceQuery<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for HostImageCopyDevicePerformanceQuery<'_> {
@@ -47492,10 +45509,7 @@ unsafe impl Sync for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_> {}
 impl PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'_> {
@@ -47557,10 +45571,7 @@ unsafe impl Sync for PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {}
 impl PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {
@@ -47598,10 +45609,7 @@ unsafe impl Sync for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<
 impl PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'_> {
@@ -47651,10 +45659,7 @@ unsafe impl Sync for SurfaceCapabilitiesPresentId2KHR<'_> {}
 impl SurfaceCapabilitiesPresentId2KHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SurfaceCapabilitiesPresentId2KHR<'_> {
@@ -47690,10 +45695,7 @@ unsafe impl Sync for SurfaceCapabilitiesPresentWait2KHR<'_> {}
 impl SurfaceCapabilitiesPresentWait2KHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SurfaceCapabilitiesPresentWait2KHR<'_> {
@@ -47729,10 +45731,7 @@ unsafe impl Sync for SubpassResolvePerformanceQueryEXT<'_> {}
 impl SubpassResolvePerformanceQueryEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SubpassResolvePerformanceQueryEXT<'_> {
@@ -47769,10 +45768,7 @@ unsafe impl Sync for MultisampledRenderToSingleSampledInfoEXT<'_> {}
 impl MultisampledRenderToSingleSampledInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MultisampledRenderToSingleSampledInfoEXT<'_> {
@@ -47819,10 +45815,7 @@ unsafe impl Sync for PhysicalDevicePipelineProtectedAccessFeatures<'_> {}
 impl PhysicalDevicePipelineProtectedAccessFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePipelineProtectedAccessFeatures<'_> {
@@ -47863,10 +45856,7 @@ unsafe impl Sync for QueueFamilyVideoPropertiesKHR<'_> {}
 impl QueueFamilyVideoPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for QueueFamilyVideoPropertiesKHR<'_> {
@@ -47905,10 +45895,7 @@ unsafe impl Sync for QueueFamilyQueryResultStatusPropertiesKHR<'_> {}
 impl QueueFamilyQueryResultStatusPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for QueueFamilyQueryResultStatusPropertiesKHR<'_> {
@@ -47946,10 +45933,7 @@ unsafe impl Sync for VideoProfileListInfoKHR<'_> {}
 impl VideoProfileListInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoProfileListInfoKHR<'_> {
@@ -47989,10 +45973,7 @@ unsafe impl Sync for PhysicalDeviceVideoFormatInfoKHR<'_> {}
 impl PhysicalDeviceVideoFormatInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVideoFormatInfoKHR<'_> {
@@ -48032,10 +46013,7 @@ unsafe impl Sync for VideoFormatPropertiesKHR<'_> {}
 impl VideoFormatPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoFormatPropertiesKHR<'_> {
@@ -48095,10 +46073,7 @@ unsafe impl Sync for VideoEncodeQuantizationMapCapabilitiesKHR<'_> {}
 impl VideoEncodeQuantizationMapCapabilitiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeQuantizationMapCapabilitiesKHR<'_> {
@@ -48139,10 +46114,7 @@ unsafe impl Sync for VideoEncodeH264QuantizationMapCapabilitiesKHR<'_> {}
 impl VideoEncodeH264QuantizationMapCapabilitiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH264QuantizationMapCapabilitiesKHR<'_> {
@@ -48188,10 +46160,7 @@ unsafe impl Sync for VideoEncodeH265QuantizationMapCapabilitiesKHR<'_> {}
 impl VideoEncodeH265QuantizationMapCapabilitiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH265QuantizationMapCapabilitiesKHR<'_> {
@@ -48237,10 +46206,7 @@ unsafe impl Sync for VideoEncodeAV1QuantizationMapCapabilitiesKHR<'_> {}
 impl VideoEncodeAV1QuantizationMapCapabilitiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeAV1QuantizationMapCapabilitiesKHR<'_> {
@@ -48282,10 +46248,7 @@ unsafe impl Sync for VideoFormatQuantizationMapPropertiesKHR<'_> {}
 impl VideoFormatQuantizationMapPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoFormatQuantizationMapPropertiesKHR<'_> {
@@ -48325,10 +46288,7 @@ unsafe impl Sync for VideoFormatH265QuantizationMapPropertiesKHR<'_> {}
 impl VideoFormatH265QuantizationMapPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoFormatH265QuantizationMapPropertiesKHR<'_> {
@@ -48371,10 +46331,7 @@ unsafe impl Sync for VideoFormatAV1QuantizationMapPropertiesKHR<'_> {}
 impl VideoFormatAV1QuantizationMapPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoFormatAV1QuantizationMapPropertiesKHR<'_> {
@@ -48420,10 +46377,7 @@ unsafe impl Sync for VideoProfileInfoKHR<'_> {}
 impl VideoProfileInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoProfileInfoKHR<'_> {
@@ -48491,10 +46445,7 @@ unsafe impl Sync for VideoCapabilitiesKHR<'_> {}
 impl VideoCapabilitiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoCapabilitiesKHR<'_> {
@@ -48582,10 +46533,7 @@ unsafe impl Sync for VideoSessionMemoryRequirementsKHR<'_> {}
 impl VideoSessionMemoryRequirementsKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoSessionMemoryRequirementsKHR<'_> {
@@ -48628,10 +46576,7 @@ unsafe impl Sync for BindVideoSessionMemoryInfoKHR<'_> {}
 impl BindVideoSessionMemoryInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BindVideoSessionMemoryInfoKHR<'_> {
@@ -48684,10 +46629,7 @@ unsafe impl Sync for VideoPictureResourceInfoKHR<'_> {}
 impl VideoPictureResourceInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoPictureResourceInfoKHR<'_> {
@@ -48738,10 +46680,7 @@ unsafe impl Sync for VideoReferenceSlotInfoKHR<'_> {}
 impl VideoReferenceSlotInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoReferenceSlotInfoKHR<'_> {
@@ -48784,10 +46723,7 @@ unsafe impl Sync for VideoDecodeCapabilitiesKHR<'_> {}
 impl VideoDecodeCapabilitiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeCapabilitiesKHR<'_> {
@@ -48823,10 +46759,7 @@ unsafe impl Sync for VideoDecodeUsageInfoKHR<'_> {}
 impl VideoDecodeUsageInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeUsageInfoKHR<'_> {
@@ -48871,9 +46804,8 @@ impl VideoDecodeInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
         Self {
-            s_type: Self::STRUCTURE_TYPE,
             dst_picture_resource: VideoPictureResourceInfoKHR::new(),
-            ..unsafe { ::core::mem::zeroed() }
+            ..init_tagged_structure()
         }
     }
 }
@@ -48949,10 +46881,7 @@ unsafe impl Sync for PhysicalDeviceVideoMaintenance1FeaturesKHR<'_> {}
 impl PhysicalDeviceVideoMaintenance1FeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVideoMaintenance1FeaturesKHR<'_> {
@@ -48993,10 +46922,7 @@ unsafe impl Sync for PhysicalDeviceVideoMaintenance2FeaturesKHR<'_> {}
 impl PhysicalDeviceVideoMaintenance2FeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVideoMaintenance2FeaturesKHR<'_> {
@@ -49039,10 +46965,7 @@ unsafe impl Sync for VideoInlineQueryInfoKHR<'_> {}
 impl VideoInlineQueryInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoInlineQueryInfoKHR<'_> {
@@ -49090,10 +47013,7 @@ unsafe impl Sync for VideoDecodeH264ProfileInfoKHR<'_> {}
 impl VideoDecodeH264ProfileInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeH264ProfileInfoKHR<'_> {
@@ -49139,10 +47059,7 @@ unsafe impl Sync for VideoDecodeH264CapabilitiesKHR<'_> {}
 impl VideoDecodeH264CapabilitiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeH264CapabilitiesKHR<'_> {
@@ -49186,10 +47103,7 @@ unsafe impl Sync for VideoDecodeH264SessionParametersAddInfoKHR<'_> {}
 impl VideoDecodeH264SessionParametersAddInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeH264SessionParametersAddInfoKHR<'_> {
@@ -49238,10 +47152,7 @@ unsafe impl Sync for VideoDecodeH264SessionParametersCreateInfoKHR<'_> {}
 impl VideoDecodeH264SessionParametersCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeH264SessionParametersCreateInfoKHR<'_> {
@@ -49295,10 +47206,7 @@ unsafe impl Sync for VideoDecodeH264InlineSessionParametersInfoKHR<'_> {}
 impl VideoDecodeH264InlineSessionParametersInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeH264InlineSessionParametersInfoKHR<'_> {
@@ -49342,10 +47250,7 @@ unsafe impl Sync for VideoDecodeH264PictureInfoKHR<'_> {}
 impl VideoDecodeH264PictureInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeH264PictureInfoKHR<'_> {
@@ -49390,10 +47295,7 @@ unsafe impl Sync for VideoDecodeH264DpbSlotInfoKHR<'_> {}
 impl VideoDecodeH264DpbSlotInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeH264DpbSlotInfoKHR<'_> {
@@ -49432,10 +47334,7 @@ unsafe impl Sync for VideoDecodeH265ProfileInfoKHR<'_> {}
 impl VideoDecodeH265ProfileInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeH265ProfileInfoKHR<'_> {
@@ -49472,10 +47371,7 @@ unsafe impl Sync for VideoDecodeH265CapabilitiesKHR<'_> {}
 impl VideoDecodeH265CapabilitiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeH265CapabilitiesKHR<'_> {
@@ -49516,10 +47412,7 @@ unsafe impl Sync for VideoDecodeH265SessionParametersAddInfoKHR<'_> {}
 impl VideoDecodeH265SessionParametersAddInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeH265SessionParametersAddInfoKHR<'_> {
@@ -49575,10 +47468,7 @@ unsafe impl Sync for VideoDecodeH265SessionParametersCreateInfoKHR<'_> {}
 impl VideoDecodeH265SessionParametersCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeH265SessionParametersCreateInfoKHR<'_> {
@@ -49638,10 +47528,7 @@ unsafe impl Sync for VideoDecodeH265InlineSessionParametersInfoKHR<'_> {}
 impl VideoDecodeH265InlineSessionParametersInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeH265InlineSessionParametersInfoKHR<'_> {
@@ -49690,10 +47577,7 @@ unsafe impl Sync for VideoDecodeH265PictureInfoKHR<'_> {}
 impl VideoDecodeH265PictureInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeH265PictureInfoKHR<'_> {
@@ -49738,10 +47622,7 @@ unsafe impl Sync for VideoDecodeH265DpbSlotInfoKHR<'_> {}
 impl VideoDecodeH265DpbSlotInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeH265DpbSlotInfoKHR<'_> {
@@ -49780,10 +47661,7 @@ unsafe impl Sync for PhysicalDeviceVideoDecodeVP9FeaturesKHR<'_> {}
 impl PhysicalDeviceVideoDecodeVP9FeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVideoDecodeVP9FeaturesKHR<'_> {
@@ -49821,10 +47699,7 @@ unsafe impl Sync for VideoDecodeVP9ProfileInfoKHR<'_> {}
 impl VideoDecodeVP9ProfileInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeVP9ProfileInfoKHR<'_> {
@@ -49861,10 +47736,7 @@ unsafe impl Sync for VideoDecodeVP9CapabilitiesKHR<'_> {}
 impl VideoDecodeVP9CapabilitiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeVP9CapabilitiesKHR<'_> {
@@ -49904,10 +47776,7 @@ unsafe impl Sync for VideoDecodeVP9PictureInfoKHR<'_> {}
 impl VideoDecodeVP9PictureInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeVP9PictureInfoKHR<'_> {
@@ -49970,10 +47839,7 @@ unsafe impl Sync for VideoDecodeAV1ProfileInfoKHR<'_> {}
 impl VideoDecodeAV1ProfileInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeAV1ProfileInfoKHR<'_> {
@@ -50015,10 +47881,7 @@ unsafe impl Sync for VideoDecodeAV1CapabilitiesKHR<'_> {}
 impl VideoDecodeAV1CapabilitiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeAV1CapabilitiesKHR<'_> {
@@ -50054,10 +47917,7 @@ unsafe impl Sync for VideoDecodeAV1SessionParametersCreateInfoKHR<'_> {}
 impl VideoDecodeAV1SessionParametersCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeAV1SessionParametersCreateInfoKHR<'_> {
@@ -50100,10 +47960,7 @@ unsafe impl Sync for VideoDecodeAV1InlineSessionParametersInfoKHR<'_> {}
 impl VideoDecodeAV1InlineSessionParametersInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeAV1InlineSessionParametersInfoKHR<'_> {
@@ -50148,10 +48005,7 @@ unsafe impl Sync for VideoDecodeAV1PictureInfoKHR<'_> {}
 impl VideoDecodeAV1PictureInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeAV1PictureInfoKHR<'_> {
@@ -50215,10 +48069,7 @@ unsafe impl Sync for VideoDecodeAV1DpbSlotInfoKHR<'_> {}
 impl VideoDecodeAV1DpbSlotInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoDecodeAV1DpbSlotInfoKHR<'_> {
@@ -50265,10 +48116,7 @@ unsafe impl Sync for VideoSessionCreateInfoKHR<'_> {}
 impl VideoSessionCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoSessionCreateInfoKHR<'_> {
@@ -50348,10 +48196,7 @@ unsafe impl Sync for VideoSessionParametersCreateInfoKHR<'_> {}
 impl VideoSessionParametersCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoSessionParametersCreateInfoKHR<'_> {
@@ -50399,10 +48244,7 @@ unsafe impl Sync for VideoSessionParametersUpdateInfoKHR<'_> {}
 impl VideoSessionParametersUpdateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoSessionParametersUpdateInfoKHR<'_> {
@@ -50437,10 +48279,7 @@ unsafe impl Sync for VideoEncodeSessionParametersGetInfoKHR<'_> {}
 impl VideoEncodeSessionParametersGetInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeSessionParametersGetInfoKHR<'_> {
@@ -50479,10 +48318,7 @@ unsafe impl Sync for VideoEncodeSessionParametersFeedbackInfoKHR<'_> {}
 impl VideoEncodeSessionParametersFeedbackInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeSessionParametersFeedbackInfoKHR<'_> {
@@ -50522,10 +48358,7 @@ unsafe impl Sync for VideoBeginCodingInfoKHR<'_> {}
 impl VideoBeginCodingInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoBeginCodingInfoKHR<'_> {
@@ -50582,10 +48415,7 @@ unsafe impl Sync for VideoEndCodingInfoKHR<'_> {}
 impl VideoEndCodingInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEndCodingInfoKHR<'_> {
@@ -50620,10 +48450,7 @@ unsafe impl Sync for VideoCodingControlInfoKHR<'_> {}
 impl VideoCodingControlInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoCodingControlInfoKHR<'_> {
@@ -50660,10 +48487,7 @@ unsafe impl Sync for VideoEncodeUsageInfoKHR<'_> {}
 impl VideoEncodeUsageInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeUsageInfoKHR<'_> {
@@ -50722,9 +48546,8 @@ impl VideoEncodeInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
         Self {
-            s_type: Self::STRUCTURE_TYPE,
             src_picture_resource: VideoPictureResourceInfoKHR::new(),
-            ..unsafe { ::core::mem::zeroed() }
+            ..init_tagged_structure()
         }
     }
 }
@@ -50809,10 +48632,7 @@ unsafe impl Sync for VideoEncodeQuantizationMapInfoKHR<'_> {}
 impl VideoEncodeQuantizationMapInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeQuantizationMapInfoKHR<'_> {
@@ -50853,10 +48673,7 @@ unsafe impl Sync for VideoEncodeQuantizationMapSessionParametersCreateInfoKHR<'_
 impl VideoEncodeQuantizationMapSessionParametersCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeQuantizationMapSessionParametersCreateInfoKHR<'_> {
@@ -50901,10 +48718,7 @@ unsafe impl Sync for PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'_> {}
 impl PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVideoEncodeQuantizationMapFeaturesKHR<'_> {
@@ -50951,10 +48765,7 @@ unsafe impl Sync for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> {}
 impl QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> {
@@ -50994,10 +48805,7 @@ unsafe impl Sync for VideoEncodeQualityLevelInfoKHR<'_> {}
 impl VideoEncodeQualityLevelInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeQualityLevelInfoKHR<'_> {
@@ -51038,10 +48846,7 @@ unsafe impl Sync for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'_> {}
 impl PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'_> {
@@ -51083,10 +48888,7 @@ unsafe impl Sync for VideoEncodeQualityLevelPropertiesKHR<'_> {}
 impl VideoEncodeQualityLevelPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeQualityLevelPropertiesKHR<'_> {
@@ -51137,10 +48939,7 @@ unsafe impl Sync for VideoEncodeRateControlInfoKHR<'_> {}
 impl VideoEncodeRateControlInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeRateControlInfoKHR<'_> {
@@ -51207,10 +49006,7 @@ unsafe impl Sync for VideoEncodeRateControlLayerInfoKHR<'_> {}
 impl VideoEncodeRateControlLayerInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeRateControlLayerInfoKHR<'_> {
@@ -51266,10 +49062,7 @@ unsafe impl Sync for VideoEncodeCapabilitiesKHR<'_> {}
 impl VideoEncodeCapabilitiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeCapabilitiesKHR<'_> {
@@ -51356,10 +49149,7 @@ unsafe impl Sync for VideoEncodeH264CapabilitiesKHR<'_> {}
 impl VideoEncodeH264CapabilitiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH264CapabilitiesKHR<'_> {
@@ -51478,10 +49268,7 @@ unsafe impl Sync for VideoEncodeH264QualityLevelPropertiesKHR<'_> {}
 impl VideoEncodeH264QualityLevelPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH264QualityLevelPropertiesKHR<'_> {
@@ -51584,10 +49371,7 @@ unsafe impl Sync for VideoEncodeH264SessionCreateInfoKHR<'_> {}
 impl VideoEncodeH264SessionCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH264SessionCreateInfoKHR<'_> {
@@ -51631,10 +49415,7 @@ unsafe impl Sync for VideoEncodeH264SessionParametersAddInfoKHR<'_> {}
 impl VideoEncodeH264SessionParametersAddInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH264SessionParametersAddInfoKHR<'_> {
@@ -51683,10 +49464,7 @@ unsafe impl Sync for VideoEncodeH264SessionParametersCreateInfoKHR<'_> {}
 impl VideoEncodeH264SessionParametersCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH264SessionParametersCreateInfoKHR<'_> {
@@ -51742,10 +49520,7 @@ unsafe impl Sync for VideoEncodeH264SessionParametersGetInfoKHR<'_> {}
 impl VideoEncodeH264SessionParametersGetInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH264SessionParametersGetInfoKHR<'_> {
@@ -51801,10 +49576,7 @@ unsafe impl Sync for VideoEncodeH264SessionParametersFeedbackInfoKHR<'_> {}
 impl VideoEncodeH264SessionParametersFeedbackInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH264SessionParametersFeedbackInfoKHR<'_> {
@@ -51849,10 +49621,7 @@ unsafe impl Sync for VideoEncodeH264DpbSlotInfoKHR<'_> {}
 impl VideoEncodeH264DpbSlotInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH264DpbSlotInfoKHR<'_> {
@@ -51894,10 +49663,7 @@ unsafe impl Sync for VideoEncodeH264PictureInfoKHR<'_> {}
 impl VideoEncodeH264PictureInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH264PictureInfoKHR<'_> {
@@ -51950,10 +49716,7 @@ unsafe impl Sync for VideoEncodeH264ProfileInfoKHR<'_> {}
 impl VideoEncodeH264ProfileInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH264ProfileInfoKHR<'_> {
@@ -51991,10 +49754,7 @@ unsafe impl Sync for VideoEncodeH264NaluSliceInfoKHR<'_> {}
 impl VideoEncodeH264NaluSliceInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH264NaluSliceInfoKHR<'_> {
@@ -52041,10 +49801,7 @@ unsafe impl Sync for VideoEncodeH264RateControlInfoKHR<'_> {}
 impl VideoEncodeH264RateControlInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH264RateControlInfoKHR<'_> {
@@ -52182,10 +49939,7 @@ unsafe impl Sync for VideoEncodeH264GopRemainingFrameInfoKHR<'_> {}
 impl VideoEncodeH264GopRemainingFrameInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH264GopRemainingFrameInfoKHR<'_> {
@@ -52242,10 +49996,7 @@ unsafe impl Sync for VideoEncodeH264RateControlLayerInfoKHR<'_> {}
 impl VideoEncodeH264RateControlLayerInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH264RateControlLayerInfoKHR<'_> {
@@ -52325,10 +50076,7 @@ unsafe impl Sync for VideoEncodeH265CapabilitiesKHR<'_> {}
 impl VideoEncodeH265CapabilitiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH265CapabilitiesKHR<'_> {
@@ -52465,10 +50213,7 @@ unsafe impl Sync for VideoEncodeH265QualityLevelPropertiesKHR<'_> {}
 impl VideoEncodeH265QualityLevelPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH265QualityLevelPropertiesKHR<'_> {
@@ -52559,10 +50304,7 @@ unsafe impl Sync for VideoEncodeH265SessionCreateInfoKHR<'_> {}
 impl VideoEncodeH265SessionCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH265SessionCreateInfoKHR<'_> {
@@ -52608,10 +50350,7 @@ unsafe impl Sync for VideoEncodeH265SessionParametersAddInfoKHR<'_> {}
 impl VideoEncodeH265SessionParametersAddInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH265SessionParametersAddInfoKHR<'_> {
@@ -52667,10 +50406,7 @@ unsafe impl Sync for VideoEncodeH265SessionParametersCreateInfoKHR<'_> {}
 impl VideoEncodeH265SessionParametersCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH265SessionParametersCreateInfoKHR<'_> {
@@ -52733,10 +50469,7 @@ unsafe impl Sync for VideoEncodeH265SessionParametersGetInfoKHR<'_> {}
 impl VideoEncodeH265SessionParametersGetInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH265SessionParametersGetInfoKHR<'_> {
@@ -52803,10 +50536,7 @@ unsafe impl Sync for VideoEncodeH265SessionParametersFeedbackInfoKHR<'_> {}
 impl VideoEncodeH265SessionParametersFeedbackInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH265SessionParametersFeedbackInfoKHR<'_> {
@@ -52858,10 +50588,7 @@ unsafe impl Sync for VideoEncodeH265PictureInfoKHR<'_> {}
 impl VideoEncodeH265PictureInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH265PictureInfoKHR<'_> {
@@ -52910,10 +50637,7 @@ unsafe impl Sync for VideoEncodeH265NaluSliceSegmentInfoKHR<'_> {}
 impl VideoEncodeH265NaluSliceSegmentInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH265NaluSliceSegmentInfoKHR<'_> {
@@ -52961,10 +50685,7 @@ unsafe impl Sync for VideoEncodeH265RateControlInfoKHR<'_> {}
 impl VideoEncodeH265RateControlInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH265RateControlInfoKHR<'_> {
@@ -53102,10 +50823,7 @@ unsafe impl Sync for VideoEncodeH265GopRemainingFrameInfoKHR<'_> {}
 impl VideoEncodeH265GopRemainingFrameInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH265GopRemainingFrameInfoKHR<'_> {
@@ -53162,10 +50880,7 @@ unsafe impl Sync for VideoEncodeH265RateControlLayerInfoKHR<'_> {}
 impl VideoEncodeH265RateControlLayerInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH265RateControlLayerInfoKHR<'_> {
@@ -53230,10 +50945,7 @@ unsafe impl Sync for VideoEncodeH265ProfileInfoKHR<'_> {}
 impl VideoEncodeH265ProfileInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH265ProfileInfoKHR<'_> {
@@ -53270,10 +50982,7 @@ unsafe impl Sync for VideoEncodeH265DpbSlotInfoKHR<'_> {}
 impl VideoEncodeH265DpbSlotInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeH265DpbSlotInfoKHR<'_> {
@@ -53335,10 +51044,7 @@ unsafe impl Sync for VideoEncodeAV1CapabilitiesKHR<'_> {}
 impl VideoEncodeAV1CapabilitiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeAV1CapabilitiesKHR<'_> {
@@ -53540,10 +51246,7 @@ unsafe impl Sync for VideoEncodeAV1QualityLevelPropertiesKHR<'_> {}
 impl VideoEncodeAV1QualityLevelPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeAV1QualityLevelPropertiesKHR<'_> {
@@ -53700,10 +51403,7 @@ unsafe impl Sync for PhysicalDeviceVideoEncodeAV1FeaturesKHR<'_> {}
 impl PhysicalDeviceVideoEncodeAV1FeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVideoEncodeAV1FeaturesKHR<'_> {
@@ -53742,10 +51442,7 @@ unsafe impl Sync for VideoEncodeAV1SessionCreateInfoKHR<'_> {}
 impl VideoEncodeAV1SessionCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeAV1SessionCreateInfoKHR<'_> {
@@ -53789,10 +51486,7 @@ unsafe impl Sync for VideoEncodeAV1SessionParametersCreateInfoKHR<'_> {}
 impl VideoEncodeAV1SessionParametersCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeAV1SessionParametersCreateInfoKHR<'_> {
@@ -53852,10 +51546,7 @@ unsafe impl Sync for VideoEncodeAV1DpbSlotInfoKHR<'_> {}
 impl VideoEncodeAV1DpbSlotInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeAV1DpbSlotInfoKHR<'_> {
@@ -53900,10 +51591,7 @@ unsafe impl Sync for VideoEncodeAV1PictureInfoKHR<'_> {}
 impl VideoEncodeAV1PictureInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeAV1PictureInfoKHR<'_> {
@@ -53984,10 +51672,7 @@ unsafe impl Sync for VideoEncodeAV1ProfileInfoKHR<'_> {}
 impl VideoEncodeAV1ProfileInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeAV1ProfileInfoKHR<'_> {
@@ -54028,10 +51713,7 @@ unsafe impl Sync for VideoEncodeAV1RateControlInfoKHR<'_> {}
 impl VideoEncodeAV1RateControlInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeAV1RateControlInfoKHR<'_> {
@@ -54172,10 +51854,7 @@ unsafe impl Sync for VideoEncodeAV1GopRemainingFrameInfoKHR<'_> {}
 impl VideoEncodeAV1GopRemainingFrameInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeAV1GopRemainingFrameInfoKHR<'_> {
@@ -54232,10 +51911,7 @@ unsafe impl Sync for VideoEncodeAV1RateControlLayerInfoKHR<'_> {}
 impl VideoEncodeAV1RateControlLayerInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeAV1RateControlLayerInfoKHR<'_> {
@@ -54300,10 +51976,7 @@ unsafe impl Sync for PhysicalDeviceInheritedViewportScissorFeaturesNV<'_> {}
 impl PhysicalDeviceInheritedViewportScissorFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceInheritedViewportScissorFeaturesNV<'_> {
@@ -54349,10 +52022,7 @@ unsafe impl Sync for CommandBufferInheritanceViewportScissorInfoNV<'_> {}
 impl CommandBufferInheritanceViewportScissorInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CommandBufferInheritanceViewportScissorInfoNV<'_> {
@@ -54402,10 +52072,7 @@ unsafe impl Sync for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'_> {}
 impl PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'_> {
@@ -54447,10 +52114,7 @@ unsafe impl Sync for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {}
 impl PhysicalDeviceProvokingVertexFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {
@@ -54498,10 +52162,7 @@ unsafe impl Sync for PhysicalDeviceProvokingVertexPropertiesEXT<'_> {}
 impl PhysicalDeviceProvokingVertexPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceProvokingVertexPropertiesEXT<'_> {
@@ -54553,10 +52214,7 @@ unsafe impl Sync for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'_> 
 impl PipelineRasterizationProvokingVertexStateCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineRasterizationProvokingVertexStateCreateInfoEXT<'_> {
@@ -54603,10 +52261,7 @@ unsafe impl Sync for VideoEncodeIntraRefreshCapabilitiesKHR<'_> {}
 impl VideoEncodeIntraRefreshCapabilitiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeIntraRefreshCapabilitiesKHR<'_> {
@@ -54681,10 +52336,7 @@ unsafe impl Sync for VideoEncodeSessionIntraRefreshCreateInfoKHR<'_> {}
 impl VideoEncodeSessionIntraRefreshCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeSessionIntraRefreshCreateInfoKHR<'_> {
@@ -54728,10 +52380,7 @@ unsafe impl Sync for VideoEncodeIntraRefreshInfoKHR<'_> {}
 impl VideoEncodeIntraRefreshInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeIntraRefreshInfoKHR<'_> {
@@ -54772,10 +52421,7 @@ unsafe impl Sync for VideoReferenceIntraRefreshInfoKHR<'_> {}
 impl VideoReferenceIntraRefreshInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoReferenceIntraRefreshInfoKHR<'_> {
@@ -54811,10 +52457,7 @@ unsafe impl Sync for PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'_> {}
 impl PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVideoEncodeIntraRefreshFeaturesKHR<'_> {
@@ -54856,10 +52499,7 @@ unsafe impl Sync for CuModuleCreateInfoNVX<'_> {}
 impl CuModuleCreateInfoNVX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CuModuleCreateInfoNVX<'_> {
@@ -54895,10 +52535,7 @@ unsafe impl Sync for CuModuleTexturingModeCreateInfoNVX<'_> {}
 impl CuModuleTexturingModeCreateInfoNVX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CuModuleTexturingModeCreateInfoNVX<'_> {
@@ -54935,10 +52572,7 @@ unsafe impl Sync for CuFunctionCreateInfoNVX<'_> {}
 impl CuFunctionCreateInfoNVX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CuFunctionCreateInfoNVX<'_> {
@@ -54997,10 +52631,7 @@ unsafe impl Sync for CuLaunchInfoNVX<'_> {}
 impl CuLaunchInfoNVX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CuLaunchInfoNVX<'_> {
@@ -55085,10 +52716,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {}
 impl PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> {
@@ -55183,10 +52811,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {}
 impl PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferPropertiesEXT<'_> {
@@ -55489,10 +53114,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_> {
 impl PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'_> {
@@ -55538,10 +53160,7 @@ unsafe impl Sync for DescriptorAddressInfoEXT<'_> {}
 impl DescriptorAddressInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DescriptorAddressInfoEXT<'_> {
@@ -55587,10 +53206,7 @@ unsafe impl Sync for DescriptorBufferBindingInfoEXT<'_> {}
 impl DescriptorBufferBindingInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DescriptorBufferBindingInfoEXT<'_> {
@@ -55630,10 +53246,7 @@ unsafe impl Sync for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_> {}
 impl DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'_> {
@@ -55705,10 +53318,7 @@ impl fmt::Debug for DescriptorGetInfoEXT<'_> {
 impl DescriptorGetInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DescriptorGetInfoEXT<'_> {
@@ -55748,10 +53358,7 @@ unsafe impl Sync for BufferCaptureDescriptorDataInfoEXT<'_> {}
 impl BufferCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BufferCaptureDescriptorDataInfoEXT<'_> {
@@ -55786,10 +53393,7 @@ unsafe impl Sync for ImageCaptureDescriptorDataInfoEXT<'_> {}
 impl ImageCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageCaptureDescriptorDataInfoEXT<'_> {
@@ -55824,10 +53428,7 @@ unsafe impl Sync for ImageViewCaptureDescriptorDataInfoEXT<'_> {}
 impl ImageViewCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageViewCaptureDescriptorDataInfoEXT<'_> {
@@ -55863,10 +53464,7 @@ unsafe impl Sync for SamplerCaptureDescriptorDataInfoEXT<'_> {}
 impl SamplerCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SamplerCaptureDescriptorDataInfoEXT<'_> {
@@ -55902,10 +53500,7 @@ unsafe impl Sync for AccelerationStructureCaptureDescriptorDataInfoEXT<'_> {}
 impl AccelerationStructureCaptureDescriptorDataInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AccelerationStructureCaptureDescriptorDataInfoEXT<'_> {
@@ -55952,10 +53547,7 @@ unsafe impl Sync for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {}
 impl OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {
@@ -56012,10 +53604,7 @@ unsafe impl Sync for PhysicalDeviceShaderIntegerDotProductFeatures<'_> {}
 impl PhysicalDeviceShaderIntegerDotProductFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderIntegerDotProductFeatures<'_> {
@@ -56086,10 +53675,7 @@ unsafe impl Sync for PhysicalDeviceShaderIntegerDotProductProperties<'_> {}
 impl PhysicalDeviceShaderIntegerDotProductProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderIntegerDotProductProperties<'_> {
@@ -56402,10 +53988,7 @@ unsafe impl Sync for PhysicalDeviceDrmPropertiesEXT<'_> {}
 impl PhysicalDeviceDrmPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDrmPropertiesEXT<'_> {
@@ -56466,10 +54049,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_> {}
 impl PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'_> {
@@ -56513,10 +54093,7 @@ unsafe impl Sync for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'_> {}
 impl PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'_> {
@@ -56562,10 +54139,7 @@ unsafe impl Sync for PhysicalDeviceShaderFmaFeaturesKHR<'_> {}
 impl PhysicalDeviceShaderFmaFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderFmaFeaturesKHR<'_> {
@@ -56613,10 +54187,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_> {}
 impl PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'_> {
@@ -56666,10 +54237,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingValidationFeaturesNV<'_> {}
 impl PhysicalDeviceRayTracingValidationFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRayTracingValidationFeaturesNV<'_> {
@@ -56711,10 +54279,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'_> {}
 impl PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'_> {
@@ -56772,10 +54337,7 @@ impl fmt::Debug for AccelerationStructureGeometryMotionTrianglesDataNV<'_> {
 impl AccelerationStructureGeometryMotionTrianglesDataNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AccelerationStructureGeometryMotionTrianglesDataNV<'_> {
@@ -56816,10 +54378,7 @@ unsafe impl Sync for AccelerationStructureMotionInfoNV<'_> {}
 impl AccelerationStructureMotionInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AccelerationStructureMotionInfoNV<'_> {
@@ -57095,10 +54654,7 @@ unsafe impl Sync for MemoryGetRemoteAddressInfoNV<'_> {}
 impl MemoryGetRemoteAddressInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryGetRemoteAddressInfoNV<'_> {
@@ -57139,10 +54695,7 @@ unsafe impl Sync for ImportMemoryBufferCollectionFUCHSIA<'_> {}
 impl ImportMemoryBufferCollectionFUCHSIA<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImportMemoryBufferCollectionFUCHSIA<'_> {
@@ -57184,10 +54737,7 @@ unsafe impl Sync for BufferCollectionImageCreateInfoFUCHSIA<'_> {}
 impl BufferCollectionImageCreateInfoFUCHSIA<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BufferCollectionImageCreateInfoFUCHSIA<'_> {
@@ -57230,10 +54780,7 @@ unsafe impl Sync for BufferCollectionBufferCreateInfoFUCHSIA<'_> {}
 impl BufferCollectionBufferCreateInfoFUCHSIA<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BufferCollectionBufferCreateInfoFUCHSIA<'_> {
@@ -57275,10 +54822,7 @@ unsafe impl Sync for BufferCollectionCreateInfoFUCHSIA<'_> {}
 impl BufferCollectionCreateInfoFUCHSIA<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BufferCollectionCreateInfoFUCHSIA<'_> {
@@ -57324,9 +54868,8 @@ impl BufferCollectionPropertiesFUCHSIA<'_> {
     #[inline]
     pub const fn new() -> Self {
         Self {
-            s_type: Self::STRUCTURE_TYPE,
             sysmem_color_space_index: SysmemColorSpaceFUCHSIA::new(),
-            ..unsafe { ::core::mem::zeroed() }
+            ..init_tagged_structure()
         }
     }
 }
@@ -57430,10 +54973,9 @@ impl BufferConstraintsInfoFUCHSIA<'_> {
     #[inline]
     pub const fn new() -> Self {
         Self {
-            s_type: Self::STRUCTURE_TYPE,
             create_info: BufferCreateInfo::new(),
             buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA::new(),
-            ..unsafe { ::core::mem::zeroed() }
+            ..init_tagged_structure()
         }
     }
 }
@@ -57485,10 +55027,7 @@ unsafe impl Sync for SysmemColorSpaceFUCHSIA<'_> {}
 impl SysmemColorSpaceFUCHSIA<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SysmemColorSpaceFUCHSIA<'_> {
@@ -57529,9 +55068,8 @@ impl ImageFormatConstraintsInfoFUCHSIA<'_> {
     #[inline]
     pub const fn new() -> Self {
         Self {
-            s_type: Self::STRUCTURE_TYPE,
             image_create_info: ImageCreateInfo::new(),
-            ..unsafe { ::core::mem::zeroed() }
+            ..init_tagged_structure()
         }
     }
 }
@@ -57595,9 +55133,8 @@ impl ImageConstraintsInfoFUCHSIA<'_> {
     #[inline]
     pub const fn new() -> Self {
         Self {
-            s_type: Self::STRUCTURE_TYPE,
             buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA::new(),
-            ..unsafe { ::core::mem::zeroed() }
+            ..init_tagged_structure()
         }
     }
 }
@@ -57654,10 +55191,7 @@ unsafe impl Sync for BufferCollectionConstraintsInfoFUCHSIA<'_> {}
 impl BufferCollectionConstraintsInfoFUCHSIA<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BufferCollectionConstraintsInfoFUCHSIA<'_> {
@@ -57735,10 +55269,7 @@ unsafe impl Sync for CudaModuleCreateInfoNV<'_> {}
 impl CudaModuleCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -57782,10 +55313,7 @@ unsafe impl Sync for CudaFunctionCreateInfoNV<'_> {}
 impl CudaFunctionCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -57851,10 +55379,7 @@ unsafe impl Sync for CudaLaunchInfoNV<'_> {}
 impl CudaLaunchInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -57939,10 +55464,7 @@ unsafe impl Sync for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {}
 impl PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {
@@ -57986,10 +55508,7 @@ unsafe impl Sync for FormatProperties3<'_> {}
 impl FormatProperties3<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for FormatProperties3<'_> {
@@ -58042,10 +55561,7 @@ unsafe impl Sync for DrmFormatModifierPropertiesList2EXT<'_> {}
 impl DrmFormatModifierPropertiesList2EXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DrmFormatModifierPropertiesList2EXT<'_> {
@@ -58137,10 +55653,7 @@ unsafe impl Sync for AndroidHardwareBufferFormatProperties2ANDROID<'_> {}
 impl AndroidHardwareBufferFormatProperties2ANDROID<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AndroidHardwareBufferFormatProperties2ANDROID<'_> {
@@ -58231,10 +55744,7 @@ unsafe impl Sync for PipelineRenderingCreateInfo<'_> {}
 impl PipelineRenderingCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineRenderingCreateInfo<'_> {
@@ -58296,10 +55806,7 @@ unsafe impl Sync for RenderingInfo<'_> {}
 impl RenderingInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderingInfo<'_> {
@@ -58373,10 +55880,7 @@ unsafe impl Sync for RenderingEndInfoKHR<'_> {}
 impl RenderingEndInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderingEndInfoKHR<'_> {
@@ -58428,10 +55932,7 @@ impl fmt::Debug for RenderingAttachmentInfo<'_> {
 impl RenderingAttachmentInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderingAttachmentInfo<'_> {
@@ -58503,10 +56004,7 @@ unsafe impl Sync for RenderingFragmentShadingRateAttachmentInfoKHR<'_> {}
 impl RenderingFragmentShadingRateAttachmentInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderingFragmentShadingRateAttachmentInfoKHR<'_> {
@@ -58557,10 +56055,7 @@ unsafe impl Sync for RenderingFragmentDensityMapAttachmentInfoEXT<'_> {}
 impl RenderingFragmentDensityMapAttachmentInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderingFragmentDensityMapAttachmentInfoEXT<'_> {
@@ -58602,10 +56097,7 @@ unsafe impl Sync for PhysicalDeviceDynamicRenderingFeatures<'_> {}
 impl PhysicalDeviceDynamicRenderingFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDynamicRenderingFeatures<'_> {
@@ -58648,10 +56140,7 @@ unsafe impl Sync for CommandBufferInheritanceRenderingInfo<'_> {}
 impl CommandBufferInheritanceRenderingInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CommandBufferInheritanceRenderingInfo<'_> {
@@ -58721,10 +56210,7 @@ unsafe impl Sync for AttachmentSampleCountInfoAMD<'_> {}
 impl AttachmentSampleCountInfoAMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AttachmentSampleCountInfoAMD<'_> {
@@ -58774,10 +56260,7 @@ unsafe impl Sync for MultiviewPerViewAttributesInfoNVX<'_> {}
 impl MultiviewPerViewAttributesInfoNVX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MultiviewPerViewAttributesInfoNVX<'_> {
@@ -58823,10 +56306,7 @@ unsafe impl Sync for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {}
 impl PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {
@@ -58864,10 +56344,7 @@ unsafe impl Sync for ImageViewMinLodCreateInfoEXT<'_> {}
 impl ImageViewMinLodCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageViewMinLodCreateInfoEXT<'_> {
@@ -58905,10 +56382,7 @@ unsafe impl Sync for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT
 impl PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'_> {
@@ -58976,10 +56450,7 @@ unsafe impl Sync for PhysicalDeviceLinearColorAttachmentFeaturesNV<'_> {}
 impl PhysicalDeviceLinearColorAttachmentFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceLinearColorAttachmentFeaturesNV<'_> {
@@ -59020,10 +56491,7 @@ unsafe impl Sync for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_> {}
 impl PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'_> {
@@ -59064,10 +56532,7 @@ unsafe impl Sync for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {}
 impl PhysicalDevicePipelineBinaryFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {
@@ -59105,10 +56570,7 @@ unsafe impl Sync for DevicePipelineBinaryInternalCacheControlKHR<'_> {}
 impl DevicePipelineBinaryInternalCacheControlKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DevicePipelineBinaryInternalCacheControlKHR<'_> {
@@ -59149,10 +56611,7 @@ unsafe impl Sync for PhysicalDevicePipelineBinaryPropertiesKHR<'_> {}
 impl PhysicalDevicePipelineBinaryPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePipelineBinaryPropertiesKHR<'_> {
@@ -59231,10 +56690,7 @@ unsafe impl Sync for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'_> {}
 impl PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'_> {
@@ -59287,10 +56743,7 @@ unsafe impl Sync for GraphicsPipelineLibraryCreateInfoEXT<'_> {}
 impl GraphicsPipelineLibraryCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for GraphicsPipelineLibraryCreateInfoEXT<'_> {
@@ -59326,10 +56779,7 @@ unsafe impl Sync for PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesA
 impl PhysicalDeviceDataGraphNeuralAcceleratorStatisticsFeaturesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default
@@ -59381,10 +56831,7 @@ unsafe impl Sync for DataGraphPipelineNeuralStatisticsCreateInfoARM<'_> {}
 impl DataGraphPipelineNeuralStatisticsCreateInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineNeuralStatisticsCreateInfoARM<'_> {
@@ -59424,10 +56871,7 @@ unsafe impl Sync for DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'_> {
 impl DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineSessionNeuralStatisticsCreateInfoARM<'_> {
@@ -59467,10 +56911,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'_> {}
 impl PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'_> {
@@ -59515,10 +56956,7 @@ unsafe impl Sync for DescriptorSetBindingReferenceVALVE<'_> {}
 impl DescriptorSetBindingReferenceVALVE<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DescriptorSetBindingReferenceVALVE<'_> {
@@ -59562,10 +57000,7 @@ unsafe impl Sync for DescriptorSetLayoutHostMappingInfoVALVE<'_> {}
 impl DescriptorSetLayoutHostMappingInfoVALVE<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DescriptorSetLayoutHostMappingInfoVALVE<'_> {
@@ -59608,10 +57043,7 @@ unsafe impl Sync for PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {}
 impl PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceNestedCommandBufferFeaturesEXT<'_> {
@@ -59669,10 +57101,7 @@ unsafe impl Sync for PhysicalDeviceNestedCommandBufferPropertiesEXT<'_> {}
 impl PhysicalDeviceNestedCommandBufferPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceNestedCommandBufferPropertiesEXT<'_> {
@@ -59715,10 +57144,7 @@ unsafe impl Sync for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {}
 impl PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'_> {
@@ -59759,10 +57185,7 @@ unsafe impl Sync for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'_> {}
 impl PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'_> {
@@ -59806,10 +57229,7 @@ unsafe impl Sync for PipelineShaderStageModuleIdentifierCreateInfoEXT<'_> {}
 impl PipelineShaderStageModuleIdentifierCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineShaderStageModuleIdentifierCreateInfoEXT<'_> {
@@ -59861,10 +57281,7 @@ impl fmt::Debug for ShaderModuleIdentifierEXT<'_> {
 impl ShaderModuleIdentifierEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ShaderModuleIdentifierEXT<'_> {
@@ -59906,10 +57323,7 @@ unsafe impl Sync for ImageCompressionControlEXT<'_> {}
 impl ImageCompressionControlEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageCompressionControlEXT<'_> {
@@ -59956,10 +57370,7 @@ unsafe impl Sync for PhysicalDeviceImageCompressionControlFeaturesEXT<'_> {}
 impl PhysicalDeviceImageCompressionControlFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceImageCompressionControlFeaturesEXT<'_> {
@@ -60001,10 +57412,7 @@ unsafe impl Sync for ImageCompressionPropertiesEXT<'_> {}
 impl ImageCompressionPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageCompressionPropertiesEXT<'_> {
@@ -60053,10 +57461,7 @@ unsafe impl Sync for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'
 impl PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'_> {
@@ -60105,10 +57510,7 @@ unsafe impl Sync for ImageSubresource2<'_> {}
 impl ImageSubresource2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageSubresource2<'_> {
@@ -60143,10 +57545,7 @@ unsafe impl Sync for SubresourceLayout2<'_> {}
 impl SubresourceLayout2<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SubresourceLayout2<'_> {
@@ -60181,10 +57580,7 @@ unsafe impl Sync for RenderPassCreationControlEXT<'_> {}
 impl RenderPassCreationControlEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderPassCreationControlEXT<'_> {
@@ -60248,10 +57644,7 @@ unsafe impl Sync for RenderPassCreationFeedbackCreateInfoEXT<'_> {}
 impl RenderPassCreationFeedbackCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderPassCreationFeedbackCreateInfoEXT<'_> {
@@ -60350,10 +57743,7 @@ unsafe impl Sync for RenderPassSubpassFeedbackCreateInfoEXT<'_> {}
 impl RenderPassSubpassFeedbackCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderPassSubpassFeedbackCreateInfoEXT<'_> {
@@ -60393,10 +57783,7 @@ unsafe impl Sync for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {}
 impl PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'_> {
@@ -60466,10 +57853,7 @@ impl fmt::Debug for MicromapBuildInfoEXT<'_> {
 impl MicromapBuildInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MicromapBuildInfoEXT<'_> {
@@ -60559,10 +57943,7 @@ unsafe impl Sync for AccelerationStructureGeometryMicromapDataKHR<'_> {}
 impl AccelerationStructureGeometryMicromapDataKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AccelerationStructureGeometryMicromapDataKHR<'_> {
@@ -60632,10 +58013,7 @@ unsafe impl Sync for MicromapCreateInfoEXT<'_> {}
 impl MicromapCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MicromapCreateInfoEXT<'_> {
@@ -60695,10 +58073,7 @@ unsafe impl Sync for MicromapVersionInfoEXT<'_> {}
 impl MicromapVersionInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MicromapVersionInfoEXT<'_> {
@@ -60735,10 +58110,7 @@ unsafe impl Sync for CopyMicromapInfoEXT<'_> {}
 impl CopyMicromapInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CopyMicromapInfoEXT<'_> {
@@ -60796,10 +58168,7 @@ impl fmt::Debug for CopyMicromapToMemoryInfoEXT<'_> {
 impl CopyMicromapToMemoryInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CopyMicromapToMemoryInfoEXT<'_> {
@@ -60857,10 +58226,7 @@ impl fmt::Debug for CopyMemoryToMicromapInfoEXT<'_> {
 impl CopyMemoryToMicromapInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CopyMemoryToMicromapInfoEXT<'_> {
@@ -60907,10 +58273,7 @@ unsafe impl Sync for MicromapBuildSizesInfoEXT<'_> {}
 impl MicromapBuildSizesInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MicromapBuildSizesInfoEXT<'_> {
@@ -61072,10 +58435,7 @@ unsafe impl Sync for PhysicalDeviceOpacityMicromapFeaturesKHR<'_> {}
 impl PhysicalDeviceOpacityMicromapFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapFeaturesKHR<'_> {
@@ -61115,10 +58475,7 @@ unsafe impl Sync for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {}
 impl PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {
@@ -61169,10 +58526,7 @@ unsafe impl Sync for PhysicalDeviceOpacityMicromapPropertiesKHR<'_> {}
 impl PhysicalDeviceOpacityMicromapPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapPropertiesKHR<'_> {
@@ -61238,10 +58592,7 @@ unsafe impl Sync for PhysicalDeviceOpacityMicromapPropertiesEXT<'_> {}
 impl PhysicalDeviceOpacityMicromapPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceOpacityMicromapPropertiesEXT<'_> {
@@ -61296,10 +58647,7 @@ unsafe impl Sync for AccelerationStructureTrianglesOpacityMicromapKHR<'_> {}
 impl AccelerationStructureTrianglesOpacityMicromapKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AccelerationStructureTrianglesOpacityMicromapKHR<'_> {
@@ -61387,10 +58735,7 @@ impl fmt::Debug for AccelerationStructureTrianglesOpacityMicromapEXT<'_> {
 impl AccelerationStructureTrianglesOpacityMicromapEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AccelerationStructureTrianglesOpacityMicromapEXT<'_> {
@@ -61474,10 +58819,7 @@ unsafe impl Sync for PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {}
 impl PhysicalDeviceDisplacementMicromapFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -61527,10 +58869,7 @@ unsafe impl Sync for PhysicalDeviceDisplacementMicromapPropertiesNV<'_> {}
 impl PhysicalDeviceDisplacementMicromapPropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -61637,10 +58976,7 @@ impl fmt::Debug for AccelerationStructureTrianglesDisplacementMicromapNV<'_> {
 impl AccelerationStructureTrianglesDisplacementMicromapNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -61780,10 +59116,7 @@ unsafe impl Sync for PipelinePropertiesIdentifierEXT<'_> {}
 impl PipelinePropertiesIdentifierEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelinePropertiesIdentifierEXT<'_> {
@@ -61818,10 +59151,7 @@ unsafe impl Sync for PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {}
 impl PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePipelinePropertiesFeaturesEXT<'_> {
@@ -61865,10 +59195,7 @@ unsafe impl Sync for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_
 impl PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'_> {
@@ -61917,10 +59244,7 @@ unsafe impl Sync for ExternalMemoryAcquireUnmodifiedEXT<'_> {}
 impl ExternalMemoryAcquireUnmodifiedEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExternalMemoryAcquireUnmodifiedEXT<'_> {
@@ -61959,10 +59283,7 @@ unsafe impl Sync for ExportMetalObjectCreateInfoEXT<'_> {}
 impl ExportMetalObjectCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExportMetalObjectCreateInfoEXT<'_> {
@@ -62006,10 +59327,7 @@ unsafe impl Sync for ExportMetalObjectsInfoEXT<'_> {}
 impl ExportMetalObjectsInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExportMetalObjectsInfoEXT<'_> {
@@ -62038,10 +59356,7 @@ unsafe impl Sync for ExportMetalDeviceInfoEXT<'_> {}
 impl ExportMetalDeviceInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExportMetalDeviceInfoEXT<'_> {
@@ -62078,10 +59393,7 @@ unsafe impl Sync for ExportMetalCommandQueueInfoEXT<'_> {}
 impl ExportMetalCommandQueueInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExportMetalCommandQueueInfoEXT<'_> {
@@ -62123,10 +59435,7 @@ unsafe impl Sync for ExportMetalBufferInfoEXT<'_> {}
 impl ExportMetalBufferInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExportMetalBufferInfoEXT<'_> {
@@ -62167,10 +59476,7 @@ unsafe impl Sync for ImportMetalBufferInfoEXT<'_> {}
 impl ImportMetalBufferInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImportMetalBufferInfoEXT<'_> {
@@ -62210,10 +59516,7 @@ unsafe impl Sync for ExportMetalTextureInfoEXT<'_> {}
 impl ExportMetalTextureInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExportMetalTextureInfoEXT<'_> {
@@ -62270,10 +59573,7 @@ unsafe impl Sync for ImportMetalTextureInfoEXT<'_> {}
 impl ImportMetalTextureInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImportMetalTextureInfoEXT<'_> {
@@ -62315,10 +59615,7 @@ unsafe impl Sync for ExportMetalIOSurfaceInfoEXT<'_> {}
 impl ExportMetalIOSurfaceInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExportMetalIOSurfaceInfoEXT<'_> {
@@ -62359,10 +59656,7 @@ unsafe impl Sync for ImportMetalIOSurfaceInfoEXT<'_> {}
 impl ImportMetalIOSurfaceInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImportMetalIOSurfaceInfoEXT<'_> {
@@ -62400,10 +59694,7 @@ unsafe impl Sync for ExportMetalSharedEventInfoEXT<'_> {}
 impl ExportMetalSharedEventInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExportMetalSharedEventInfoEXT<'_> {
@@ -62449,10 +59740,7 @@ unsafe impl Sync for ImportMetalSharedEventInfoEXT<'_> {}
 impl ImportMetalSharedEventInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImportMetalSharedEventInfoEXT<'_> {
@@ -62489,10 +59777,7 @@ unsafe impl Sync for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {}
 impl PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_> {
@@ -62533,10 +59818,7 @@ unsafe impl Sync for PhysicalDevicePipelineRobustnessFeatures<'_> {}
 impl PhysicalDevicePipelineRobustnessFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePipelineRobustnessFeatures<'_> {
@@ -62577,10 +59859,7 @@ unsafe impl Sync for PipelineRobustnessCreateInfo<'_> {}
 impl PipelineRobustnessCreateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineRobustnessCreateInfo<'_> {
@@ -62643,10 +59922,7 @@ unsafe impl Sync for PhysicalDevicePipelineRobustnessProperties<'_> {}
 impl PhysicalDevicePipelineRobustnessProperties<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePipelineRobustnessProperties<'_> {
@@ -62715,10 +59991,7 @@ unsafe impl Sync for ImageViewSampleWeightCreateInfoQCOM<'_> {}
 impl ImageViewSampleWeightCreateInfoQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageViewSampleWeightCreateInfoQCOM<'_> {
@@ -62764,10 +60037,7 @@ unsafe impl Sync for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'_> {}
 impl PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderMultipleWaitQueuesFeaturesQCOM<'_> {
@@ -62811,10 +60081,7 @@ unsafe impl Sync for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'_> {}
 impl PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderMultipleWaitQueuesPropertiesQCOM<'_> {
@@ -62856,10 +60123,7 @@ unsafe impl Sync for PhysicalDeviceImageProcessingFeaturesQCOM<'_> {}
 impl PhysicalDeviceImageProcessingFeaturesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceImageProcessingFeaturesQCOM<'_> {
@@ -62910,10 +60174,7 @@ unsafe impl Sync for PhysicalDeviceImageProcessingPropertiesQCOM<'_> {}
 impl PhysicalDeviceImageProcessingPropertiesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceImageProcessingPropertiesQCOM<'_> {
@@ -62971,10 +60232,7 @@ unsafe impl Sync for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {}
 impl PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {
@@ -63014,10 +60272,7 @@ unsafe impl Sync for TilePropertiesQCOM<'_> {}
 impl TilePropertiesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for TilePropertiesQCOM<'_> {
@@ -63062,10 +60317,7 @@ unsafe impl Sync for TileMemoryBindInfoQCOM<'_> {}
 impl TileMemoryBindInfoQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for TileMemoryBindInfoQCOM<'_> {
@@ -63101,10 +60353,7 @@ unsafe impl Sync for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {}
 impl PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {
@@ -63143,10 +60392,7 @@ unsafe impl Sync for AmigoProfilingSubmitInfoSEC<'_> {}
 impl AmigoProfilingSubmitInfoSEC<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AmigoProfilingSubmitInfoSEC<'_> {
@@ -63187,10 +60433,7 @@ unsafe impl Sync for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_> {
 impl PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'_> {
@@ -63237,10 +60480,7 @@ unsafe impl Sync for AttachmentFeedbackLoopInfoEXT<'_> {}
 impl AttachmentFeedbackLoopInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AttachmentFeedbackLoopInfoEXT<'_> {
@@ -63276,10 +60516,7 @@ unsafe impl Sync for PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {}
 impl PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceAddressBindingReportFeaturesEXT<'_> {
@@ -63320,10 +60557,7 @@ unsafe impl Sync for RenderingAttachmentFlagsInfoKHR<'_> {}
 impl RenderingAttachmentFlagsInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderingAttachmentFlagsInfoKHR<'_> {
@@ -63361,10 +60595,7 @@ unsafe impl Sync for ResolveImageModeInfoKHR<'_> {}
 impl ResolveImageModeInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ResolveImageModeInfoKHR<'_> {
@@ -63413,10 +60644,7 @@ unsafe impl Sync for DeviceAddressBindingCallbackDataEXT<'_> {}
 impl DeviceAddressBindingCallbackDataEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceAddressBindingCallbackDataEXT<'_> {
@@ -63470,10 +60698,7 @@ unsafe impl Sync for PhysicalDeviceOpticalFlowFeaturesNV<'_> {}
 impl PhysicalDeviceOpticalFlowFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceOpticalFlowFeaturesNV<'_> {
@@ -63520,10 +60745,7 @@ unsafe impl Sync for PhysicalDeviceOpticalFlowPropertiesNV<'_> {}
 impl PhysicalDeviceOpticalFlowPropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceOpticalFlowPropertiesNV<'_> {
@@ -63618,10 +60840,7 @@ unsafe impl Sync for OpticalFlowImageFormatInfoNV<'_> {}
 impl OpticalFlowImageFormatInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for OpticalFlowImageFormatInfoNV<'_> {
@@ -63658,10 +60877,7 @@ unsafe impl Sync for OpticalFlowImageFormatPropertiesNV<'_> {}
 impl OpticalFlowImageFormatPropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for OpticalFlowImageFormatPropertiesNV<'_> {
@@ -63704,10 +60920,7 @@ unsafe impl Sync for OpticalFlowSessionCreateInfoNV<'_> {}
 impl OpticalFlowSessionCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for OpticalFlowSessionCreateInfoNV<'_> {
@@ -63787,10 +61000,7 @@ unsafe impl Sync for OpticalFlowSessionCreatePrivateDataInfoNV<'_> {}
 impl OpticalFlowSessionCreatePrivateDataInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for OpticalFlowSessionCreatePrivateDataInfoNV<'_> {
@@ -63842,10 +61052,7 @@ unsafe impl Sync for OpticalFlowExecuteInfoNV<'_> {}
 impl OpticalFlowExecuteInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for OpticalFlowExecuteInfoNV<'_> {
@@ -63887,10 +61094,7 @@ unsafe impl Sync for PhysicalDeviceFaultFeaturesEXT<'_> {}
 impl PhysicalDeviceFaultFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFaultFeaturesEXT<'_> {
@@ -64046,10 +61250,7 @@ impl fmt::Debug for DeviceFaultInfoKHR<'_> {
 impl DeviceFaultInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceFaultInfoKHR<'_> {
@@ -64124,10 +61325,7 @@ unsafe impl Sync for DeviceFaultDebugInfoKHR<'_> {}
 impl DeviceFaultDebugInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceFaultDebugInfoKHR<'_> {
@@ -64165,10 +61363,7 @@ unsafe impl Sync for DeviceFaultCountsEXT<'_> {}
 impl DeviceFaultCountsEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceFaultCountsEXT<'_> {
@@ -64228,10 +61423,7 @@ impl fmt::Debug for DeviceFaultInfoEXT<'_> {
 impl DeviceFaultInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceFaultInfoEXT<'_> {
@@ -64382,10 +61574,7 @@ unsafe impl Sync for PhysicalDeviceFaultFeaturesKHR<'_> {}
 impl PhysicalDeviceFaultFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFaultFeaturesKHR<'_> {
@@ -64440,10 +61629,7 @@ unsafe impl Sync for PhysicalDeviceFaultPropertiesKHR<'_> {}
 impl PhysicalDeviceFaultPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFaultPropertiesKHR<'_> {
@@ -64479,10 +61665,7 @@ unsafe impl Sync for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {}
 impl PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'_> {
@@ -64531,10 +61714,7 @@ unsafe impl Sync for DepthBiasInfoEXT<'_> {}
 impl DepthBiasInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DepthBiasInfoEXT<'_> {
@@ -64580,10 +61760,7 @@ unsafe impl Sync for DepthBiasRepresentationInfoEXT<'_> {}
 impl DepthBiasRepresentationInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DepthBiasRepresentationInfoEXT<'_> {
@@ -64732,10 +61909,7 @@ unsafe impl Sync for DecompressMemoryInfoEXT<'_> {}
 impl DecompressMemoryInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DecompressMemoryInfoEXT<'_> {
@@ -64781,10 +61955,7 @@ unsafe impl Sync for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {}
 impl PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'_> {
@@ -64834,10 +62005,7 @@ unsafe impl Sync for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {}
 impl PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_> {
@@ -64886,10 +62054,7 @@ unsafe impl Sync for FrameBoundaryEXT<'_> {}
 impl FrameBoundaryEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for FrameBoundaryEXT<'_> {
@@ -64956,10 +62121,7 @@ unsafe impl Sync for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {}
 impl PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {
@@ -64997,10 +62159,7 @@ unsafe impl Sync for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<
 impl PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'_> {
@@ -65049,10 +62208,7 @@ unsafe impl Sync for PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'_> {
 impl PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceInternallySynchronizedQueuesFeaturesKHR<'_> {
@@ -65099,10 +62255,7 @@ unsafe impl Sync for SurfacePresentModeKHR<'_> {}
 impl SurfacePresentModeKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SurfacePresentModeKHR<'_> {
@@ -65142,10 +62295,7 @@ unsafe impl Sync for SurfacePresentScalingCapabilitiesKHR<'_> {}
 impl SurfacePresentScalingCapabilitiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SurfacePresentScalingCapabilitiesKHR<'_> {
@@ -65211,10 +62361,7 @@ unsafe impl Sync for SurfacePresentModeCompatibilityKHR<'_> {}
 impl SurfacePresentModeCompatibilityKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SurfacePresentModeCompatibilityKHR<'_> {
@@ -65251,10 +62398,7 @@ unsafe impl Sync for PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'_> {}
 impl PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'_> {
@@ -65296,10 +62440,7 @@ unsafe impl Sync for SwapchainPresentFenceInfoKHR<'_> {}
 impl SwapchainPresentFenceInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SwapchainPresentFenceInfoKHR<'_> {
@@ -65337,10 +62478,7 @@ unsafe impl Sync for SwapchainPresentModesCreateInfoKHR<'_> {}
 impl SwapchainPresentModesCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SwapchainPresentModesCreateInfoKHR<'_> {
@@ -65378,10 +62516,7 @@ unsafe impl Sync for SwapchainPresentModeInfoKHR<'_> {}
 impl SwapchainPresentModeInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SwapchainPresentModeInfoKHR<'_> {
@@ -65420,10 +62555,7 @@ unsafe impl Sync for SwapchainPresentScalingCreateInfoKHR<'_> {}
 impl SwapchainPresentScalingCreateInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SwapchainPresentScalingCreateInfoKHR<'_> {
@@ -65471,10 +62603,7 @@ unsafe impl Sync for ReleaseSwapchainImagesInfoKHR<'_> {}
 impl ReleaseSwapchainImagesInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ReleaseSwapchainImagesInfoKHR<'_> {
@@ -65518,10 +62647,7 @@ unsafe impl Sync for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {}
 impl PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> {
@@ -65578,10 +62704,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'_> {}
 impl PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderFeaturesEXT<'_> {
@@ -65628,10 +62751,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {}
 impl PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'_> {
@@ -65679,10 +62799,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'_> 
 impl PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderPropertiesEXT<'_> {
@@ -65734,10 +62851,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_> {
 impl PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'_> {
@@ -65781,10 +62895,7 @@ unsafe impl Sync for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_> {}
 impl PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'_> {
@@ -65833,10 +62944,7 @@ unsafe impl Sync for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'_> {}
 impl PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'_> {
@@ -65909,10 +63017,7 @@ impl fmt::Debug for DirectDriverLoadingInfoLUNARG<'_> {
 impl DirectDriverLoadingInfoLUNARG<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DirectDriverLoadingInfoLUNARG<'_> {
@@ -65957,10 +63062,7 @@ unsafe impl Sync for DirectDriverLoadingListLUNARG<'_> {}
 impl DirectDriverLoadingListLUNARG<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DirectDriverLoadingListLUNARG<'_> {
@@ -66002,10 +63104,7 @@ unsafe impl Sync for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_> {}
 impl PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'_> {
@@ -66052,10 +63151,7 @@ unsafe impl Sync for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_> {}
 impl PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'_> {
@@ -66097,10 +63193,7 @@ unsafe impl Sync for DeviceImageSubresourceInfo<'_> {}
 impl DeviceImageSubresourceInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceImageSubresourceInfo<'_> {
@@ -66142,10 +63235,7 @@ unsafe impl Sync for PhysicalDeviceShaderCorePropertiesARM<'_> {}
 impl PhysicalDeviceShaderCorePropertiesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderCorePropertiesARM<'_> {
@@ -66191,10 +63281,7 @@ unsafe impl Sync for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {
 impl PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'_> {
@@ -66242,10 +63329,7 @@ unsafe impl Sync for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {}
 impl MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'_> {
@@ -66287,10 +63371,7 @@ unsafe impl Sync for QueryLowLatencySupportNV<'_> {}
 impl QueryLowLatencySupportNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for QueryLowLatencySupportNV<'_> {
@@ -66329,10 +63410,7 @@ unsafe impl Sync for MemoryMapInfo<'_> {}
 impl MemoryMapInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryMapInfo<'_> {
@@ -66383,10 +63461,7 @@ unsafe impl Sync for MemoryUnmapInfo<'_> {}
 impl MemoryUnmapInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryUnmapInfo<'_> {
@@ -66426,10 +63501,7 @@ unsafe impl Sync for PhysicalDeviceShaderObjectFeaturesEXT<'_> {}
 impl PhysicalDeviceShaderObjectFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderObjectFeaturesEXT<'_> {
@@ -66467,10 +63539,7 @@ unsafe impl Sync for PhysicalDeviceShaderObjectPropertiesEXT<'_> {}
 impl PhysicalDeviceShaderObjectPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderObjectPropertiesEXT<'_> {
@@ -66523,10 +63592,7 @@ unsafe impl Sync for ShaderCreateInfoEXT<'_> {}
 impl ShaderCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ShaderCreateInfoEXT<'_> {
@@ -66620,10 +63686,7 @@ unsafe impl Sync for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {}
 impl PhysicalDeviceShaderTileImageFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {
@@ -66683,10 +63746,7 @@ unsafe impl Sync for PhysicalDeviceShaderTileImagePropertiesEXT<'_> {}
 impl PhysicalDeviceShaderTileImagePropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderTileImagePropertiesEXT<'_> {
@@ -66748,10 +63808,7 @@ unsafe impl Sync for ImportScreenBufferInfoQNX<'_> {}
 impl ImportScreenBufferInfoQNX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImportScreenBufferInfoQNX<'_> {
@@ -66788,10 +63845,7 @@ unsafe impl Sync for ScreenBufferPropertiesQNX<'_> {}
 impl ScreenBufferPropertiesQNX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ScreenBufferPropertiesQNX<'_> {
@@ -66839,10 +63893,7 @@ unsafe impl Sync for ScreenBufferFormatPropertiesQNX<'_> {}
 impl ScreenBufferFormatPropertiesQNX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ScreenBufferFormatPropertiesQNX<'_> {
@@ -66930,10 +63981,7 @@ unsafe impl Sync for ExternalFormatQNX<'_> {}
 impl ExternalFormatQNX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExternalFormatQNX<'_> {
@@ -66970,10 +64018,7 @@ unsafe impl Sync for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_> {}
 impl PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'_> {
@@ -67018,10 +64063,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {}
 impl PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_> {
@@ -67079,10 +64121,7 @@ unsafe impl Sync for CooperativeMatrixPropertiesKHR<'_> {}
 impl CooperativeMatrixPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CooperativeMatrixPropertiesKHR<'_> {
@@ -67157,10 +64196,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixPropertiesKHR<'_> {}
 impl PhysicalDeviceCooperativeMatrixPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixPropertiesKHR<'_> {
@@ -67203,10 +64239,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'_> {
 impl PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixConversionFeaturesQCOM<'_> {
@@ -67263,10 +64296,7 @@ unsafe impl Sync for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {}
 impl PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -67364,10 +64394,7 @@ unsafe impl Sync for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {}
 impl PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -67425,10 +64452,7 @@ unsafe impl Sync for ExecutionGraphPipelineCreateInfoAMDX<'_> {}
 impl ExecutionGraphPipelineCreateInfoAMDX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -67500,10 +64524,7 @@ unsafe impl Sync for PipelineShaderStageNodeCreateInfoAMDX<'_> {}
 impl PipelineShaderStageNodeCreateInfoAMDX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -67566,10 +64587,7 @@ unsafe impl Sync for ExecutionGraphPipelineScratchSizeAMDX<'_> {}
 impl ExecutionGraphPipelineScratchSizeAMDX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -67730,10 +64748,7 @@ unsafe impl Sync for PhysicalDeviceAntiLagFeaturesAMD<'_> {}
 impl PhysicalDeviceAntiLagFeaturesAMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceAntiLagFeaturesAMD<'_> {
@@ -67772,10 +64787,7 @@ unsafe impl Sync for AntiLagDataAMD<'_> {}
 impl AntiLagDataAMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AntiLagDataAMD<'_> {
@@ -67824,10 +64836,7 @@ unsafe impl Sync for AntiLagPresentationInfoAMD<'_> {}
 impl AntiLagPresentationInfoAMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AntiLagPresentationInfoAMD<'_> {
@@ -67867,10 +64876,7 @@ unsafe impl Sync for BindMemoryStatus<'_> {}
 impl BindMemoryStatus<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BindMemoryStatus<'_> {
@@ -67907,10 +64913,7 @@ unsafe impl Sync for PhysicalDeviceTileMemoryHeapFeaturesQCOM<'_> {}
 impl PhysicalDeviceTileMemoryHeapFeaturesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceTileMemoryHeapFeaturesQCOM<'_> {
@@ -67949,10 +64952,7 @@ unsafe impl Sync for PhysicalDeviceTileMemoryHeapPropertiesQCOM<'_> {}
 impl PhysicalDeviceTileMemoryHeapPropertiesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceTileMemoryHeapPropertiesQCOM<'_> {
@@ -67997,10 +64997,7 @@ unsafe impl Sync for TileMemorySizeInfoQCOM<'_> {}
 impl TileMemorySizeInfoQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for TileMemorySizeInfoQCOM<'_> {
@@ -68039,10 +65036,7 @@ unsafe impl Sync for TileMemoryRequirementsQCOM<'_> {}
 impl TileMemoryRequirementsQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for TileMemoryRequirementsQCOM<'_> {
@@ -68089,10 +65083,7 @@ unsafe impl Sync for BindDescriptorSetsInfo<'_> {}
 impl BindDescriptorSetsInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BindDescriptorSetsInfo<'_> {
@@ -68153,10 +65144,7 @@ unsafe impl Sync for PushConstantsInfo<'_> {}
 impl PushConstantsInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PushConstantsInfo<'_> {
@@ -68211,10 +65199,7 @@ unsafe impl Sync for PushDescriptorSetInfo<'_> {}
 impl PushDescriptorSetInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PushDescriptorSetInfo<'_> {
@@ -68271,10 +65256,7 @@ unsafe impl Sync for PushDescriptorSetWithTemplateInfo<'_> {}
 impl PushDescriptorSetWithTemplateInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PushDescriptorSetWithTemplateInfo<'_> {
@@ -68332,10 +65314,7 @@ unsafe impl Sync for SetDescriptorBufferOffsetsInfoEXT<'_> {}
 impl SetDescriptorBufferOffsetsInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SetDescriptorBufferOffsetsInfoEXT<'_> {
@@ -68394,10 +65373,7 @@ unsafe impl Sync for BindDescriptorBufferEmbeddedSamplersInfoEXT<'_> {}
 impl BindDescriptorBufferEmbeddedSamplersInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BindDescriptorBufferEmbeddedSamplersInfoEXT<'_> {
@@ -68443,10 +65419,7 @@ unsafe impl Sync for PhysicalDeviceCubicClampFeaturesQCOM<'_> {}
 impl PhysicalDeviceCubicClampFeaturesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCubicClampFeaturesQCOM<'_> {
@@ -68483,10 +65456,7 @@ unsafe impl Sync for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {}
 impl PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {
@@ -68525,10 +65495,7 @@ unsafe impl Sync for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'_> {}
 impl SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'_> {
@@ -68573,10 +65540,7 @@ unsafe impl Sync for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {}
 impl PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {
@@ -68614,10 +65578,7 @@ unsafe impl Sync for SamplerCubicWeightsCreateInfoQCOM<'_> {}
 impl SamplerCubicWeightsCreateInfoQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SamplerCubicWeightsCreateInfoQCOM<'_> {
@@ -68653,10 +65614,7 @@ unsafe impl Sync for BlitImageCubicWeightsInfoQCOM<'_> {}
 impl BlitImageCubicWeightsInfoQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BlitImageCubicWeightsInfoQCOM<'_> {
@@ -68692,10 +65650,7 @@ unsafe impl Sync for PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {}
 impl PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceImageProcessing2FeaturesQCOM<'_> {
@@ -68736,10 +65691,7 @@ unsafe impl Sync for PhysicalDeviceImageProcessing2PropertiesQCOM<'_> {}
 impl PhysicalDeviceImageProcessing2PropertiesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceImageProcessing2PropertiesQCOM<'_> {
@@ -68780,10 +65732,7 @@ unsafe impl Sync for SamplerBlockMatchWindowCreateInfoQCOM<'_> {}
 impl SamplerBlockMatchWindowCreateInfoQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SamplerBlockMatchWindowCreateInfoQCOM<'_> {
@@ -68830,10 +65779,7 @@ unsafe impl Sync for PhysicalDeviceImageProcessing3FeaturesQCOM<'_> {}
 impl PhysicalDeviceImageProcessing3FeaturesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceImageProcessing3FeaturesQCOM<'_> {
@@ -68887,10 +65833,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'_> {}
 impl PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'_> {
@@ -68937,10 +65880,7 @@ unsafe impl Sync for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> {}
 impl PhysicalDeviceLayeredDriverPropertiesMSFT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> {
@@ -68981,10 +65921,7 @@ unsafe impl Sync for PhysicalDevicePerStageDescriptorSetFeaturesNV<'_> {}
 impl PhysicalDevicePerStageDescriptorSetFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePerStageDescriptorSetFeaturesNV<'_> {
@@ -69030,10 +65967,7 @@ unsafe impl Sync for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'_> {}
 impl PhysicalDeviceExternalFormatResolveFeaturesANDROID<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'_> {
@@ -69079,10 +66013,7 @@ unsafe impl Sync for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'_> {}
 impl PhysicalDeviceExternalFormatResolvePropertiesANDROID<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'_> {
@@ -69142,10 +66073,7 @@ unsafe impl Sync for AndroidHardwareBufferFormatResolvePropertiesANDROID<'_> {}
 impl AndroidHardwareBufferFormatResolvePropertiesANDROID<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AndroidHardwareBufferFormatResolvePropertiesANDROID<'_> {
@@ -69187,10 +66115,7 @@ unsafe impl Sync for LatencySleepModeInfoNV<'_> {}
 impl LatencySleepModeInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for LatencySleepModeInfoNV<'_> {
@@ -69236,10 +66161,7 @@ unsafe impl Sync for LatencySleepInfoNV<'_> {}
 impl LatencySleepInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for LatencySleepInfoNV<'_> {
@@ -69280,10 +66202,7 @@ unsafe impl Sync for SetLatencyMarkerInfoNV<'_> {}
 impl SetLatencyMarkerInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SetLatencyMarkerInfoNV<'_> {
@@ -69324,10 +66243,7 @@ unsafe impl Sync for GetLatencyMarkerInfoNV<'_> {}
 impl GetLatencyMarkerInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for GetLatencyMarkerInfoNV<'_> {
@@ -69376,10 +66292,7 @@ unsafe impl Sync for LatencyTimingsFrameReportNV<'_> {}
 impl LatencyTimingsFrameReportNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for LatencyTimingsFrameReportNV<'_> {
@@ -69482,10 +66395,7 @@ unsafe impl Sync for OutOfBandQueueTypeInfoNV<'_> {}
 impl OutOfBandQueueTypeInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for OutOfBandQueueTypeInfoNV<'_> {
@@ -69520,10 +66430,7 @@ unsafe impl Sync for LatencySubmissionPresentIdNV<'_> {}
 impl LatencySubmissionPresentIdNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for LatencySubmissionPresentIdNV<'_> {
@@ -69560,10 +66467,7 @@ unsafe impl Sync for SwapchainLatencyCreateInfoNV<'_> {}
 impl SwapchainLatencyCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SwapchainLatencyCreateInfoNV<'_> {
@@ -69600,10 +66504,7 @@ unsafe impl Sync for LatencySurfaceCapabilitiesNV<'_> {}
 impl LatencySurfaceCapabilitiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for LatencySurfaceCapabilitiesNV<'_> {
@@ -69644,10 +66545,7 @@ unsafe impl Sync for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {}
 impl PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -69695,10 +66593,7 @@ unsafe impl Sync for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_> {}
 impl PhysicalDeviceCudaKernelLaunchPropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -69747,10 +66642,7 @@ unsafe impl Sync for DeviceQueueShaderCoreControlCreateInfoARM<'_> {}
 impl DeviceQueueShaderCoreControlCreateInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceQueueShaderCoreControlCreateInfoARM<'_> {
@@ -69788,10 +66680,7 @@ unsafe impl Sync for PhysicalDeviceSchedulingControlsFeaturesARM<'_> {}
 impl PhysicalDeviceSchedulingControlsFeaturesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceSchedulingControlsFeaturesARM<'_> {
@@ -69832,10 +66721,7 @@ unsafe impl Sync for PhysicalDeviceSchedulingControlsPropertiesARM<'_> {}
 impl PhysicalDeviceSchedulingControlsPropertiesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceSchedulingControlsPropertiesARM<'_> {
@@ -69880,10 +66766,7 @@ unsafe impl Sync for PhysicalDeviceSchedulingControlsDispatchParametersPropertie
 impl PhysicalDeviceSchedulingControlsDispatchParametersPropertiesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default
@@ -69950,10 +66833,7 @@ unsafe impl Sync for DispatchParametersARM<'_> {}
 impl DispatchParametersARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DispatchParametersARM<'_> {
@@ -70001,10 +66881,7 @@ unsafe impl Sync for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_> {}
 impl PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'_> {
@@ -70048,10 +66925,7 @@ unsafe impl Sync for PhysicalDeviceRenderPassStripedFeaturesARM<'_> {}
 impl PhysicalDeviceRenderPassStripedFeaturesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRenderPassStripedFeaturesARM<'_> {
@@ -70093,10 +66967,7 @@ unsafe impl Sync for PhysicalDeviceRenderPassStripedPropertiesARM<'_> {}
 impl PhysicalDeviceRenderPassStripedPropertiesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRenderPassStripedPropertiesARM<'_> {
@@ -70144,10 +67015,7 @@ unsafe impl Sync for RenderPassStripeInfoARM<'_> {}
 impl RenderPassStripeInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderPassStripeInfoARM<'_> {
@@ -70183,10 +67051,7 @@ unsafe impl Sync for RenderPassStripeBeginInfoARM<'_> {}
 impl RenderPassStripeBeginInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderPassStripeBeginInfoARM<'_> {
@@ -70225,10 +67090,7 @@ unsafe impl Sync for RenderPassStripeSubmitInfoARM<'_> {}
 impl RenderPassStripeSubmitInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderPassStripeSubmitInfoARM<'_> {
@@ -70268,10 +67130,7 @@ unsafe impl Sync for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'_> {}
 impl PhysicalDevicePipelineOpacityMicromapFeaturesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'_> {
@@ -70312,10 +67171,7 @@ unsafe impl Sync for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'_> {}
 impl PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'_> {
@@ -70363,10 +67219,7 @@ unsafe impl Sync for PhysicalDeviceShaderSubgroupRotateFeatures<'_> {}
 impl PhysicalDeviceShaderSubgroupRotateFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderSubgroupRotateFeatures<'_> {
@@ -70415,10 +67268,7 @@ unsafe impl Sync for PhysicalDeviceShaderExpectAssumeFeatures<'_> {}
 impl PhysicalDeviceShaderExpectAssumeFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderExpectAssumeFeatures<'_> {
@@ -70456,10 +67306,7 @@ unsafe impl Sync for PhysicalDeviceShaderFloatControls2Features<'_> {}
 impl PhysicalDeviceShaderFloatControls2Features<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderFloatControls2Features<'_> {
@@ -70500,10 +67347,7 @@ unsafe impl Sync for PhysicalDeviceDynamicRenderingLocalReadFeatures<'_> {}
 impl PhysicalDeviceDynamicRenderingLocalReadFeatures<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDynamicRenderingLocalReadFeatures<'_> {
@@ -70548,10 +67392,7 @@ unsafe impl Sync for RenderingAttachmentLocationInfo<'_> {}
 impl RenderingAttachmentLocationInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderingAttachmentLocationInfo<'_> {
@@ -70595,10 +67436,7 @@ unsafe impl Sync for RenderingInputAttachmentIndexInfo<'_> {}
 impl RenderingInputAttachmentIndexInfo<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderingInputAttachmentIndexInfo<'_> {
@@ -70655,10 +67493,7 @@ unsafe impl Sync for PhysicalDeviceShaderQuadControlFeaturesKHR<'_> {}
 impl PhysicalDeviceShaderQuadControlFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderQuadControlFeaturesKHR<'_> {
@@ -70699,10 +67534,7 @@ unsafe impl Sync for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'_> {}
 impl PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'_> {
@@ -70751,10 +67583,7 @@ unsafe impl Sync for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {}
 impl PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {
@@ -70802,10 +67631,7 @@ unsafe impl Sync for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_> {}
 impl PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_> {
@@ -70848,10 +67674,7 @@ unsafe impl Sync for MemoryMapPlacedInfoEXT<'_> {}
 impl MemoryMapPlacedInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryMapPlacedInfoEXT<'_> {
@@ -70889,10 +67712,7 @@ unsafe impl Sync for PhysicalDeviceShaderBfloat16FeaturesKHR<'_> {}
 impl PhysicalDeviceShaderBfloat16FeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderBfloat16FeaturesKHR<'_> {
@@ -70946,10 +67766,7 @@ unsafe impl Sync for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {}
 impl PhysicalDeviceRawAccessChainsFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {
@@ -70987,10 +67804,7 @@ unsafe impl Sync for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'_> {}
 impl PhysicalDeviceCommandBufferInheritanceFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'_> {
@@ -71031,10 +67845,7 @@ unsafe impl Sync for PhysicalDeviceImageAlignmentControlFeaturesMESA<'_> {}
 impl PhysicalDeviceImageAlignmentControlFeaturesMESA<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceImageAlignmentControlFeaturesMESA<'_> {
@@ -71075,10 +67886,7 @@ unsafe impl Sync for PhysicalDeviceImageAlignmentControlPropertiesMESA<'_> {}
 impl PhysicalDeviceImageAlignmentControlPropertiesMESA<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceImageAlignmentControlPropertiesMESA<'_> {
@@ -71121,10 +67929,7 @@ unsafe impl Sync for ImageAlignmentControlCreateInfoMESA<'_> {}
 impl ImageAlignmentControlCreateInfoMESA<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageAlignmentControlCreateInfoMESA<'_> {
@@ -71160,10 +67965,7 @@ unsafe impl Sync for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'_> {}
 impl PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'_> {
@@ -71210,10 +68012,7 @@ unsafe impl Sync for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'_> {}
 impl PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'_> {
@@ -71299,10 +68098,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrix2FeaturesNV<'_> {}
 impl PhysicalDeviceCooperativeMatrix2FeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrix2FeaturesNV<'_> {
@@ -71398,10 +68194,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrix2PropertiesNV<'_> {}
 impl PhysicalDeviceCooperativeMatrix2PropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrix2PropertiesNV<'_> {
@@ -71472,10 +68265,7 @@ unsafe impl Sync for CooperativeMatrixFlexibleDimensionsPropertiesNV<'_> {}
 impl CooperativeMatrixFlexibleDimensionsPropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CooperativeMatrixFlexibleDimensionsPropertiesNV<'_> {
@@ -71556,10 +68346,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_> {
 impl PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCooperativeMatrixDecodeVectorFeaturesNV<'_> {
@@ -71606,10 +68393,7 @@ unsafe impl Sync for PhysicalDeviceHdrVividFeaturesHUAWEI<'_> {}
 impl PhysicalDeviceHdrVividFeaturesHUAWEI<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceHdrVividFeaturesHUAWEI<'_> {
@@ -71646,10 +68430,7 @@ unsafe impl Sync for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'_> {}
 impl PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'_> {
@@ -71697,10 +68478,7 @@ unsafe impl Sync for PhysicalDeviceDenseGeometryFormatFeaturesAMDX<'_> {}
 impl PhysicalDeviceDenseGeometryFormatFeaturesAMDX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -71772,10 +68550,7 @@ impl fmt::Debug for AccelerationStructureDenseGeometryFormatTrianglesDataAMDX<'_
 impl AccelerationStructureDenseGeometryFormatTrianglesDataAMDX<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 #[cfg(feature = "provisional")]
@@ -71851,10 +68626,7 @@ unsafe impl Sync for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'_> {}
 impl PhysicalDeviceDepthClampZeroOneFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'_> {
@@ -71896,10 +68668,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeVectorFeaturesNV<'_> {}
 impl PhysicalDeviceCooperativeVectorFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCooperativeVectorFeaturesNV<'_> {
@@ -71947,10 +68716,7 @@ unsafe impl Sync for CooperativeVectorPropertiesNV<'_> {}
 impl CooperativeVectorPropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CooperativeVectorPropertiesNV<'_> {
@@ -72013,10 +68779,7 @@ unsafe impl Sync for PhysicalDeviceCooperativeVectorPropertiesNV<'_> {}
 impl PhysicalDeviceCooperativeVectorPropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceCooperativeVectorPropertiesNV<'_> {
@@ -72116,10 +68879,7 @@ impl fmt::Debug for ConvertCooperativeVectorMatrixInfoNV<'_> {
 impl ConvertCooperativeVectorMatrixInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ConvertCooperativeVectorMatrixInfoNV<'_> {
@@ -72222,10 +68982,7 @@ unsafe impl Sync for PhysicalDeviceTileShadingFeaturesQCOM<'_> {}
 impl PhysicalDeviceTileShadingFeaturesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceTileShadingFeaturesQCOM<'_> {
@@ -72354,10 +69111,7 @@ unsafe impl Sync for PhysicalDeviceTileShadingPropertiesQCOM<'_> {}
 impl PhysicalDeviceTileShadingPropertiesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceTileShadingPropertiesQCOM<'_> {
@@ -72410,10 +69164,7 @@ unsafe impl Sync for RenderPassTileShadingCreateInfoQCOM<'_> {}
 impl RenderPassTileShadingCreateInfoQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderPassTileShadingCreateInfoQCOM<'_> {
@@ -72456,10 +69207,7 @@ unsafe impl Sync for PerTileBeginInfoQCOM<'_> {}
 impl PerTileBeginInfoQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PerTileBeginInfoQCOM<'_> {
@@ -72487,10 +69235,7 @@ unsafe impl Sync for PerTileEndInfoQCOM<'_> {}
 impl PerTileEndInfoQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PerTileEndInfoQCOM<'_> {
@@ -72518,10 +69263,7 @@ unsafe impl Sync for DispatchTileInfoQCOM<'_> {}
 impl DispatchTileInfoQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DispatchTileInfoQCOM<'_> {
@@ -72550,10 +69292,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'_> 
 impl PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'_> {
@@ -72596,10 +69335,7 @@ unsafe impl Sync for PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'_> {}
 impl PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'_> {
@@ -72646,10 +69382,7 @@ unsafe impl Sync for PipelineFragmentDensityMapLayeredCreateInfoVALVE<'_> {}
 impl PipelineFragmentDensityMapLayeredCreateInfoVALVE<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PipelineFragmentDensityMapLayeredCreateInfoVALVE<'_> {
@@ -72693,10 +69426,7 @@ unsafe impl Sync for SetPresentConfigNV<'_> {}
 impl SetPresentConfigNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SetPresentConfigNV<'_> {
@@ -72737,10 +69467,7 @@ unsafe impl Sync for PhysicalDevicePresentMeteringFeaturesNV<'_> {}
 impl PhysicalDevicePresentMeteringFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePresentMeteringFeaturesNV<'_> {
@@ -72778,10 +69505,7 @@ unsafe impl Sync for ExternalComputeQueueDeviceCreateInfoNV<'_> {}
 impl ExternalComputeQueueDeviceCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExternalComputeQueueDeviceCreateInfoNV<'_> {
@@ -72818,10 +69542,7 @@ unsafe impl Sync for ExternalComputeQueueCreateInfoNV<'_> {}
 impl ExternalComputeQueueCreateInfoNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExternalComputeQueueCreateInfoNV<'_> {
@@ -72856,10 +69577,7 @@ unsafe impl Sync for ExternalComputeQueueDataParamsNV<'_> {}
 impl ExternalComputeQueueDataParamsNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExternalComputeQueueDataParamsNV<'_> {
@@ -72895,10 +69613,7 @@ unsafe impl Sync for PhysicalDeviceExternalComputeQueuePropertiesNV<'_> {}
 impl PhysicalDeviceExternalComputeQueuePropertiesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceExternalComputeQueuePropertiesNV<'_> {
@@ -72948,10 +69663,7 @@ unsafe impl Sync for PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'_
 impl PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderUniformBufferUnsizedArrayFeaturesEXT<'_> {
@@ -73003,10 +69715,7 @@ unsafe impl Sync for PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'_> {
 impl PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderMixedFloatDotProductFeaturesVALVE<'_> {
@@ -73081,10 +69790,7 @@ unsafe impl Sync for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'_> {}
 impl PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePrimitiveRestartIndexFeaturesEXT<'_> {
@@ -73125,10 +69831,7 @@ unsafe impl Sync for PhysicalDeviceFormatPackFeaturesARM<'_> {}
 impl PhysicalDeviceFormatPackFeaturesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceFormatPackFeaturesARM<'_> {
@@ -73165,10 +69868,7 @@ unsafe impl Sync for PhysicalDeviceThrottleHintFeaturesSEC<'_> {}
 impl PhysicalDeviceThrottleHintFeaturesSEC<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceThrottleHintFeaturesSEC<'_> {
@@ -73205,10 +69905,7 @@ unsafe impl Sync for ThrottleHintSubmitInfoSEC<'_> {}
 impl ThrottleHintSubmitInfoSEC<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ThrottleHintSubmitInfoSEC<'_> {
@@ -73249,10 +69946,7 @@ unsafe impl Sync for TensorDescriptionARM<'_> {}
 impl TensorDescriptionARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for TensorDescriptionARM<'_> {
@@ -73315,10 +70009,7 @@ unsafe impl Sync for TensorCreateInfoARM<'_> {}
 impl TensorCreateInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for TensorCreateInfoARM<'_> {
@@ -73371,10 +70062,7 @@ unsafe impl Sync for TensorViewCreateInfoARM<'_> {}
 impl TensorViewCreateInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for TensorViewCreateInfoARM<'_> {
@@ -73419,10 +70107,7 @@ unsafe impl Sync for TensorMemoryRequirementsInfoARM<'_> {}
 impl TensorMemoryRequirementsInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for TensorMemoryRequirementsInfoARM<'_> {
@@ -73459,10 +70144,7 @@ unsafe impl Sync for BindTensorMemoryInfoARM<'_> {}
 impl BindTensorMemoryInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BindTensorMemoryInfoARM<'_> {
@@ -73508,10 +70190,7 @@ unsafe impl Sync for WriteDescriptorSetTensorARM<'_> {}
 impl WriteDescriptorSetTensorARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for WriteDescriptorSetTensorARM<'_> {
@@ -73549,10 +70228,7 @@ unsafe impl Sync for TensorFormatPropertiesARM<'_> {}
 impl TensorFormatPropertiesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for TensorFormatPropertiesARM<'_> {
@@ -73611,10 +70287,7 @@ unsafe impl Sync for PhysicalDeviceTensorPropertiesARM<'_> {}
 impl PhysicalDeviceTensorPropertiesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceTensorPropertiesARM<'_> {
@@ -73747,10 +70420,7 @@ unsafe impl Sync for TensorMemoryBarrierARM<'_> {}
 impl TensorMemoryBarrierARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for TensorMemoryBarrierARM<'_> {
@@ -73817,10 +70487,7 @@ unsafe impl Sync for TensorDependencyInfoARM<'_> {}
 impl TensorDependencyInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for TensorDependencyInfoARM<'_> {
@@ -73865,10 +70532,7 @@ unsafe impl Sync for PhysicalDeviceTensorFeaturesARM<'_> {}
 impl PhysicalDeviceTensorFeaturesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceTensorFeaturesARM<'_> {
@@ -73942,10 +70606,7 @@ unsafe impl Sync for DeviceTensorMemoryRequirementsARM<'_> {}
 impl DeviceTensorMemoryRequirementsARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceTensorMemoryRequirementsARM<'_> {
@@ -73983,10 +70644,7 @@ unsafe impl Sync for CopyTensorInfoARM<'_> {}
 impl CopyTensorInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CopyTensorInfoARM<'_> {
@@ -74035,10 +70693,7 @@ unsafe impl Sync for TensorCopyARM<'_> {}
 impl TensorCopyARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for TensorCopyARM<'_> {
@@ -74086,10 +70741,7 @@ unsafe impl Sync for MemoryDedicatedAllocateInfoTensorARM<'_> {}
 impl MemoryDedicatedAllocateInfoTensorARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryDedicatedAllocateInfoTensorARM<'_> {
@@ -74127,10 +70779,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'_> {}
 impl PhysicalDeviceDescriptorBufferTensorPropertiesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'_> {
@@ -74188,10 +70837,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'_> {}
 impl PhysicalDeviceDescriptorBufferTensorFeaturesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'_> {
@@ -74235,10 +70881,7 @@ unsafe impl Sync for TensorCaptureDescriptorDataInfoARM<'_> {}
 impl TensorCaptureDescriptorDataInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for TensorCaptureDescriptorDataInfoARM<'_> {
@@ -74273,10 +70916,7 @@ unsafe impl Sync for TensorViewCaptureDescriptorDataInfoARM<'_> {}
 impl TensorViewCaptureDescriptorDataInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for TensorViewCaptureDescriptorDataInfoARM<'_> {
@@ -74312,10 +70952,7 @@ unsafe impl Sync for DescriptorGetTensorInfoARM<'_> {}
 impl DescriptorGetTensorInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DescriptorGetTensorInfoARM<'_> {
@@ -74352,10 +70989,7 @@ unsafe impl Sync for FrameBoundaryTensorsARM<'_> {}
 impl FrameBoundaryTensorsARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for FrameBoundaryTensorsARM<'_> {
@@ -74397,10 +71031,7 @@ unsafe impl Sync for PhysicalDeviceExternalTensorInfoARM<'_> {}
 impl PhysicalDeviceExternalTensorInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceExternalTensorInfoARM<'_> {
@@ -74445,10 +71076,7 @@ unsafe impl Sync for ExternalTensorPropertiesARM<'_> {}
 impl ExternalTensorPropertiesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExternalTensorPropertiesARM<'_> {
@@ -74486,10 +71114,7 @@ unsafe impl Sync for ExternalMemoryTensorCreateInfoARM<'_> {}
 impl ExternalMemoryTensorCreateInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExternalMemoryTensorCreateInfoARM<'_> {
@@ -74526,10 +71151,7 @@ unsafe impl Sync for PhysicalDeviceShaderFloat8FeaturesEXT<'_> {}
 impl PhysicalDeviceShaderFloat8FeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderFloat8FeaturesEXT<'_> {
@@ -74575,10 +71197,7 @@ unsafe impl Sync for SurfaceCreateInfoOHOS<'_> {}
 impl SurfaceCreateInfoOHOS<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SurfaceCreateInfoOHOS<'_> {
@@ -74622,10 +71241,7 @@ unsafe impl Sync for PhysicalDeviceDataGraphFeaturesARM<'_> {}
 impl PhysicalDeviceDataGraphFeaturesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDataGraphFeaturesARM<'_> {
@@ -74693,10 +71309,7 @@ unsafe impl Sync for DataGraphPipelineConstantTensorSemiStructuredSparsityInfoAR
 impl DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'_> {
@@ -74749,10 +71362,7 @@ unsafe impl Sync for DataGraphPipelineConstantARM<'_> {}
 impl DataGraphPipelineConstantARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineConstantARM<'_> {
@@ -74794,10 +71404,7 @@ unsafe impl Sync for DataGraphPipelineResourceInfoARM<'_> {}
 impl DataGraphPipelineResourceInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineResourceInfoARM<'_> {
@@ -74842,10 +71449,7 @@ unsafe impl Sync for DataGraphPipelineResourceInfoImageLayoutARM<'_> {}
 impl DataGraphPipelineResourceInfoImageLayoutARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineResourceInfoImageLayoutARM<'_> {
@@ -74885,10 +71489,7 @@ unsafe impl Sync for DataGraphPipelineCompilerControlCreateInfoARM<'_> {}
 impl DataGraphPipelineCompilerControlCreateInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineCompilerControlCreateInfoARM<'_> {
@@ -74939,10 +71540,7 @@ unsafe impl Sync for DataGraphPipelineCreateInfoARM<'_> {}
 impl DataGraphPipelineCreateInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineCreateInfoARM<'_> {
@@ -74995,10 +71593,7 @@ unsafe impl Sync for DataGraphPipelineShaderModuleCreateInfoARM<'_> {}
 impl DataGraphPipelineShaderModuleCreateInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineShaderModuleCreateInfoARM<'_> {
@@ -75066,10 +71661,7 @@ unsafe impl Sync for DataGraphPipelineSessionCreateInfoARM<'_> {}
 impl DataGraphPipelineSessionCreateInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineSessionCreateInfoARM<'_> {
@@ -75110,10 +71702,7 @@ unsafe impl Sync for DataGraphPipelineSessionBindPointRequirementsInfoARM<'_> {}
 impl DataGraphPipelineSessionBindPointRequirementsInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineSessionBindPointRequirementsInfoARM<'_> {
@@ -75151,10 +71740,7 @@ unsafe impl Sync for DataGraphPipelineSessionBindPointRequirementARM<'_> {}
 impl DataGraphPipelineSessionBindPointRequirementARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineSessionBindPointRequirementARM<'_> {
@@ -75205,10 +71791,7 @@ unsafe impl Sync for DataGraphPipelineSessionMemoryRequirementsInfoARM<'_> {}
 impl DataGraphPipelineSessionMemoryRequirementsInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineSessionMemoryRequirementsInfoARM<'_> {
@@ -75258,10 +71841,7 @@ unsafe impl Sync for BindDataGraphPipelineSessionMemoryInfoARM<'_> {}
 impl BindDataGraphPipelineSessionMemoryInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BindDataGraphPipelineSessionMemoryInfoARM<'_> {
@@ -75317,10 +71897,7 @@ unsafe impl Sync for DataGraphPipelineInfoARM<'_> {}
 impl DataGraphPipelineInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineInfoARM<'_> {
@@ -75358,10 +71935,7 @@ unsafe impl Sync for DataGraphPipelinePropertyQueryResultARM<'_> {}
 impl DataGraphPipelinePropertyQueryResultARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelinePropertyQueryResultARM<'_> {
@@ -75409,10 +71983,7 @@ unsafe impl Sync for DataGraphPipelineIdentifierCreateInfoARM<'_> {}
 impl DataGraphPipelineIdentifierCreateInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineIdentifierCreateInfoARM<'_> {
@@ -75453,10 +72024,7 @@ unsafe impl Sync for DataGraphPipelineDispatchInfoARM<'_> {}
 impl DataGraphPipelineDispatchInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineDispatchInfoARM<'_> {
@@ -75579,10 +72147,7 @@ unsafe impl Sync for QueueFamilyDataGraphPropertiesARM<'_> {}
 impl QueueFamilyDataGraphPropertiesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for QueueFamilyDataGraphPropertiesARM<'_> {
@@ -75626,10 +72191,7 @@ unsafe impl Sync for PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM<'
 impl PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM<'_> {
@@ -75676,10 +72238,7 @@ unsafe impl Sync for QueueFamilyDataGraphProcessingEnginePropertiesARM<'_> {}
 impl QueueFamilyDataGraphProcessingEnginePropertiesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for QueueFamilyDataGraphProcessingEnginePropertiesARM<'_> {
@@ -75727,10 +72286,7 @@ unsafe impl Sync for DataGraphProcessingEngineCreateInfoARM<'_> {}
 impl DataGraphProcessingEngineCreateInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphProcessingEngineCreateInfoARM<'_> {
@@ -75776,10 +72332,7 @@ unsafe impl Sync for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'_> {
 impl PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'_> {
@@ -75826,10 +72379,7 @@ unsafe impl Sync for DataGraphPipelineBuiltinModelCreateInfoQCOM<'_> {}
 impl DataGraphPipelineBuiltinModelCreateInfoQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineBuiltinModelCreateInfoQCOM<'_> {
@@ -75872,10 +72422,7 @@ unsafe impl Sync for PhysicalDeviceDataGraphModelFeaturesQCOM<'_> {}
 impl PhysicalDeviceDataGraphModelFeaturesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDataGraphModelFeaturesQCOM<'_> {
@@ -75913,10 +72460,7 @@ unsafe impl Sync for PhysicalDeviceShaderUntypedPointersFeaturesKHR<'_> {}
 impl PhysicalDeviceShaderUntypedPointersFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderUntypedPointersFeaturesKHR<'_> {
@@ -75957,10 +72501,7 @@ unsafe impl Sync for PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'_> {}
 impl PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceVideoEncodeRgbConversionFeaturesVALVE<'_> {
@@ -76007,10 +72548,7 @@ unsafe impl Sync for VideoEncodeRgbConversionCapabilitiesVALVE<'_> {}
 impl VideoEncodeRgbConversionCapabilitiesVALVE<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeRgbConversionCapabilitiesVALVE<'_> {
@@ -76071,10 +72609,7 @@ unsafe impl Sync for VideoEncodeProfileRgbConversionInfoVALVE<'_> {}
 impl VideoEncodeProfileRgbConversionInfoVALVE<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeProfileRgbConversionInfoVALVE<'_> {
@@ -76117,10 +72652,7 @@ unsafe impl Sync for VideoEncodeSessionRgbConversionCreateInfoVALVE<'_> {}
 impl VideoEncodeSessionRgbConversionCreateInfoVALVE<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for VideoEncodeSessionRgbConversionCreateInfoVALVE<'_> {
@@ -76181,10 +72713,7 @@ unsafe impl Sync for PhysicalDeviceShader64BitIndexingFeaturesEXT<'_> {}
 impl PhysicalDeviceShader64BitIndexingFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShader64BitIndexingFeaturesEXT<'_> {
@@ -76225,10 +72754,7 @@ unsafe impl Sync for NativeBufferUsageOHOS<'_> {}
 impl NativeBufferUsageOHOS<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for NativeBufferUsageOHOS<'_> {
@@ -76265,10 +72791,7 @@ unsafe impl Sync for NativeBufferPropertiesOHOS<'_> {}
 impl NativeBufferPropertiesOHOS<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for NativeBufferPropertiesOHOS<'_> {
@@ -76315,10 +72838,7 @@ unsafe impl Sync for NativeBufferFormatPropertiesOHOS<'_> {}
 impl NativeBufferFormatPropertiesOHOS<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for NativeBufferFormatPropertiesOHOS<'_> {
@@ -76401,10 +72921,7 @@ unsafe impl Sync for ImportNativeBufferInfoOHOS<'_> {}
 impl ImportNativeBufferInfoOHOS<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImportNativeBufferInfoOHOS<'_> {
@@ -76440,10 +72957,7 @@ unsafe impl Sync for MemoryGetNativeBufferInfoOHOS<'_> {}
 impl MemoryGetNativeBufferInfoOHOS<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryGetNativeBufferInfoOHOS<'_> {
@@ -76478,10 +72992,7 @@ unsafe impl Sync for ExternalFormatOHOS<'_> {}
 impl ExternalFormatOHOS<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ExternalFormatOHOS<'_> {
@@ -76522,10 +73033,7 @@ unsafe impl Sync for PerfHintInfoQCOM<'_> {}
 impl PerfHintInfoQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PerfHintInfoQCOM<'_> {
@@ -76565,10 +73073,7 @@ unsafe impl Sync for PhysicalDeviceQueuePerfHintFeaturesQCOM<'_> {}
 impl PhysicalDeviceQueuePerfHintFeaturesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceQueuePerfHintFeaturesQCOM<'_> {
@@ -76606,10 +73111,7 @@ unsafe impl Sync for PhysicalDeviceQueuePerfHintPropertiesQCOM<'_> {}
 impl PhysicalDeviceQueuePerfHintPropertiesQCOM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceQueuePerfHintPropertiesQCOM<'_> {
@@ -76649,10 +73151,7 @@ unsafe impl Sync for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'_> {}
 impl PhysicalDevicePerformanceCountersByRegionFeaturesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePerformanceCountersByRegionFeaturesARM<'_> {
@@ -76703,10 +73202,7 @@ unsafe impl Sync for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'_> 
 impl PhysicalDevicePerformanceCountersByRegionPropertiesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDevicePerformanceCountersByRegionPropertiesARM<'_> {
@@ -76772,10 +73268,7 @@ unsafe impl Sync for PerformanceCounterARM<'_> {}
 impl PerformanceCounterARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PerformanceCounterARM<'_> {
@@ -76821,10 +73314,7 @@ impl fmt::Debug for PerformanceCounterDescriptionARM<'_> {
 impl PerformanceCounterDescriptionARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PerformanceCounterDescriptionARM<'_> {
@@ -76871,10 +73361,7 @@ unsafe impl Sync for RenderPassPerformanceCountersByRegionBeginInfoARM<'_> {}
 impl RenderPassPerformanceCountersByRegionBeginInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for RenderPassPerformanceCountersByRegionBeginInfoARM<'_> {
@@ -76928,10 +73415,7 @@ unsafe impl Sync for ComputeOccupancyPriorityParametersNV<'_> {}
 impl ComputeOccupancyPriorityParametersNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ComputeOccupancyPriorityParametersNV<'_> {
@@ -76971,10 +73455,7 @@ unsafe impl Sync for PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'_> {}
 impl PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceComputeOccupancyPriorityFeaturesNV<'_> {
@@ -77015,10 +73496,7 @@ unsafe impl Sync for PhysicalDeviceShaderLongVectorFeaturesEXT<'_> {}
 impl PhysicalDeviceShaderLongVectorFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderLongVectorFeaturesEXT<'_> {
@@ -77056,10 +73534,7 @@ unsafe impl Sync for PhysicalDeviceShaderLongVectorPropertiesEXT<'_> {}
 impl PhysicalDeviceShaderLongVectorPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderLongVectorPropertiesEXT<'_> {
@@ -77099,10 +73574,7 @@ unsafe impl Sync for PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'_> {}
 impl PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceTextureCompressionASTC3DFeaturesEXT<'_> {
@@ -77146,10 +73618,7 @@ unsafe impl Sync for PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'_> {}
 impl PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderSubgroupPartitionedFeaturesEXT<'_> {
@@ -77258,10 +73727,7 @@ unsafe impl Sync for TexelBufferDescriptorInfoEXT<'_> {}
 impl TexelBufferDescriptorInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for TexelBufferDescriptorInfoEXT<'_> {
@@ -77302,10 +73768,7 @@ unsafe impl Sync for ImageDescriptorInfoEXT<'_> {}
 impl ImageDescriptorInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ImageDescriptorInfoEXT<'_> {
@@ -77371,10 +73834,7 @@ impl fmt::Debug for ResourceDescriptorInfoEXT<'_> {
 impl ResourceDescriptorInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ResourceDescriptorInfoEXT<'_> {
@@ -77416,10 +73876,7 @@ unsafe impl Sync for BindHeapInfoEXT<'_> {}
 impl BindHeapInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BindHeapInfoEXT<'_> {
@@ -77465,10 +73922,7 @@ unsafe impl Sync for PushDataInfoEXT<'_> {}
 impl PushDataInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PushDataInfoEXT<'_> {
@@ -78029,10 +74483,7 @@ impl fmt::Debug for DescriptorSetAndBindingMappingEXT<'_> {
 impl DescriptorSetAndBindingMappingEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DescriptorSetAndBindingMappingEXT<'_> {
@@ -78093,10 +74544,7 @@ unsafe impl Sync for ShaderDescriptorSetAndBindingMappingInfoEXT<'_> {}
 impl ShaderDescriptorSetAndBindingMappingInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ShaderDescriptorSetAndBindingMappingInfoEXT<'_> {
@@ -78138,10 +74586,7 @@ unsafe impl Sync for SamplerCustomBorderColorIndexCreateInfoEXT<'_> {}
 impl SamplerCustomBorderColorIndexCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SamplerCustomBorderColorIndexCreateInfoEXT<'_> {
@@ -78178,10 +74623,7 @@ unsafe impl Sync for OpaqueCaptureDataCreateInfoEXT<'_> {}
 impl OpaqueCaptureDataCreateInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for OpaqueCaptureDataCreateInfoEXT<'_> {
@@ -78219,10 +74661,7 @@ unsafe impl Sync for IndirectCommandsLayoutPushDataTokenNV<'_> {}
 impl IndirectCommandsLayoutPushDataTokenNV<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for IndirectCommandsLayoutPushDataTokenNV<'_> {
@@ -78267,10 +74706,7 @@ unsafe impl Sync for SubsampledImageFormatPropertiesEXT<'_> {}
 impl SubsampledImageFormatPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for SubsampledImageFormatPropertiesEXT<'_> {
@@ -78309,10 +74745,7 @@ unsafe impl Sync for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'_> {}
 impl PhysicalDeviceShaderSplitBarrierFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'_> {
@@ -78353,10 +74786,7 @@ unsafe impl Sync for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'_> {}
 impl PhysicalDeviceShaderSplitBarrierPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderSplitBarrierPropertiesEXT<'_> {
@@ -78400,10 +74830,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorHeapFeaturesEXT<'_> {}
 impl PhysicalDeviceDescriptorHeapFeaturesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDescriptorHeapFeaturesEXT<'_> {
@@ -78467,10 +74894,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorHeapPropertiesEXT<'_> {}
 impl PhysicalDeviceDescriptorHeapPropertiesEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDescriptorHeapPropertiesEXT<'_> {
@@ -78629,10 +75053,7 @@ unsafe impl Sync for CommandBufferInheritanceDescriptorHeapInfoEXT<'_> {}
 impl CommandBufferInheritanceDescriptorHeapInfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CommandBufferInheritanceDescriptorHeapInfoEXT<'_> {
@@ -78685,10 +75106,7 @@ unsafe impl Sync for PhysicalDeviceDescriptorHeapTensorPropertiesARM<'_> {}
 impl PhysicalDeviceDescriptorHeapTensorPropertiesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDescriptorHeapTensorPropertiesARM<'_> {
@@ -78744,10 +75162,7 @@ unsafe impl Sync for PhysicalDeviceShaderInstrumentationFeaturesARM<'_> {}
 impl PhysicalDeviceShaderInstrumentationFeaturesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderInstrumentationFeaturesARM<'_> {
@@ -78789,10 +75204,7 @@ unsafe impl Sync for PhysicalDeviceShaderInstrumentationPropertiesARM<'_> {}
 impl PhysicalDeviceShaderInstrumentationPropertiesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderInstrumentationPropertiesARM<'_> {
@@ -78836,10 +75248,7 @@ unsafe impl Sync for ShaderInstrumentationCreateInfoARM<'_> {}
 impl ShaderInstrumentationCreateInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ShaderInstrumentationCreateInfoARM<'_> {
@@ -78879,10 +75288,7 @@ impl fmt::Debug for ShaderInstrumentationMetricDescriptionARM<'_> {
 impl ShaderInstrumentationMetricDescriptionARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ShaderInstrumentationMetricDescriptionARM<'_> {
@@ -79015,10 +75421,7 @@ unsafe impl Sync for DeviceMemoryCopyKHR<'_> {}
 impl DeviceMemoryCopyKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceMemoryCopyKHR<'_> {
@@ -79069,10 +75472,7 @@ unsafe impl Sync for CopyDeviceMemoryInfoKHR<'_> {}
 impl CopyDeviceMemoryInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CopyDeviceMemoryInfoKHR<'_> {
@@ -79115,10 +75515,7 @@ unsafe impl Sync for DeviceMemoryImageCopyKHR<'_> {}
 impl DeviceMemoryImageCopyKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceMemoryImageCopyKHR<'_> {
@@ -79190,10 +75587,7 @@ unsafe impl Sync for CopyDeviceMemoryImageInfoKHR<'_> {}
 impl CopyDeviceMemoryImageInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for CopyDeviceMemoryImageInfoKHR<'_> {
@@ -79235,10 +75629,7 @@ unsafe impl Sync for MemoryRangeBarriersInfoKHR<'_> {}
 impl MemoryRangeBarriersInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryRangeBarriersInfoKHR<'_> {
@@ -79285,10 +75676,7 @@ unsafe impl Sync for MemoryRangeBarrierKHR<'_> {}
 impl MemoryRangeBarrierKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryRangeBarrierKHR<'_> {
@@ -79358,10 +75746,7 @@ unsafe impl Sync for PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'_> {}
 impl PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'_> {
@@ -79404,10 +75789,7 @@ unsafe impl Sync for ConditionalRenderingBeginInfo2EXT<'_> {}
 impl ConditionalRenderingBeginInfo2EXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for ConditionalRenderingBeginInfo2EXT<'_> {
@@ -79455,10 +75837,7 @@ unsafe impl Sync for AccelerationStructureCreateInfo2KHR<'_> {}
 impl AccelerationStructureCreateInfo2KHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for AccelerationStructureCreateInfo2KHR<'_> {
@@ -79510,10 +75889,7 @@ unsafe impl Sync for BindIndexBuffer3InfoKHR<'_> {}
 impl BindIndexBuffer3InfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BindIndexBuffer3InfoKHR<'_> {
@@ -79560,10 +75936,7 @@ unsafe impl Sync for BindVertexBuffer3InfoKHR<'_> {}
 impl BindVertexBuffer3InfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BindVertexBuffer3InfoKHR<'_> {
@@ -79610,10 +75983,7 @@ unsafe impl Sync for DrawIndirect2InfoKHR<'_> {}
 impl DrawIndirect2InfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DrawIndirect2InfoKHR<'_> {
@@ -79662,10 +76032,7 @@ unsafe impl Sync for DrawIndirectCount2InfoKHR<'_> {}
 impl DrawIndirectCount2InfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DrawIndirectCount2InfoKHR<'_> {
@@ -79724,10 +76091,7 @@ unsafe impl Sync for DispatchIndirect2InfoKHR<'_> {}
 impl DispatchIndirect2InfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DispatchIndirect2InfoKHR<'_> {
@@ -79768,10 +76132,7 @@ unsafe impl Sync for BindTransformFeedbackBuffer2InfoEXT<'_> {}
 impl BindTransformFeedbackBuffer2InfoEXT<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for BindTransformFeedbackBuffer2InfoEXT<'_> {
@@ -79814,10 +76175,7 @@ unsafe impl Sync for MemoryMarkerInfoAMD<'_> {}
 impl MemoryMarkerInfoAMD<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for MemoryMarkerInfoAMD<'_> {
@@ -79867,10 +76225,7 @@ unsafe impl Sync for PhysicalDeviceShaderConstantDataFeaturesKHR<'_> {}
 impl PhysicalDeviceShaderConstantDataFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderConstantDataFeaturesKHR<'_> {
@@ -79911,10 +76266,7 @@ unsafe impl Sync for PhysicalDeviceShaderAbortFeaturesKHR<'_> {}
 impl PhysicalDeviceShaderAbortFeaturesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderAbortFeaturesKHR<'_> {
@@ -79951,10 +76303,7 @@ unsafe impl Sync for PhysicalDeviceShaderAbortPropertiesKHR<'_> {}
 impl PhysicalDeviceShaderAbortPropertiesKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceShaderAbortPropertiesKHR<'_> {
@@ -79995,10 +76344,7 @@ unsafe impl Sync for DeviceFaultShaderAbortMessageInfoKHR<'_> {}
 impl DeviceFaultShaderAbortMessageInfoKHR<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DeviceFaultShaderAbortMessageInfoKHR<'_> {
@@ -80083,10 +76429,7 @@ unsafe impl Sync for QueueFamilyDataGraphTOSAPropertiesARM<'_> {}
 impl QueueFamilyDataGraphTOSAPropertiesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for QueueFamilyDataGraphTOSAPropertiesARM<'_> {
@@ -80136,10 +76479,7 @@ unsafe impl Sync for DataGraphPipelineSingleNodeConnectionARM<'_> {}
 impl DataGraphPipelineSingleNodeConnectionARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineSingleNodeConnectionARM<'_> {
@@ -80185,10 +76525,7 @@ unsafe impl Sync for PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'_> {}
 impl PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for PhysicalDeviceDataGraphOpticalFlowFeaturesARM<'_> {
@@ -80236,10 +76573,7 @@ unsafe impl Sync for QueueFamilyDataGraphOpticalFlowPropertiesARM<'_> {}
 impl QueueFamilyDataGraphOpticalFlowPropertiesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for QueueFamilyDataGraphOpticalFlowPropertiesARM<'_> {
@@ -80316,10 +76650,7 @@ unsafe impl Sync for DataGraphOpticalFlowImageFormatInfoARM<'_> {}
 impl DataGraphOpticalFlowImageFormatInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphOpticalFlowImageFormatInfoARM<'_> {
@@ -80360,10 +76691,7 @@ unsafe impl Sync for DataGraphOpticalFlowImageFormatPropertiesARM<'_> {}
 impl DataGraphOpticalFlowImageFormatPropertiesARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphOpticalFlowImageFormatPropertiesARM<'_> {
@@ -80401,10 +76729,7 @@ unsafe impl Sync for DataGraphPipelineSingleNodeCreateInfoARM<'_> {}
 impl DataGraphPipelineSingleNodeCreateInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineSingleNodeCreateInfoARM<'_> {
@@ -80461,10 +76786,7 @@ unsafe impl Sync for DataGraphPipelineOpticalFlowCreateInfoARM<'_> {}
 impl DataGraphPipelineOpticalFlowCreateInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineOpticalFlowCreateInfoARM<'_> {
@@ -80554,10 +76876,7 @@ unsafe impl Sync for DataGraphPipelineOpticalFlowDispatchInfoARM<'_> {}
 impl DataGraphPipelineOpticalFlowDispatchInfoARM<'_> {
     #[inline]
     pub const fn new() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            ..unsafe { ::core::mem::zeroed() }
-        }
+        init_tagged_structure()
     }
 }
 impl ::core::default::Default for DataGraphPipelineOpticalFlowDispatchInfoARM<'_> {
