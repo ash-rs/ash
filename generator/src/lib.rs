@@ -2162,7 +2162,7 @@ fn derive_getters_and_setters(
         if struct_.name == "VkShaderModuleCreateInfo" && name == "pCode" {
             return Some(quote! {
                 #[inline]
-                pub fn code(mut self, code: &'a [u32]) -> Self {
+                pub const fn code(mut self, code: &'a [u32]) -> Self {
                     self.code_size = code.len() * 4;
                     self.p_code = code.as_ptr();
                     self
@@ -2178,7 +2178,7 @@ fn derive_getters_and_setters(
                 /// See <https://docs.vulkan.org/refpages/latest/refpages/source/VkPipelineMultisampleStateCreateInfo.html#_description>
                 /// for more details.
                 #[inline]
-                pub fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> Self {
+                pub const fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> Self {
                     self.p_sample_mask = if sample_mask.is_empty() {
                         core::ptr::null()
                     } else {
@@ -2211,12 +2211,13 @@ fn derive_getters_and_setters(
                 return Some(quote! {
                     #deprecated
                     #[inline]
-                    pub fn #param_ident_short(mut self, #param_ident_short: &'a CStr) -> Self {
+                    pub const fn #param_ident_short(mut self, #param_ident_short: &'a CStr) -> Self {
                         self.#param_ident = #param_ident_short.as_ptr();
                         self
                     }
                     #deprecated
                     #[inline]
+                    // TODO: const requires MSRV 1.84 for is_null(), 1.81 for CStr::from_ptr()
                     pub unsafe fn #param_ident_as_c_str(&self) -> Option<&CStr> {
                         if self.#param_ident.is_null() {
                             None
@@ -2235,7 +2236,7 @@ fn derive_getters_and_setters(
                     }
                     #deprecated
                     #[inline]
-                    pub fn #param_ident_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
+                    pub const fn #param_ident_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
                         wrap_c_str_slice_until_nul(&self.#param_ident)
                     }
                 });
@@ -2274,6 +2275,7 @@ fn derive_getters_and_setters(
                     return Some(quote! {
                         #deprecated
                         #[inline]
+                        // TODO: const when the indexer is
                         pub fn #param_ident_short(mut self, #param_ident_short: &'_ #slice_param_ty_tokens) -> Self {
                             self.#array_size_ident = #param_ident_short.len()#cast;
                             self.#param_ident[..#param_ident_short.len()].copy_from_slice(#param_ident_short);
@@ -2281,6 +2283,7 @@ fn derive_getters_and_setters(
                         }
                         #deprecated
                         #[inline]
+                        // TODO: const when the indexer is
                         pub fn #param_ident_short_as_slice(&self) -> &#slice_param_ty_tokens {
                             &self.#param_ident[..self.#array_size_ident #cast]
                         }
@@ -2327,12 +2330,17 @@ fn derive_getters_and_setters(
                     quote!(self.#array_size_ident = #param_ident_short.len()#cast;)
                 };
 
-                let mutable = if field.is_const { quote!() } else { quote!(mut) };
+                // TODO: const for mutable references requires MSRV 1.83
+                let (mutable, constness) = if field.is_const {
+                    (quote!(), quote!(const))
+                } else {
+                    (quote!(mut), quote!())
+                };
 
                 return Some(quote! {
                     #deprecated
                     #[inline]
-                    pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
+                    pub #constness fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
                         #set_size_stmt
                         self.#param_ident = #param_ident_short #ptr;
                         self
@@ -2345,8 +2353,9 @@ fn derive_getters_and_setters(
             return Some(quote!{
                 #deprecated
                 #[inline]
-                pub fn #param_ident_short(mut self, #param_ident_short: bool) -> Self {
-                    self.#param_ident = #param_ident_short.into();
+                pub const fn #param_ident_short(mut self, #param_ident_short: bool) -> Self {
+                    // TODO: Explicit conversion to vk::TRUE / vk::FALSE?
+                    self.#param_ident = #param_ident_short as Bool32;
                     self
                 }
             });
@@ -2366,6 +2375,7 @@ fn derive_getters_and_setters(
                 return Some(quote!{
                     #deprecated
                     #[inline]
+                    // TODO: const requires `trait Handle` to be const
                     pub fn #param_ident_short<T: Handle>(mut self, #param_ident_short: T) -> Self {
                         self.#param_ident = #param_ident_short.as_raw();
                         self.#objecttype_ident = T::TYPE;
@@ -2375,17 +2385,20 @@ fn derive_getters_and_setters(
             }
         };
 
-        let param_ty_tokens = if is_opaque_type(&field.basetype) {
+        let (param_ty_tokens, constness) = if is_opaque_type(&field.basetype) {
             //  Use raw pointers for void/opaque types
-            field.type_tokens(false, type_lifetime)
+            (field.type_tokens(false, type_lifetime), quote!(const))
+        } else if field.reference.is_some() && !field.is_const {
+            // TODO: const for mutable references requires MSRV 1.83
+            (param_ty_tokens, quote!())
         } else {
-            param_ty_tokens
+            (param_ty_tokens, quote!(const))
         };
 
         Some(quote!{
             #deprecated
             #[inline]
-            pub fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens) -> Self {
+            pub #constness fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens) -> Self {
                 self.#param_ident = #param_ident_short;
                 self
             }
