@@ -720,12 +720,18 @@ unsafe impl Send for BaseInStructure<'_> {}
 unsafe impl Sync for BaseInStructure<'_> {}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default, PartialEq, Eq, Hash)]
+#[derive(Copy, Clone, PartialEq, Eq, Hash)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkOffset2D.html>"]
 #[must_use]
 pub struct Offset2D {
     pub x: i32,
     pub y: i32,
+}
+impl ::core::default::Default for Offset2D {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl Offset2D {
     #[inline]
@@ -741,13 +747,19 @@ impl Offset2D {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default, PartialEq, Eq, Hash)]
+#[derive(Copy, Clone, PartialEq, Eq, Hash)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkOffset3D.html>"]
 #[must_use]
 pub struct Offset3D {
     pub x: i32,
     pub y: i32,
     pub z: i32,
+}
+impl ::core::default::Default for Offset3D {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl Offset3D {
     #[inline]
@@ -768,12 +780,18 @@ impl Offset3D {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default, PartialEq, Eq, Hash)]
+#[derive(Copy, Clone, PartialEq, Eq, Hash)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkExtent2D.html>"]
 #[must_use]
 pub struct Extent2D {
     pub width: u32,
     pub height: u32,
+}
+impl ::core::default::Default for Extent2D {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl Extent2D {
     #[inline]
@@ -789,13 +807,19 @@ impl Extent2D {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default, PartialEq, Eq, Hash)]
+#[derive(Copy, Clone, PartialEq, Eq, Hash)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkExtent3D.html>"]
 #[must_use]
 pub struct Extent3D {
     pub width: u32,
     pub height: u32,
     pub depth: u32,
+}
+impl ::core::default::Default for Extent3D {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl Extent3D {
     #[inline]
@@ -816,7 +840,7 @@ impl Extent3D {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkViewport.html>"]
 #[must_use]
 pub struct Viewport {
@@ -826,6 +850,12 @@ pub struct Viewport {
     pub height: f32,
     pub min_depth: f32,
     pub max_depth: f32,
+}
+impl ::core::default::Default for Viewport {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl Viewport {
     #[inline]
@@ -861,12 +891,18 @@ impl Viewport {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default, PartialEq, Eq, Hash)]
+#[derive(Copy, Clone, PartialEq, Eq, Hash)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkRect2D.html>"]
 #[must_use]
 pub struct Rect2D {
     pub offset: Offset2D,
     pub extent: Extent2D,
+}
+impl ::core::default::Default for Rect2D {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl Rect2D {
     #[inline]
@@ -882,13 +918,19 @@ impl Rect2D {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default, PartialEq, Eq, Hash)]
+#[derive(Copy, Clone, PartialEq, Eq, Hash)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkClearRect.html>"]
 #[must_use]
 pub struct ClearRect {
     pub rect: Rect2D,
     pub base_array_layer: u32,
     pub layer_count: u32,
+}
+impl ::core::default::Default for ClearRect {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ClearRect {
     #[inline]
@@ -909,7 +951,7 @@ impl ClearRect {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkComponentMapping.html>"]
 #[must_use]
 pub struct ComponentMapping {
@@ -917,6 +959,12 @@ pub struct ComponentMapping {
     pub g: ComponentSwizzle,
     pub b: ComponentSwizzle,
     pub a: ComponentSwizzle,
+}
+impl ::core::default::Default for ComponentMapping {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ComponentMapping {
     #[inline]
@@ -1455,7 +1503,7 @@ impl<'a> InstanceCreateInfo<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkQueueFamilyProperties.html>"]
 #[must_use]
 pub struct QueueFamilyProperties {
@@ -1463,6 +1511,12 @@ pub struct QueueFamilyProperties {
     pub queue_count: u32,
     pub timestamp_valid_bits: u32,
     pub min_image_transfer_granularity: Extent3D,
+}
+impl ::core::default::Default for QueueFamilyProperties {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl QueueFamilyProperties {
     #[inline]
@@ -1578,13 +1632,19 @@ impl<'a> MemoryAllocateInfo<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkMemoryRequirements.html>"]
 #[must_use]
 pub struct MemoryRequirements {
     pub size: DeviceSize,
     pub alignment: DeviceSize,
     pub memory_type_bits: u32,
+}
+impl ::core::default::Default for MemoryRequirements {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl MemoryRequirements {
     #[inline]
@@ -1605,13 +1665,19 @@ impl MemoryRequirements {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSparseImageFormatProperties.html>"]
 #[must_use]
 pub struct SparseImageFormatProperties {
     pub aspect_mask: ImageAspectFlags,
     pub image_granularity: Extent3D,
     pub flags: SparseImageFormatFlags,
+}
+impl ::core::default::Default for SparseImageFormatProperties {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SparseImageFormatProperties {
     #[inline]
@@ -1632,7 +1698,7 @@ impl SparseImageFormatProperties {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSparseImageMemoryRequirements.html>"]
 #[must_use]
 pub struct SparseImageMemoryRequirements {
@@ -1641,6 +1707,12 @@ pub struct SparseImageMemoryRequirements {
     pub image_mip_tail_size: DeviceSize,
     pub image_mip_tail_offset: DeviceSize,
     pub image_mip_tail_stride: DeviceSize,
+}
+impl ::core::default::Default for SparseImageMemoryRequirements {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SparseImageMemoryRequirements {
     #[inline]
@@ -1671,12 +1743,18 @@ impl SparseImageMemoryRequirements {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkMemoryType.html>"]
 #[must_use]
 pub struct MemoryType {
     pub property_flags: MemoryPropertyFlags,
     pub heap_index: u32,
+}
+impl ::core::default::Default for MemoryType {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl MemoryType {
     #[inline]
@@ -1692,12 +1770,18 @@ impl MemoryType {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkMemoryHeap.html>"]
 #[must_use]
 pub struct MemoryHeap {
     pub size: DeviceSize,
     pub flags: MemoryHeapFlags,
+}
+impl ::core::default::Default for MemoryHeap {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl MemoryHeap {
     #[inline]
@@ -1757,13 +1841,19 @@ impl<'a> MappedMemoryRange<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkFormatProperties.html>"]
 #[must_use]
 pub struct FormatProperties {
     pub linear_tiling_features: FormatFeatureFlags,
     pub optimal_tiling_features: FormatFeatureFlags,
     pub buffer_features: FormatFeatureFlags,
+}
+impl ::core::default::Default for FormatProperties {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl FormatProperties {
     #[inline]
@@ -1784,7 +1874,7 @@ impl FormatProperties {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkImageFormatProperties.html>"]
 #[must_use]
 pub struct ImageFormatProperties {
@@ -1793,6 +1883,12 @@ pub struct ImageFormatProperties {
     pub max_array_layers: u32,
     pub sample_counts: SampleCountFlags,
     pub max_resource_size: DeviceSize,
+}
+impl ::core::default::Default for ImageFormatProperties {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ImageFormatProperties {
     #[inline]
@@ -1823,13 +1919,19 @@ impl ImageFormatProperties {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDescriptorBufferInfo.html>"]
 #[must_use]
 pub struct DescriptorBufferInfo {
     pub buffer: Buffer,
     pub offset: DeviceSize,
     pub range: DeviceSize,
+}
+impl ::core::default::Default for DescriptorBufferInfo {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DescriptorBufferInfo {
     #[inline]
@@ -1850,13 +1952,19 @@ impl DescriptorBufferInfo {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDescriptorImageInfo.html>"]
 #[must_use]
 pub struct DescriptorImageInfo {
     pub sampler: Sampler,
     pub image_view: ImageView,
     pub image_layout: ImageLayout,
+}
+impl ::core::default::Default for DescriptorImageInfo {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DescriptorImageInfo {
     #[inline]
@@ -2172,13 +2280,19 @@ impl<'a> BufferViewCreateInfo<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkImageSubresource.html>"]
 #[must_use]
 pub struct ImageSubresource {
     pub aspect_mask: ImageAspectFlags,
     pub mip_level: u32,
     pub array_layer: u32,
+}
+impl ::core::default::Default for ImageSubresource {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ImageSubresource {
     #[inline]
@@ -2199,7 +2313,7 @@ impl ImageSubresource {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkImageSubresourceLayers.html>"]
 #[must_use]
 pub struct ImageSubresourceLayers {
@@ -2207,6 +2321,12 @@ pub struct ImageSubresourceLayers {
     pub mip_level: u32,
     pub base_array_layer: u32,
     pub layer_count: u32,
+}
+impl ::core::default::Default for ImageSubresourceLayers {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ImageSubresourceLayers {
     #[inline]
@@ -2232,7 +2352,7 @@ impl ImageSubresourceLayers {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkImageSubresourceRange.html>"]
 #[must_use]
 pub struct ImageSubresourceRange {
@@ -2241,6 +2361,12 @@ pub struct ImageSubresourceRange {
     pub level_count: u32,
     pub base_array_layer: u32,
     pub layer_count: u32,
+}
+impl ::core::default::Default for ImageSubresourceRange {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ImageSubresourceRange {
     #[inline]
@@ -2551,7 +2677,7 @@ impl<'a> ImageCreateInfo<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSubresourceLayout.html>"]
 #[must_use]
 pub struct SubresourceLayout {
@@ -2560,6 +2686,12 @@ pub struct SubresourceLayout {
     pub row_pitch: DeviceSize,
     pub array_pitch: DeviceSize,
     pub depth_pitch: DeviceSize,
+}
+impl ::core::default::Default for SubresourceLayout {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SubresourceLayout {
     #[inline]
@@ -2652,13 +2784,19 @@ impl<'a> ImageViewCreateInfo<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkBufferCopy.html>"]
 #[must_use]
 pub struct BufferCopy {
     pub src_offset: DeviceSize,
     pub dst_offset: DeviceSize,
     pub size: DeviceSize,
+}
+impl ::core::default::Default for BufferCopy {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl BufferCopy {
     #[inline]
@@ -2679,7 +2817,7 @@ impl BufferCopy {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSparseMemoryBind.html>"]
 #[must_use]
 pub struct SparseMemoryBind {
@@ -2688,6 +2826,12 @@ pub struct SparseMemoryBind {
     pub memory: DeviceMemory,
     pub memory_offset: DeviceSize,
     pub flags: SparseMemoryBindFlags,
+}
+impl ::core::default::Default for SparseMemoryBind {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SparseMemoryBind {
     #[inline]
@@ -2718,7 +2862,7 @@ impl SparseMemoryBind {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSparseImageMemoryBind.html>"]
 #[must_use]
 pub struct SparseImageMemoryBind {
@@ -2728,6 +2872,12 @@ pub struct SparseImageMemoryBind {
     pub memory: DeviceMemory,
     pub memory_offset: DeviceSize,
     pub flags: SparseMemoryBindFlags,
+}
+impl ::core::default::Default for SparseImageMemoryBind {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SparseImageMemoryBind {
     #[inline]
@@ -2928,7 +3078,7 @@ impl<'a> BindSparseInfo<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkImageCopy.html>"]
 #[must_use]
 pub struct ImageCopy {
@@ -2937,6 +3087,12 @@ pub struct ImageCopy {
     pub dst_subresource: ImageSubresourceLayers,
     pub dst_offset: Offset3D,
     pub extent: Extent3D,
+}
+impl ::core::default::Default for ImageCopy {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ImageCopy {
     #[inline]
@@ -3006,7 +3162,7 @@ impl ImageBlit {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkBufferImageCopy.html>"]
 #[must_use]
 pub struct BufferImageCopy {
@@ -3016,6 +3172,12 @@ pub struct BufferImageCopy {
     pub image_subresource: ImageSubresourceLayers,
     pub image_offset: Offset3D,
     pub image_extent: Extent3D,
+}
+impl ::core::default::Default for BufferImageCopy {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl BufferImageCopy {
     #[inline]
@@ -3051,13 +3213,19 @@ impl BufferImageCopy {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkStridedDeviceAddressRangeKHR.html>"]
 #[must_use]
 pub struct StridedDeviceAddressRangeKHR {
     pub address: DeviceAddress,
     pub size: DeviceSize,
     pub stride: DeviceSize,
+}
+impl ::core::default::Default for StridedDeviceAddressRangeKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl StridedDeviceAddressRangeKHR {
     #[inline]
@@ -3078,13 +3246,19 @@ impl StridedDeviceAddressRangeKHR {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkCopyMemoryIndirectCommandKHR.html>"]
 #[must_use]
 pub struct CopyMemoryIndirectCommandKHR {
     pub src_address: DeviceAddress,
     pub dst_address: DeviceAddress,
     pub size: DeviceSize,
+}
+impl ::core::default::Default for CopyMemoryIndirectCommandKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl CopyMemoryIndirectCommandKHR {
     #[inline]
@@ -3155,7 +3329,7 @@ impl<'a> CopyMemoryIndirectInfoKHR<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkCopyMemoryToImageIndirectCommandKHR.html>"]
 #[must_use]
 pub struct CopyMemoryToImageIndirectCommandKHR {
@@ -3165,6 +3339,12 @@ pub struct CopyMemoryToImageIndirectCommandKHR {
     pub image_subresource: ImageSubresourceLayers,
     pub image_offset: Offset3D,
     pub image_extent: Extent3D,
+}
+impl ::core::default::Default for CopyMemoryToImageIndirectCommandKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl CopyMemoryToImageIndirectCommandKHR {
     #[inline]
@@ -3258,7 +3438,7 @@ impl<'a> CopyMemoryToImageIndirectInfoKHR<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkImageResolve.html>"]
 #[must_use]
 pub struct ImageResolve {
@@ -3267,6 +3447,12 @@ pub struct ImageResolve {
     pub dst_subresource: ImageSubresourceLayers,
     pub dst_offset: Offset3D,
     pub extent: Extent3D,
+}
+impl ::core::default::Default for ImageResolve {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ImageResolve {
     #[inline]
@@ -3428,12 +3614,18 @@ impl<'a> DescriptorSetLayoutCreateInfo<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDescriptorPoolSize.html>"]
 #[must_use]
 pub struct DescriptorPoolSize {
     pub ty: DescriptorType,
     pub descriptor_count: u32,
+}
+impl ::core::default::Default for DescriptorPoolSize {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DescriptorPoolSize {
     #[inline]
@@ -3535,13 +3727,19 @@ impl<'a> DescriptorSetAllocateInfo<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSpecializationMapEntry.html>"]
 #[must_use]
 pub struct SpecializationMapEntry {
     pub constant_id: u32,
     pub offset: u32,
     pub size: usize,
+}
+impl ::core::default::Default for SpecializationMapEntry {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SpecializationMapEntry {
     #[inline]
@@ -3801,13 +3999,19 @@ impl<'a> PipelineCreateFlags2CreateInfo<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkVertexInputBindingDescription.html>"]
 #[must_use]
 pub struct VertexInputBindingDescription {
     pub binding: u32,
     pub stride: u32,
     pub input_rate: VertexInputRate,
+}
+impl ::core::default::Default for VertexInputBindingDescription {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl VertexInputBindingDescription {
     #[inline]
@@ -3828,7 +4032,7 @@ impl VertexInputBindingDescription {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkVertexInputAttributeDescription.html>"]
 #[must_use]
 pub struct VertexInputAttributeDescription {
@@ -3836,6 +4040,12 @@ pub struct VertexInputAttributeDescription {
     pub binding: u32,
     pub format: Format,
     pub offset: u32,
+}
+impl ::core::default::Default for VertexInputAttributeDescription {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl VertexInputAttributeDescription {
     #[inline]
@@ -4224,7 +4434,7 @@ impl<'a> PipelineMultisampleStateCreateInfo<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPipelineColorBlendAttachmentState.html>"]
 #[must_use]
 pub struct PipelineColorBlendAttachmentState {
@@ -4236,6 +4446,12 @@ pub struct PipelineColorBlendAttachmentState {
     pub dst_alpha_blend_factor: BlendFactor,
     pub alpha_blend_op: BlendOp,
     pub color_write_mask: ColorComponentFlags,
+}
+impl ::core::default::Default for PipelineColorBlendAttachmentState {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl PipelineColorBlendAttachmentState {
     #[inline]
@@ -4379,7 +4595,7 @@ impl<'a> PipelineDynamicStateCreateInfo<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkStencilOpState.html>"]
 #[must_use]
 pub struct StencilOpState {
@@ -4390,6 +4606,12 @@ pub struct StencilOpState {
     pub compare_mask: u32,
     pub write_mask: u32,
     pub reference: u32,
+}
+impl ::core::default::Default for StencilOpState {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl StencilOpState {
     #[inline]
@@ -4797,13 +5019,19 @@ impl PipelineCacheHeaderVersionDataGraphQCOM {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPushConstantRange.html>"]
 #[must_use]
 pub struct PushConstantRange {
     pub stage_flags: ShaderStageFlags,
     pub offset: u32,
     pub size: u32,
+}
+impl ::core::default::Default for PushConstantRange {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl PushConstantRange {
     #[inline]
@@ -5581,12 +5809,18 @@ impl ::core::default::Default for ClearColorValue {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkClearDepthStencilValue.html>"]
 #[must_use]
 pub struct ClearDepthStencilValue {
     pub depth: f32,
     pub stencil: u32,
+}
+impl ::core::default::Default for ClearDepthStencilValue {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ClearDepthStencilValue {
     #[inline]
@@ -5614,7 +5848,7 @@ impl ::core::default::Default for ClearValue {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkClearAttachment.html>"]
 #[must_use]
 pub struct ClearAttachment {
@@ -5630,6 +5864,12 @@ impl fmt::Debug for ClearAttachment {
             .field("color_attachment", &self.color_attachment)
             .field("clear_value", &"union")
             .finish()
+    }
+}
+impl ::core::default::Default for ClearAttachment {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl ClearAttachment {
@@ -5651,7 +5891,7 @@ impl ClearAttachment {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkAttachmentDescription.html>"]
 #[must_use]
 pub struct AttachmentDescription {
@@ -5664,6 +5904,12 @@ pub struct AttachmentDescription {
     pub stencil_store_op: AttachmentStoreOp,
     pub initial_layout: ImageLayout,
     pub final_layout: ImageLayout,
+}
+impl ::core::default::Default for AttachmentDescription {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl AttachmentDescription {
     #[inline]
@@ -5714,12 +5960,18 @@ impl AttachmentDescription {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkAttachmentReference.html>"]
 #[must_use]
 pub struct AttachmentReference {
     pub attachment: u32,
     pub layout: ImageLayout,
+}
+impl ::core::default::Default for AttachmentReference {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl AttachmentReference {
     #[inline]
@@ -5805,7 +6057,7 @@ impl<'a> SubpassDescription<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSubpassDependency.html>"]
 #[must_use]
 pub struct SubpassDependency {
@@ -5816,6 +6068,12 @@ pub struct SubpassDependency {
     pub src_access_mask: AccessFlags,
     pub dst_access_mask: AccessFlags,
     pub dependency_flags: DependencyFlags,
+}
+impl ::core::default::Default for SubpassDependency {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SubpassDependency {
     #[inline]
@@ -5976,7 +6234,7 @@ impl<'a> FenceCreateInfo<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceFeatures.html>"]
 #[must_use]
 pub struct PhysicalDeviceFeatures {
@@ -6035,6 +6293,12 @@ pub struct PhysicalDeviceFeatures {
     pub sparse_residency_aliased: Bool32,
     pub variable_multisample_rate: Bool32,
     pub inherited_queries: Bool32,
+}
+impl ::core::default::Default for PhysicalDeviceFeatures {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl PhysicalDeviceFeatures {
     #[inline]
@@ -6352,7 +6616,7 @@ impl PhysicalDeviceFeatures {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceSparseProperties.html>"]
 #[must_use]
 pub struct PhysicalDeviceSparseProperties {
@@ -6361,6 +6625,12 @@ pub struct PhysicalDeviceSparseProperties {
     pub residency_standard3_d_block_shape: Bool32,
     pub residency_aligned_mip_size: Bool32,
     pub residency_non_resident_strict: Bool32,
+}
+impl ::core::default::Default for PhysicalDeviceSparseProperties {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl PhysicalDeviceSparseProperties {
     #[inline]
@@ -7335,7 +7605,7 @@ impl<'a> FramebufferCreateInfo<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDrawIndirectCommand.html>"]
 #[must_use]
 pub struct DrawIndirectCommand {
@@ -7343,6 +7613,12 @@ pub struct DrawIndirectCommand {
     pub instance_count: u32,
     pub first_vertex: u32,
     pub first_instance: u32,
+}
+impl ::core::default::Default for DrawIndirectCommand {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DrawIndirectCommand {
     #[inline]
@@ -7368,7 +7644,7 @@ impl DrawIndirectCommand {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDrawIndexedIndirectCommand.html>"]
 #[must_use]
 pub struct DrawIndexedIndirectCommand {
@@ -7377,6 +7653,12 @@ pub struct DrawIndexedIndirectCommand {
     pub first_index: u32,
     pub vertex_offset: i32,
     pub first_instance: u32,
+}
+impl ::core::default::Default for DrawIndexedIndirectCommand {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DrawIndexedIndirectCommand {
     #[inline]
@@ -7407,13 +7689,19 @@ impl DrawIndexedIndirectCommand {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDispatchIndirectCommand.html>"]
 #[must_use]
 pub struct DispatchIndirectCommand {
     pub x: u32,
     pub y: u32,
     pub z: u32,
+}
+impl ::core::default::Default for DispatchIndirectCommand {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DispatchIndirectCommand {
     #[inline]
@@ -7434,12 +7722,18 @@ impl DispatchIndirectCommand {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkMultiDrawInfoEXT.html>"]
 #[must_use]
 pub struct MultiDrawInfoEXT {
     pub first_vertex: u32,
     pub vertex_count: u32,
+}
+impl ::core::default::Default for MultiDrawInfoEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl MultiDrawInfoEXT {
     #[inline]
@@ -7455,13 +7749,19 @@ impl MultiDrawInfoEXT {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkMultiDrawIndexedInfoEXT.html>"]
 #[must_use]
 pub struct MultiDrawIndexedInfoEXT {
     pub first_index: u32,
     pub index_count: u32,
     pub vertex_offset: i32,
+}
+impl ::core::default::Default for MultiDrawIndexedInfoEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl MultiDrawIndexedInfoEXT {
     #[inline]
@@ -7607,12 +7907,18 @@ impl<'a> DisplayPropertiesKHR<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDisplayPlanePropertiesKHR.html>"]
 #[must_use]
 pub struct DisplayPlanePropertiesKHR {
     pub current_display: DisplayKHR,
     pub current_stack_index: u32,
+}
+impl ::core::default::Default for DisplayPlanePropertiesKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DisplayPlanePropertiesKHR {
     #[inline]
@@ -7628,12 +7934,18 @@ impl DisplayPlanePropertiesKHR {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDisplayModeParametersKHR.html>"]
 #[must_use]
 pub struct DisplayModeParametersKHR {
     pub visible_region: Extent2D,
     pub refresh_rate: u32,
+}
+impl ::core::default::Default for DisplayModeParametersKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DisplayModeParametersKHR {
     #[inline]
@@ -7649,12 +7961,18 @@ impl DisplayModeParametersKHR {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDisplayModePropertiesKHR.html>"]
 #[must_use]
 pub struct DisplayModePropertiesKHR {
     pub display_mode: DisplayModeKHR,
     pub parameters: DisplayModeParametersKHR,
+}
+impl ::core::default::Default for DisplayModePropertiesKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DisplayModePropertiesKHR {
     #[inline]
@@ -7708,7 +8026,7 @@ impl<'a> DisplayModeCreateInfoKHR<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDisplayPlaneCapabilitiesKHR.html>"]
 #[must_use]
 pub struct DisplayPlaneCapabilitiesKHR {
@@ -7721,6 +8039,12 @@ pub struct DisplayPlaneCapabilitiesKHR {
     pub max_dst_position: Offset2D,
     pub min_dst_extent: Extent2D,
     pub max_dst_extent: Extent2D,
+}
+impl ::core::default::Default for DisplayPlaneCapabilitiesKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DisplayPlaneCapabilitiesKHR {
     #[inline]
@@ -7923,7 +8247,7 @@ impl<'a> DisplayPresentInfoKHR<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSurfaceCapabilitiesKHR.html>"]
 #[must_use]
 pub struct SurfaceCapabilitiesKHR {
@@ -7937,6 +8261,12 @@ pub struct SurfaceCapabilitiesKHR {
     pub current_transform: SurfaceTransformFlagsKHR,
     pub supported_composite_alpha: CompositeAlphaFlagsKHR,
     pub supported_usage_flags: ImageUsageFlags,
+}
+impl ::core::default::Default for SurfaceCapabilitiesKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SurfaceCapabilitiesKHR {
     #[inline]
@@ -8455,12 +8785,18 @@ impl<'a> ScreenSurfaceCreateInfoQNX<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default, PartialEq, Eq, Hash)]
+#[derive(Copy, Clone, PartialEq, Eq, Hash)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSurfaceFormatKHR.html>"]
 #[must_use]
 pub struct SurfaceFormatKHR {
     pub format: Format,
     pub color_space: ColorSpaceKHR,
+}
+impl ::core::default::Default for SurfaceFormatKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SurfaceFormatKHR {
     #[inline]
@@ -9184,7 +9520,7 @@ impl<'a> DedicatedAllocationMemoryAllocateInfoNV<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkExternalImageFormatPropertiesNV.html>"]
 #[must_use]
 pub struct ExternalImageFormatPropertiesNV {
@@ -9192,6 +9528,12 @@ pub struct ExternalImageFormatPropertiesNV {
     pub external_memory_features: ExternalMemoryFeatureFlagsNV,
     pub export_from_imported_handle_types: ExternalMemoryHandleTypeFlagsNV,
     pub compatible_handle_types: ExternalMemoryHandleTypeFlagsNV,
+}
+impl ::core::default::Default for ExternalImageFormatPropertiesNV {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ExternalImageFormatPropertiesNV {
     #[inline]
@@ -9999,12 +10341,18 @@ impl<'a> PhysicalDeviceClusterAccelerationStructurePropertiesNV<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkStridedDeviceAddressNV.html>"]
 #[must_use]
 pub struct StridedDeviceAddressNV {
     pub start_address: DeviceAddress,
     pub stride_in_bytes: DeviceSize,
+}
+impl ::core::default::Default for StridedDeviceAddressNV {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl StridedDeviceAddressNV {
     #[inline]
@@ -10071,11 +10419,17 @@ pub struct ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkClusterAccelerationStructureMoveObjectsInfoNV.html>"]
 #[must_use]
 pub struct ClusterAccelerationStructureMoveObjectsInfoNV {
     pub src_acceleration_structure: DeviceAddress,
+}
+impl ::core::default::Default for ClusterAccelerationStructureMoveObjectsInfoNV {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ClusterAccelerationStructureMoveObjectsInfoNV {
     #[inline]
@@ -10086,13 +10440,19 @@ impl ClusterAccelerationStructureMoveObjectsInfoNV {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkClusterAccelerationStructureBuildClustersBottomLevelInfoNV.html>"]
 #[must_use]
 pub struct ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {
     pub cluster_references_count: u32,
     pub cluster_references_stride: u32,
     pub cluster_references: DeviceAddress,
+}
+impl ::core::default::Default for ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {
     #[inline]
@@ -10113,11 +10473,17 @@ impl ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkClusterAccelerationStructureGetTemplateIndicesInfoNV.html>"]
 #[must_use]
 pub struct ClusterAccelerationStructureGetTemplateIndicesInfoNV {
     pub cluster_template_address: DeviceAddress,
+}
+impl ::core::default::Default for ClusterAccelerationStructureGetTemplateIndicesInfoNV {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ClusterAccelerationStructureGetTemplateIndicesInfoNV {
     #[inline]
@@ -10655,11 +11021,17 @@ impl<'a> GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkBindShaderGroupIndirectCommandNV.html>"]
 #[must_use]
 pub struct BindShaderGroupIndirectCommandNV {
     pub group_index: u32,
+}
+impl ::core::default::Default for BindShaderGroupIndirectCommandNV {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl BindShaderGroupIndirectCommandNV {
     #[inline]
@@ -10670,13 +11042,19 @@ impl BindShaderGroupIndirectCommandNV {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkBindIndexBufferIndirectCommandNV.html>"]
 #[must_use]
 pub struct BindIndexBufferIndirectCommandNV {
     pub buffer_address: DeviceAddress,
     pub size: u32,
     pub index_type: IndexType,
+}
+impl ::core::default::Default for BindIndexBufferIndirectCommandNV {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl BindIndexBufferIndirectCommandNV {
     #[inline]
@@ -10697,13 +11075,19 @@ impl BindIndexBufferIndirectCommandNV {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkBindVertexBufferIndirectCommandNV.html>"]
 #[must_use]
 pub struct BindVertexBufferIndirectCommandNV {
     pub buffer_address: DeviceAddress,
     pub size: u32,
     pub stride: u32,
+}
+impl ::core::default::Default for BindVertexBufferIndirectCommandNV {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl BindVertexBufferIndirectCommandNV {
     #[inline]
@@ -10724,11 +11108,17 @@ impl BindVertexBufferIndirectCommandNV {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSetStateFlagsIndirectCommandNV.html>"]
 #[must_use]
 pub struct SetStateFlagsIndirectCommandNV {
     pub data: u32,
+}
+impl ::core::default::Default for SetStateFlagsIndirectCommandNV {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SetStateFlagsIndirectCommandNV {
     #[inline]
@@ -10739,12 +11129,18 @@ impl SetStateFlagsIndirectCommandNV {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkIndirectCommandsStreamNV.html>"]
 #[must_use]
 pub struct IndirectCommandsStreamNV {
     pub buffer: Buffer,
     pub offset: DeviceSize,
+}
+impl ::core::default::Default for IndirectCommandsStreamNV {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl IndirectCommandsStreamNV {
     #[inline]
@@ -11116,11 +11512,17 @@ impl<'a> PipelineIndirectDeviceAddressInfoNV<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkBindPipelineIndirectCommandNV.html>"]
 #[must_use]
 pub struct BindPipelineIndirectCommandNV {
     pub pipeline_address: DeviceAddress,
+}
+impl ::core::default::Default for BindPipelineIndirectCommandNV {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl BindPipelineIndirectCommandNV {
     #[inline]
@@ -11507,7 +11909,7 @@ impl<'a> PhysicalDevicePushDescriptorProperties<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkConformanceVersion.html>"]
 #[must_use]
 pub struct ConformanceVersion {
@@ -11515,6 +11917,12 @@ pub struct ConformanceVersion {
     pub minor: u8,
     pub subminor: u8,
     pub patch: u8,
+}
+impl ::core::default::Default for ConformanceVersion {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ConformanceVersion {
     #[inline]
@@ -11676,13 +12084,19 @@ impl<'a> PresentRegionKHR<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkRectLayerKHR.html>"]
 #[must_use]
 pub struct RectLayerKHR {
     pub offset: Offset2D,
     pub extent: Extent2D,
     pub layer: u32,
+}
+impl ::core::default::Default for RectLayerKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl RectLayerKHR {
     #[inline]
@@ -11746,13 +12160,19 @@ impl<'a> PhysicalDeviceVariablePointersFeatures<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkExternalMemoryProperties.html>"]
 #[must_use]
 pub struct ExternalMemoryProperties {
     pub external_memory_features: ExternalMemoryFeatureFlags,
     pub export_from_imported_handle_types: ExternalMemoryHandleTypeFlags,
     pub compatible_handle_types: ExternalMemoryHandleTypeFlags,
+}
+impl ::core::default::Default for ExternalMemoryProperties {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ExternalMemoryProperties {
     #[inline]
@@ -14535,7 +14955,7 @@ impl<'a> DeviceGroupSwapchainCreateInfoKHR<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDescriptorUpdateTemplateEntry.html>"]
 #[must_use]
 pub struct DescriptorUpdateTemplateEntry {
@@ -14545,6 +14965,12 @@ pub struct DescriptorUpdateTemplateEntry {
     pub descriptor_type: DescriptorType,
     pub offset: usize,
     pub stride: usize,
+}
+impl ::core::default::Default for DescriptorUpdateTemplateEntry {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DescriptorUpdateTemplateEntry {
     #[inline]
@@ -14653,12 +15079,18 @@ impl<'a> DescriptorUpdateTemplateCreateInfo<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkXYColorEXT.html>"]
 #[must_use]
 pub struct XYColorEXT {
     pub x: f32,
     pub y: f32,
+}
+impl ::core::default::Default for XYColorEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl XYColorEXT {
     #[inline]
@@ -15102,12 +15534,18 @@ impl<'a> SwapchainTimeDomainPropertiesEXT<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPresentStageTimeEXT.html>"]
 #[must_use]
 pub struct PresentStageTimeEXT {
     pub stage: PresentStageFlagsEXT,
     pub time: u64,
+}
+impl ::core::default::Default for PresentStageTimeEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl PresentStageTimeEXT {
     #[inline]
@@ -15590,11 +16028,17 @@ impl<'a> SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkRefreshCycleDurationGOOGLE.html>"]
 #[must_use]
 pub struct RefreshCycleDurationGOOGLE {
     pub refresh_duration: u64,
+}
+impl ::core::default::Default for RefreshCycleDurationGOOGLE {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl RefreshCycleDurationGOOGLE {
     #[inline]
@@ -15605,7 +16049,7 @@ impl RefreshCycleDurationGOOGLE {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPastPresentationTimingGOOGLE.html>"]
 #[must_use]
 pub struct PastPresentationTimingGOOGLE {
@@ -15614,6 +16058,12 @@ pub struct PastPresentationTimingGOOGLE {
     pub actual_present_time: u64,
     pub earliest_present_time: u64,
     pub present_margin: u64,
+}
+impl ::core::default::Default for PastPresentationTimingGOOGLE {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl PastPresentationTimingGOOGLE {
     #[inline]
@@ -15679,12 +16129,18 @@ impl<'a> PresentTimesInfoGOOGLE<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPresentTimeGOOGLE.html>"]
 #[must_use]
 pub struct PresentTimeGOOGLE {
     pub present_id: u32,
     pub desired_present_time: u64,
+}
+impl ::core::default::Default for PresentTimeGOOGLE {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl PresentTimeGOOGLE {
     #[inline]
@@ -15814,12 +16270,18 @@ impl<'a> MetalSurfaceCreateInfoEXT<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkViewportWScalingNV.html>"]
 #[must_use]
 pub struct ViewportWScalingNV {
     pub xcoeff: f32,
     pub ycoeff: f32,
+}
+impl ::core::default::Default for ViewportWScalingNV {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ViewportWScalingNV {
     #[inline]
@@ -15880,7 +16342,7 @@ impl<'a> PipelineViewportWScalingStateCreateInfoNV<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkViewportSwizzleNV.html>"]
 #[must_use]
 pub struct ViewportSwizzleNV {
@@ -15888,6 +16350,12 @@ pub struct ViewportSwizzleNV {
     pub y: ViewportCoordinateSwizzleNV,
     pub z: ViewportCoordinateSwizzleNV,
     pub w: ViewportCoordinateSwizzleNV,
+}
+impl ::core::default::Default for ViewportSwizzleNV {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ViewportSwizzleNV {
     #[inline]
@@ -16089,13 +16557,19 @@ impl<'a> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkInputAttachmentAspectReference.html>"]
 #[must_use]
 pub struct InputAttachmentAspectReference {
     pub subpass: u32,
     pub input_attachment_index: u32,
     pub aspect_mask: ImageAspectFlags,
+}
+impl ::core::default::Default for InputAttachmentAspectReference {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl InputAttachmentAspectReference {
     #[inline]
@@ -17671,12 +18145,18 @@ impl<'a> PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSampleLocationEXT.html>"]
 #[must_use]
 pub struct SampleLocationEXT {
     pub x: f32,
     pub y: f32,
+}
+impl ::core::default::Default for SampleLocationEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SampleLocationEXT {
     #[inline]
@@ -17743,13 +18223,22 @@ impl<'a> SampleLocationsInfoEXT<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkAttachmentSampleLocationsEXT.html>"]
 #[must_use]
 pub struct AttachmentSampleLocationsEXT<'a> {
     pub attachment_index: u32,
     pub sample_locations_info: SampleLocationsInfoEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
+}
+impl ::core::default::Default for AttachmentSampleLocationsEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            sample_locations_info: SampleLocationsInfoEXT::default(),
+            ..unsafe { ::core::mem::zeroed() }
+        }
+    }
 }
 impl<'a> AttachmentSampleLocationsEXT<'a> {
     #[inline]
@@ -17768,13 +18257,22 @@ impl<'a> AttachmentSampleLocationsEXT<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSubpassSampleLocationsEXT.html>"]
 #[must_use]
 pub struct SubpassSampleLocationsEXT<'a> {
     pub subpass_index: u32,
     pub sample_locations_info: SampleLocationsInfoEXT<'a>,
     pub _marker: PhantomData<&'a ()>,
+}
+impl ::core::default::Default for SubpassSampleLocationsEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            sample_locations_info: SampleLocationsInfoEXT::default(),
+            ..unsafe { ::core::mem::zeroed() }
+        }
+    }
 }
 impl<'a> SubpassSampleLocationsEXT<'a> {
     #[inline]
@@ -19901,12 +20399,18 @@ impl<'a> PhysicalDeviceHostQueryResetFeatures<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkNativeBufferUsage2ANDROID.html>"]
 #[must_use]
 pub struct NativeBufferUsage2ANDROID {
     pub consumer: u64,
     pub producer: u64,
+}
+impl ::core::default::Default for NativeBufferUsage2ANDROID {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl NativeBufferUsage2ANDROID {
     #[inline]
@@ -20050,7 +20554,7 @@ impl<'a> PhysicalDevicePresentationPropertiesANDROID<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkShaderResourceUsageAMD.html>"]
 #[must_use]
 pub struct ShaderResourceUsageAMD {
@@ -20059,6 +20563,12 @@ pub struct ShaderResourceUsageAMD {
     pub lds_size_per_local_work_group: u32,
     pub lds_usage_size_in_bytes: usize,
     pub scratch_mem_usage_in_bytes: usize,
+}
+impl ::core::default::Default for ShaderResourceUsageAMD {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ShaderResourceUsageAMD {
     #[inline]
@@ -22480,12 +22990,18 @@ impl<'a> SemaphoreSignalInfo<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkVertexInputBindingDivisorDescription.html>"]
 #[must_use]
 pub struct VertexInputBindingDivisorDescription {
     pub binding: u32,
     pub divisor: u32,
+}
+impl ::core::default::Default for VertexInputBindingDivisorDescription {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl VertexInputBindingDivisorDescription {
     #[inline]
@@ -24702,13 +25218,19 @@ impl<'a> PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkCoarseSampleLocationNV.html>"]
 #[must_use]
 pub struct CoarseSampleLocationNV {
     pub pixel_x: u32,
     pub pixel_y: u32,
     pub sample: u32,
+}
+impl ::core::default::Default for CoarseSampleLocationNV {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl CoarseSampleLocationNV {
     #[inline]
@@ -24966,12 +25488,18 @@ impl<'a> PhysicalDeviceMeshShaderPropertiesNV<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDrawMeshTasksIndirectCommandNV.html>"]
 #[must_use]
 pub struct DrawMeshTasksIndirectCommandNV {
     pub task_count: u32,
     pub first_task: u32,
+}
+impl ::core::default::Default for DrawMeshTasksIndirectCommandNV {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DrawMeshTasksIndirectCommandNV {
     #[inline]
@@ -25275,13 +25803,19 @@ impl<'a> PhysicalDeviceMeshShaderPropertiesEXT<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDrawMeshTasksIndirectCommandEXT.html>"]
 #[must_use]
 pub struct DrawMeshTasksIndirectCommandEXT {
     pub group_count_x: u32,
     pub group_count_y: u32,
     pub group_count_z: u32,
+}
+impl ::core::default::Default for DrawMeshTasksIndirectCommandEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DrawMeshTasksIndirectCommandEXT {
     #[inline]
@@ -25733,13 +26267,23 @@ impl<'a> GeometryAABBNV<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkGeometryDataNV.html>"]
 #[must_use]
 pub struct GeometryDataNV<'a> {
     pub triangles: GeometryTrianglesNV<'a>,
     pub aabbs: GeometryAABBNV<'a>,
     pub _marker: PhantomData<&'a ()>,
+}
+impl ::core::default::Default for GeometryDataNV<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            triangles: GeometryTrianglesNV::default(),
+            aabbs: GeometryAABBNV::default(),
+            ..unsafe { ::core::mem::zeroed() }
+        }
+    }
 }
 impl<'a> GeometryDataNV<'a> {
     #[inline]
@@ -26515,13 +27059,19 @@ impl<'a> PhysicalDeviceRayTracingPropertiesNV<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkStridedDeviceAddressRegionKHR.html>"]
 #[must_use]
 pub struct StridedDeviceAddressRegionKHR {
     pub device_address: DeviceAddress,
     pub stride: DeviceSize,
     pub size: DeviceSize,
+}
+impl ::core::default::Default for StridedDeviceAddressRegionKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl StridedDeviceAddressRegionKHR {
     #[inline]
@@ -26542,13 +27092,19 @@ impl StridedDeviceAddressRegionKHR {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkTraceRaysIndirectCommandKHR.html>"]
 #[must_use]
 pub struct TraceRaysIndirectCommandKHR {
     pub width: u32,
     pub height: u32,
     pub depth: u32,
+}
+impl ::core::default::Default for TraceRaysIndirectCommandKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl TraceRaysIndirectCommandKHR {
     #[inline]
@@ -26569,7 +27125,7 @@ impl TraceRaysIndirectCommandKHR {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkTraceRaysIndirectCommand2KHR.html>"]
 #[must_use]
 pub struct TraceRaysIndirectCommand2KHR {
@@ -26587,6 +27143,12 @@ pub struct TraceRaysIndirectCommand2KHR {
     pub width: u32,
     pub height: u32,
     pub depth: u32,
+}
+impl ::core::default::Default for TraceRaysIndirectCommand2KHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl TraceRaysIndirectCommand2KHR {
     #[inline]
@@ -26778,13 +27340,19 @@ impl<'a> DrmFormatModifierPropertiesListEXT<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDrmFormatModifierPropertiesEXT.html>"]
 #[must_use]
 pub struct DrmFormatModifierPropertiesEXT {
     pub drm_format_modifier: u64,
     pub drm_format_modifier_plane_count: u32,
     pub drm_format_modifier_tiling_features: FormatFeatureFlags,
+}
+impl ::core::default::Default for DrmFormatModifierPropertiesEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DrmFormatModifierPropertiesEXT {
     #[inline]
@@ -28553,12 +29121,18 @@ impl<'a> PresentFrameTokenGGP<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPipelineCreationFeedback.html>"]
 #[must_use]
 pub struct PipelineCreationFeedback {
     pub flags: PipelineCreationFeedbackFlags,
     pub duration: u64,
+}
+impl ::core::default::Default for PipelineCreationFeedback {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl PipelineCreationFeedback {
     #[inline]
@@ -29413,7 +29987,7 @@ impl ::core::default::Default for PerformanceValueDataINTEL {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPerformanceValueINTEL.html>"]
 #[must_use]
 pub struct PerformanceValueINTEL {
@@ -29427,6 +30001,12 @@ impl fmt::Debug for PerformanceValueINTEL {
             .field("ty", &self.ty)
             .field("data", &"union")
             .finish()
+    }
+}
+impl ::core::default::Default for PerformanceValueINTEL {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PerformanceValueINTEL {
@@ -33463,7 +34043,7 @@ impl<'a> PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkGpaPerfBlockPropertiesAMD.html>"]
 #[must_use]
 pub struct GpaPerfBlockPropertiesAMD {
@@ -33474,6 +34054,12 @@ pub struct GpaPerfBlockPropertiesAMD {
     pub max_global_only_counters: u32,
     pub max_global_shared_counters: u32,
     pub max_streaming_counters: u32,
+}
+impl ::core::default::Default for GpaPerfBlockPropertiesAMD {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl GpaPerfBlockPropertiesAMD {
     #[inline]
@@ -33652,13 +34238,19 @@ impl<'a> PhysicalDeviceGpaProperties2AMD<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkGpaPerfCounterAMD.html>"]
 #[must_use]
 pub struct GpaPerfCounterAMD {
     pub block_type: GpaPerfBlockAMD,
     pub block_instance: u32,
     pub event_id: u32,
+}
+impl ::core::default::Default for GpaPerfCounterAMD {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl GpaPerfCounterAMD {
     #[inline]
@@ -34858,7 +35450,7 @@ impl<'a> AccelerationStructureBuildGeometryInfoKHR<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkAccelerationStructureBuildRangeInfoKHR.html>"]
 #[must_use]
 pub struct AccelerationStructureBuildRangeInfoKHR {
@@ -34866,6 +35458,12 @@ pub struct AccelerationStructureBuildRangeInfoKHR {
     pub primitive_offset: u32,
     pub first_vertex: u32,
     pub transform_offset: u32,
+}
+impl ::core::default::Default for AccelerationStructureBuildRangeInfoKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl AccelerationStructureBuildRangeInfoKHR {
     #[inline]
@@ -34953,7 +35551,7 @@ impl<'a> AccelerationStructureCreateInfoKHR<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkAabbPositionsKHR.html>"]
 #[must_use]
 pub struct AabbPositionsKHR {
@@ -34963,6 +35561,12 @@ pub struct AabbPositionsKHR {
     pub max_x: f32,
     pub max_y: f32,
     pub max_z: f32,
+}
+impl ::core::default::Default for AabbPositionsKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl AabbPositionsKHR {
     #[inline]
@@ -35803,7 +36407,7 @@ impl<'a> PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkColorBlendEquationEXT.html>"]
 #[must_use]
 pub struct ColorBlendEquationEXT {
@@ -35813,6 +36417,12 @@ pub struct ColorBlendEquationEXT {
     pub src_alpha_blend_factor: BlendFactor,
     pub dst_alpha_blend_factor: BlendFactor,
     pub alpha_blend_op: BlendOp,
+}
+impl ::core::default::Default for ColorBlendEquationEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ColorBlendEquationEXT {
     #[inline]
@@ -35848,7 +36458,7 @@ impl ColorBlendEquationEXT {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkColorBlendAdvancedEXT.html>"]
 #[must_use]
 pub struct ColorBlendAdvancedEXT {
@@ -35857,6 +36467,12 @@ pub struct ColorBlendAdvancedEXT {
     pub dst_premultiplied: Bool32,
     pub blend_overlap: BlendOverlapEXT,
     pub clamp_results: Bool32,
+}
+impl ::core::default::Default for ColorBlendAdvancedEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ColorBlendAdvancedEXT {
     #[inline]
@@ -36083,13 +36699,19 @@ impl<'a> PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkBuildPartitionedAccelerationStructureIndirectCommandNV.html>"]
 #[must_use]
 pub struct BuildPartitionedAccelerationStructureIndirectCommandNV {
     pub op_type: PartitionedAccelerationStructureOpTypeNV,
     pub arg_count: u32,
     pub arg_data: StridedDeviceAddressNV,
+}
+impl ::core::default::Default for BuildPartitionedAccelerationStructureIndirectCommandNV {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl BuildPartitionedAccelerationStructureIndirectCommandNV {
     #[inline]
@@ -36222,13 +36844,19 @@ impl PartitionedAccelerationStructureWriteInstanceDataNV {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPartitionedAccelerationStructureUpdateInstanceDataNV.html>"]
 #[must_use]
 pub struct PartitionedAccelerationStructureUpdateInstanceDataNV {
     pub instance_index: u32,
     pub instance_contribution_to_hit_group_index: u32,
     pub acceleration_structure: DeviceAddress,
+}
+impl ::core::default::Default for PartitionedAccelerationStructureUpdateInstanceDataNV {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl PartitionedAccelerationStructureUpdateInstanceDataNV {
     #[inline]
@@ -39692,13 +40320,19 @@ impl<'a> IndirectCommandsLayoutTokenEXT<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDrawIndirectCountIndirectCommandEXT.html>"]
 #[must_use]
 pub struct DrawIndirectCountIndirectCommandEXT {
     pub buffer_address: DeviceAddress,
     pub stride: u32,
     pub command_count: u32,
+}
+impl ::core::default::Default for DrawIndirectCountIndirectCommandEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DrawIndirectCountIndirectCommandEXT {
     #[inline]
@@ -39719,11 +40353,17 @@ impl DrawIndirectCountIndirectCommandEXT {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkIndirectCommandsVertexBufferTokenEXT.html>"]
 #[must_use]
 pub struct IndirectCommandsVertexBufferTokenEXT {
     pub vertex_binding_unit: u32,
+}
+impl ::core::default::Default for IndirectCommandsVertexBufferTokenEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl IndirectCommandsVertexBufferTokenEXT {
     #[inline]
@@ -39734,13 +40374,19 @@ impl IndirectCommandsVertexBufferTokenEXT {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkBindVertexBufferIndirectCommandEXT.html>"]
 #[must_use]
 pub struct BindVertexBufferIndirectCommandEXT {
     pub buffer_address: DeviceAddress,
     pub size: u32,
     pub stride: u32,
+}
+impl ::core::default::Default for BindVertexBufferIndirectCommandEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl BindVertexBufferIndirectCommandEXT {
     #[inline]
@@ -39761,11 +40407,17 @@ impl BindVertexBufferIndirectCommandEXT {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkIndirectCommandsIndexBufferTokenEXT.html>"]
 #[must_use]
 pub struct IndirectCommandsIndexBufferTokenEXT {
     pub mode: IndirectCommandsInputModeFlagsEXT,
+}
+impl ::core::default::Default for IndirectCommandsIndexBufferTokenEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl IndirectCommandsIndexBufferTokenEXT {
     #[inline]
@@ -39776,13 +40428,19 @@ impl IndirectCommandsIndexBufferTokenEXT {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkBindIndexBufferIndirectCommandEXT.html>"]
 #[must_use]
 pub struct BindIndexBufferIndirectCommandEXT {
     pub buffer_address: DeviceAddress,
     pub size: u32,
     pub index_type: IndexType,
+}
+impl ::core::default::Default for BindIndexBufferIndirectCommandEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl BindIndexBufferIndirectCommandEXT {
     #[inline]
@@ -39803,11 +40461,17 @@ impl BindIndexBufferIndirectCommandEXT {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkIndirectCommandsPushConstantTokenEXT.html>"]
 #[must_use]
 pub struct IndirectCommandsPushConstantTokenEXT {
     pub update_range: PushConstantRange,
+}
+impl ::core::default::Default for IndirectCommandsPushConstantTokenEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl IndirectCommandsPushConstantTokenEXT {
     #[inline]
@@ -39818,12 +40482,18 @@ impl IndirectCommandsPushConstantTokenEXT {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkIndirectCommandsExecutionSetTokenEXT.html>"]
 #[must_use]
 pub struct IndirectCommandsExecutionSetTokenEXT {
     pub ty: IndirectExecutionSetInfoTypeEXT,
     pub shader_stages: ShaderStageFlags,
+}
+impl ::core::default::Default for IndirectCommandsExecutionSetTokenEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl IndirectCommandsExecutionSetTokenEXT {
     #[inline]
@@ -45411,13 +46081,19 @@ impl<'a> VideoEncodeH264RateControlInfoKHR<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkVideoEncodeH264QpKHR.html>"]
 #[must_use]
 pub struct VideoEncodeH264QpKHR {
     pub qp_i: i32,
     pub qp_p: i32,
     pub qp_b: i32,
+}
+impl ::core::default::Default for VideoEncodeH264QpKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl VideoEncodeH264QpKHR {
     #[inline]
@@ -45438,13 +46114,19 @@ impl VideoEncodeH264QpKHR {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkVideoEncodeH264FrameSizeKHR.html>"]
 #[must_use]
 pub struct VideoEncodeH264FrameSizeKHR {
     pub frame_i_size: u32,
     pub frame_p_size: u32,
     pub frame_b_size: u32,
+}
+impl ::core::default::Default for VideoEncodeH264FrameSizeKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl VideoEncodeH264FrameSizeKHR {
     #[inline]
@@ -46223,13 +46905,19 @@ impl<'a> VideoEncodeH265RateControlInfoKHR<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkVideoEncodeH265QpKHR.html>"]
 #[must_use]
 pub struct VideoEncodeH265QpKHR {
     pub qp_i: i32,
     pub qp_p: i32,
     pub qp_b: i32,
+}
+impl ::core::default::Default for VideoEncodeH265QpKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl VideoEncodeH265QpKHR {
     #[inline]
@@ -46250,13 +46938,19 @@ impl VideoEncodeH265QpKHR {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkVideoEncodeH265FrameSizeKHR.html>"]
 #[must_use]
 pub struct VideoEncodeH265FrameSizeKHR {
     pub frame_i_size: u32,
     pub frame_p_size: u32,
     pub frame_b_size: u32,
+}
+impl ::core::default::Default for VideoEncodeH265FrameSizeKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl VideoEncodeH265FrameSizeKHR {
     #[inline]
@@ -47173,13 +47867,19 @@ impl<'a> VideoEncodeAV1RateControlInfoKHR<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkVideoEncodeAV1QIndexKHR.html>"]
 #[must_use]
 pub struct VideoEncodeAV1QIndexKHR {
     pub intra_q_index: u32,
     pub predictive_q_index: u32,
     pub bipredictive_q_index: u32,
+}
+impl ::core::default::Default for VideoEncodeAV1QIndexKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl VideoEncodeAV1QIndexKHR {
     #[inline]
@@ -47200,13 +47900,19 @@ impl VideoEncodeAV1QIndexKHR {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkVideoEncodeAV1FrameSizeKHR.html>"]
 #[must_use]
 pub struct VideoEncodeAV1FrameSizeKHR {
     pub intra_frame_size: u32,
     pub predictive_frame_size: u32,
     pub bipredictive_frame_size: u32,
+}
+impl ::core::default::Default for VideoEncodeAV1FrameSizeKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl VideoEncodeAV1FrameSizeKHR {
     #[inline]
@@ -49645,7 +50351,7 @@ impl<'a> AccelerationStructureMotionInfoNV<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSRTDataNV.html>"]
 #[must_use]
 pub struct SRTDataNV {
@@ -49665,6 +50371,12 @@ pub struct SRTDataNV {
     pub tx: f32,
     pub ty: f32,
     pub tz: f32,
+}
+impl ::core::default::Default for SRTDataNV {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl SRTDataNV {
     #[inline]
@@ -49789,7 +50501,7 @@ impl ::core::default::Default for AccelerationStructureMotionInstanceDataNV {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkAccelerationStructureMotionInstanceNV.html>"]
 #[must_use]
 pub struct AccelerationStructureMotionInstanceNV {
@@ -49805,6 +50517,12 @@ impl fmt::Debug for AccelerationStructureMotionInstanceNV {
             .field("flags", &self.flags)
             .field("data", &"union")
             .finish()
+    }
+}
+impl ::core::default::Default for AccelerationStructureMotionInstanceNV {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl AccelerationStructureMotionInstanceNV {
@@ -50702,13 +51420,19 @@ impl<'a> DrmFormatModifierPropertiesList2EXT<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDrmFormatModifierProperties2EXT.html>"]
 #[must_use]
 pub struct DrmFormatModifierProperties2EXT {
     pub drm_format_modifier: u64,
     pub drm_format_modifier_plane_count: u32,
     pub drm_format_modifier_tiling_features: FormatFeatureFlags2,
+}
+impl ::core::default::Default for DrmFormatModifierProperties2EXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DrmFormatModifierProperties2EXT {
     #[inline]
@@ -52558,11 +53282,17 @@ impl<'a> RenderPassCreationControlEXT<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkRenderPassCreationFeedbackInfoEXT.html>"]
 #[must_use]
 pub struct RenderPassCreationFeedbackInfoEXT {
     pub post_merge_subpass_count: u32,
+}
+impl ::core::default::Default for RenderPassCreationFeedbackInfoEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl RenderPassCreationFeedbackInfoEXT {
     #[inline]
@@ -53197,13 +53927,19 @@ impl<'a> MicromapBuildSizesInfoEXT<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkMicromapUsageKHR.html>"]
 #[must_use]
 pub struct MicromapUsageKHR {
     pub count: u32,
     pub subdivision_level: u32,
     pub format: OpacityMicromapFormatKHR,
+}
+impl ::core::default::Default for MicromapUsageKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl MicromapUsageKHR {
     #[inline]
@@ -53224,13 +53960,19 @@ impl MicromapUsageKHR {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkMicromapUsageEXT.html>"]
 #[must_use]
 pub struct MicromapUsageEXT {
     pub count: u32,
     pub subdivision_level: u32,
     pub format: u32,
+}
+impl ::core::default::Default for MicromapUsageEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl MicromapUsageEXT {
     #[inline]
@@ -53251,13 +53993,19 @@ impl MicromapUsageEXT {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkMicromapTriangleKHR.html>"]
 #[must_use]
 pub struct MicromapTriangleKHR {
     pub data_offset: u32,
     pub subdivision_level: u16,
     pub format: u16,
+}
+impl ::core::default::Default for MicromapTriangleKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl MicromapTriangleKHR {
     #[inline]
@@ -55787,13 +56535,19 @@ impl<'a> PhysicalDeviceFaultFeaturesEXT<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDeviceFaultAddressInfoKHR.html>"]
 #[must_use]
 pub struct DeviceFaultAddressInfoKHR {
     pub address_type: DeviceFaultAddressTypeKHR,
     pub reported_address: DeviceAddress,
     pub address_precision: DeviceSize,
+}
+impl ::core::default::Default for DeviceFaultAddressInfoKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DeviceFaultAddressInfoKHR {
     #[inline]
@@ -56396,7 +57150,7 @@ impl<'a> DepthBiasRepresentationInfoEXT<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDecompressMemoryRegionNV.html>"]
 #[must_use]
 pub struct DecompressMemoryRegionNV {
@@ -56405,6 +57159,12 @@ pub struct DecompressMemoryRegionNV {
     pub compressed_size: DeviceSize,
     pub decompressed_size: DeviceSize,
     pub decompression_method: MemoryDecompressionMethodFlagsEXT,
+}
+impl ::core::default::Default for DecompressMemoryRegionNV {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DecompressMemoryRegionNV {
     #[inline]
@@ -56438,7 +57198,7 @@ impl DecompressMemoryRegionNV {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDecompressMemoryRegionEXT.html>"]
 #[must_use]
 pub struct DecompressMemoryRegionEXT {
@@ -56446,6 +57206,12 @@ pub struct DecompressMemoryRegionEXT {
     pub dst_address: DeviceAddress,
     pub compressed_size: DeviceSize,
     pub decompressed_size: DeviceSize,
+}
+impl ::core::default::Default for DecompressMemoryRegionEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DecompressMemoryRegionEXT {
     #[inline]
@@ -58998,7 +59764,7 @@ impl<'a> ExecutionGraphPipelineScratchSizeAMDX<'a> {
 }
 #[cfg(feature = "provisional")]
 #[repr(C)]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDispatchGraphInfoAMDX.html>"]
 #[must_use]
 pub struct DispatchGraphInfoAMDX {
@@ -59017,6 +59783,13 @@ impl fmt::Debug for DispatchGraphInfoAMDX {
             .field("payloads", &"union")
             .field("payload_stride", &self.payload_stride)
             .finish()
+    }
+}
+#[cfg(feature = "provisional")]
+impl ::core::default::Default for DispatchGraphInfoAMDX {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 #[cfg(feature = "provisional")]
@@ -59044,7 +59817,7 @@ impl DispatchGraphInfoAMDX {
 }
 #[cfg(feature = "provisional")]
 #[repr(C)]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDispatchGraphCountInfoAMDX.html>"]
 #[must_use]
 pub struct DispatchGraphCountInfoAMDX {
@@ -59061,6 +59834,13 @@ impl fmt::Debug for DispatchGraphCountInfoAMDX {
             .field("infos", &"union")
             .field("stride", &self.stride)
             .finish()
+    }
+}
+#[cfg(feature = "provisional")]
+impl ::core::default::Default for DispatchGraphCountInfoAMDX {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
     }
 }
 #[cfg(feature = "provisional")]
@@ -62134,12 +62914,18 @@ impl<'a> PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDepthClampRangeEXT.html>"]
 #[must_use]
 pub struct DepthClampRangeEXT {
     pub min_depth_clamp: f32,
     pub max_depth_clamp: f32,
+}
+impl ::core::default::Default for DepthClampRangeEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DepthClampRangeEXT {
     #[inline]
@@ -65840,12 +66626,18 @@ impl<'a> DataGraphPipelineDispatchInfoARM<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceDataGraphProcessingEngineARM.html>"]
 #[must_use]
 pub struct PhysicalDeviceDataGraphProcessingEngineARM {
     pub ty: PhysicalDeviceDataGraphProcessingEngineTypeARM,
     pub is_foreign: Bool32,
+}
+impl ::core::default::Default for PhysicalDeviceDataGraphProcessingEngineARM {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl PhysicalDeviceDataGraphProcessingEngineARM {
     #[inline]
@@ -67881,12 +68673,18 @@ impl<'a> DescriptorMappingSourceIndirectIndexArrayEXT<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDescriptorMappingSourceHeapDataEXT.html>"]
 #[must_use]
 pub struct DescriptorMappingSourceHeapDataEXT {
     pub heap_offset: u32,
     pub push_offset: u32,
+}
+impl ::core::default::Default for DescriptorMappingSourceHeapDataEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DescriptorMappingSourceHeapDataEXT {
     #[inline]
@@ -67983,12 +68781,18 @@ impl<'a> DescriptorMappingSourceShaderRecordIndexEXT<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDescriptorMappingSourceIndirectAddressEXT.html>"]
 #[must_use]
 pub struct DescriptorMappingSourceIndirectAddressEXT {
     pub push_offset: u32,
     pub address_offset: u32,
+}
+impl ::core::default::Default for DescriptorMappingSourceIndirectAddressEXT {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DescriptorMappingSourceIndirectAddressEXT {
     #[inline]
@@ -68837,7 +69641,7 @@ impl<'a> ShaderInstrumentationMetricDescriptionARM<'a> {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkShaderInstrumentationMetricDataHeaderARM.html>"]
 #[must_use]
 pub struct ShaderInstrumentationMetricDataHeaderARM {
@@ -68845,6 +69649,12 @@ pub struct ShaderInstrumentationMetricDataHeaderARM {
     pub result_sub_index: u32,
     pub stages: ShaderStageFlags,
     pub basic_block_index: u32,
+}
+impl ::core::default::Default for ShaderInstrumentationMetricDataHeaderARM {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl ShaderInstrumentationMetricDataHeaderARM {
     #[inline]
@@ -68870,12 +69680,18 @@ impl ShaderInstrumentationMetricDataHeaderARM {
 }
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkDeviceAddressRangeKHR.html>"]
 #[must_use]
 pub struct DeviceAddressRangeKHR {
     pub address: DeviceAddress,
     pub size: DeviceSize,
+}
+impl ::core::default::Default for DeviceAddressRangeKHR {
+    #[inline]
+    fn default() -> Self {
+        unsafe { ::core::mem::zeroed() }
+    }
 }
 impl DeviceAddressRangeKHR {
     #[inline]

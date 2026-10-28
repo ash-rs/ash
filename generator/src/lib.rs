@@ -1887,21 +1887,17 @@ fn derive_default(
     provisional: &Option<TokenStream>,
     has_struct_type: &HashSet<Ident>,
 ) -> Option<TokenStream> {
+    if struct_.name == "VkBaseInStructure" || struct_.name == "VkBaseOutStructure" {
+        // These don't really have a valid initializer, since they'll end up as
+        // vk::StructureType::APPLICATION_INFO (0).
+        return None;
+    }
     let name = name_to_tokens(&struct_.name);
     let is_structure_type = |field: &vkxml::Field| field.basetype == "VkStructureType";
 
-    let contains_ptr = members
-        .iter()
-        .any(|member| member.vkxml_field.reference.is_some());
     let contains_structure_type = members
         .iter()
         .any(|member| is_structure_type(member.vkxml_field));
-    let contains_static_array = members
-        .iter()
-        .any(|member| is_static_array(member.vkxml_field));
-    if !(contains_ptr || contains_structure_type || contains_static_array) {
-        return None;
-    };
     let lifetime = has_lifetime.then(|| quote!(<'_>));
 
     let zeroed = quote! {
@@ -2688,26 +2684,13 @@ pub fn generate_struct(
     };
 
     let debug_tokens = derive_debug(struct_, &members, union_types, has_lifetime, &provisional);
-    let (default_tokens, derive_default) =
-        if struct_.name == "VkBaseInStructure" || struct_.name == "VkBaseOutStructure" {
-            // These don't really have a valid initializer, since they'll end up as
-            // vk::StructureType::APPLICATION_INFO (0).
-            (None, quote!())
-        } else {
-            let default_tokens = derive_default(
-                struct_,
-                &members,
-                has_lifetime,
-                &provisional,
-                has_struct_type,
-            );
-            let derive_default = if default_tokens.is_none() {
-                quote!(Default,)
-            } else {
-                quote!()
-            };
-            (default_tokens, derive_default)
-        };
+    let default_tokens = derive_default(
+        struct_,
+        &members,
+        has_lifetime,
+        &provisional,
+        has_struct_type,
+    );
     let send_sync_tokens = derive_send_sync(struct_, has_lifetime, &provisional);
     let setter_tokens = derive_getters_and_setters(
         struct_,
@@ -2726,7 +2709,7 @@ pub fn generate_struct(
         #provisional
         #[repr(C)]
         #derive_debug
-        #[derive(Copy, Clone, #derive_default #manual_derive_tokens)]
+        #[derive(Copy, Clone, #manual_derive_tokens)]
         #[doc = #khronos_link]
         #[must_use]
         pub struct #name #lifetimes {
