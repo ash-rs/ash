@@ -1036,7 +1036,7 @@ vk_bitflags_wrapped!(ShaderCorePropertiesFlagsAMD, Flags);
 impl ShaderCorePropertiesFlagsAMD {}
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkShaderModuleCreateFlagBits.html>"]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkShaderModuleCreateFlags.html>"]
 pub struct ShaderModuleCreateFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(ShaderModuleCreateFlags, Flags);
 impl ShaderModuleCreateFlags {}
