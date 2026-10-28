@@ -1672,17 +1672,17 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
         .unwrap_or("");
     let struct_name = struct_name.strip_suffix(vendor).unwrap();
     let struct_name = TRAILING_NUMBER.replace(struct_name, "_$1");
+    // H264 doesn't change, but ST209450 does
+    let struct_name = struct_name.replace("ST209450", "ST_209450");
     let variant_name = variant_name.strip_suffix(vendor).unwrap_or(&variant_name);
 
-    let new_variant_name = variant_name
-        .strip_prefix(struct_name.as_ref())
-        .unwrap_or_else(|| {
-            if enum_name == "VkResult" {
-                variant_name.strip_prefix("VK").unwrap()
-            } else {
-                panic!("Failed to strip {struct_name} prefix from enum variant {variant_name}")
-            }
-        });
+    let new_variant_name = variant_name.strip_prefix(&struct_name).unwrap_or_else(|| {
+        if enum_name == "VkResult" {
+            variant_name.strip_prefix("VK").unwrap()
+        } else {
+            panic!("Failed to strip {struct_name} prefix from enum variant {variant_name}")
+        }
+    });
 
     // Both of the above strip_prefix leave a leading `_`:
     let new_variant_name = new_variant_name.strip_prefix('_').unwrap();
@@ -1885,6 +1885,7 @@ fn derive_default(
     members: &[PreprocessedMember<'_>],
     has_lifetime: bool,
     provisional: &Option<TokenStream>,
+    contains_deprecated: bool,
 ) -> Option<TokenStream> {
     let name = name_to_tokens(&struct_.name);
     let is_structure_type = |field: &vkxml::Field| field.basetype == "VkStructureType";
@@ -1913,7 +1914,6 @@ fn derive_default(
     let contains_static_array = members
         .iter()
         .any(|member| is_static_array(member.vkxml_field));
-    let contains_deprecated = members.iter().any(|member| member.deprecated.is_some());
     let allow_deprecated = contains_deprecated.then(|| quote!(#[allow(deprecated)]));
     if !(contains_ptr || contains_structure_type || contains_static_array) {
         return None;
@@ -2461,6 +2461,7 @@ pub fn generate_struct(
     struct_: &vkxml::Struct,
     provided_by: &ProvidedBy<'_>,
     allowed_types: &HashMap<&str, ProvidedBy<'_>>,
+    deprecated_features: &HashMap<(&str, &str), &str>,
     vk_parse_types: &HashMap<String, &vk_parse::Type>,
     union_types: &HashSet<&str>,
     has_lifetimes: &HashSet<Ident>,
@@ -2649,31 +2650,38 @@ pub fn generate_struct(
                 .iter()
                 .filter_map(get_variant!(vk_parse::TypeMember::Definition)),
         )
-        .filter(|(_, vk_parse_field)| {
-            all_or_desired_api( vk_parse_field.api.as_deref())
-        })
+        .filter(|(_, vk_parse_field)| all_or_desired_api(vk_parse_field.api.as_deref()))
         .map(|(field, vk_parse_field)| {
-            let deprecated = vk_parse_field
-                .deprecated
-                .as_ref()
-                .map(|deprecated| match deprecated.as_str() {
+            let mut deprecated = vk_parse_field.deprecated.as_ref().map(|deprecated| {
+                // Rustfmt fails to format this entire block unless this string is defined outside of the match + quote!() macro
+                let fix_rustfmt = "functionality described by this member no longer operates";
+                match deprecated.as_str() {
                     "true" => quote!(#[deprecated]),
                     "unused" => {
-                        quote!(#[deprecated = "functionality described by this member no longer operates"])
+                        quote!(#[deprecated = #fix_rustfmt])
                     }
                     x => panic!("Unknown deprecation reason {x}"),
-                });
-                PreprocessedMember {
-                    vkxml_field: field,
-                    vk_parse_type_member: vk_parse_field,
-                    deprecated,
                 }
+            });
+            if let Some(x) =
+                deprecated_features.get(&(field.name.as_deref().unwrap(), struct_.name.as_str()))
+            {
+                let x = deprecated_link(x);
+                let prev = deprecated.replace(quote!(#[deprecated = #x]));
+                assert!(prev.is_none(), "Handle duplicate deprecation on fields");
+            }
+            PreprocessedMember {
+                vkxml_field: field,
+                vk_parse_type_member: vk_parse_field,
+                deprecated,
+            }
         })
         .collect::<Vec<_>>();
 
     let params = members.iter().map(|member| {
         let field = &member.vkxml_field;
-        let deprecated = &member.deprecated;
+        let deprecated = member.deprecated.clone();
+
         let param_ident = field.param_ident();
         let param_ty_tokens = if field.basetype == struct_.name {
             let pointer = field
@@ -2698,7 +2706,15 @@ pub fn generate_struct(
     };
 
     let debug_tokens = derive_debug(struct_, &members, union_types, has_lifetime, &provisional);
-    let default_tokens = derive_default(struct_, &members, has_lifetime, &provisional);
+    // Temporary workaround until the Default-unification lands
+    let contains_deprecated_fields = members.iter().any(|m| m.deprecated.is_some());
+    let default_tokens = derive_default(
+        struct_,
+        &members,
+        has_lifetime,
+        &provisional,
+        contains_deprecated_fields,
+    );
     let send_sync_tokens = derive_send_sync(struct_, has_lifetime, &provisional);
     let setter_tokens = derive_getters_and_setters(
         struct_,
@@ -2855,6 +2871,7 @@ pub fn generate_definition_vk_parse(
 pub fn generate_definition(
     definition: &vkxml::DefinitionsElement,
     allowed_types: &HashMap<&str, ProvidedBy<'_>>,
+    deprecated_features: &HashMap<(&str, &str), &str>,
     union_types: &HashSet<&str>,
     has_lifetimes: &HashSet<Ident>,
     vk_parse_types: &HashMap<String, &vk_parse::Type>,
@@ -2873,6 +2890,7 @@ pub fn generate_definition(
                 struct_,
                 provided_by,
                 allowed_types,
+                deprecated_features,
                 vk_parse_types,
                 union_types,
                 has_lifetimes,
@@ -3293,6 +3311,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     let mut deprecated_types = HashMap::new();
     let mut deprecated_commands = HashMap::new();
+    let mut deprecated_features = HashMap::new();
 
     let mut required_types = HashMap::<_, ProvidedBy<'_>>::new();
     let mut required_commands = HashMap::<_, ProvidedBy<'_>>::new();
@@ -3362,6 +3381,12 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
                             }
                             vk_parse::InterfaceItem::Command { name, .. } => {
                                 deprecated_commands.insert(name.as_str(), explanationlink.as_str());
+                            }
+                            vk_parse::InterfaceItem::Feature { name, struct_, .. } => {
+                                deprecated_features.insert(
+                                    (name.as_str(), struct_.as_str()),
+                                    explanationlink.as_str(),
+                                );
                             }
                             x => todo!("{x:?}"),
                         }
@@ -3435,7 +3460,9 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
     let constants_code: Vec<_> = constants
         .iter()
         .map(|constant| {
-            let provided_by = required_enums.get(constant.name.as_str()).unwrap();
+            let provided_by = required_enums
+                .get(constant.name.as_str())
+                .expect(&constant.name);
             generate_constant(constant, provided_by, &mut global_const_cache)
         })
         .collect();
@@ -3576,6 +3603,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
             generate_definition(
                 def,
                 &required_types,
+                &deprecated_features,
                 &union_types,
                 &has_lifetimes,
                 &vk_parse_types,
