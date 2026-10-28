@@ -29,7 +29,7 @@ impl crate::khr::xcb_surface::Instance {
         &self,
         physical_device: vk::PhysicalDevice,
         queue_family_index: u32,
-        connection: &mut vk::xcb_connection_t,
+        connection: *mut vk::xcb_connection_t,
         visual_id: vk::xcb_visualid_t,
     ) -> bool {
         let b = (self.fp.get_physical_device_xcb_presentation_support_khr)(
@@ -40,5 +40,48 @@ impl crate::khr::xcb_surface::Instance {
         );
 
         b > 0
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::vk;
+
+    unsafe extern "system" fn unused_create_xcb_surface(
+        _instance: vk::Instance,
+        _create_info: *const vk::XcbSurfaceCreateInfoKHR<'_>,
+        _allocator: *const vk::AllocationCallbacks,
+        _surface: *mut vk::SurfaceKHR,
+    ) -> vk::Result {
+        vk::Result::SUCCESS
+    }
+
+    unsafe extern "system" fn accepts_connection_pointer(
+        _physical_device: vk::PhysicalDevice,
+        _queue_family_index: u32,
+        connection: *mut vk::xcb_connection_t,
+        visual_id: vk::xcb_visualid_t,
+    ) -> vk::Bool32 {
+        u32::from(connection == 1usize as *mut vk::xcb_connection_t && visual_id == 7)
+    }
+
+    #[test]
+    fn xcb_presentation_support_forwards_raw_connection_pointer() {
+        let instance = crate::khr::xcb_surface::Instance {
+            handle: vk::Instance::null(),
+            fp: crate::khr::xcb_surface::InstanceFn {
+                create_xcb_surface_khr: unused_create_xcb_surface,
+                get_physical_device_xcb_presentation_support_khr: accepts_connection_pointer,
+            },
+        };
+
+        assert!(unsafe {
+            instance.get_physical_device_xcb_presentation_support(
+                vk::PhysicalDevice::null(),
+                0,
+                1usize as *mut vk::xcb_connection_t,
+                7,
+            )
+        });
     }
 }

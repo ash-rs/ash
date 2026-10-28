@@ -29,7 +29,7 @@ impl crate::khr::wayland_surface::Instance {
         &self,
         physical_device: vk::PhysicalDevice,
         queue_family_index: u32,
-        wl_display: &mut vk::wl_display,
+        wl_display: *mut vk::wl_display,
     ) -> bool {
         let b = (self.fp.get_physical_device_wayland_presentation_support_khr)(
             physical_device,
@@ -38,5 +38,46 @@ impl crate::khr::wayland_surface::Instance {
         );
 
         b > 0
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::vk;
+
+    unsafe extern "system" fn unused_create_wayland_surface(
+        _instance: vk::Instance,
+        _create_info: *const vk::WaylandSurfaceCreateInfoKHR<'_>,
+        _allocator: *const vk::AllocationCallbacks,
+        _surface: *mut vk::SurfaceKHR,
+    ) -> vk::Result {
+        vk::Result::SUCCESS
+    }
+
+    unsafe extern "system" fn accepts_display_pointer(
+        _physical_device: vk::PhysicalDevice,
+        _queue_family_index: u32,
+        display: *mut vk::wl_display,
+    ) -> vk::Bool32 {
+        u32::from(display == 1usize as *mut vk::wl_display)
+    }
+
+    #[test]
+    fn wayland_presentation_support_forwards_raw_display_pointer() {
+        let instance = crate::khr::wayland_surface::Instance {
+            handle: vk::Instance::null(),
+            fp: crate::khr::wayland_surface::InstanceFn {
+                create_wayland_surface_khr: unused_create_wayland_surface,
+                get_physical_device_wayland_presentation_support_khr: accepts_display_pointer,
+            },
+        };
+
+        assert!(unsafe {
+            instance.get_physical_device_wayland_presentation_support(
+                vk::PhysicalDevice::null(),
+                0,
+                1usize as *mut vk::wl_display,
+            )
+        });
     }
 }
