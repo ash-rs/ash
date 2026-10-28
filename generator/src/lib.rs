@@ -1900,10 +1900,7 @@ fn derive_default(
         .any(|member| is_structure_type(member.vkxml_field));
     let lifetime = has_lifetime.then(|| quote!(<'_>));
 
-    let zeroed = quote! {
-        // SAFETY: All fields of Vulkan structures are valid when zeroed
-        unsafe { ::core::mem::zeroed() }
-    };
+    let zeroed = zeroed_initializer();
 
     // Zero-initialization doesn't set the s_type of this or nested (owned) structures,
     // initialize those explicitly
@@ -1918,7 +1915,7 @@ fn derive_default(
                     let t = name_to_tokens(&m.vkxml_field.basetype);
                     has_struct_type.contains(&t).then(|| {
                         let i = m.vkxml_field.param_ident();
-                        quote!(#i: #t::default())
+                        quote!(#i: #t::new())
                     })
                 }),
         )
@@ -1934,15 +1931,39 @@ fn derive_default(
         zeroed
     };
 
-    Some(quote! {
+    Some(new_and_default(&name, lifetime, provisional, initializer))
+}
+
+fn zeroed_initializer() -> TokenStream {
+    quote! {
+        // SAFETY: All fields of Vulkan structures are valid when zeroed
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+
+/// Generates a `const fn new()` constructor, which [`Default`] relays to
+fn new_and_default(
+    name: &Ident,
+    lifetime: Option<TokenStream>,
+    provisional: &Option<TokenStream>,
+    initializer: TokenStream,
+) -> TokenStream {
+    quote! {
+        #provisional
+        impl #name #lifetime {
+            #[inline]
+            pub const fn new() -> Self {
+                #initializer
+            }
+        }
         #provisional
         impl ::core::default::Default for #name #lifetime {
             #[inline]
             fn default() -> Self {
-                #initializer
+                Self::new()
             }
         }
-    })
+    }
 }
 
 fn derive_send_sync(
@@ -2462,17 +2483,26 @@ pub fn generate_struct(
         .provisional
         .then(|| quote!(#[cfg(feature = "provisional")]));
 
+    // For the handwritten structures below, none of which have an s_type
+    let zeroed_new_and_default = new_and_default(
+        &name_to_tokens(&struct_.name),
+        None,
+        &provisional,
+        zeroed_initializer(),
+    );
+
     if &struct_.name == "VkTransformMatrixKHR" {
         return quote! {
             #provisional
             #[repr(C)]
             #[cfg_attr(feature = "debug", derive(Debug))]
-            #[derive(Copy, Clone, Default)]
+            #[derive(Copy, Clone)]
             #[doc = #khronos_link]
             #[must_use]
             pub struct TransformMatrixKHR {
                 pub matrix: [f32; 12],
             }
+            #zeroed_new_and_default
         };
     }
 
@@ -2500,6 +2530,7 @@ pub fn generate_struct(
                 pub instance_shader_binding_table_record_offset_and_flags: Packed24_8,
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
             }
+            #zeroed_new_and_default
         };
     }
 
@@ -2519,6 +2550,7 @@ pub fn generate_struct(
                 pub instance_shader_binding_table_record_offset_and_flags: Packed24_8,
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
             }
+            #zeroed_new_and_default
         };
     }
 
@@ -2538,6 +2570,7 @@ pub fn generate_struct(
                 pub instance_shader_binding_table_record_offset_and_flags: Packed24_8,
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
             }
+            #zeroed_new_and_default
         };
     }
 
@@ -2553,6 +2586,7 @@ pub fn generate_struct(
                 /// Use [`Packed24_5_3::new(geometry_index, geometry_flags)`][Packed24_5_3::new()] to construct this field
                 pub geometry_index_and_geometry_flags: Packed24_5_3,
             }
+            #zeroed_new_and_default
         };
     }
     if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterInfoNV" {
@@ -2579,6 +2613,7 @@ pub fn generate_struct(
                 pub opacity_micromap_array: DeviceAddress,
                 pub opacity_micromap_index_buffer: DeviceAddress,
             }
+            #zeroed_new_and_default
         };
     }
     if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV" {
@@ -2606,6 +2641,7 @@ pub fn generate_struct(
                 pub opacity_micromap_index_buffer: DeviceAddress,
                 pub instantiation_bounding_box_limit: DeviceAddress,
             }
+            #zeroed_new_and_default
         };
     }
     if &struct_.name == "VkClusterAccelerationStructureInstantiateClusterInfoNV" {
@@ -2623,6 +2659,7 @@ pub fn generate_struct(
                 pub cluster_template_address: DeviceAddress,
                 pub vertex_buffer: StridedDeviceAddressNV,
             }
+            #zeroed_new_and_default
         };
     }
 
