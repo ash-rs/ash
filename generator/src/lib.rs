@@ -1885,25 +1885,11 @@ fn derive_default(
     members: &[PreprocessedMember<'_>],
     has_lifetime: bool,
     provisional: &Option<TokenStream>,
+    has_struct_type: &HashSet<Ident>,
 ) -> Option<TokenStream> {
     let name = name_to_tokens(&struct_.name);
     let is_structure_type = |field: &vkxml::Field| field.basetype == "VkStructureType";
 
-    // These are also pointers, and therefor also don't implement Default. The spec
-    // also doesn't mark them as pointers
-    let handles = [
-        "LPCWSTR",
-        "HANDLE",
-        "HINSTANCE",
-        "HWND",
-        "HMONITOR",
-        "IOSurfaceRef",
-        "MTLBuffer_id",
-        "MTLCommandQueue_id",
-        "MTLDevice_id",
-        "MTLSharedEvent_id",
-        "MTLTexture_id",
-    ];
     let contains_ptr = members
         .iter()
         .any(|member| member.vkxml_field.reference.is_some());
@@ -1913,48 +1899,51 @@ fn derive_default(
     let contains_static_array = members
         .iter()
         .any(|member| is_static_array(member.vkxml_field));
-    let contains_deprecated = members.iter().any(|member| member.deprecated.is_some());
-    let allow_deprecated = contains_deprecated.then(|| quote!(#[allow(deprecated)]));
     if !(contains_ptr || contains_structure_type || contains_static_array) {
         return None;
     };
-    let default_fields = members.iter().map(|member| {
-        let param_ident = member.vkxml_field.param_ident();
-        if is_structure_type(member.vkxml_field) {
-            if member.vkxml_field.type_enums.is_some() {
-                quote!(#param_ident: Self::STRUCTURE_TYPE)
-            } else {
-                quote!(#param_ident: unsafe { ::core::mem::zeroed() })
-            }
-        } else if member.vkxml_field.reference.is_some() {
-            if member.vkxml_field.is_const {
-                quote!(#param_ident: ::core::ptr::null())
-            } else {
-                quote!(#param_ident: ::core::ptr::null_mut())
-            }
-        } else if is_static_array(member.vkxml_field)
-            || handles.contains(&member.vkxml_field.basetype.as_str())
-        {
-            quote!(#param_ident: unsafe { ::core::mem::zeroed() })
-        } else {
-            let ty = member.vkxml_field.type_tokens(false, None);
-            quote!(#param_ident: #ty::default())
-        }
-    });
     let lifetime = has_lifetime.then(|| quote!(<'_>));
-    let marker = has_lifetime.then(|| quote!(_marker: PhantomData,));
+
+    let zeroed = quote! {
+        // SAFETY: All fields of Vulkan structures are valid when zeroed
+        unsafe { ::core::mem::zeroed() }
+    };
+
+    // Zero-initialization doesn't set the s_type of this or nested (owned) structures,
+    // initialize those explicitly
+    let stype_members = contains_structure_type
+        .then(|| quote!(s_type: Self::STRUCTURE_TYPE))
+        .into_iter()
+        .chain(
+            members
+                .iter()
+                .filter(|m| m.vkxml_field.reference.is_none())
+                .filter_map(|m| {
+                    let t = name_to_tokens(&m.vkxml_field.basetype);
+                    has_struct_type.contains(&t).then(|| {
+                        let i = m.vkxml_field.param_ident();
+                        quote!(#i: #t::default())
+                    })
+                }),
+        )
+        .collect::<Vec<_>>();
+    let initializer = if !stype_members.is_empty() {
+        quote! {
+            Self {
+                #(#stype_members,)*
+                ..#zeroed
+            }
+        }
+    } else {
+        zeroed
+    };
+
     Some(quote! {
         #provisional
         impl ::core::default::Default for #name #lifetime {
             #[inline]
             fn default() -> Self {
-                #allow_deprecated
-                Self {
-                    #(
-                        #default_fields,
-                    )*
-                    #marker
-                }
+                #initializer
             }
         }
     })
@@ -2464,6 +2453,7 @@ pub fn generate_struct(
     vk_parse_types: &HashMap<String, &vk_parse::Type>,
     union_types: &HashSet<&str>,
     has_lifetimes: &HashSet<Ident>,
+    has_struct_type: &HashSet<Ident>,
 ) -> TokenStream {
     let name = name_to_tokens(&struct_.name);
     let vk_parse_struct = vk_parse_types[&struct_.name];
@@ -2704,7 +2694,13 @@ pub fn generate_struct(
             // vk::StructureType::APPLICATION_INFO (0).
             (None, quote!())
         } else {
-            let default_tokens = derive_default(struct_, &members, has_lifetime, &provisional);
+            let default_tokens = derive_default(
+                struct_,
+                &members,
+                has_lifetime,
+                &provisional,
+                has_struct_type,
+            );
             let derive_default = if default_tokens.is_none() {
                 quote!(Default,)
             } else {
@@ -2865,6 +2861,7 @@ pub fn generate_definition(
     allowed_types: &HashMap<&str, ProvidedBy<'_>>,
     union_types: &HashSet<&str>,
     has_lifetimes: &HashSet<Ident>,
+    has_struct_type: &HashSet<Ident>,
     vk_parse_types: &HashMap<String, &vk_parse::Type>,
     bitflags_cache: &mut HashSet<Ident>,
     const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
@@ -2884,6 +2881,7 @@ pub fn generate_definition(
                 vk_parse_types,
                 union_types,
                 has_lifetimes,
+                has_struct_type,
             ))
         }
         vkxml::DefinitionsElement::Bitmask(ref mask) => {
@@ -3515,6 +3513,32 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         }
     }
 
+    // Identify structs that need s_type initialization: those with an s_type themselves, and
+    // those that own such a struct as a member (by value, not through a pointer or the p_next
+    // chain).  Unions don't count as we don't know which of the fields' s_type to pick yet.
+    let mut has_struct_type = HashSet::new();
+    loop {
+        let len = has_struct_type.len();
+        for (type_, members) in &struct_and_union_types {
+            let needs_s_type = if let Some(alias) = &type_.alias {
+                has_struct_type.contains(&name_to_tokens(alias))
+            } else {
+                type_.category.as_deref() == Some("struct")
+                    && members.iter().any(|x| {
+                        x.type_enums.is_some()
+                            || x.reference.is_none()
+                                && has_struct_type.contains(&name_to_tokens(&x.basetype))
+                    })
+            };
+            if needs_s_type {
+                has_struct_type.insert(name_to_tokens(type_.name.as_ref().unwrap()));
+            }
+        }
+        if has_struct_type.len() == len {
+            break;
+        }
+    }
+
     let extension_constants = extensions
         .iter()
         .map(|ext| {
@@ -3593,6 +3617,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
                 &required_types,
                 &union_types,
                 &has_lifetimes,
+                &has_struct_type,
                 &vk_parse_types,
                 &mut bitflags_cache,
                 &mut const_values,
