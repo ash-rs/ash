@@ -13,7 +13,7 @@ Interoperability between [`ash`](https://github.com/ash-rs/ash) and [`raw-window
 ## Usage
 
 ```toml
-ash-window = "0.12.0"
+ash-window = "0.13.0"
 ```
 
 The library exposes two functions:
@@ -34,7 +34,7 @@ The library exposes two functions:
 ## Versions
 
 ```toml
-ash = "0.37"
+ash = "0.38"
 ```
 
 ## Support
