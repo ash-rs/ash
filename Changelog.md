@@ -52,6 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `build_range_infos` in `cmd_build_acceleration_structures()`.
 - `vk::LayerSettingEXT::values()` now takes a slice of any new `vk::LayerSettingValue` type instead of `&[u8]`, and sets `value_count` to the number of values instead of the length in bytes. (#1053)
 - Receive `wl_display` and `xcb_connection_t` as raw pointers rather than mutable borrows in their high-level extension wrappers (#1057)
+- Bumped MSRV from 1.69 to 1.75 (#1058)
 
 ### Removed
 
