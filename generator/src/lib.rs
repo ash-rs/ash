@@ -3448,55 +3448,62 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
 
     let mut identifier_renames = BTreeMap::new();
 
-    // Identify structs that need a lifetime annotation
-    // Note that this relies on `vk.xml` defining types before they are used,
-    // as is required in C(++) too.
-    let mut has_lifetimes = definitions
-        .iter()
-        .filter_map(get_variant!(vkxml::DefinitionsElement::Struct))
-        .filter(|s| {
-            s.elements
-                .iter()
-                .filter_map(get_variant!(vkxml::StructElement::Member))
-                .filter(|x| {
-                    x.name.as_deref() == Some("pNext")
-                        // Opaque types (typically external system handles) are treated as pointers
-                        // rather than borrows. They don't carry a lifetime, unless they are wrapped
-                        // in a slice which inherently is lifetime-bounded.
-                        || x.size.is_some()
-                        || !is_opaque_type(&x.basetype)
-                })
-                .any(|x| x.reference.is_some())
-        })
-        .map(|s| name_to_tokens(&s.name))
-        .collect::<HashSet<Ident>>();
-    for def in &definitions {
-        match def {
-            vkxml::DefinitionsElement::Struct(s) => s
-                .elements
-                .iter()
-                .filter_map(get_variant!(vkxml::StructElement::Member))
-                .any(|field| has_lifetimes.contains(&name_to_tokens(&field.basetype)))
-                .then(|| has_lifetimes.insert(name_to_tokens(&s.name))),
-            vkxml::DefinitionsElement::Union(u) => u
-                .elements
-                .iter()
-                .any(|field| has_lifetimes.contains(&name_to_tokens(&field.basetype)))
-                .then(|| has_lifetimes.insert(name_to_tokens(&u.name))),
-            _ => continue,
-        };
-    }
-    for type_ in spec2
+    // All structs and unions including their aliases, which `definitions` doesn't contain.
+    // `vk.xml` doesn't define types before they are used (nor aliases before they are
+    // used or after their target), hence lookup tables derived from this have to be
+    // computed until nothing is added anymore.
+    let struct_and_union_types = spec2
         .0
         .iter()
         .filter_map(get_variant!(vk_parse::RegistryChild::Types))
         .flat_map(|types| &types.children)
         .filter_map(get_variant!(vk_parse::TypesChild::Type))
-    {
-        if let (Some(name), Some(alias)) = (&type_.name, &type_.alias) {
-            if has_lifetimes.contains(&name_to_tokens(alias)) {
-                has_lifetimes.insert(name_to_tokens(name));
+        .filter(|t| matches!(t.category.as_deref(), Some("struct" | "union")))
+        .map(|t| {
+            let members = match &t.spec {
+                vk_parse::TypeSpec::Members(members) => members
+                    .iter()
+                    .filter(|m| matches!(m, vk_parse::TypeMember::Definition(_)))
+                    .map(|m| match vkxml::StructElement::from(m.clone()) {
+                        vkxml::StructElement::Member(field) => field,
+                        _ => unreachable!(),
+                    })
+                    .collect(),
+                _ => vec![],
+            };
+            (t, members)
+        })
+        .collect::<Vec<(&vk_parse::Type, Vec<vkxml::Field>)>>();
+
+    // Identify structs that need a lifetime annotation
+    let mut has_lifetimes = HashSet::new();
+    loop {
+        let len = has_lifetimes.len();
+        for (type_, members) in &struct_and_union_types {
+            let has_lifetime = if let Some(alias) = &type_.alias {
+                has_lifetimes.contains(&name_to_tokens(alias))
+            } else {
+                let is_struct = type_.category.as_deref() == Some("struct");
+                members.iter().any(|x| {
+                    // Structs with borrows
+                    is_struct
+                        && x.reference.is_some()
+                        && (x.name.as_deref() == Some("pNext")
+                            // Opaque types (typically external system handles) are treated as pointers
+                            // rather than borrows. They don't carry a lifetime, unless they are wrapped
+                            // in a slice which inherently is lifetime-bounded.
+                            || x.size.is_some()
+                            || !is_opaque_type(&x.basetype))
+                        // Structs and unions containing those
+                        || has_lifetimes.contains(&name_to_tokens(&x.basetype))
+                })
+            };
+            if has_lifetime {
+                has_lifetimes.insert(name_to_tokens(type_.name.as_ref().unwrap()));
             }
+        }
+        if has_lifetimes.len() == len {
+            break;
         }
     }
 
