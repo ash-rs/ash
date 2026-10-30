@@ -1887,27 +1887,20 @@ fn derive_default(
     provisional: &Option<TokenStream>,
     has_struct_type: &HashSet<Ident>,
 ) -> Option<TokenStream> {
+    if struct_.name == "VkBaseInStructure" || struct_.name == "VkBaseOutStructure" {
+        // These don't really have a valid initializer, since they'll end up as
+        // vk::StructureType::APPLICATION_INFO (0).
+        return None;
+    }
     let name = name_to_tokens(&struct_.name);
     let is_structure_type = |field: &vkxml::Field| field.basetype == "VkStructureType";
 
-    let contains_ptr = members
-        .iter()
-        .any(|member| member.vkxml_field.reference.is_some());
     let contains_structure_type = members
         .iter()
         .any(|member| is_structure_type(member.vkxml_field));
-    let contains_static_array = members
-        .iter()
-        .any(|member| is_static_array(member.vkxml_field));
-    if !(contains_ptr || contains_structure_type || contains_static_array) {
-        return None;
-    };
     let lifetime = has_lifetime.then(|| quote!(<'_>));
 
-    let zeroed = quote! {
-        // SAFETY: All fields of Vulkan structures are valid when zeroed
-        unsafe { ::core::mem::zeroed() }
-    };
+    let zeroed = zeroed_initializer();
 
     // Zero-initialization doesn't set the s_type of this or nested (owned) structures,
     // initialize those explicitly
@@ -1922,7 +1915,7 @@ fn derive_default(
                     let t = name_to_tokens(&m.vkxml_field.basetype);
                     has_struct_type.contains(&t).then(|| {
                         let i = m.vkxml_field.param_ident();
-                        quote!(#i: #t::default())
+                        quote!(#i: #t::new())
                     })
                 }),
         )
@@ -1938,15 +1931,39 @@ fn derive_default(
         zeroed
     };
 
-    Some(quote! {
+    Some(new_and_default(&name, lifetime, provisional, initializer))
+}
+
+fn zeroed_initializer() -> TokenStream {
+    quote! {
+        // SAFETY: All fields of Vulkan structures are valid when zeroed
+        unsafe { ::core::mem::zeroed() }
+    }
+}
+
+/// Generates a `const fn new()` constructor, which [`Default`] relays to
+fn new_and_default(
+    name: &Ident,
+    lifetime: Option<TokenStream>,
+    provisional: &Option<TokenStream>,
+    initializer: TokenStream,
+) -> TokenStream {
+    quote! {
+        #provisional
+        impl #name #lifetime {
+            #[inline]
+            pub const fn new() -> Self {
+                #initializer
+            }
+        }
         #provisional
         impl ::core::default::Default for #name #lifetime {
             #[inline]
             fn default() -> Self {
-                #initializer
+                Self::new()
             }
         }
-    })
+    }
 }
 
 fn derive_send_sync(
@@ -2145,7 +2162,7 @@ fn derive_getters_and_setters(
         if struct_.name == "VkShaderModuleCreateInfo" && name == "pCode" {
             return Some(quote! {
                 #[inline]
-                pub fn code(mut self, code: &'a [u32]) -> Self {
+                pub const fn code(mut self, code: &'a [u32]) -> Self {
                     self.code_size = code.len() * 4;
                     self.p_code = code.as_ptr();
                     self
@@ -2161,7 +2178,7 @@ fn derive_getters_and_setters(
                 /// See <https://docs.vulkan.org/refpages/latest/refpages/source/VkPipelineMultisampleStateCreateInfo.html#_description>
                 /// for more details.
                 #[inline]
-                pub fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> Self {
+                pub const fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> Self {
                     self.p_sample_mask = if sample_mask.is_empty() {
                         core::ptr::null()
                     } else {
@@ -2194,12 +2211,13 @@ fn derive_getters_and_setters(
                 return Some(quote! {
                     #deprecated
                     #[inline]
-                    pub fn #param_ident_short(mut self, #param_ident_short: &'a CStr) -> Self {
+                    pub const fn #param_ident_short(mut self, #param_ident_short: &'a CStr) -> Self {
                         self.#param_ident = #param_ident_short.as_ptr();
                         self
                     }
                     #deprecated
                     #[inline]
+                    // TODO: const requires MSRV 1.84 for is_null(), 1.81 for CStr::from_ptr()
                     pub unsafe fn #param_ident_as_c_str(&self) -> Option<&CStr> {
                         if self.#param_ident.is_null() {
                             None
@@ -2218,7 +2236,7 @@ fn derive_getters_and_setters(
                     }
                     #deprecated
                     #[inline]
-                    pub fn #param_ident_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
+                    pub const fn #param_ident_as_c_str(&self) -> core::result::Result<&CStr, FromBytesUntilNulError> {
                         wrap_c_str_slice_until_nul(&self.#param_ident)
                     }
                 });
@@ -2257,6 +2275,7 @@ fn derive_getters_and_setters(
                     return Some(quote! {
                         #deprecated
                         #[inline]
+                        // TODO: const when the indexer is
                         pub fn #param_ident_short(mut self, #param_ident_short: &'_ #slice_param_ty_tokens) -> Self {
                             self.#array_size_ident = #param_ident_short.len()#cast;
                             self.#param_ident[..#param_ident_short.len()].copy_from_slice(#param_ident_short);
@@ -2264,6 +2283,7 @@ fn derive_getters_and_setters(
                         }
                         #deprecated
                         #[inline]
+                        // TODO: const when the indexer is
                         pub fn #param_ident_short_as_slice(&self) -> &#slice_param_ty_tokens {
                             &self.#param_ident[..self.#array_size_ident #cast]
                         }
@@ -2310,12 +2330,17 @@ fn derive_getters_and_setters(
                     quote!(self.#array_size_ident = #param_ident_short.len()#cast;)
                 };
 
-                let mutable = if field.is_const { quote!() } else { quote!(mut) };
+                // TODO: const for mutable references requires MSRV 1.83
+                let (mutable, constness) = if field.is_const {
+                    (quote!(), quote!(const))
+                } else {
+                    (quote!(mut), quote!())
+                };
 
                 return Some(quote! {
                     #deprecated
                     #[inline]
-                    pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
+                    pub #constness fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
                         #set_size_stmt
                         self.#param_ident = #param_ident_short #ptr;
                         self
@@ -2328,8 +2353,9 @@ fn derive_getters_and_setters(
             return Some(quote!{
                 #deprecated
                 #[inline]
-                pub fn #param_ident_short(mut self, #param_ident_short: bool) -> Self {
-                    self.#param_ident = #param_ident_short.into();
+                pub const fn #param_ident_short(mut self, #param_ident_short: bool) -> Self {
+                    // TODO: Explicit conversion to vk::TRUE / vk::FALSE?
+                    self.#param_ident = #param_ident_short as Bool32;
                     self
                 }
             });
@@ -2349,6 +2375,7 @@ fn derive_getters_and_setters(
                 return Some(quote!{
                     #deprecated
                     #[inline]
+                    // TODO: const requires `trait Handle` to be const
                     pub fn #param_ident_short<T: Handle>(mut self, #param_ident_short: T) -> Self {
                         self.#param_ident = #param_ident_short.as_raw();
                         self.#objecttype_ident = T::TYPE;
@@ -2358,17 +2385,20 @@ fn derive_getters_and_setters(
             }
         };
 
-        let param_ty_tokens = if is_opaque_type(&field.basetype) {
+        let (param_ty_tokens, constness) = if is_opaque_type(&field.basetype) {
             //  Use raw pointers for void/opaque types
-            field.type_tokens(false, type_lifetime)
+            (field.type_tokens(false, type_lifetime), quote!(const))
+        } else if field.reference.is_some() && !field.is_const {
+            // TODO: const for mutable references requires MSRV 1.83
+            (param_ty_tokens, quote!())
         } else {
-            param_ty_tokens
+            (param_ty_tokens, quote!(const))
         };
 
         Some(quote!{
             #deprecated
             #[inline]
-            pub fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens) -> Self {
+            pub #constness fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens) -> Self {
                 self.#param_ident = #param_ident_short;
                 self
             }
@@ -2466,17 +2496,26 @@ pub fn generate_struct(
         .provisional
         .then(|| quote!(#[cfg(feature = "provisional")]));
 
+    // For the handwritten structures below, none of which have an s_type
+    let zeroed_new_and_default = new_and_default(
+        &name_to_tokens(&struct_.name),
+        None,
+        &provisional,
+        zeroed_initializer(),
+    );
+
     if &struct_.name == "VkTransformMatrixKHR" {
         return quote! {
             #provisional
             #[repr(C)]
             #[cfg_attr(feature = "debug", derive(Debug))]
-            #[derive(Copy, Clone, Default)]
+            #[derive(Copy, Clone)]
             #[doc = #khronos_link]
             #[must_use]
             pub struct TransformMatrixKHR {
                 pub matrix: [f32; 12],
             }
+            #zeroed_new_and_default
         };
     }
 
@@ -2504,6 +2543,7 @@ pub fn generate_struct(
                 pub instance_shader_binding_table_record_offset_and_flags: Packed24_8,
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
             }
+            #zeroed_new_and_default
         };
     }
 
@@ -2523,6 +2563,7 @@ pub fn generate_struct(
                 pub instance_shader_binding_table_record_offset_and_flags: Packed24_8,
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
             }
+            #zeroed_new_and_default
         };
     }
 
@@ -2542,6 +2583,7 @@ pub fn generate_struct(
                 pub instance_shader_binding_table_record_offset_and_flags: Packed24_8,
                 pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
             }
+            #zeroed_new_and_default
         };
     }
 
@@ -2557,6 +2599,7 @@ pub fn generate_struct(
                 /// Use [`Packed24_5_3::new(geometry_index, geometry_flags)`][Packed24_5_3::new()] to construct this field
                 pub geometry_index_and_geometry_flags: Packed24_5_3,
             }
+            #zeroed_new_and_default
         };
     }
     if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterInfoNV" {
@@ -2583,6 +2626,7 @@ pub fn generate_struct(
                 pub opacity_micromap_array: DeviceAddress,
                 pub opacity_micromap_index_buffer: DeviceAddress,
             }
+            #zeroed_new_and_default
         };
     }
     if &struct_.name == "VkClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV" {
@@ -2610,6 +2654,7 @@ pub fn generate_struct(
                 pub opacity_micromap_index_buffer: DeviceAddress,
                 pub instantiation_bounding_box_limit: DeviceAddress,
             }
+            #zeroed_new_and_default
         };
     }
     if &struct_.name == "VkClusterAccelerationStructureInstantiateClusterInfoNV" {
@@ -2627,6 +2672,7 @@ pub fn generate_struct(
                 pub cluster_template_address: DeviceAddress,
                 pub vertex_buffer: StridedDeviceAddressNV,
             }
+            #zeroed_new_and_default
         };
     }
 
@@ -2688,26 +2734,13 @@ pub fn generate_struct(
     };
 
     let debug_tokens = derive_debug(struct_, &members, union_types, has_lifetime, &provisional);
-    let (default_tokens, derive_default) =
-        if struct_.name == "VkBaseInStructure" || struct_.name == "VkBaseOutStructure" {
-            // These don't really have a valid initializer, since they'll end up as
-            // vk::StructureType::APPLICATION_INFO (0).
-            (None, quote!())
-        } else {
-            let default_tokens = derive_default(
-                struct_,
-                &members,
-                has_lifetime,
-                &provisional,
-                has_struct_type,
-            );
-            let derive_default = if default_tokens.is_none() {
-                quote!(Default,)
-            } else {
-                quote!()
-            };
-            (default_tokens, derive_default)
-        };
+    let default_tokens = derive_default(
+        struct_,
+        &members,
+        has_lifetime,
+        &provisional,
+        has_struct_type,
+    );
     let send_sync_tokens = derive_send_sync(struct_, has_lifetime, &provisional);
     let setter_tokens = derive_getters_and_setters(
         struct_,
@@ -2726,7 +2759,7 @@ pub fn generate_struct(
         #provisional
         #[repr(C)]
         #derive_debug
-        #[derive(Copy, Clone, #derive_default #manual_derive_tokens)]
+        #[derive(Copy, Clone, #manual_derive_tokens)]
         #[doc = #khronos_link]
         #[must_use]
         pub struct #name #lifetimes {
