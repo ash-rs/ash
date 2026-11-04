@@ -2365,6 +2365,7 @@ impl fmt::Debug for DriverId {
             Self::APEX => Some("APEX"),
             Self::NIKKI => Some("NIKKI"),
             Self::MOMOTEN => Some("MOMOTEN"),
+            Self::AURORA_BOREALIS => Some("AURORA_BOREALIS"),
             _ => None,
         };
         if let Some(x) = name {
@@ -8954,6 +8955,12 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_PRIMITIVE_RESTART_INDEX_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PRIMITIVE_RESTART_INDEX_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_MAINTENANCE_12_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_12_FEATURES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_MAINTENANCE_12_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_MAINTENANCE_12_PROPERTIES_KHR")
             }
             Self::PHYSICAL_DEVICE_IMAGE_TILING_CONTROL_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_IMAGE_TILING_CONTROL_FEATURES_EXT")
