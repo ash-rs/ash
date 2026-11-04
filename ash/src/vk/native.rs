@@ -94,6 +94,8 @@ pub type StdVideoH264ChromaFormatIdc = ::core::ffi::c_uint;
 pub const StdVideoH264ProfileIdc_STD_VIDEO_H264_PROFILE_IDC_BASELINE: StdVideoH264ProfileIdc = 66;
 pub const StdVideoH264ProfileIdc_STD_VIDEO_H264_PROFILE_IDC_MAIN: StdVideoH264ProfileIdc = 77;
 pub const StdVideoH264ProfileIdc_STD_VIDEO_H264_PROFILE_IDC_HIGH: StdVideoH264ProfileIdc = 100;
+pub const StdVideoH264ProfileIdc_STD_VIDEO_H264_PROFILE_IDC_HIGH_10: StdVideoH264ProfileIdc = 110;
+pub const StdVideoH264ProfileIdc_STD_VIDEO_H264_PROFILE_IDC_HIGH_422: StdVideoH264ProfileIdc = 122;
 pub const StdVideoH264ProfileIdc_STD_VIDEO_H264_PROFILE_IDC_HIGH_444_PREDICTIVE:
     StdVideoH264ProfileIdc = 244;
 pub const StdVideoH264ProfileIdc_STD_VIDEO_H264_PROFILE_IDC_INVALID: StdVideoH264ProfileIdc =
