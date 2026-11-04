@@ -63,7 +63,7 @@ pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_API_VERSION_1_4.html>"]
 pub const API_VERSION_1_4: u32 = make_api_version(0, 1, 4, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 366;
+pub const HEADER_VERSION: u32 = 367;
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 4, HEADER_VERSION);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSampleMask.html>"]
@@ -21256,6 +21256,82 @@ impl<'a> PhysicalDeviceMaintenance10FeaturesKHR<'a> {
     #[inline]
     pub fn maintenance10(mut self, maintenance10: bool) -> Self {
         self.maintenance10 = maintenance10.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceMaintenance12PropertiesKHR.html>"]
+#[must_use]
+pub struct PhysicalDeviceMaintenance12PropertiesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub max_input_attachment_index: u32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceMaintenance12PropertiesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceMaintenance12PropertiesKHR<'_> {}
+impl ::core::default::Default for PhysicalDeviceMaintenance12PropertiesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            max_input_attachment_index: u32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance12PropertiesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_MAINTENANCE_12_PROPERTIES_KHR;
+}
+unsafe impl Extends<PhysicalDeviceProperties2<'_>>
+    for PhysicalDeviceMaintenance12PropertiesKHR<'_>
+{
+}
+impl<'a> PhysicalDeviceMaintenance12PropertiesKHR<'a> {
+    #[inline]
+    pub fn max_input_attachment_index(mut self, max_input_attachment_index: u32) -> Self {
+        self.max_input_attachment_index = max_input_attachment_index;
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceMaintenance12FeaturesKHR.html>"]
+#[must_use]
+pub struct PhysicalDeviceMaintenance12FeaturesKHR<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub maintenance12: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceMaintenance12FeaturesKHR<'_> {}
+unsafe impl Sync for PhysicalDeviceMaintenance12FeaturesKHR<'_> {}
+impl ::core::default::Default for PhysicalDeviceMaintenance12FeaturesKHR<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            maintenance12: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceMaintenance12FeaturesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_MAINTENANCE_12_FEATURES_KHR;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>> for PhysicalDeviceMaintenance12FeaturesKHR<'_> {}
+unsafe impl Extends<DeviceCreateInfo<'_>> for PhysicalDeviceMaintenance12FeaturesKHR<'_> {}
+impl<'a> PhysicalDeviceMaintenance12FeaturesKHR<'a> {
+    #[inline]
+    pub fn maintenance12(mut self, maintenance12: bool) -> Self {
+        self.maintenance12 = maintenance12.into();
         self
     }
 }
