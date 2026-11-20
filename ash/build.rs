@@ -14,6 +14,7 @@ fn main() {
                 _ => "lib",
             };
             println!("cargo:rustc-link-search={var}/{suffix}");
+            println!("cargo:rustc-link-search={var}/{suffix}/VulkanLoader/lib");
         }
         let lib = match &*target_family {
             "windows" => "vulkan-1",
