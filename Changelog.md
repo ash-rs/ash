@@ -57,6 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed unused lifetime from `vk::AllocationCallbacks` structure (#968)
 - Removed `ash::prelude` and `ash::vk::prelude` in favour of capturing all contents directly in their parent module. (#972)
+- Removed `Default` from `vk::BaseInStructure` and `vk::BaseOutStructure`, which would initialize `s_type` to the unrelated `vk::StructureType::APPLICATION_INFO` (#1051)
 
 ## [0.38.0] - 2024-04-01
 

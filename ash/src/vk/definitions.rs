@@ -706,16 +706,6 @@ pub struct BaseOutStructure<'a> {
 }
 unsafe impl Send for BaseOutStructure<'_> {}
 unsafe impl Sync for BaseOutStructure<'_> {}
-impl ::core::default::Default for BaseOutStructure<'_> {
-    #[inline]
-    fn default() -> Self {
-        Self {
-            s_type: unsafe { ::core::mem::zeroed() },
-            p_next: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
-    }
-}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
@@ -728,16 +718,6 @@ pub struct BaseInStructure<'a> {
 }
 unsafe impl Send for BaseInStructure<'_> {}
 unsafe impl Sync for BaseInStructure<'_> {}
-impl ::core::default::Default for BaseInStructure<'_> {
-    #[inline]
-    fn default() -> Self {
-        Self {
-            s_type: unsafe { ::core::mem::zeroed() },
-            p_next: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
-    }
-}
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone, Default, PartialEq, Eq, Hash)]
@@ -994,17 +974,7 @@ impl fmt::Debug for PhysicalDeviceProperties {
 impl ::core::default::Default for PhysicalDeviceProperties {
     #[inline]
     fn default() -> Self {
-        Self {
-            api_version: u32::default(),
-            driver_version: u32::default(),
-            vendor_id: u32::default(),
-            device_id: u32::default(),
-            device_type: PhysicalDeviceType::default(),
-            device_name: unsafe { ::core::mem::zeroed() },
-            pipeline_cache_uuid: unsafe { ::core::mem::zeroed() },
-            limits: PhysicalDeviceLimits::default(),
-            sparse_properties: PhysicalDeviceSparseProperties::default(),
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PhysicalDeviceProperties {
@@ -1080,10 +1050,7 @@ impl fmt::Debug for ExtensionProperties {
 impl ::core::default::Default for ExtensionProperties {
     #[inline]
     fn default() -> Self {
-        Self {
-            extension_name: unsafe { ::core::mem::zeroed() },
-            spec_version: u32::default(),
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl ExtensionProperties {
@@ -1128,12 +1095,7 @@ impl fmt::Debug for LayerProperties {
 impl ::core::default::Default for LayerProperties {
     #[inline]
     fn default() -> Self {
-        Self {
-            layer_name: unsafe { ::core::mem::zeroed() },
-            spec_version: u32::default(),
-            implementation_version: u32::default(),
-            description: unsafe { ::core::mem::zeroed() },
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl LayerProperties {
@@ -1192,13 +1154,7 @@ impl ::core::default::Default for ApplicationInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_application_name: ::core::ptr::null(),
-            application_version: u32::default(),
-            p_engine_name: ::core::ptr::null(),
-            engine_version: u32::default(),
-            api_version: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -1290,14 +1246,7 @@ impl fmt::Debug for AllocationCallbacks {
 impl ::core::default::Default for AllocationCallbacks {
     #[inline]
     fn default() -> Self {
-        Self {
-            p_user_data: ::core::ptr::null_mut(),
-            pfn_allocation: PFN_vkAllocationFunction::default(),
-            pfn_reallocation: PFN_vkReallocationFunction::default(),
-            pfn_free: PFN_vkFreeFunction::default(),
-            pfn_internal_allocation: PFN_vkInternalAllocationNotification::default(),
-            pfn_internal_free: PFN_vkInternalFreeNotification::default(),
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl AllocationCallbacks {
@@ -1356,12 +1305,7 @@ impl ::core::default::Default for DeviceQueueCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DeviceQueueCreateFlags::default(),
-            queue_family_index: u32::default(),
-            queue_count: u32::default(),
-            p_queue_priorities: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -1411,19 +1355,9 @@ unsafe impl Sync for DeviceCreateInfo<'_> {}
 impl ::core::default::Default for DeviceCreateInfo<'_> {
     #[inline]
     fn default() -> Self {
-        #[allow(deprecated)]
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DeviceCreateFlags::default(),
-            queue_create_info_count: u32::default(),
-            p_queue_create_infos: ::core::ptr::null(),
-            enabled_layer_count: u32::default(),
-            pp_enabled_layer_names: ::core::ptr::null(),
-            enabled_extension_count: u32::default(),
-            pp_enabled_extension_names: ::core::ptr::null(),
-            p_enabled_features: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -1488,14 +1422,7 @@ impl ::core::default::Default for InstanceCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: InstanceCreateFlags::default(),
-            p_application_info: ::core::ptr::null(),
-            enabled_layer_count: u32::default(),
-            pp_enabled_layer_names: ::core::ptr::null(),
-            enabled_extension_count: u32::default(),
-            pp_enabled_extension_names: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -1586,12 +1513,7 @@ impl fmt::Debug for PhysicalDeviceMemoryProperties {
 impl ::core::default::Default for PhysicalDeviceMemoryProperties {
     #[inline]
     fn default() -> Self {
-        Self {
-            memory_type_count: u32::default(),
-            memory_types: unsafe { ::core::mem::zeroed() },
-            memory_heap_count: u32::default(),
-            memory_heaps: unsafe { ::core::mem::zeroed() },
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PhysicalDeviceMemoryProperties {
@@ -1635,10 +1557,7 @@ impl ::core::default::Default for MemoryAllocateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            allocation_size: DeviceSize::default(),
-            memory_type_index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -1812,11 +1731,7 @@ impl ::core::default::Default for MappedMemoryRange<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            offset: DeviceSize::default(),
-            size: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -1985,16 +1900,7 @@ impl ::core::default::Default for WriteDescriptorSet<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            dst_set: DescriptorSet::default(),
-            dst_binding: u32::default(),
-            dst_array_element: u32::default(),
-            descriptor_count: u32::default(),
-            descriptor_type: DescriptorType::default(),
-            p_image_info: ::core::ptr::null(),
-            p_buffer_info: ::core::ptr::null(),
-            p_texel_buffer_view: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -2070,15 +1976,7 @@ impl ::core::default::Default for CopyDescriptorSet<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_set: DescriptorSet::default(),
-            src_binding: u32::default(),
-            src_array_element: u32::default(),
-            dst_set: DescriptorSet::default(),
-            dst_binding: u32::default(),
-            dst_array_element: u32::default(),
-            descriptor_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -2140,9 +2038,7 @@ impl ::core::default::Default for BufferUsageFlags2CreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            usage: BufferUsageFlags2::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -2183,14 +2079,7 @@ impl ::core::default::Default for BufferCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: BufferCreateFlags::default(),
-            size: DeviceSize::default(),
-            usage: BufferUsageFlags::default(),
-            sharing_mode: SharingMode::default(),
-            queue_family_index_count: u32::default(),
-            p_queue_family_indices: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -2247,13 +2136,7 @@ impl ::core::default::Default for BufferViewCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: BufferViewCreateFlags::default(),
-            buffer: Buffer::default(),
-            format: Format::default(),
-            offset: DeviceSize::default(),
-            range: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -2405,10 +2288,7 @@ impl ::core::default::Default for MemoryBarrier<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_access_mask: AccessFlags::default(),
-            dst_access_mask: AccessFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -2451,15 +2331,7 @@ impl ::core::default::Default for BufferMemoryBarrier<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_access_mask: AccessFlags::default(),
-            dst_access_mask: AccessFlags::default(),
-            src_queue_family_index: u32::default(),
-            dst_queue_family_index: u32::default(),
-            buffer: Buffer::default(),
-            offset: DeviceSize::default(),
-            size: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -2528,16 +2400,7 @@ impl ::core::default::Default for ImageMemoryBarrier<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_access_mask: AccessFlags::default(),
-            dst_access_mask: AccessFlags::default(),
-            old_layout: ImageLayout::default(),
-            new_layout: ImageLayout::default(),
-            src_queue_family_index: u32::default(),
-            dst_queue_family_index: u32::default(),
-            image: Image::default(),
-            subresource_range: ImageSubresourceRange::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -2616,21 +2479,7 @@ impl ::core::default::Default for ImageCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ImageCreateFlags::default(),
-            image_type: ImageType::default(),
-            format: Format::default(),
-            extent: Extent3D::default(),
-            mip_levels: u32::default(),
-            array_layers: u32::default(),
-            samples: SampleCountFlags::default(),
-            tiling: ImageTiling::default(),
-            usage: ImageUsageFlags::default(),
-            sharing_mode: SharingMode::default(),
-            queue_family_index_count: u32::default(),
-            p_queue_family_indices: ::core::ptr::null(),
-            initial_layout: ImageLayout::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -2762,14 +2611,7 @@ impl ::core::default::Default for ImageViewCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ImageViewCreateFlags::default(),
-            image: Image::default(),
-            view_type: ImageViewType::default(),
-            format: Format::default(),
-            components: ComponentMapping::default(),
-            subresource_range: ImageSubresourceRange::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -2935,12 +2777,7 @@ unsafe impl Sync for SparseBufferMemoryBindInfo<'_> {}
 impl ::core::default::Default for SparseBufferMemoryBindInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            buffer: Buffer::default(),
-            bind_count: u32::default(),
-            p_binds: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> SparseBufferMemoryBindInfo<'a> {
@@ -2972,12 +2809,7 @@ unsafe impl Sync for SparseImageOpaqueMemoryBindInfo<'_> {}
 impl ::core::default::Default for SparseImageOpaqueMemoryBindInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            image: Image::default(),
-            bind_count: u32::default(),
-            p_binds: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> SparseImageOpaqueMemoryBindInfo<'a> {
@@ -3009,12 +2841,7 @@ unsafe impl Sync for SparseImageMemoryBindInfo<'_> {}
 impl ::core::default::Default for SparseImageMemoryBindInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            image: Image::default(),
-            bind_count: u32::default(),
-            p_binds: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> SparseImageMemoryBindInfo<'a> {
@@ -3057,18 +2884,7 @@ impl ::core::default::Default for BindSparseInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            wait_semaphore_count: u32::default(),
-            p_wait_semaphores: ::core::ptr::null(),
-            buffer_bind_count: u32::default(),
-            p_buffer_binds: ::core::ptr::null(),
-            image_opaque_bind_count: u32::default(),
-            p_image_opaque_binds: ::core::ptr::null(),
-            image_bind_count: u32::default(),
-            p_image_binds: ::core::ptr::null(),
-            signal_semaphore_count: u32::default(),
-            p_signal_semaphores: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -3163,12 +2979,7 @@ pub struct ImageBlit {
 impl ::core::default::Default for ImageBlit {
     #[inline]
     fn default() -> Self {
-        Self {
-            src_subresource: ImageSubresourceLayers::default(),
-            src_offsets: unsafe { ::core::mem::zeroed() },
-            dst_subresource: ImageSubresourceLayers::default(),
-            dst_offsets: unsafe { ::core::mem::zeroed() },
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl ImageBlit {
@@ -3313,12 +3124,7 @@ impl ::core::default::Default for CopyMemoryIndirectInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_copy_flags: AddressCopyFlagsKHR::default(),
-            dst_copy_flags: AddressCopyFlagsKHR::default(),
-            copy_count: u32::default(),
-            copy_address_range: StridedDeviceAddressRangeKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -3415,14 +3221,7 @@ impl ::core::default::Default for CopyMemoryToImageIndirectInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_copy_flags: AddressCopyFlagsKHR::default(),
-            copy_count: u32::default(),
-            copy_address_range: StridedDeviceAddressRangeKHR::default(),
-            dst_image: Image::default(),
-            dst_image_layout: ImageLayout::default(),
-            p_image_subresources: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -3516,11 +3315,7 @@ impl ::core::default::Default for ShaderModuleCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ShaderModuleCreateFlags::default(),
-            code_size: usize::default(),
-            p_code: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -3560,14 +3355,7 @@ unsafe impl Sync for DescriptorSetLayoutBinding<'_> {}
 impl ::core::default::Default for DescriptorSetLayoutBinding<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            binding: u32::default(),
-            descriptor_type: DescriptorType::default(),
-            descriptor_count: u32::default(),
-            stage_flags: ShaderStageFlags::default(),
-            p_immutable_samplers: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> DescriptorSetLayoutBinding<'a> {
@@ -3618,11 +3406,7 @@ impl ::core::default::Default for DescriptorSetLayoutCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DescriptorSetLayoutCreateFlags::default(),
-            binding_count: u32::default(),
-            p_bindings: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -3684,12 +3468,7 @@ impl ::core::default::Default for DescriptorPoolCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DescriptorPoolCreateFlags::default(),
-            max_sets: u32::default(),
-            pool_size_count: u32::default(),
-            p_pool_sizes: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -3734,11 +3513,7 @@ impl ::core::default::Default for DescriptorSetAllocateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            descriptor_pool: DescriptorPool::default(),
-            descriptor_set_count: u32::default(),
-            p_set_layouts: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -3802,13 +3577,7 @@ unsafe impl Sync for SpecializationInfo<'_> {}
 impl ::core::default::Default for SpecializationInfo<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            map_entry_count: u32::default(),
-            p_map_entries: ::core::ptr::null(),
-            data_size: usize::default(),
-            p_data: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> SpecializationInfo<'a> {
@@ -3847,13 +3616,7 @@ impl ::core::default::Default for PipelineShaderStageCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineShaderStageCreateFlags::default(),
-            stage: ShaderStageFlags::default(),
-            module: ShaderModule::default(),
-            p_name: ::core::ptr::null(),
-            p_specialization_info: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -3917,13 +3680,8 @@ impl ::core::default::Default for ComputePipelineCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCreateFlags::default(),
             stage: PipelineShaderStageCreateInfo::default(),
-            layout: PipelineLayout::default(),
-            base_pipeline_handle: Pipeline::default(),
-            base_pipeline_index: i32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -3977,11 +3735,7 @@ impl ::core::default::Default for ComputePipelineIndirectBufferInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            device_address: DeviceAddress::default(),
-            size: DeviceSize::default(),
-            pipeline_device_address_capture_replay: DeviceAddress::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -4027,9 +3781,7 @@ impl ::core::default::Default for PipelineCreateFlags2CreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCreateFlags2::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -4129,13 +3881,7 @@ impl ::core::default::Default for PipelineVertexInputStateCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineVertexInputStateCreateFlags::default(),
-            vertex_binding_description_count: u32::default(),
-            p_vertex_binding_descriptions: ::core::ptr::null(),
-            vertex_attribute_description_count: u32::default(),
-            p_vertex_attribute_descriptions: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -4187,11 +3933,7 @@ impl ::core::default::Default for PipelineInputAssemblyStateCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineInputAssemblyStateCreateFlags::default(),
-            topology: PrimitiveTopology::default(),
-            primitive_restart_enable: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -4234,10 +3976,7 @@ impl ::core::default::Default for PipelineTessellationStateCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineTessellationStateCreateFlags::default(),
-            patch_control_points: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -4278,13 +4017,7 @@ impl ::core::default::Default for PipelineViewportStateCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineViewportStateCreateFlags::default(),
-            viewport_count: u32::default(),
-            p_viewports: ::core::ptr::null(),
-            scissor_count: u32::default(),
-            p_scissors: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -4348,19 +4081,7 @@ impl ::core::default::Default for PipelineRasterizationStateCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineRasterizationStateCreateFlags::default(),
-            depth_clamp_enable: Bool32::default(),
-            rasterizer_discard_enable: Bool32::default(),
-            polygon_mode: PolygonMode::default(),
-            cull_mode: CullModeFlags::default(),
-            front_face: FrontFace::default(),
-            depth_bias_enable: Bool32::default(),
-            depth_bias_constant_factor: f32::default(),
-            depth_bias_clamp: f32::default(),
-            depth_bias_slope_factor: f32::default(),
-            line_width: f32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -4448,15 +4169,7 @@ impl ::core::default::Default for PipelineMultisampleStateCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineMultisampleStateCreateFlags::default(),
-            rasterization_samples: SampleCountFlags::default(),
-            sample_shading_enable: Bool32::default(),
-            min_sample_shading: f32::default(),
-            p_sample_mask: ::core::ptr::null(),
-            alpha_to_coverage_enable: Bool32::default(),
-            alpha_to_one_enable: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -4589,14 +4302,7 @@ impl ::core::default::Default for PipelineColorBlendStateCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineColorBlendStateCreateFlags::default(),
-            logic_op_enable: Bool32::default(),
-            logic_op: LogicOp::default(),
-            attachment_count: u32::default(),
-            p_attachments: ::core::ptr::null(),
-            blend_constants: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -4651,11 +4357,7 @@ impl ::core::default::Default for PipelineDynamicStateCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineDynamicStateCreateFlags::default(),
-            dynamic_state_count: u32::default(),
-            p_dynamic_states: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -4753,18 +4455,7 @@ impl ::core::default::Default for PipelineDepthStencilStateCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineDepthStencilStateCreateFlags::default(),
-            depth_test_enable: Bool32::default(),
-            depth_write_enable: Bool32::default(),
-            depth_compare_op: CompareOp::default(),
-            depth_bounds_test_enable: Bool32::default(),
-            stencil_test_enable: Bool32::default(),
-            front: StencilOpState::default(),
-            back: StencilOpState::default(),
-            min_depth_bounds: f32::default(),
-            max_depth_bounds: f32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -4857,25 +4548,7 @@ impl ::core::default::Default for GraphicsPipelineCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCreateFlags::default(),
-            stage_count: u32::default(),
-            p_stages: ::core::ptr::null(),
-            p_vertex_input_state: ::core::ptr::null(),
-            p_input_assembly_state: ::core::ptr::null(),
-            p_tessellation_state: ::core::ptr::null(),
-            p_viewport_state: ::core::ptr::null(),
-            p_rasterization_state: ::core::ptr::null(),
-            p_multisample_state: ::core::ptr::null(),
-            p_depth_stencil_state: ::core::ptr::null(),
-            p_color_blend_state: ::core::ptr::null(),
-            p_dynamic_state: ::core::ptr::null(),
-            layout: PipelineLayout::default(),
-            render_pass: RenderPass::default(),
-            subpass: u32::default(),
-            base_pipeline_handle: Pipeline::default(),
-            base_pipeline_index: i32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -5009,11 +4682,7 @@ impl ::core::default::Default for PipelineCacheCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCacheCreateFlags::default(),
-            initial_data_size: usize::default(),
-            p_initial_data: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -5048,13 +4717,7 @@ pub struct PipelineCacheHeaderVersionOne {
 impl ::core::default::Default for PipelineCacheHeaderVersionOne {
     #[inline]
     fn default() -> Self {
-        Self {
-            header_size: u32::default(),
-            header_version: PipelineCacheHeaderVersion::default(),
-            vendor_id: u32::default(),
-            device_id: u32::default(),
-            pipeline_cache_uuid: unsafe { ::core::mem::zeroed() },
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PipelineCacheHeaderVersionOne {
@@ -5099,13 +4762,7 @@ pub struct PipelineCacheHeaderVersionDataGraphQCOM {
 impl ::core::default::Default for PipelineCacheHeaderVersionDataGraphQCOM {
     #[inline]
     fn default() -> Self {
-        Self {
-            header_size: u32::default(),
-            header_version: PipelineCacheHeaderVersion::default(),
-            cache_type: DataGraphModelCacheTypeQCOM::default(),
-            cache_version: u32::default(),
-            toolchain_version: unsafe { ::core::mem::zeroed() },
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PipelineCacheHeaderVersionDataGraphQCOM {
@@ -5185,11 +4842,7 @@ impl ::core::default::Default for PipelineBinaryCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_keys_and_data_info: ::core::ptr::null(),
-            pipeline: Pipeline::default(),
-            p_pipeline_create_info: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -5238,10 +4891,7 @@ impl ::core::default::Default for PipelineBinaryHandlesInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            pipeline_binary_count: u32::default(),
-            p_pipeline_binaries: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -5271,11 +4921,7 @@ unsafe impl Sync for PipelineBinaryDataKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            data_size: usize::default(),
-            p_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> PipelineBinaryDataKHR<'a> {
@@ -5302,12 +4948,7 @@ unsafe impl Sync for PipelineBinaryKeysAndDataKHR<'_> {}
 impl ::core::default::Default for PipelineBinaryKeysAndDataKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            binary_count: u32::default(),
-            p_pipeline_binary_keys: ::core::ptr::null(),
-            p_pipeline_binary_data: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> PipelineBinaryKeysAndDataKHR<'a> {
@@ -5349,10 +4990,7 @@ impl ::core::default::Default for PipelineBinaryKeyKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            key_size: u32::default(),
-            key: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -5390,10 +5028,7 @@ impl ::core::default::Default for PipelineBinaryInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            binary_count: u32::default(),
-            p_pipeline_binaries: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -5429,9 +5064,7 @@ impl ::core::default::Default for ReleaseCapturedPipelineDataInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline: Pipeline::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -5463,9 +5096,7 @@ impl ::core::default::Default for PipelineBinaryDataInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_binary: PipelineBinaryKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -5496,8 +5127,7 @@ impl ::core::default::Default for PipelineCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -5527,13 +5157,7 @@ impl ::core::default::Default for PipelineLayoutCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineLayoutCreateFlags::default(),
-            set_layout_count: u32::default(),
-            p_set_layouts: ::core::ptr::null(),
-            push_constant_range_count: u32::default(),
-            p_push_constant_ranges: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -5602,24 +5226,7 @@ impl ::core::default::Default for SamplerCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: SamplerCreateFlags::default(),
-            mag_filter: Filter::default(),
-            min_filter: Filter::default(),
-            mipmap_mode: SamplerMipmapMode::default(),
-            address_mode_u: SamplerAddressMode::default(),
-            address_mode_v: SamplerAddressMode::default(),
-            address_mode_w: SamplerAddressMode::default(),
-            mip_lod_bias: f32::default(),
-            anisotropy_enable: Bool32::default(),
-            max_anisotropy: f32::default(),
-            compare_enable: Bool32::default(),
-            compare_op: CompareOp::default(),
-            min_lod: f32::default(),
-            max_lod: f32::default(),
-            border_color: BorderColor::default(),
-            unnormalized_coordinates: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -5727,10 +5334,7 @@ impl ::core::default::Default for CommandPoolCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: CommandPoolCreateFlags::default(),
-            queue_family_index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -5769,11 +5373,7 @@ impl ::core::default::Default for CommandBufferAllocateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            command_pool: CommandPool::default(),
-            level: CommandBufferLevel::default(),
-            command_buffer_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -5820,14 +5420,7 @@ impl ::core::default::Default for CommandBufferInheritanceInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            render_pass: RenderPass::default(),
-            subpass: u32::default(),
-            framebuffer: Framebuffer::default(),
-            occlusion_query_enable: Bool32::default(),
-            query_flags: QueryControlFlags::default(),
-            pipeline_statistics: QueryPipelineStatisticFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -5885,10 +5478,7 @@ impl ::core::default::Default for CommandBufferBeginInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: CommandBufferUsageFlags::default(),
-            p_inheritance_info: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -5945,13 +5535,7 @@ impl ::core::default::Default for RenderPassBeginInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            render_pass: RenderPass::default(),
-            framebuffer: Framebuffer::default(),
-            render_area: Rect2D::default(),
-            clear_value_count: u32::default(),
-            p_clear_values: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -6172,19 +5756,7 @@ unsafe impl Sync for SubpassDescription<'_> {}
 impl ::core::default::Default for SubpassDescription<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            flags: SubpassDescriptionFlags::default(),
-            pipeline_bind_point: PipelineBindPoint::default(),
-            input_attachment_count: u32::default(),
-            p_input_attachments: ::core::ptr::null(),
-            color_attachment_count: u32::default(),
-            p_color_attachments: ::core::ptr::null(),
-            p_resolve_attachments: ::core::ptr::null(),
-            p_depth_stencil_attachment: ::core::ptr::null(),
-            preserve_attachment_count: u32::default(),
-            p_preserve_attachments: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> SubpassDescription<'a> {
@@ -6306,15 +5878,7 @@ impl ::core::default::Default for RenderPassCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: RenderPassCreateFlags::default(),
-            attachment_count: u32::default(),
-            p_attachments: ::core::ptr::null(),
-            subpass_count: u32::default(),
-            p_subpasses: ::core::ptr::null(),
-            dependency_count: u32::default(),
-            p_dependencies: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -6364,9 +5928,7 @@ impl ::core::default::Default for EventCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: EventCreateFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -6398,9 +5960,7 @@ impl ::core::default::Default for FenceCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: FenceCreateFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -6955,114 +6515,7 @@ pub struct PhysicalDeviceLimits {
 impl ::core::default::Default for PhysicalDeviceLimits {
     #[inline]
     fn default() -> Self {
-        Self {
-            max_image_dimension1_d: u32::default(),
-            max_image_dimension2_d: u32::default(),
-            max_image_dimension3_d: u32::default(),
-            max_image_dimension_cube: u32::default(),
-            max_image_array_layers: u32::default(),
-            max_texel_buffer_elements: u32::default(),
-            max_uniform_buffer_range: u32::default(),
-            max_storage_buffer_range: u32::default(),
-            max_push_constants_size: u32::default(),
-            max_memory_allocation_count: u32::default(),
-            max_sampler_allocation_count: u32::default(),
-            buffer_image_granularity: DeviceSize::default(),
-            sparse_address_space_size: DeviceSize::default(),
-            max_bound_descriptor_sets: u32::default(),
-            max_per_stage_descriptor_samplers: u32::default(),
-            max_per_stage_descriptor_uniform_buffers: u32::default(),
-            max_per_stage_descriptor_storage_buffers: u32::default(),
-            max_per_stage_descriptor_sampled_images: u32::default(),
-            max_per_stage_descriptor_storage_images: u32::default(),
-            max_per_stage_descriptor_input_attachments: u32::default(),
-            max_per_stage_resources: u32::default(),
-            max_descriptor_set_samplers: u32::default(),
-            max_descriptor_set_uniform_buffers: u32::default(),
-            max_descriptor_set_uniform_buffers_dynamic: u32::default(),
-            max_descriptor_set_storage_buffers: u32::default(),
-            max_descriptor_set_storage_buffers_dynamic: u32::default(),
-            max_descriptor_set_sampled_images: u32::default(),
-            max_descriptor_set_storage_images: u32::default(),
-            max_descriptor_set_input_attachments: u32::default(),
-            max_vertex_input_attributes: u32::default(),
-            max_vertex_input_bindings: u32::default(),
-            max_vertex_input_attribute_offset: u32::default(),
-            max_vertex_input_binding_stride: u32::default(),
-            max_vertex_output_components: u32::default(),
-            max_tessellation_generation_level: u32::default(),
-            max_tessellation_patch_size: u32::default(),
-            max_tessellation_control_per_vertex_input_components: u32::default(),
-            max_tessellation_control_per_vertex_output_components: u32::default(),
-            max_tessellation_control_per_patch_output_components: u32::default(),
-            max_tessellation_control_total_output_components: u32::default(),
-            max_tessellation_evaluation_input_components: u32::default(),
-            max_tessellation_evaluation_output_components: u32::default(),
-            max_geometry_shader_invocations: u32::default(),
-            max_geometry_input_components: u32::default(),
-            max_geometry_output_components: u32::default(),
-            max_geometry_output_vertices: u32::default(),
-            max_geometry_total_output_components: u32::default(),
-            max_fragment_input_components: u32::default(),
-            max_fragment_output_attachments: u32::default(),
-            max_fragment_dual_src_attachments: u32::default(),
-            max_fragment_combined_output_resources: u32::default(),
-            max_compute_shared_memory_size: u32::default(),
-            max_compute_work_group_count: unsafe { ::core::mem::zeroed() },
-            max_compute_work_group_invocations: u32::default(),
-            max_compute_work_group_size: unsafe { ::core::mem::zeroed() },
-            sub_pixel_precision_bits: u32::default(),
-            sub_texel_precision_bits: u32::default(),
-            mipmap_precision_bits: u32::default(),
-            max_draw_indexed_index_value: u32::default(),
-            max_draw_indirect_count: u32::default(),
-            max_sampler_lod_bias: f32::default(),
-            max_sampler_anisotropy: f32::default(),
-            max_viewports: u32::default(),
-            max_viewport_dimensions: unsafe { ::core::mem::zeroed() },
-            viewport_bounds_range: unsafe { ::core::mem::zeroed() },
-            viewport_sub_pixel_bits: u32::default(),
-            min_memory_map_alignment: usize::default(),
-            min_texel_buffer_offset_alignment: DeviceSize::default(),
-            min_uniform_buffer_offset_alignment: DeviceSize::default(),
-            min_storage_buffer_offset_alignment: DeviceSize::default(),
-            min_texel_offset: i32::default(),
-            max_texel_offset: u32::default(),
-            min_texel_gather_offset: i32::default(),
-            max_texel_gather_offset: u32::default(),
-            min_interpolation_offset: f32::default(),
-            max_interpolation_offset: f32::default(),
-            sub_pixel_interpolation_offset_bits: u32::default(),
-            max_framebuffer_width: u32::default(),
-            max_framebuffer_height: u32::default(),
-            max_framebuffer_layers: u32::default(),
-            framebuffer_color_sample_counts: SampleCountFlags::default(),
-            framebuffer_depth_sample_counts: SampleCountFlags::default(),
-            framebuffer_stencil_sample_counts: SampleCountFlags::default(),
-            framebuffer_no_attachments_sample_counts: SampleCountFlags::default(),
-            max_color_attachments: u32::default(),
-            sampled_image_color_sample_counts: SampleCountFlags::default(),
-            sampled_image_integer_sample_counts: SampleCountFlags::default(),
-            sampled_image_depth_sample_counts: SampleCountFlags::default(),
-            sampled_image_stencil_sample_counts: SampleCountFlags::default(),
-            storage_image_sample_counts: SampleCountFlags::default(),
-            max_sample_mask_words: u32::default(),
-            timestamp_compute_and_graphics: Bool32::default(),
-            timestamp_period: f32::default(),
-            max_clip_distances: u32::default(),
-            max_cull_distances: u32::default(),
-            max_combined_clip_and_cull_distances: u32::default(),
-            discrete_queue_priorities: u32::default(),
-            point_size_range: unsafe { ::core::mem::zeroed() },
-            line_width_range: unsafe { ::core::mem::zeroed() },
-            point_size_granularity: f32::default(),
-            line_width_granularity: f32::default(),
-            strict_lines: Bool32::default(),
-            standard_sample_locations: Bool32::default(),
-            optimal_buffer_copy_offset_alignment: DeviceSize::default(),
-            optimal_buffer_copy_row_pitch_alignment: DeviceSize::default(),
-            non_coherent_atom_size: DeviceSize::default(),
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PhysicalDeviceLimits {
@@ -7747,9 +7200,7 @@ impl ::core::default::Default for SemaphoreCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: SemaphoreCreateFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -7784,12 +7235,7 @@ impl ::core::default::Default for QueryPoolCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: QueryPoolCreateFlags::default(),
-            query_type: QueryType::default(),
-            query_count: u32::default(),
-            pipeline_statistics: QueryPipelineStatisticFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -7842,15 +7288,7 @@ impl ::core::default::Default for FramebufferCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: FramebufferCreateFlags::default(),
-            render_pass: RenderPass::default(),
-            attachment_count: u32::default(),
-            p_attachments: ::core::ptr::null(),
-            width: u32::default(),
-            height: u32::default(),
-            layers: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -8066,15 +7504,7 @@ impl ::core::default::Default for SubmitInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            wait_semaphore_count: u32::default(),
-            p_wait_semaphores: ::core::ptr::null(),
-            p_wait_dst_stage_mask: ::core::ptr::null(),
-            command_buffer_count: u32::default(),
-            p_command_buffers: ::core::ptr::null(),
-            signal_semaphore_count: u32::default(),
-            p_signal_semaphores: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -8127,16 +7557,7 @@ unsafe impl Sync for DisplayPropertiesKHR<'_> {}
 impl ::core::default::Default for DisplayPropertiesKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            display: DisplayKHR::default(),
-            display_name: ::core::ptr::null(),
-            physical_dimensions: Extent2D::default(),
-            physical_resolution: Extent2D::default(),
-            supported_transforms: SurfaceTransformFlagsKHR::default(),
-            plane_reorder_possible: Bool32::default(),
-            persistent_content: Bool32::default(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> DisplayPropertiesKHR<'a> {
@@ -8266,10 +7687,7 @@ impl ::core::default::Default for DisplayModeCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DisplayModeCreateFlagsKHR::default(),
-            parameters: DisplayModeParametersKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -8376,16 +7794,7 @@ impl ::core::default::Default for DisplaySurfaceCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DisplaySurfaceCreateFlagsKHR::default(),
-            display_mode: DisplayModeKHR::default(),
-            plane_index: u32::default(),
-            plane_stack_index: u32::default(),
-            transform: SurfaceTransformFlagsKHR::default(),
-            global_alpha: f32::default(),
-            alpha_mode: DisplayPlaneAlphaFlagsKHR::default(),
-            image_extent: Extent2D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -8452,9 +7861,7 @@ impl ::core::default::Default for DisplaySurfaceStereoCreateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stereo_type: DisplaySurfaceStereoTypeNV::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -8489,11 +7896,7 @@ impl ::core::default::Default for DisplayPresentInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_rect: Rect2D::default(),
-            dst_rect: Rect2D::default(),
-            persistent: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -8609,10 +8012,7 @@ impl ::core::default::Default for AndroidSurfaceCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: AndroidSurfaceCreateFlagsKHR::default(),
-            window: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -8650,10 +8050,7 @@ impl ::core::default::Default for ViSurfaceCreateInfoNN<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ViSurfaceCreateFlagsNN::default(),
-            window: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -8692,11 +8089,7 @@ impl ::core::default::Default for WaylandSurfaceCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: WaylandSurfaceCreateFlagsKHR::default(),
-            display: ::core::ptr::null_mut(),
-            surface: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -8740,11 +8133,7 @@ impl ::core::default::Default for UbmSurfaceCreateInfoSEC<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: UbmSurfaceCreateFlagsSEC::default(),
-            device: ::core::ptr::null_mut(),
-            surface: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -8788,11 +8177,7 @@ impl ::core::default::Default for Win32SurfaceCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: Win32SurfaceCreateFlagsKHR::default(),
-            hinstance: unsafe { ::core::mem::zeroed() },
-            hwnd: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -8836,11 +8221,7 @@ impl ::core::default::Default for XlibSurfaceCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: XlibSurfaceCreateFlagsKHR::default(),
-            dpy: ::core::ptr::null_mut(),
-            window: Window::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -8884,11 +8265,7 @@ impl ::core::default::Default for XcbSurfaceCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: XcbSurfaceCreateFlagsKHR::default(),
-            connection: ::core::ptr::null_mut(),
-            window: xcb_window_t::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -8932,11 +8309,7 @@ impl ::core::default::Default for DirectFBSurfaceCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DirectFBSurfaceCreateFlagsEXT::default(),
-            dfb: ::core::ptr::null_mut(),
-            surface: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -8979,10 +8352,7 @@ impl ::core::default::Default for ImagePipeSurfaceCreateInfoFUCHSIA<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ImagePipeSurfaceCreateFlagsFUCHSIA::default(),
-            image_pipe_handle: zx_handle_t::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -9020,10 +8390,7 @@ impl ::core::default::Default for StreamDescriptorSurfaceCreateInfoGGP<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: StreamDescriptorSurfaceCreateFlagsGGP::default(),
-            stream_descriptor: GgpStreamDescriptor::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -9062,11 +8429,7 @@ impl ::core::default::Default for ScreenSurfaceCreateInfoQNX<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ScreenSurfaceCreateFlagsQNX::default(),
-            context: ::core::ptr::null_mut(),
-            window: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -9144,24 +8507,7 @@ impl ::core::default::Default for SwapchainCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: SwapchainCreateFlagsKHR::default(),
-            surface: SurfaceKHR::default(),
-            min_image_count: u32::default(),
-            image_format: Format::default(),
-            image_color_space: ColorSpaceKHR::default(),
-            image_extent: Extent2D::default(),
-            image_array_layers: u32::default(),
-            image_usage: ImageUsageFlags::default(),
-            image_sharing_mode: SharingMode::default(),
-            queue_family_index_count: u32::default(),
-            p_queue_family_indices: ::core::ptr::null(),
-            pre_transform: SurfaceTransformFlagsKHR::default(),
-            composite_alpha: CompositeAlphaFlagsKHR::default(),
-            present_mode: PresentModeKHR::default(),
-            clipped: Bool32::default(),
-            old_swapchain: SwapchainKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -9269,14 +8615,7 @@ impl ::core::default::Default for PresentInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            wait_semaphore_count: u32::default(),
-            p_wait_semaphores: ::core::ptr::null(),
-            swapchain_count: u32::default(),
-            p_swapchains: ::core::ptr::null(),
-            p_image_indices: ::core::ptr::null(),
-            p_results: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -9340,11 +8679,7 @@ impl ::core::default::Default for DebugReportCallbackCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DebugReportFlagsEXT::default(),
-            pfn_callback: PFN_vkDebugReportCallbackEXT::default(),
-            p_user_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -9388,10 +8723,7 @@ impl ::core::default::Default for ValidationFlagsEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            disabled_validation_check_count: u32::default(),
-            p_disabled_validation_checks: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -9431,12 +8763,7 @@ impl ::core::default::Default for ValidationFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            enabled_validation_feature_count: u32::default(),
-            p_enabled_validation_features: ::core::ptr::null(),
-            disabled_validation_feature_count: u32::default(),
-            p_disabled_validation_features: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -9485,10 +8812,7 @@ impl ::core::default::Default for LayerSettingsCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            setting_count: u32::default(),
-            p_settings: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -9522,14 +8846,7 @@ unsafe impl Sync for LayerSettingEXT<'_> {}
 impl ::core::default::Default for LayerSettingEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            p_layer_name: ::core::ptr::null(),
-            p_setting_name: ::core::ptr::null(),
-            ty: LayerSettingTypeEXT::default(),
-            value_count: u32::default(),
-            p_values: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> LayerSettingEXT<'a> {
@@ -9590,9 +8907,7 @@ impl ::core::default::Default for PipelineRasterizationStateRasterizationOrderAM
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            rasterization_order: RasterizationOrderAMD::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -9631,11 +8946,7 @@ impl ::core::default::Default for DebugMarkerObjectNameInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            object_type: DebugReportObjectTypeEXT::default(),
-            object: u64::default(),
-            p_object_name: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -9689,13 +9000,7 @@ impl ::core::default::Default for DebugMarkerObjectTagInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            object_type: DebugReportObjectTypeEXT::default(),
-            object: u64::default(),
-            tag_name: u64::default(),
-            tag_size: usize::default(),
-            p_tag: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -9744,10 +9049,7 @@ impl ::core::default::Default for DebugMarkerMarkerInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_marker_name: ::core::ptr::null(),
-            color: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -9792,9 +9094,7 @@ impl ::core::default::Default for DedicatedAllocationImageCreateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            dedicated_allocation: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -9827,9 +9127,7 @@ impl ::core::default::Default for DedicatedAllocationBufferCreateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            dedicated_allocation: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -9863,10 +9161,7 @@ impl ::core::default::Default for DedicatedAllocationMemoryAllocateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image: Image::default(),
-            buffer: Buffer::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -9950,9 +9245,7 @@ impl ::core::default::Default for ExternalMemoryImageCreateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_types: ExternalMemoryHandleTypeFlagsNV::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -9985,9 +9278,7 @@ impl ::core::default::Default for ExportMemoryAllocateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_types: ExternalMemoryHandleTypeFlagsNV::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -10021,10 +9312,7 @@ impl ::core::default::Default for ImportMemoryWin32HandleInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_type: ExternalMemoryHandleTypeFlagsNV::default(),
-            handle: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -10063,10 +9351,7 @@ impl ::core::default::Default for ExportMemoryWin32HandleInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_attributes: ::core::ptr::null(),
-            dw_access: DWORD::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -10110,15 +9395,7 @@ impl ::core::default::Default for Win32KeyedMutexAcquireReleaseInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            acquire_count: u32::default(),
-            p_acquire_syncs: ::core::ptr::null(),
-            p_acquire_keys: ::core::ptr::null(),
-            p_acquire_timeout_milliseconds: ::core::ptr::null(),
-            release_count: u32::default(),
-            p_release_syncs: ::core::ptr::null(),
-            p_release_keys: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -10177,9 +9454,7 @@ impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesN
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_generated_commands: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -10217,9 +9492,7 @@ impl ::core::default::Default for PushConstantBankInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            bank: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -10255,9 +9528,7 @@ impl ::core::default::Default for PhysicalDevicePushConstantBankFeaturesNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            push_constant_bank: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -10295,12 +9566,7 @@ impl ::core::default::Default for PhysicalDevicePushConstantBankPropertiesNV<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_graphics_push_constant_banks: u32::default(),
-            max_compute_push_constant_banks: u32::default(),
-            max_graphics_push_data_banks: u32::default(),
-            max_compute_push_data_banks: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -10357,11 +9623,7 @@ impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsComputeFe
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_generated_compute: Bool32::default(),
-            device_generated_compute_pipelines: Bool32::default(),
-            device_generated_compute_capture_replay: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -10419,9 +9681,7 @@ impl ::core::default::Default for DevicePrivateDataCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            private_data_slot_request_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -10454,9 +9714,7 @@ impl ::core::default::Default for PrivateDataSlotCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PrivateDataSlotCreateFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -10488,9 +9746,7 @@ impl ::core::default::Default for PhysicalDevicePrivateDataFeatures<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            private_data: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -10532,17 +9788,7 @@ impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsPropertie
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_graphics_shader_group_count: u32::default(),
-            max_indirect_sequence_count: u32::default(),
-            max_indirect_commands_token_count: u32::default(),
-            max_indirect_commands_stream_count: u32::default(),
-            max_indirect_commands_token_offset: u32::default(),
-            max_indirect_commands_stream_stride: u32::default(),
-            min_sequences_count_buffer_offset_alignment: u32::default(),
-            min_sequences_index_buffer_offset_alignment: u32::default(),
-            min_indirect_commands_buffer_offset_alignment: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -10643,9 +9889,7 @@ impl ::core::default::Default for PhysicalDeviceClusterAccelerationStructureFeat
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cluster_acceleration_structure: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -10693,16 +9937,7 @@ impl ::core::default::Default for PhysicalDeviceClusterAccelerationStructureProp
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_vertices_per_cluster: u32::default(),
-            max_triangles_per_cluster: u32::default(),
-            cluster_scratch_byte_alignment: u32::default(),
-            cluster_byte_alignment: u32::default(),
-            cluster_template_byte_alignment: u32::default(),
-            cluster_bottom_level_byte_alignment: u32::default(),
-            cluster_template_bounds_byte_alignment: u32::default(),
-            max_cluster_geometry_index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -10801,9 +10036,7 @@ impl ::core::default::Default for RayTracingPipelineClusterAccelerationStructure
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            allow_cluster_acceleration_structure: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -10969,10 +10202,7 @@ impl ::core::default::Default for ClusterAccelerationStructureClustersBottomLeve
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_total_cluster_count: u32::default(),
-            max_cluster_count_per_acceleration_structure: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -11021,16 +10251,7 @@ impl ::core::default::Default for ClusterAccelerationStructureTriangleClusterInp
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            vertex_format: Format::default(),
-            max_geometry_index_value: u32::default(),
-            max_cluster_unique_geometry_count: u32::default(),
-            max_cluster_triangle_count: u32::default(),
-            max_cluster_vertex_count: u32::default(),
-            max_total_triangle_count: u32::default(),
-            max_total_vertex_count: u32::default(),
-            min_position_truncate_bit_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -11103,11 +10324,7 @@ impl ::core::default::Default for ClusterAccelerationStructureMoveObjectsInputNV
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ty: ClusterAccelerationStructureTypeNV::default(),
-            no_move_overlap: Bool32::default(),
-            max_moved_bytes: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -11184,13 +10401,7 @@ impl ::core::default::Default for ClusterAccelerationStructureInputInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_acceleration_structure_count: u32::default(),
-            flags: BuildAccelerationStructureFlagsKHR::default(),
-            op_type: ClusterAccelerationStructureOpTypeNV::default(),
-            op_mode: ClusterAccelerationStructureOpModeNV::default(),
-            op_input: ClusterAccelerationStructureOpInputNV::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -11253,17 +10464,8 @@ impl ::core::default::Default for ClusterAccelerationStructureCommandsInfoNV<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
             input: ClusterAccelerationStructureInputInfoNV::default(),
-            dst_implicit_data: DeviceAddress::default(),
-            scratch_data: DeviceAddress::default(),
-            dst_addresses_array: StridedDeviceAddressRegionKHR::default(),
-            dst_sizes_array: StridedDeviceAddressRegionKHR::default(),
-            src_infos_array: StridedDeviceAddressRegionKHR::default(),
-            src_infos_count: DeviceAddress::default(),
-            address_resolution_flags: ClusterAccelerationStructureAddressResolutionFlagsNV::default(
-            ),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -11337,9 +10539,7 @@ impl ::core::default::Default for PhysicalDeviceMultiDrawPropertiesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_multi_draw_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -11375,12 +10575,7 @@ impl ::core::default::Default for GraphicsShaderGroupCreateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stage_count: u32::default(),
-            p_stages: ::core::ptr::null(),
-            p_vertex_input_state: ::core::ptr::null(),
-            p_tessellation_state: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -11432,12 +10627,7 @@ impl ::core::default::Default for GraphicsPipelineShaderGroupsCreateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            group_count: u32::default(),
-            p_groups: ::core::ptr::null(),
-            pipeline_count: u32::default(),
-            p_pipelines: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -11598,21 +10788,7 @@ impl ::core::default::Default for IndirectCommandsLayoutTokenNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            token_type: IndirectCommandsTokenTypeNV::default(),
-            stream: u32::default(),
-            offset: u32::default(),
-            vertex_binding_unit: u32::default(),
-            vertex_dynamic_stride: Bool32::default(),
-            pushconstant_pipeline_layout: PipelineLayout::default(),
-            pushconstant_shader_stage_flags: ShaderStageFlags::default(),
-            pushconstant_offset: u32::default(),
-            pushconstant_size: u32::default(),
-            indirect_state_flags: IndirectStateFlagsNV::default(),
-            index_type_count: u32::default(),
-            p_index_types: ::core::ptr::null(),
-            p_index_type_values: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -11712,14 +10888,7 @@ impl ::core::default::Default for IndirectCommandsLayoutCreateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: IndirectCommandsLayoutUsageFlagsNV::default(),
-            pipeline_bind_point: PipelineBindPoint::default(),
-            token_count: u32::default(),
-            p_tokens: ::core::ptr::null(),
-            stream_count: u32::default(),
-            p_stream_strides: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -11780,21 +10949,7 @@ impl ::core::default::Default for GeneratedCommandsInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            pipeline_bind_point: PipelineBindPoint::default(),
-            pipeline: Pipeline::default(),
-            indirect_commands_layout: IndirectCommandsLayoutNV::default(),
-            stream_count: u32::default(),
-            p_streams: ::core::ptr::null(),
-            sequences_count: u32::default(),
-            preprocess_buffer: Buffer::default(),
-            preprocess_offset: DeviceSize::default(),
-            preprocess_size: DeviceSize::default(),
-            sequences_count_buffer: Buffer::default(),
-            sequences_count_offset: DeviceSize::default(),
-            sequences_index_buffer: Buffer::default(),
-            sequences_index_offset: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -11888,12 +11043,7 @@ impl ::core::default::Default for GeneratedCommandsMemoryRequirementsInfoNV<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            pipeline_bind_point: PipelineBindPoint::default(),
-            pipeline: Pipeline::default(),
-            indirect_commands_layout: IndirectCommandsLayoutNV::default(),
-            max_sequences_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -11945,10 +11095,7 @@ impl ::core::default::Default for PipelineIndirectDeviceAddressInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            pipeline_bind_point: PipelineBindPoint::default(),
-            pipeline: Pipeline::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12000,9 +11147,7 @@ impl ::core::default::Default for PhysicalDeviceFeatures2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            features: PhysicalDeviceFeatures::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12035,9 +11180,7 @@ impl ::core::default::Default for PhysicalDeviceProperties2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            properties: PhysicalDeviceProperties::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12069,9 +11212,7 @@ impl ::core::default::Default for FormatProperties2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format_properties: FormatProperties::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12103,9 +11244,7 @@ impl ::core::default::Default for ImageFormatProperties2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image_format_properties: ImageFormatProperties::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12144,13 +11283,7 @@ impl ::core::default::Default for PhysicalDeviceImageFormatInfo2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            format: Format::default(),
-            ty: ImageType::default(),
-            tiling: ImageTiling::default(),
-            usage: ImageUsageFlags::default(),
-            flags: ImageCreateFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12202,9 +11335,7 @@ impl ::core::default::Default for QueueFamilyProperties2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            queue_family_properties: QueueFamilyProperties::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12239,9 +11370,7 @@ impl ::core::default::Default for PhysicalDeviceMemoryProperties2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_properties: PhysicalDeviceMemoryProperties::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12273,9 +11402,7 @@ impl ::core::default::Default for SparseImageFormatProperties2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            properties: SparseImageFormatProperties::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12311,13 +11438,7 @@ impl ::core::default::Default for PhysicalDeviceSparseImageFormatInfo2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            format: Format::default(),
-            ty: ImageType::default(),
-            samples: SampleCountFlags::default(),
-            usage: ImageUsageFlags::default(),
-            tiling: ImageTiling::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12369,9 +11490,7 @@ impl ::core::default::Default for PhysicalDevicePushDescriptorProperties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_push_descriptors: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12452,12 +11571,7 @@ impl ::core::default::Default for PhysicalDeviceDriverProperties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            driver_id: DriverId::default(),
-            driver_name: unsafe { ::core::mem::zeroed() },
-            driver_info: unsafe { ::core::mem::zeroed() },
-            conformance_version: ConformanceVersion::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12518,10 +11632,7 @@ impl ::core::default::Default for PresentRegionsKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12552,11 +11663,7 @@ unsafe impl Sync for PresentRegionKHR<'_> {}
 impl ::core::default::Default for PresentRegionKHR<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            rectangle_count: u32::default(),
-            p_rectangles: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> PresentRegionKHR<'a> {
@@ -12613,10 +11720,7 @@ impl ::core::default::Default for PhysicalDeviceVariablePointersFeatures<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            variable_pointers_storage_buffer: Bool32::default(),
-            variable_pointers: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12694,9 +11798,7 @@ impl ::core::default::Default for PhysicalDeviceExternalImageFormatInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12732,9 +11834,7 @@ impl ::core::default::Default for ExternalImageFormatProperties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            external_memory_properties: ExternalMemoryProperties::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12772,11 +11872,7 @@ impl ::core::default::Default for PhysicalDeviceExternalBufferInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: BufferCreateFlags::default(),
-            usage: BufferUsageFlags::default(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12818,9 +11914,7 @@ impl ::core::default::Default for ExternalBufferProperties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            external_memory_properties: ExternalMemoryProperties::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12859,13 +11953,7 @@ impl ::core::default::Default for PhysicalDeviceIDProperties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_uuid: unsafe { ::core::mem::zeroed() },
-            driver_uuid: unsafe { ::core::mem::zeroed() },
-            device_luid: unsafe { ::core::mem::zeroed() },
-            device_node_mask: u32::default(),
-            device_luid_valid: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12918,9 +12006,7 @@ impl ::core::default::Default for ExternalMemoryImageCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_types: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12953,9 +12039,7 @@ impl ::core::default::Default for ExternalMemoryBufferCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_types: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -12988,9 +12072,7 @@ impl ::core::default::Default for ExportMemoryAllocateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_types: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13025,11 +12107,7 @@ impl ::core::default::Default for ImportMemoryWin32HandleInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            handle: unsafe { ::core::mem::zeroed() },
-            name: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13074,11 +12152,7 @@ impl ::core::default::Default for ExportMemoryWin32HandleInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_attributes: ::core::ptr::null(),
-            dw_access: DWORD::default(),
-            name: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13122,10 +12196,7 @@ impl ::core::default::Default for ImportMemoryZirconHandleInfoFUCHSIA<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            handle: zx_handle_t::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13163,9 +12234,7 @@ impl ::core::default::Default for MemoryZirconHandlePropertiesFUCHSIA<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_type_bits: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13198,10 +12267,7 @@ impl ::core::default::Default for MemoryGetZirconHandleInfoFUCHSIA<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13238,9 +12304,7 @@ impl ::core::default::Default for MemoryWin32HandlePropertiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_type_bits: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13273,10 +12337,7 @@ impl ::core::default::Default for MemoryGetWin32HandleInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13314,10 +12375,7 @@ impl ::core::default::Default for ImportMemoryFdInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            fd: c_int::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13355,9 +12413,7 @@ impl ::core::default::Default for MemoryFdPropertiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_type_bits: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13390,10 +12446,7 @@ impl ::core::default::Default for MemoryGetFdInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13436,15 +12489,7 @@ impl ::core::default::Default for Win32KeyedMutexAcquireReleaseInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            acquire_count: u32::default(),
-            p_acquire_syncs: ::core::ptr::null(),
-            p_acquire_keys: ::core::ptr::null(),
-            p_acquire_timeouts: ::core::ptr::null(),
-            release_count: u32::default(),
-            p_release_syncs: ::core::ptr::null(),
-            p_release_keys: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13504,10 +12549,7 @@ impl ::core::default::Default for ImportMemoryMetalHandleInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            handle: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13545,9 +12587,7 @@ impl ::core::default::Default for MemoryMetalHandlePropertiesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_type_bits: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13580,10 +12620,7 @@ impl ::core::default::Default for MemoryGetMetalHandleInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13620,9 +12657,7 @@ impl ::core::default::Default for PhysicalDeviceExternalSemaphoreInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13656,11 +12691,7 @@ impl ::core::default::Default for ExternalSemaphoreProperties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            export_from_imported_handle_types: ExternalSemaphoreHandleTypeFlags::default(),
-            compatible_handle_types: ExternalSemaphoreHandleTypeFlags::default(),
-            external_semaphore_features: ExternalSemaphoreFeatureFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13711,9 +12742,7 @@ impl ::core::default::Default for ExportSemaphoreCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_types: ExternalSemaphoreHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13750,13 +12779,7 @@ impl ::core::default::Default for ImportSemaphoreWin32HandleInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            semaphore: Semaphore::default(),
-            flags: SemaphoreImportFlags::default(),
-            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
-            handle: unsafe { ::core::mem::zeroed() },
-            name: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13810,11 +12833,7 @@ impl ::core::default::Default for ExportSemaphoreWin32HandleInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_attributes: ::core::ptr::null(),
-            dw_access: DWORD::default(),
-            name: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13860,12 +12879,7 @@ impl ::core::default::Default for D3D12FenceSubmitInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            wait_semaphore_values_count: u32::default(),
-            p_wait_semaphore_values: ::core::ptr::null(),
-            signal_semaphore_values_count: u32::default(),
-            p_signal_semaphore_values: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13906,10 +12920,7 @@ impl ::core::default::Default for SemaphoreGetWin32HandleInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            semaphore: Semaphore::default(),
-            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -13949,12 +12960,7 @@ impl ::core::default::Default for ImportSemaphoreFdInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            semaphore: Semaphore::default(),
-            flags: SemaphoreImportFlags::default(),
-            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
-            fd: c_int::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14002,10 +13008,7 @@ impl ::core::default::Default for SemaphoreGetFdInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            semaphore: Semaphore::default(),
-            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14045,12 +13048,7 @@ impl ::core::default::Default for ImportSemaphoreZirconHandleInfoFUCHSIA<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            semaphore: Semaphore::default(),
-            flags: SemaphoreImportFlags::default(),
-            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
-            zircon_handle: zx_handle_t::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14099,10 +13097,7 @@ impl ::core::default::Default for SemaphoreGetZirconHandleInfoFUCHSIA<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            semaphore: Semaphore::default(),
-            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14139,9 +13134,7 @@ impl ::core::default::Default for PhysicalDeviceExternalFenceInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_type: ExternalFenceHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14175,11 +13168,7 @@ impl ::core::default::Default for ExternalFenceProperties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            export_from_imported_handle_types: ExternalFenceHandleTypeFlags::default(),
-            compatible_handle_types: ExternalFenceHandleTypeFlags::default(),
-            external_fence_features: ExternalFenceFeatureFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14230,9 +13219,7 @@ impl ::core::default::Default for ExportFenceCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_types: ExternalFenceHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14269,13 +13256,7 @@ impl ::core::default::Default for ImportFenceWin32HandleInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            fence: Fence::default(),
-            flags: FenceImportFlags::default(),
-            handle_type: ExternalFenceHandleTypeFlags::default(),
-            handle: unsafe { ::core::mem::zeroed() },
-            name: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14329,11 +13310,7 @@ impl ::core::default::Default for ExportFenceWin32HandleInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_attributes: ::core::ptr::null(),
-            dw_access: DWORD::default(),
-            name: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14377,10 +13354,7 @@ impl ::core::default::Default for FenceGetWin32HandleInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            fence: Fence::default(),
-            handle_type: ExternalFenceHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14420,12 +13394,7 @@ impl ::core::default::Default for ImportFenceFdInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            fence: Fence::default(),
-            flags: FenceImportFlags::default(),
-            handle_type: ExternalFenceHandleTypeFlags::default(),
-            fd: c_int::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14473,10 +13442,7 @@ impl ::core::default::Default for FenceGetFdInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            fence: Fence::default(),
-            handle_type: ExternalFenceHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14515,11 +13481,7 @@ impl ::core::default::Default for PhysicalDeviceMultiviewFeatures<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            multiview: Bool32::default(),
-            multiview_geometry_shader: Bool32::default(),
-            multiview_tessellation_shader: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14564,10 +13526,7 @@ impl ::core::default::Default for PhysicalDeviceMultiviewProperties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_multiview_view_count: u32::default(),
-            max_multiview_instance_index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14610,14 +13569,7 @@ impl ::core::default::Default for RenderPassMultiviewCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            subpass_count: u32::default(),
-            p_view_masks: ::core::ptr::null(),
-            dependency_count: u32::default(),
-            p_view_offsets: ::core::ptr::null(),
-            correlation_mask_count: u32::default(),
-            p_correlation_masks: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14673,19 +13625,7 @@ impl ::core::default::Default for SurfaceCapabilities2EXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_image_count: u32::default(),
-            max_image_count: u32::default(),
-            current_extent: Extent2D::default(),
-            min_image_extent: Extent2D::default(),
-            max_image_extent: Extent2D::default(),
-            max_image_array_layers: u32::default(),
-            supported_transforms: SurfaceTransformFlagsKHR::default(),
-            current_transform: SurfaceTransformFlagsKHR::default(),
-            supported_composite_alpha: CompositeAlphaFlagsKHR::default(),
-            supported_usage_flags: ImageUsageFlags::default(),
-            supported_surface_counters: SurfaceCounterFlagsEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14773,9 +13713,7 @@ impl ::core::default::Default for DisplayPowerInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            power_state: DisplayPowerStateEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14807,9 +13745,7 @@ impl ::core::default::Default for DeviceEventInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            device_event: DeviceEventTypeEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14841,9 +13777,7 @@ impl ::core::default::Default for DisplayEventInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            display_event: DisplayEventTypeEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14875,9 +13809,7 @@ impl ::core::default::Default for SwapchainCounterCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            surface_counters: SurfaceCounterFlagsEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14923,11 +13855,7 @@ impl ::core::default::Default for PhysicalDeviceGroupProperties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            physical_device_count: u32::default(),
-            physical_devices: unsafe { ::core::mem::zeroed() },
-            subset_allocation: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -14970,10 +13898,7 @@ impl ::core::default::Default for MemoryAllocateFlagsInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: MemoryAllocateFlags::default(),
-            device_mask: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15013,11 +13938,7 @@ impl ::core::default::Default for BindBufferMemoryInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            buffer: Buffer::default(),
-            memory: DeviceMemory::default(),
-            memory_offset: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15060,10 +13981,7 @@ impl ::core::default::Default for BindBufferMemoryDeviceGroupInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            device_index_count: u32::default(),
-            p_device_indices: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15099,11 +14017,7 @@ impl ::core::default::Default for BindImageMemoryInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image: Image::default(),
-            memory: DeviceMemory::default(),
-            memory_offset: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15148,12 +14062,7 @@ impl ::core::default::Default for BindImageMemoryDeviceGroupInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            device_index_count: u32::default(),
-            p_device_indices: ::core::ptr::null(),
-            split_instance_bind_region_count: u32::default(),
-            p_split_instance_bind_regions: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15198,11 +14107,7 @@ impl ::core::default::Default for DeviceGroupRenderPassBeginInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            device_mask: u32::default(),
-            device_render_area_count: u32::default(),
-            p_device_render_areas: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15242,9 +14147,7 @@ impl ::core::default::Default for DeviceGroupCommandBufferBeginInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            device_mask: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15282,14 +14185,7 @@ impl ::core::default::Default for DeviceGroupSubmitInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            wait_semaphore_count: u32::default(),
-            p_wait_semaphore_device_indices: ::core::ptr::null(),
-            command_buffer_count: u32::default(),
-            p_command_buffer_device_masks: ::core::ptr::null(),
-            signal_semaphore_count: u32::default(),
-            p_signal_semaphore_device_indices: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15342,10 +14238,7 @@ impl ::core::default::Default for DeviceGroupBindSparseInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            resource_device_index: u32::default(),
-            memory_device_index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15384,10 +14277,7 @@ impl ::core::default::Default for DeviceGroupPresentCapabilitiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_mask: unsafe { ::core::mem::zeroed() },
-            modes: DeviceGroupPresentModeFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15424,9 +14314,7 @@ impl ::core::default::Default for ImageSwapchainCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain: SwapchainKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15460,10 +14348,7 @@ impl ::core::default::Default for BindImageMemorySwapchainInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain: SwapchainKHR::default(),
-            image_index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15505,13 +14390,7 @@ impl ::core::default::Default for AcquireNextImageInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain: SwapchainKHR::default(),
-            timeout: u64::default(),
-            semaphore: Semaphore::default(),
-            fence: Fence::default(),
-            device_mask: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15565,11 +14444,7 @@ impl ::core::default::Default for DeviceGroupPresentInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain_count: u32::default(),
-            p_device_masks: ::core::ptr::null(),
-            mode: DeviceGroupPresentModeFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15609,10 +14484,7 @@ impl ::core::default::Default for DeviceGroupDeviceCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            physical_device_count: u32::default(),
-            p_physical_devices: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15646,9 +14518,7 @@ impl ::core::default::Default for DeviceGroupSwapchainCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            modes: DeviceGroupPresentModeFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15733,16 +14603,7 @@ impl ::core::default::Default for DescriptorUpdateTemplateCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DescriptorUpdateTemplateCreateFlags::default(),
-            descriptor_update_entry_count: u32::default(),
-            p_descriptor_update_entries: ::core::ptr::null(),
-            template_type: DescriptorUpdateTemplateType::default(),
-            descriptor_set_layout: DescriptorSetLayout::default(),
-            pipeline_bind_point: PipelineBindPoint::default(),
-            pipeline_layout: PipelineLayout::default(),
-            set: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15829,9 +14690,7 @@ impl ::core::default::Default for PhysicalDevicePresentIdFeaturesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_id: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15866,10 +14725,7 @@ impl ::core::default::Default for PresentIdKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain_count: u32::default(),
-            p_present_ids: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15903,9 +14759,7 @@ impl ::core::default::Default for PhysicalDevicePresentId2FeaturesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_id2: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15940,10 +14794,7 @@ impl ::core::default::Default for PresentId2KHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain_count: u32::default(),
-            p_present_ids: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -15978,10 +14829,7 @@ impl ::core::default::Default for PresentWait2InfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            present_id: u64::default(),
-            timeout: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -16018,9 +14866,7 @@ impl ::core::default::Default for PhysicalDevicePresentWaitFeaturesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_wait: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -16054,9 +14900,7 @@ impl ::core::default::Default for PhysicalDevicePresentWait2FeaturesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_wait2: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -16093,11 +14937,7 @@ impl ::core::default::Default for PhysicalDevicePresentTimingFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_timing: Bool32::default(),
-            present_at_absolute_time: Bool32::default(),
-            present_at_relative_time: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -16145,12 +14985,7 @@ impl ::core::default::Default for PresentTimingSurfaceCapabilitiesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_timing_supported: Bool32::default(),
-            present_at_absolute_time_supported: Bool32::default(),
-            present_at_relative_time_supported: Bool32::default(),
-            present_stage_queries: PresentStageFlagsEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -16205,10 +15040,7 @@ impl ::core::default::Default for SwapchainTimingPropertiesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            refresh_duration: u64::default(),
-            refresh_interval: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -16247,11 +15079,7 @@ impl ::core::default::Default for SwapchainTimeDomainPropertiesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            time_domain_count: u32::default(),
-            p_time_domains: ::core::ptr::null_mut(),
-            p_time_domain_ids: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -16312,10 +15140,7 @@ impl ::core::default::Default for PastPresentationTimingInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PastPresentationTimingFlagsEXT::default(),
-            swapchain: SwapchainKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -16355,12 +15180,7 @@ impl ::core::default::Default for PastPresentationTimingPropertiesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            timing_properties_counter: u64::default(),
-            time_domains_counter: u64::default(),
-            presentation_timing_count: u32::default(),
-            p_presentation_timings: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -16412,15 +15232,7 @@ impl ::core::default::Default for PastPresentationTimingEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_id: u64::default(),
-            target_time: u64::default(),
-            present_stage_count: u32::default(),
-            p_present_stages: ::core::ptr::null_mut(),
-            time_domain: TimeDomainKHR::default(),
-            time_domain_id: u64::default(),
-            report_complete: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -16479,10 +15291,7 @@ impl ::core::default::Default for PresentTimingsInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain_count: u32::default(),
-            p_timing_infos: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -16520,13 +15329,7 @@ impl ::core::default::Default for PresentTimingInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PresentTimingInfoFlagsEXT::default(),
-            target_time: u64::default(),
-            time_domain_id: u64::default(),
-            present_stage_queries: PresentStageFlagsEXT::default(),
-            target_time_domain_present_stage: PresentStageFlagsEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -16583,11 +15386,7 @@ impl ::core::default::Default for SwapchainCalibratedTimestampInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain: SwapchainKHR::default(),
-            present_stage: PresentStageFlagsEXT::default(),
-            time_domain_id: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -16637,16 +15436,7 @@ impl ::core::default::Default for HdrMetadataEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            display_primary_red: XYColorEXT::default(),
-            display_primary_green: XYColorEXT::default(),
-            display_primary_blue: XYColorEXT::default(),
-            white_point: XYColorEXT::default(),
-            max_luminance: f32::default(),
-            min_luminance: f32::default(),
-            max_content_light_level: f32::default(),
-            max_frame_average_light_level: f32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -16714,10 +15504,7 @@ impl ::core::default::Default for HdrVividDynamicMetadataHUAWEI<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            dynamic_metadata_size: usize::default(),
-            p_dynamic_metadata: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -16751,9 +15538,7 @@ impl ::core::default::Default for DisplayNativeHdrSurfaceCapabilitiesAMD<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            local_dimming_support: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -16787,9 +15572,7 @@ impl ::core::default::Default for SwapchainDisplayNativeHdrCreateInfoAMD<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            local_dimming_enable: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -16878,10 +15661,7 @@ impl ::core::default::Default for PresentTimesInfoGOOGLE<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain_count: u32::default(),
-            p_times: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -16937,10 +15717,7 @@ impl ::core::default::Default for IOSSurfaceCreateInfoMVK<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: IOSSurfaceCreateFlagsMVK::default(),
-            p_view: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -16978,10 +15755,7 @@ impl ::core::default::Default for MacOSSurfaceCreateInfoMVK<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: MacOSSurfaceCreateFlagsMVK::default(),
-            p_view: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17019,10 +15793,7 @@ impl ::core::default::Default for MetalSurfaceCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: MetalSurfaceCreateFlagsEXT::default(),
-            p_layer: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17082,11 +15853,7 @@ impl ::core::default::Default for PipelineViewportWScalingStateCreateInfoNV<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            viewport_w_scaling_enable: Bool32::default(),
-            viewport_count: u32::default(),
-            p_viewport_w_scalings: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17164,11 +15931,7 @@ impl ::core::default::Default for PipelineViewportSwizzleStateCreateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineViewportSwizzleStateCreateFlagsNV::default(),
-            viewport_count: u32::default(),
-            p_viewport_swizzles: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17211,9 +15974,7 @@ impl ::core::default::Default for PhysicalDeviceDiscardRectanglePropertiesEXT<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_discard_rectangles: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17253,12 +16014,7 @@ impl ::core::default::Default for PipelineDiscardRectangleStateCreateInfoEXT<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineDiscardRectangleStateCreateFlagsEXT::default(),
-            discard_rectangle_mode: DiscardRectangleModeEXT::default(),
-            discard_rectangle_count: u32::default(),
-            p_discard_rectangles: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17309,9 +16065,7 @@ impl ::core::default::Default for PhysicalDeviceMultiviewPerViewAttributesProper
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            per_view_position_all_components: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17379,10 +16133,7 @@ impl ::core::default::Default for RenderPassInputAttachmentAspectCreateInfo<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            aspect_reference_count: u32::default(),
-            p_aspect_references: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17420,9 +16171,7 @@ impl ::core::default::Default for PhysicalDeviceSurfaceInfo2KHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            surface: SurfaceKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17454,9 +16203,7 @@ impl ::core::default::Default for SurfaceCapabilities2KHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            surface_capabilities: SurfaceCapabilitiesKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17488,9 +16235,7 @@ impl ::core::default::Default for SurfaceFormat2KHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            surface_format: SurfaceFormatKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17522,9 +16267,7 @@ impl ::core::default::Default for DisplayProperties2KHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            display_properties: DisplayPropertiesKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17556,9 +16299,7 @@ impl ::core::default::Default for DisplayPlaneProperties2KHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            display_plane_properties: DisplayPlanePropertiesKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17593,9 +16334,7 @@ impl ::core::default::Default for DisplayModeProperties2KHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            display_mode_properties: DisplayModePropertiesKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17630,9 +16369,7 @@ impl ::core::default::Default for DisplayModeStereoPropertiesNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            hdmi3_d_supported: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17666,10 +16403,7 @@ impl ::core::default::Default for DisplayPlaneInfo2KHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            mode: DisplayModeKHR::default(),
-            plane_index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17706,9 +16440,7 @@ impl ::core::default::Default for DisplayPlaneCapabilities2KHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            capabilities: DisplayPlaneCapabilitiesKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17740,9 +16472,7 @@ impl ::core::default::Default for SharedPresentSurfaceCapabilitiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shared_present_supported_usage_flags: ImageUsageFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17781,12 +16511,7 @@ impl ::core::default::Default for PhysicalDevice16BitStorageFeatures<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            storage_buffer16_bit_access: Bool32::default(),
-            uniform_and_storage_buffer16_bit_access: Bool32::default(),
-            storage_push_constant16: Bool32::default(),
-            storage_input_output16: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17842,12 +16567,7 @@ impl ::core::default::Default for PhysicalDeviceSubgroupProperties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            subgroup_size: u32::default(),
-            supported_stages: ShaderStageFlags::default(),
-            supported_operations: SubgroupFeatureFlags::default(),
-            quad_operations_in_all_stages: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17895,9 +16615,7 @@ impl ::core::default::Default for PhysicalDeviceShaderSubgroupExtendedTypesFeatu
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_subgroup_extended_types: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17938,9 +16656,7 @@ impl ::core::default::Default for BufferMemoryRequirementsInfo2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            buffer: Buffer::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -17972,9 +16688,7 @@ impl ::core::default::Default for DeviceBufferMemoryRequirements<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_create_info: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18006,9 +16720,7 @@ impl ::core::default::Default for ImageMemoryRequirementsInfo2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image: Image::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18040,9 +16752,7 @@ impl ::core::default::Default for ImageSparseMemoryRequirementsInfo2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image: Image::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18075,10 +16785,7 @@ impl ::core::default::Default for DeviceImageMemoryRequirements<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_create_info: ::core::ptr::null(),
-            plane_aspect: ImageAspectFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18115,9 +16822,7 @@ impl ::core::default::Default for MemoryRequirements2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_requirements: MemoryRequirements::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18149,9 +16854,7 @@ impl ::core::default::Default for SparseImageMemoryRequirements2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_requirements: SparseImageMemoryRequirements::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18186,9 +16889,7 @@ impl ::core::default::Default for PhysicalDevicePointClippingProperties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            point_clipping_behavior: PointClippingBehavior::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18225,10 +16926,7 @@ impl ::core::default::Default for MemoryDedicatedRequirements<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            prefers_dedicated_allocation: Bool32::default(),
-            requires_dedicated_allocation: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18267,10 +16965,7 @@ impl ::core::default::Default for MemoryDedicatedAllocateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image: Image::default(),
-            buffer: Buffer::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18308,9 +17003,7 @@ impl ::core::default::Default for ImageViewUsageCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            usage: ImageUsageFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18344,10 +17037,7 @@ impl ::core::default::Default for ImageViewSlicedCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            slice_offset: u32::default(),
-            slice_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18385,9 +17075,7 @@ impl ::core::default::Default for PipelineTessellationDomainOriginStateCreateInf
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            domain_origin: TessellationDomainOrigin::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18424,9 +17112,7 @@ impl ::core::default::Default for SamplerYcbcrConversionInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            conversion: SamplerYcbcrConversion::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18467,16 +17153,7 @@ impl ::core::default::Default for SamplerYcbcrConversionCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            format: Format::default(),
-            ycbcr_model: SamplerYcbcrModelConversion::default(),
-            ycbcr_range: SamplerYcbcrRange::default(),
-            components: ComponentMapping::default(),
-            x_chroma_offset: ChromaLocation::default(),
-            y_chroma_offset: ChromaLocation::default(),
-            chroma_filter: Filter::default(),
-            force_explicit_reconstruction: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18543,9 +17220,7 @@ impl ::core::default::Default for BindImagePlaneMemoryInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            plane_aspect: ImageAspectFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18578,9 +17253,7 @@ impl ::core::default::Default for ImagePlaneMemoryRequirementsInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            plane_aspect: ImageAspectFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18613,9 +17286,7 @@ impl ::core::default::Default for PhysicalDeviceSamplerYcbcrConversionFeatures<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            sampler_ycbcr_conversion: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18653,9 +17324,7 @@ impl ::core::default::Default for SamplerYcbcrConversionImageFormatProperties<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            combined_image_sampler_descriptor_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18695,9 +17364,7 @@ impl ::core::default::Default for TextureLODGatherFormatPropertiesAMD<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            supports_texture_gather_lod_bias_amd: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18735,11 +17402,7 @@ impl ::core::default::Default for ConditionalRenderingBeginInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            buffer: Buffer::default(),
-            offset: DeviceSize::default(),
-            flags: ConditionalRenderingFlagsEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18781,9 +17444,7 @@ impl ::core::default::Default for ProtectedSubmitInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            protected_submit: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18816,9 +17477,7 @@ impl ::core::default::Default for PhysicalDeviceProtectedMemoryFeatures<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            protected_memory: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18852,9 +17511,7 @@ impl ::core::default::Default for PhysicalDeviceProtectedMemoryProperties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            protected_no_fault: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18890,11 +17547,7 @@ impl ::core::default::Default for DeviceQueueInfo2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DeviceQueueCreateFlags::default(),
-            queue_family_index: u32::default(),
-            queue_index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18938,11 +17591,7 @@ impl ::core::default::Default for PipelineCoverageToColorStateCreateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCoverageToColorStateCreateFlagsNV::default(),
-            coverage_to_color_enable: Bool32::default(),
-            coverage_to_color_location: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -18990,10 +17639,7 @@ impl ::core::default::Default for PhysicalDeviceSamplerFilterMinmaxProperties<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            filter_minmax_single_component_formats: Bool32::default(),
-            filter_minmax_image_component_mapping: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -19065,12 +17711,7 @@ impl ::core::default::Default for SampleLocationsInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            sample_locations_per_pixel: SampleCountFlags::default(),
-            sample_location_grid_size: Extent2D::default(),
-            sample_locations_count: u32::default(),
-            p_sample_locations: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -19171,12 +17812,7 @@ impl ::core::default::Default for RenderPassSampleLocationsBeginInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            attachment_initial_sample_locations_count: u32::default(),
-            p_attachment_initial_sample_locations: ::core::ptr::null(),
-            post_subpass_sample_locations_count: u32::default(),
-            p_post_subpass_sample_locations: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -19225,10 +17861,8 @@ impl ::core::default::Default for PipelineSampleLocationsStateCreateInfoEXT<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            sample_locations_enable: Bool32::default(),
             sample_locations_info: SampleLocationsInfoEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -19277,13 +17911,7 @@ impl ::core::default::Default for PhysicalDeviceSampleLocationsPropertiesEXT<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            sample_location_sample_counts: SampleCountFlags::default(),
-            max_sample_location_grid_size: Extent2D::default(),
-            sample_location_coordinate_range: unsafe { ::core::mem::zeroed() },
-            sample_location_sub_pixel_bits: u32::default(),
-            variable_sample_locations: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -19349,9 +17977,7 @@ impl ::core::default::Default for MultisamplePropertiesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_sample_location_grid_size: Extent2D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -19386,9 +18012,7 @@ impl ::core::default::Default for SamplerReductionModeCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            reduction_mode: SamplerReductionMode::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -19421,9 +18045,7 @@ impl ::core::default::Default for PhysicalDeviceBlendOperationAdvancedFeaturesEX
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            advanced_blend_coherent_operations: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -19464,9 +18086,7 @@ impl ::core::default::Default for PhysicalDeviceMultiDrawFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            multi_draw: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -19505,14 +18125,7 @@ impl ::core::default::Default for PhysicalDeviceBlendOperationAdvancedProperties
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            advanced_blend_max_color_attachments: u32::default(),
-            advanced_blend_independent_blend: Bool32::default(),
-            advanced_blend_non_premultiplied_src_color: Bool32::default(),
-            advanced_blend_non_premultiplied_dst_color: Bool32::default(),
-            advanced_blend_correlated_overlap: Bool32::default(),
-            advanced_blend_all_operations: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -19593,11 +18206,7 @@ impl ::core::default::Default for PipelineColorBlendAdvancedStateCreateInfoEXT<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_premultiplied: Bool32::default(),
-            dst_premultiplied: Bool32::default(),
-            blend_overlap: BlendOverlapEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -19645,10 +18254,7 @@ impl ::core::default::Default for PhysicalDeviceInlineUniformBlockFeatures<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            inline_uniform_block: Bool32::default(),
-            descriptor_binding_inline_uniform_block_update_after_bind: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -19696,13 +18302,7 @@ impl ::core::default::Default for PhysicalDeviceInlineUniformBlockProperties<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_inline_uniform_block_size: u32::default(),
-            max_per_stage_descriptor_inline_uniform_blocks: u32::default(),
-            max_per_stage_descriptor_update_after_bind_inline_uniform_blocks: u32::default(),
-            max_descriptor_set_inline_uniform_blocks: u32::default(),
-            max_descriptor_set_update_after_bind_inline_uniform_blocks: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -19775,10 +18375,7 @@ impl ::core::default::Default for WriteDescriptorSetInlineUniformBlock<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            data_size: u32::default(),
-            p_data: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -19812,9 +18409,7 @@ impl ::core::default::Default for DescriptorPoolInlineUniformBlockCreateInfo<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            max_inline_uniform_block_bindings: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -19858,13 +18453,7 @@ impl ::core::default::Default for PipelineCoverageModulationStateCreateInfoNV<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCoverageModulationStateCreateFlagsNV::default(),
-            coverage_modulation_mode: CoverageModulationModeNV::default(),
-            coverage_modulation_table_enable: Bool32::default(),
-            coverage_modulation_table_count: u32::default(),
-            p_coverage_modulation_table: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -19924,10 +18513,7 @@ impl ::core::default::Default for ImageFormatListCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            view_format_count: u32::default(),
-            p_view_formats: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -19965,11 +18551,7 @@ impl ::core::default::Default for ValidationCacheCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ValidationCacheCreateFlagsEXT::default(),
-            initial_data_size: usize::default(),
-            p_initial_data: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20007,9 +18589,7 @@ impl ::core::default::Default for ShaderModuleValidationCacheCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            validation_cache: ValidationCacheEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20048,10 +18628,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance3Properties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_per_set_descriptors: u32::default(),
-            max_memory_allocation_size: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20089,9 +18666,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance4Features<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            maintenance4: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20125,9 +18700,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance4Properties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_buffer_size: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20160,9 +18733,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance5Features<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            maintenance5: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20201,14 +18772,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance5Properties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            early_fragment_multisample_coverage_after_sample_counting: Bool32::default(),
-            early_fragment_sample_mask_test_before_sample_counting: Bool32::default(),
-            depth_stencil_swizzle_one_support: Bool32::default(),
-            polygon_mode_point_size: Bool32::default(),
-            non_strict_single_pixel_wide_lines_use_parallelogram: Bool32::default(),
-            non_strict_wide_lines_use_parallelogram: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20285,9 +18849,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance6Features<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            maintenance6: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20323,11 +18885,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance6Properties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            block_texel_view_compatible_multiple_layers: Bool32::default(),
-            max_combined_image_sampler_descriptor_count: u32::default(),
-            fragment_shading_rate_clamp_combiner_inputs: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20382,9 +18940,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance7FeaturesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            maintenance7: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20425,16 +18981,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance7PropertiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            robust_fragment_shading_rate_attachment_access: Bool32::default(),
-            separate_depth_stencil_attachment_access: Bool32::default(),
-            max_descriptor_set_total_uniform_buffers_dynamic: u32::default(),
-            max_descriptor_set_total_storage_buffers_dynamic: u32::default(),
-            max_descriptor_set_total_buffers_dynamic: u32::default(),
-            max_descriptor_set_update_after_bind_total_uniform_buffers_dynamic: u32::default(),
-            max_descriptor_set_update_after_bind_total_storage_buffers_dynamic: u32::default(),
-            max_descriptor_set_update_after_bind_total_buffers_dynamic: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20535,10 +19082,7 @@ impl ::core::default::Default for PhysicalDeviceLayeredApiPropertiesListKHR<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            layered_api_count: u32::default(),
-            p_layered_apis: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20594,12 +19138,7 @@ impl ::core::default::Default for PhysicalDeviceLayeredApiPropertiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            vendor_id: u32::default(),
-            device_id: u32::default(),
-            layered_api: PhysicalDeviceLayeredApiKHR::default(),
-            device_name: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20652,9 +19191,8 @@ impl ::core::default::Default for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
             properties: PhysicalDeviceProperties2::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20691,9 +19229,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance8FeaturesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            maintenance8: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20727,9 +19263,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance9FeaturesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            maintenance9: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20764,10 +19298,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance9PropertiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image2_d_view_of3_d_sparse: Bool32::default(),
-            default_vertex_attribute_value: DefaultVertexAttributeValueKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20809,9 +19340,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance11FeaturesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            maintenance11: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20848,11 +19377,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance10PropertiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            rgba4_opaque_black_swizzled: Bool32::default(),
-            resolve_srgb_format_applies_transfer_function: Bool32::default(),
-            resolve_srgb_format_supports_transfer_function_control: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20907,9 +19432,7 @@ impl ::core::default::Default for PhysicalDeviceMaintenance10FeaturesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            maintenance10: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20944,9 +19467,7 @@ impl ::core::default::Default for QueueFamilyOwnershipTransferPropertiesKHR<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            optimal_image_transfer_to_queue_families: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -20983,9 +19504,7 @@ impl ::core::default::Default for QueueFamilyOptimalImageTransferGranularityProp
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            optimal_image_transfer_granularity: Extent3D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -21031,13 +19550,7 @@ impl ::core::default::Default for RenderingAreaInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            view_mask: u32::default(),
-            color_attachment_count: u32::default(),
-            p_color_attachment_formats: ::core::ptr::null(),
-            depth_attachment_format: Format::default(),
-            stencil_attachment_format: Format::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -21085,9 +19598,7 @@ impl ::core::default::Default for DescriptorSetLayoutSupport<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            supported: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -21119,9 +19630,7 @@ impl ::core::default::Default for PhysicalDeviceShaderDrawParametersFeatures<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_draw_parameters: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -21160,10 +19669,7 @@ impl ::core::default::Default for PhysicalDeviceShaderFloat16Int8Features<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_float16: Bool32::default(),
-            shader_int8: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -21219,25 +19725,7 @@ impl ::core::default::Default for PhysicalDeviceFloatControlsProperties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            denorm_behavior_independence: ShaderFloatControlsIndependence::default(),
-            rounding_mode_independence: ShaderFloatControlsIndependence::default(),
-            shader_signed_zero_inf_nan_preserve_float16: Bool32::default(),
-            shader_signed_zero_inf_nan_preserve_float32: Bool32::default(),
-            shader_signed_zero_inf_nan_preserve_float64: Bool32::default(),
-            shader_denorm_preserve_float16: Bool32::default(),
-            shader_denorm_preserve_float32: Bool32::default(),
-            shader_denorm_preserve_float64: Bool32::default(),
-            shader_denorm_flush_to_zero_float16: Bool32::default(),
-            shader_denorm_flush_to_zero_float32: Bool32::default(),
-            shader_denorm_flush_to_zero_float64: Bool32::default(),
-            shader_rounding_mode_rte_float16: Bool32::default(),
-            shader_rounding_mode_rte_float32: Bool32::default(),
-            shader_rounding_mode_rte_float64: Bool32::default(),
-            shader_rounding_mode_rtz_float16: Bool32::default(),
-            shader_rounding_mode_rtz_float32: Bool32::default(),
-            shader_rounding_mode_rtz_float64: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -21395,9 +19883,7 @@ impl ::core::default::Default for PhysicalDeviceHostQueryResetFeatures<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            host_query_reset: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -21456,13 +19942,7 @@ impl ::core::default::Default for NativeBufferANDROID<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle: ::core::ptr::null(),
-            stride: c_int::default(),
-            format: c_int::default(),
-            usage: c_int::default(),
-            usage2: NativeBufferUsage2ANDROID::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -21516,9 +19996,7 @@ impl ::core::default::Default for SwapchainImageCreateInfoANDROID<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            usage: SwapchainImageUsageFlagsANDROID::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -21551,9 +20029,7 @@ impl ::core::default::Default for PhysicalDevicePresentationPropertiesANDROID<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shared_image: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -21628,15 +20104,7 @@ pub struct ShaderStatisticsInfoAMD {
 impl ::core::default::Default for ShaderStatisticsInfoAMD {
     #[inline]
     fn default() -> Self {
-        Self {
-            shader_stage_mask: ShaderStageFlags::default(),
-            resource_usage: ShaderResourceUsageAMD::default(),
-            num_physical_vgprs: u32::default(),
-            num_physical_sgprs: u32::default(),
-            num_available_vgprs: u32::default(),
-            num_available_sgprs: u32::default(),
-            compute_work_group_size: unsafe { ::core::mem::zeroed() },
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl ShaderStatisticsInfoAMD {
@@ -21694,9 +20162,7 @@ impl ::core::default::Default for PhysicalDeviceElapsedTimerQueryFeaturesQCOM<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            elapsed_timer_query: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -21734,9 +20200,7 @@ impl ::core::default::Default for DeviceQueueGlobalPriorityCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            global_priority: QueueGlobalPriority::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -21769,9 +20233,7 @@ impl ::core::default::Default for PhysicalDeviceGlobalPriorityQueryFeatures<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            global_priority_query: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -21817,10 +20279,7 @@ impl ::core::default::Default for QueueFamilyGlobalPriorityProperties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            priority_count: u32::default(),
-            priorities: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -21860,11 +20319,7 @@ impl ::core::default::Default for DebugUtilsObjectNameInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            object_type: ObjectType::default(),
-            object_handle: u64::default(),
-            p_object_name: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -21917,13 +20372,7 @@ impl ::core::default::Default for DebugUtilsObjectTagInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            object_type: ObjectType::default(),
-            object_handle: u64::default(),
-            tag_name: u64::default(),
-            tag_size: usize::default(),
-            p_tag: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -21968,10 +20417,7 @@ impl ::core::default::Default for DebugUtilsLabelEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_label_name: ::core::ptr::null(),
-            color: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -22036,13 +20482,7 @@ impl ::core::default::Default for DebugUtilsMessengerCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DebugUtilsMessengerCreateFlagsEXT::default(),
-            message_severity: DebugUtilsMessageSeverityFlagsEXT::default(),
-            message_type: DebugUtilsMessageTypeFlagsEXT::default(),
-            pfn_user_callback: PFN_vkDebugUtilsMessengerCallbackEXT::default(),
-            p_user_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -22107,18 +20547,7 @@ impl ::core::default::Default for DebugUtilsMessengerCallbackDataEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DebugUtilsMessengerCallbackDataFlagsEXT::default(),
-            p_message_id_name: ::core::ptr::null(),
-            message_id_number: i32::default(),
-            p_message: ::core::ptr::null(),
-            queue_label_count: u32::default(),
-            p_queue_labels: ::core::ptr::null(),
-            cmd_buf_label_count: u32::default(),
-            p_cmd_buf_labels: ::core::ptr::null(),
-            object_count: u32::default(),
-            p_objects: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -22199,9 +20628,7 @@ impl ::core::default::Default for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_memory_report: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -22255,11 +20682,7 @@ impl ::core::default::Default for DeviceDeviceMemoryReportCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DeviceMemoryReportFlagsEXT::default(),
-            pfn_user_callback: PFN_vkDeviceMemoryReportCallbackEXT::default(),
-            p_user_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -22312,15 +20735,7 @@ impl ::core::default::Default for DeviceMemoryReportCallbackDataEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: DeviceMemoryReportFlagsEXT::default(),
-            ty: DeviceMemoryReportEventTypeEXT::default(),
-            memory_object_id: u64::default(),
-            size: DeviceSize::default(),
-            object_type: ObjectType::default(),
-            object_handle: u64::default(),
-            heap_index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -22379,10 +20794,7 @@ impl ::core::default::Default for ImportMemoryHostPointerInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            p_host_pointer: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -22420,9 +20832,7 @@ impl ::core::default::Default for MemoryHostPointerPropertiesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_type_bits: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -22454,9 +20864,7 @@ impl ::core::default::Default for PhysicalDeviceExternalMemoryHostPropertiesEXT<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_imported_host_pointer_alignment: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -22504,17 +20912,7 @@ impl ::core::default::Default for PhysicalDeviceConservativeRasterizationPropert
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            primitive_overestimation_size: f32::default(),
-            max_extra_primitive_overestimation_size: f32::default(),
-            extra_primitive_overestimation_size_granularity: f32::default(),
-            primitive_underestimation: Bool32::default(),
-            conservative_point_and_line_rasterization: Bool32::default(),
-            degenerate_triangles_rasterized: Bool32::default(),
-            degenerate_lines_rasterized: Bool32::default(),
-            fully_covered_fragment_shader_input_variable: Bool32::default(),
-            conservative_rasterization_post_depth_coverage: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -22613,9 +21011,7 @@ impl ::core::default::Default for CalibratedTimestampInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            time_domain: TimeDomainKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -22660,22 +21056,7 @@ impl ::core::default::Default for PhysicalDeviceShaderCorePropertiesAMD<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_engine_count: u32::default(),
-            shader_arrays_per_engine_count: u32::default(),
-            compute_units_per_shader_array: u32::default(),
-            simd_per_compute_unit: u32::default(),
-            wavefronts_per_simd: u32::default(),
-            wavefront_size: u32::default(),
-            sgprs_per_simd: u32::default(),
-            min_sgpr_allocation: u32::default(),
-            max_sgpr_allocation: u32::default(),
-            sgpr_allocation_granularity: u32::default(),
-            vgprs_per_simd: u32::default(),
-            min_vgpr_allocation: u32::default(),
-            max_vgpr_allocation: u32::default(),
-            vgpr_allocation_granularity: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -22774,10 +21155,7 @@ impl ::core::default::Default for PhysicalDeviceShaderCoreProperties2AMD<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_core_features: ShaderCorePropertiesFlagsAMD::default(),
-            active_compute_unit_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -22821,11 +21199,7 @@ impl ::core::default::Default for PipelineRasterizationConservativeStateCreateIn
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineRasterizationConservativeStateCreateFlagsEXT::default(),
-            conservative_rasterization_mode: ConservativeRasterizationModeEXT::default(),
-            extra_primitive_overestimation_size: f32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -22897,28 +21271,7 @@ impl ::core::default::Default for PhysicalDeviceDescriptorIndexingFeatures<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_input_attachment_array_dynamic_indexing: Bool32::default(),
-            shader_uniform_texel_buffer_array_dynamic_indexing: Bool32::default(),
-            shader_storage_texel_buffer_array_dynamic_indexing: Bool32::default(),
-            shader_uniform_buffer_array_non_uniform_indexing: Bool32::default(),
-            shader_sampled_image_array_non_uniform_indexing: Bool32::default(),
-            shader_storage_buffer_array_non_uniform_indexing: Bool32::default(),
-            shader_storage_image_array_non_uniform_indexing: Bool32::default(),
-            shader_input_attachment_array_non_uniform_indexing: Bool32::default(),
-            shader_uniform_texel_buffer_array_non_uniform_indexing: Bool32::default(),
-            shader_storage_texel_buffer_array_non_uniform_indexing: Bool32::default(),
-            descriptor_binding_uniform_buffer_update_after_bind: Bool32::default(),
-            descriptor_binding_sampled_image_update_after_bind: Bool32::default(),
-            descriptor_binding_storage_image_update_after_bind: Bool32::default(),
-            descriptor_binding_storage_buffer_update_after_bind: Bool32::default(),
-            descriptor_binding_uniform_texel_buffer_update_after_bind: Bool32::default(),
-            descriptor_binding_storage_texel_buffer_update_after_bind: Bool32::default(),
-            descriptor_binding_update_unused_while_pending: Bool32::default(),
-            descriptor_binding_partially_bound: Bool32::default(),
-            descriptor_binding_variable_descriptor_count: Bool32::default(),
-            runtime_descriptor_array: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -23145,31 +21498,7 @@ impl ::core::default::Default for PhysicalDeviceDescriptorIndexingProperties<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_update_after_bind_descriptors_in_all_pools: u32::default(),
-            shader_uniform_buffer_array_non_uniform_indexing_native: Bool32::default(),
-            shader_sampled_image_array_non_uniform_indexing_native: Bool32::default(),
-            shader_storage_buffer_array_non_uniform_indexing_native: Bool32::default(),
-            shader_storage_image_array_non_uniform_indexing_native: Bool32::default(),
-            shader_input_attachment_array_non_uniform_indexing_native: Bool32::default(),
-            robust_buffer_access_update_after_bind: Bool32::default(),
-            quad_divergent_implicit_lod: Bool32::default(),
-            max_per_stage_descriptor_update_after_bind_samplers: u32::default(),
-            max_per_stage_descriptor_update_after_bind_uniform_buffers: u32::default(),
-            max_per_stage_descriptor_update_after_bind_storage_buffers: u32::default(),
-            max_per_stage_descriptor_update_after_bind_sampled_images: u32::default(),
-            max_per_stage_descriptor_update_after_bind_storage_images: u32::default(),
-            max_per_stage_descriptor_update_after_bind_input_attachments: u32::default(),
-            max_per_stage_update_after_bind_resources: u32::default(),
-            max_descriptor_set_update_after_bind_samplers: u32::default(),
-            max_descriptor_set_update_after_bind_uniform_buffers: u32::default(),
-            max_descriptor_set_update_after_bind_uniform_buffers_dynamic: u32::default(),
-            max_descriptor_set_update_after_bind_storage_buffers: u32::default(),
-            max_descriptor_set_update_after_bind_storage_buffers_dynamic: u32::default(),
-            max_descriptor_set_update_after_bind_sampled_images: u32::default(),
-            max_descriptor_set_update_after_bind_storage_images: u32::default(),
-            max_descriptor_set_update_after_bind_input_attachments: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -23403,10 +21732,7 @@ impl ::core::default::Default for DescriptorSetLayoutBindingFlagsCreateInfo<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            binding_count: u32::default(),
-            p_binding_flags: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -23445,10 +21771,7 @@ impl ::core::default::Default for DescriptorSetVariableDescriptorCountAllocateIn
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            descriptor_set_count: u32::default(),
-            p_descriptor_counts: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -23486,9 +21809,7 @@ impl ::core::default::Default for DescriptorSetVariableDescriptorCountLayoutSupp
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_variable_descriptor_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -23533,17 +21854,7 @@ impl ::core::default::Default for AttachmentDescription2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: AttachmentDescriptionFlags::default(),
-            format: Format::default(),
-            samples: SampleCountFlags::default(),
-            load_op: AttachmentLoadOp::default(),
-            store_op: AttachmentStoreOp::default(),
-            stencil_load_op: AttachmentLoadOp::default(),
-            stencil_store_op: AttachmentStoreOp::default(),
-            initial_layout: ImageLayout::default(),
-            final_layout: ImageLayout::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -23617,11 +21928,7 @@ impl ::core::default::Default for AttachmentReference2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            attachment: u32::default(),
-            layout: ImageLayout::default(),
-            aspect_mask: ImageAspectFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -23673,19 +21980,7 @@ impl ::core::default::Default for SubpassDescription2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: SubpassDescriptionFlags::default(),
-            pipeline_bind_point: PipelineBindPoint::default(),
-            view_mask: u32::default(),
-            input_attachment_count: u32::default(),
-            p_input_attachments: ::core::ptr::null(),
-            color_attachment_count: u32::default(),
-            p_color_attachments: ::core::ptr::null(),
-            p_resolve_attachments: ::core::ptr::null(),
-            p_depth_stencil_attachment: ::core::ptr::null(),
-            preserve_attachment_count: u32::default(),
-            p_preserve_attachments: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -23769,16 +22064,7 @@ impl ::core::default::Default for SubpassDependency2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_subpass: u32::default(),
-            dst_subpass: u32::default(),
-            src_stage_mask: PipelineStageFlags::default(),
-            dst_stage_mask: PipelineStageFlags::default(),
-            src_access_mask: AccessFlags::default(),
-            dst_access_mask: AccessFlags::default(),
-            dependency_flags: DependencyFlags::default(),
-            view_offset: i32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -23853,17 +22139,7 @@ impl ::core::default::Default for RenderPassCreateInfo2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: RenderPassCreateFlags::default(),
-            attachment_count: u32::default(),
-            p_attachments: ::core::ptr::null(),
-            subpass_count: u32::default(),
-            p_subpasses: ::core::ptr::null(),
-            dependency_count: u32::default(),
-            p_dependencies: ::core::ptr::null(),
-            correlated_view_mask_count: u32::default(),
-            p_correlated_view_masks: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -23919,9 +22195,7 @@ impl ::core::default::Default for SubpassBeginInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            contents: SubpassContents::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -23952,8 +22226,7 @@ impl ::core::default::Default for SubpassEndInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -23979,9 +22252,7 @@ impl ::core::default::Default for PhysicalDeviceTimelineSemaphoreFeatures<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            timeline_semaphore: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24016,9 +22287,7 @@ impl ::core::default::Default for PhysicalDeviceTimelineSemaphoreProperties<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_timeline_semaphore_value_difference: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24059,10 +22328,7 @@ impl ::core::default::Default for SemaphoreTypeCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            semaphore_type: SemaphoreType::default(),
-            initial_value: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24104,12 +22370,7 @@ impl ::core::default::Default for TimelineSemaphoreSubmitInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            wait_semaphore_value_count: u32::default(),
-            p_wait_semaphore_values: ::core::ptr::null(),
-            signal_semaphore_value_count: u32::default(),
-            p_signal_semaphore_values: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24153,12 +22414,7 @@ impl ::core::default::Default for SemaphoreWaitInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: SemaphoreWaitFlags::default(),
-            semaphore_count: u32::default(),
-            p_semaphores: ::core::ptr::null(),
-            p_values: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24203,10 +22459,7 @@ impl ::core::default::Default for SemaphoreSignalInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            semaphore: Semaphore::default(),
-            value: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24265,10 +22518,7 @@ impl ::core::default::Default for PipelineVertexInputDivisorStateCreateInfo<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            vertex_binding_divisor_count: u32::default(),
-            p_vertex_binding_divisors: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24309,9 +22559,7 @@ impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorProperties
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_vertex_attrib_divisor: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24349,10 +22597,7 @@ impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorProperties
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_vertex_attrib_divisor: u32::default(),
-            supports_non_zero_first_instance: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24400,12 +22645,7 @@ impl ::core::default::Default for PhysicalDevicePCIBusInfoPropertiesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pci_domain: u32::default(),
-            pci_bus: u32::default(),
-            pci_device: u32::default(),
-            pci_function: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24454,9 +22694,7 @@ impl ::core::default::Default for ImportAndroidHardwareBufferInfoANDROID<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            buffer: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24490,9 +22728,7 @@ impl ::core::default::Default for AndroidHardwareBufferUsageANDROID<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            android_hardware_buffer_usage: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24526,10 +22762,7 @@ impl ::core::default::Default for AndroidHardwareBufferPropertiesANDROID<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            allocation_size: DeviceSize::default(),
-            memory_type_bits: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24566,9 +22799,7 @@ impl ::core::default::Default for MemoryGetAndroidHardwareBufferInfoANDROID<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24608,16 +22839,7 @@ impl ::core::default::Default for AndroidHardwareBufferFormatPropertiesANDROID<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format: Format::default(),
-            external_format: u64::default(),
-            format_features: FormatFeatureFlags::default(),
-            sampler_ycbcr_conversion_components: ComponentMapping::default(),
-            suggested_ycbcr_model: SamplerYcbcrModelConversion::default(),
-            suggested_ycbcr_range: SamplerYcbcrRange::default(),
-            suggested_x_chroma_offset: ChromaLocation::default(),
-            suggested_y_chroma_offset: ChromaLocation::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24695,9 +22917,7 @@ impl ::core::default::Default for CommandBufferInheritanceConditionalRenderingIn
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            conditional_rendering_enable: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24734,9 +22954,7 @@ impl ::core::default::Default for ExternalFormatANDROID<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            external_format: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24775,11 +22993,7 @@ impl ::core::default::Default for PhysicalDevice8BitStorageFeatures<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            storage_buffer8_bit_access: Bool32::default(),
-            uniform_and_storage_buffer8_bit_access: Bool32::default(),
-            storage_push_constant8: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24827,10 +23041,7 @@ impl ::core::default::Default for PhysicalDeviceConditionalRenderingFeaturesEXT<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            conditional_rendering: Bool32::default(),
-            inherited_conditional_rendering: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24878,11 +23089,7 @@ impl ::core::default::Default for PhysicalDeviceVulkanMemoryModelFeatures<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            vulkan_memory_model: Bool32::default(),
-            vulkan_memory_model_device_scope: Bool32::default(),
-            vulkan_memory_model_availability_visibility_chains: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24935,10 +23142,7 @@ impl ::core::default::Default for PhysicalDeviceShaderAtomicInt64Features<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_buffer_int64_atomics: Bool32::default(),
-            shader_shared_int64_atomics: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -24989,20 +23193,7 @@ impl ::core::default::Default for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_buffer_float32_atomics: Bool32::default(),
-            shader_buffer_float32_atomic_add: Bool32::default(),
-            shader_buffer_float64_atomics: Bool32::default(),
-            shader_buffer_float64_atomic_add: Bool32::default(),
-            shader_shared_float32_atomics: Bool32::default(),
-            shader_shared_float32_atomic_add: Bool32::default(),
-            shader_shared_float64_atomics: Bool32::default(),
-            shader_shared_float64_atomic_add: Bool32::default(),
-            shader_image_float32_atomics: Bool32::default(),
-            shader_image_float32_atomic_add: Bool32::default(),
-            sparse_image_float32_atomics: Bool32::default(),
-            sparse_image_float32_atomic_add: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -25124,20 +23315,7 @@ impl ::core::default::Default for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_buffer_float16_atomics: Bool32::default(),
-            shader_buffer_float16_atomic_add: Bool32::default(),
-            shader_buffer_float16_atomic_min_max: Bool32::default(),
-            shader_buffer_float32_atomic_min_max: Bool32::default(),
-            shader_buffer_float64_atomic_min_max: Bool32::default(),
-            shader_shared_float16_atomics: Bool32::default(),
-            shader_shared_float16_atomic_add: Bool32::default(),
-            shader_shared_float16_atomic_min_max: Bool32::default(),
-            shader_shared_float32_atomic_min_max: Bool32::default(),
-            shader_shared_float64_atomic_min_max: Bool32::default(),
-            shader_image_float32_atomic_min_max: Bool32::default(),
-            sparse_image_float32_atomic_min_max: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -25261,10 +23439,7 @@ impl ::core::default::Default for PhysicalDeviceVertexAttributeDivisorFeatures<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            vertex_attribute_instance_rate_divisor: Bool32::default(),
-            vertex_attribute_instance_rate_zero_divisor: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -25314,9 +23489,7 @@ impl ::core::default::Default for QueueFamilyCheckpointPropertiesNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            checkpoint_execution_stage_mask: PipelineStageFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -25353,10 +23526,7 @@ impl ::core::default::Default for CheckpointDataNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            stage: PipelineStageFlags::default(),
-            p_checkpoint_marker: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -25396,12 +23566,7 @@ impl ::core::default::Default for PhysicalDeviceDepthStencilResolveProperties<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            supported_depth_resolve_modes: ResolveModeFlags::default(),
-            supported_stencil_resolve_modes: ResolveModeFlags::default(),
-            independent_resolve_none: Bool32::default(),
-            independent_resolve: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -25461,11 +23626,7 @@ impl ::core::default::Default for SubpassDescriptionDepthStencilResolve<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            depth_resolve_mode: ResolveModeFlags::default(),
-            stencil_resolve_mode: ResolveModeFlags::default(),
-            p_depth_stencil_resolve_attachment: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -25511,9 +23672,7 @@ impl ::core::default::Default for ImageViewASTCDecodeModeEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            decode_mode: Format::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -25546,9 +23705,7 @@ impl ::core::default::Default for PhysicalDeviceASTCDecodeFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            decode_mode_shared_exponent: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -25583,10 +23740,7 @@ impl ::core::default::Default for PhysicalDeviceTransformFeedbackFeaturesEXT<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            transform_feedback: Bool32::default(),
-            geometry_streams: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -25638,18 +23792,7 @@ impl ::core::default::Default for PhysicalDeviceTransformFeedbackPropertiesEXT<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_transform_feedback_streams: u32::default(),
-            max_transform_feedback_buffers: u32::default(),
-            max_transform_feedback_buffer_size: DeviceSize::default(),
-            max_transform_feedback_stream_data_size: u32::default(),
-            max_transform_feedback_buffer_data_size: u32::default(),
-            max_transform_feedback_buffer_data_stride: u32::default(),
-            transform_feedback_queries: Bool32::default(),
-            transform_feedback_streams_lines_triangles: Bool32::default(),
-            transform_feedback_rasterization_stream_select: Bool32::default(),
-            transform_feedback_draw: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -25752,10 +23895,7 @@ impl ::core::default::Default for PipelineRasterizationStateStreamCreateInfoEXT<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineRasterizationStateStreamCreateFlagsEXT::default(),
-            rasterization_stream: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -25797,9 +23937,7 @@ impl ::core::default::Default for PhysicalDeviceRepresentativeFragmentTestFeatur
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            representative_fragment_test: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -25840,9 +23978,7 @@ impl ::core::default::Default for PipelineRepresentativeFragmentTestStateCreateI
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            representative_fragment_test_enable: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -25882,9 +24018,7 @@ impl ::core::default::Default for PhysicalDeviceExclusiveScissorFeaturesNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            exclusive_scissor: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -25920,10 +24054,7 @@ impl ::core::default::Default for PipelineViewportExclusiveScissorStateCreateInf
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            exclusive_scissor_count: u32::default(),
-            p_exclusive_scissors: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -25961,9 +24092,7 @@ impl ::core::default::Default for PhysicalDeviceCornerSampledImageFeaturesNV<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            corner_sampled_image: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -26002,10 +24131,7 @@ impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesFeatures
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            compute_derivative_group_quads: Bool32::default(),
-            compute_derivative_group_linear: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -26054,9 +24180,7 @@ impl ::core::default::Default for PhysicalDeviceComputeShaderDerivativesProperti
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            mesh_and_task_shader_derivatives: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -26096,9 +24220,7 @@ impl ::core::default::Default for PhysicalDeviceShaderImageFootprintFeaturesNV<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image_footprint: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -26136,9 +24258,7 @@ impl ::core::default::Default for PhysicalDeviceDedicatedAllocationImageAliasing
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            dedicated_allocation_image_aliasing: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -26185,10 +24305,7 @@ impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectFeaturesKHR<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            indirect_memory_copy: Bool32::default(),
-            indirect_memory_to_image_copy: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -26231,9 +24348,7 @@ impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            indirect_copy: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -26271,9 +24386,7 @@ impl ::core::default::Default for PhysicalDeviceCopyMemoryIndirectPropertiesKHR<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            supported_queues: QueueFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -26310,9 +24423,7 @@ impl ::core::default::Default for PhysicalDeviceMemoryDecompressionFeaturesEXT<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_decompression: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -26351,10 +24462,7 @@ impl ::core::default::Default for PhysicalDeviceMemoryDecompressionPropertiesEXT
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            decompression_methods: MemoryDecompressionMethodFlagsEXT::default(),
-            max_decompression_indirect_count: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -26399,11 +24507,7 @@ unsafe impl Sync for ShadingRatePaletteNV<'_> {}
 impl ::core::default::Default for ShadingRatePaletteNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            shading_rate_palette_entry_count: u32::default(),
-            p_shading_rate_palette_entries: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> ShadingRatePaletteNV<'a> {
@@ -26437,11 +24541,7 @@ impl ::core::default::Default for PipelineViewportShadingRateImageStateCreateInf
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            shading_rate_image_enable: Bool32::default(),
-            viewport_count: u32::default(),
-            p_shading_rate_palettes: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -26488,10 +24588,7 @@ impl ::core::default::Default for PhysicalDeviceShadingRateImageFeaturesNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shading_rate_image: Bool32::default(),
-            shading_rate_coarse_sample_order: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -26536,11 +24633,7 @@ impl ::core::default::Default for PhysicalDeviceShadingRateImagePropertiesNV<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shading_rate_texel_size: Extent2D::default(),
-            shading_rate_palette_size: u32::default(),
-            shading_rate_max_coarse_samples: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -26587,9 +24680,7 @@ impl ::core::default::Default for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            invocation_mask: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -26653,13 +24744,7 @@ unsafe impl Sync for CoarseSampleOrderCustomNV<'_> {}
 impl ::core::default::Default for CoarseSampleOrderCustomNV<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            shading_rate: ShadingRatePaletteEntryNV::default(),
-            sample_count: u32::default(),
-            sample_location_count: u32::default(),
-            p_sample_locations: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> CoarseSampleOrderCustomNV<'a> {
@@ -26700,11 +24785,7 @@ impl ::core::default::Default for PipelineViewportCoarseSampleOrderStateCreateIn
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            sample_order_type: CoarseSampleOrderTypeNV::default(),
-            custom_sample_order_count: u32::default(),
-            p_custom_sample_orders: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -26751,10 +24832,7 @@ impl ::core::default::Default for PhysicalDeviceMeshShaderFeaturesNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            task_shader: Bool32::default(),
-            mesh_shader: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -26805,21 +24883,7 @@ impl ::core::default::Default for PhysicalDeviceMeshShaderPropertiesNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_draw_mesh_tasks_count: u32::default(),
-            max_task_work_group_invocations: u32::default(),
-            max_task_work_group_size: unsafe { ::core::mem::zeroed() },
-            max_task_total_memory_size: u32::default(),
-            max_task_output_count: u32::default(),
-            max_mesh_work_group_invocations: u32::default(),
-            max_mesh_work_group_size: unsafe { ::core::mem::zeroed() },
-            max_mesh_total_memory_size: u32::default(),
-            max_mesh_output_vertices: u32::default(),
-            max_mesh_output_primitives: u32::default(),
-            max_mesh_multiview_view_count: u32::default(),
-            mesh_output_per_vertex_granularity: u32::default(),
-            mesh_output_per_primitive_granularity: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -26943,13 +25007,7 @@ impl ::core::default::Default for PhysicalDeviceMeshShaderFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            task_shader: Bool32::default(),
-            mesh_shader: Bool32::default(),
-            multiview_mesh_shader: Bool32::default(),
-            primitive_fragment_shading_rate_mesh_shader: Bool32::default(),
-            mesh_shader_queries: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -27034,36 +25092,7 @@ impl ::core::default::Default for PhysicalDeviceMeshShaderPropertiesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_task_work_group_total_count: u32::default(),
-            max_task_work_group_count: unsafe { ::core::mem::zeroed() },
-            max_task_work_group_invocations: u32::default(),
-            max_task_work_group_size: unsafe { ::core::mem::zeroed() },
-            max_task_payload_size: u32::default(),
-            max_task_shared_memory_size: u32::default(),
-            max_task_payload_and_shared_memory_size: u32::default(),
-            max_mesh_work_group_total_count: u32::default(),
-            max_mesh_work_group_count: unsafe { ::core::mem::zeroed() },
-            max_mesh_work_group_invocations: u32::default(),
-            max_mesh_work_group_size: unsafe { ::core::mem::zeroed() },
-            max_mesh_shared_memory_size: u32::default(),
-            max_mesh_payload_and_shared_memory_size: u32::default(),
-            max_mesh_output_memory_size: u32::default(),
-            max_mesh_payload_and_output_memory_size: u32::default(),
-            max_mesh_output_components: u32::default(),
-            max_mesh_output_vertices: u32::default(),
-            max_mesh_output_primitives: u32::default(),
-            max_mesh_output_layers: u32::default(),
-            max_mesh_multiview_view_count: u32::default(),
-            mesh_output_per_vertex_granularity: u32::default(),
-            mesh_output_per_primitive_granularity: u32::default(),
-            max_preferred_task_work_group_invocations: u32::default(),
-            max_preferred_mesh_work_group_invocations: u32::default(),
-            prefers_local_invocation_vertex_output: Bool32::default(),
-            prefers_local_invocation_primitive_output: Bool32::default(),
-            prefers_compact_vertex_output: Bool32::default(),
-            prefers_compact_primitive_output: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -27293,13 +25322,7 @@ impl ::core::default::Default for RayTracingShaderGroupCreateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: RayTracingShaderGroupTypeKHR::default(),
-            general_shader: u32::default(),
-            closest_hit_shader: u32::default(),
-            any_hit_shader: u32::default(),
-            intersection_shader: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -27356,14 +25379,7 @@ impl ::core::default::Default for RayTracingShaderGroupCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: RayTracingShaderGroupTypeKHR::default(),
-            general_shader: u32::default(),
-            closest_hit_shader: u32::default(),
-            any_hit_shader: u32::default(),
-            intersection_shader: u32::default(),
-            p_shader_group_capture_replay_handle: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -27431,17 +25447,7 @@ impl ::core::default::Default for RayTracingPipelineCreateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCreateFlags::default(),
-            stage_count: u32::default(),
-            p_stages: ::core::ptr::null(),
-            group_count: u32::default(),
-            p_groups: ::core::ptr::null(),
-            max_recursion_depth: u32::default(),
-            layout: PipelineLayout::default(),
-            base_pipeline_handle: Pipeline::default(),
-            base_pipeline_index: i32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -27516,20 +25522,7 @@ impl ::core::default::Default for RayTracingPipelineCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCreateFlags::default(),
-            stage_count: u32::default(),
-            p_stages: ::core::ptr::null(),
-            group_count: u32::default(),
-            p_groups: ::core::ptr::null(),
-            max_pipeline_ray_recursion_depth: u32::default(),
-            p_library_info: ::core::ptr::null(),
-            p_library_interface: ::core::ptr::null(),
-            p_dynamic_state: ::core::ptr::null(),
-            layout: PipelineLayout::default(),
-            base_pipeline_handle: Pipeline::default(),
-            base_pipeline_index: i32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -27624,19 +25617,7 @@ impl ::core::default::Default for GeometryTrianglesNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            vertex_data: Buffer::default(),
-            vertex_offset: DeviceSize::default(),
-            vertex_count: u32::default(),
-            vertex_stride: DeviceSize::default(),
-            vertex_format: Format::default(),
-            index_data: Buffer::default(),
-            index_offset: DeviceSize::default(),
-            index_count: u32::default(),
-            index_type: IndexType::default(),
-            transform_data: Buffer::default(),
-            transform_offset: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -27721,12 +25702,7 @@ impl ::core::default::Default for GeometryAABBNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            aabb_data: Buffer::default(),
-            num_aab_bs: u32::default(),
-            stride: u32::default(),
-            offset: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -27797,11 +25773,8 @@ impl ::core::default::Default for GeometryNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            geometry_type: GeometryTypeKHR::default(),
             geometry: GeometryDataNV::default(),
-            flags: GeometryFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -27847,13 +25820,7 @@ impl ::core::default::Default for AccelerationStructureInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: AccelerationStructureTypeNV::default(),
-            flags: BuildAccelerationStructureFlagsKHR::default(),
-            instance_count: u32::default(),
-            geometry_count: u32::default(),
-            p_geometries: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -27902,10 +25869,8 @@ impl ::core::default::Default for AccelerationStructureCreateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            compacted_size: DeviceSize::default(),
             info: AccelerationStructureInfoNV::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -27946,13 +25911,7 @@ impl ::core::default::Default for BindAccelerationStructureMemoryInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            acceleration_structure: AccelerationStructureNV::default(),
-            memory: DeviceMemory::default(),
-            memory_offset: DeviceSize::default(),
-            device_index_count: u32::default(),
-            p_device_indices: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -28004,10 +25963,7 @@ impl ::core::default::Default for WriteDescriptorSetAccelerationStructureKHR<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            acceleration_structure_count: u32::default(),
-            p_acceleration_structures: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -28046,10 +26002,7 @@ impl ::core::default::Default for WriteDescriptorSetAccelerationStructureNV<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            acceleration_structure_count: u32::default(),
-            p_acceleration_structures: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -28088,10 +26041,7 @@ impl ::core::default::Default for AccelerationStructureMemoryRequirementsInfoNV<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: AccelerationStructureMemoryRequirementsTypeNV::default(),
-            acceleration_structure: AccelerationStructureNV::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -28136,13 +26086,7 @@ impl ::core::default::Default for PhysicalDeviceAccelerationStructureFeaturesKHR
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            acceleration_structure: Bool32::default(),
-            acceleration_structure_capture_replay: Bool32::default(),
-            acceleration_structure_indirect_build: Bool32::default(),
-            acceleration_structure_host_commands: Bool32::default(),
-            descriptor_binding_acceleration_structure_update_after_bind: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -28217,13 +26161,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingPipelineFeaturesKHR<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ray_tracing_pipeline: Bool32::default(),
-            ray_tracing_pipeline_shader_group_handle_capture_replay: Bool32::default(),
-            ray_tracing_pipeline_shader_group_handle_capture_replay_mixed: Bool32::default(),
-            ray_tracing_pipeline_trace_rays_indirect: Bool32::default(),
-            ray_traversal_primitive_culling: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -28296,9 +26234,7 @@ impl ::core::default::Default for PhysicalDeviceRayQueryFeaturesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ray_query: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -28339,16 +26275,7 @@ impl ::core::default::Default for PhysicalDeviceAccelerationStructurePropertiesK
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_geometry_count: u64::default(),
-            max_instance_count: u64::default(),
-            max_primitive_count: u64::default(),
-            max_per_stage_descriptor_acceleration_structures: u32::default(),
-            max_per_stage_descriptor_update_after_bind_acceleration_structures: u32::default(),
-            max_descriptor_set_acceleration_structures: u32::default(),
-            max_descriptor_set_update_after_bind_acceleration_structures: u32::default(),
-            min_acceleration_structure_scratch_offset_alignment: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -28447,16 +26374,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingPipelinePropertiesKHR<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_group_handle_size: u32::default(),
-            max_ray_recursion_depth: u32::default(),
-            max_shader_group_stride: u32::default(),
-            shader_group_base_alignment: u32::default(),
-            shader_group_handle_capture_replay_size: u32::default(),
-            max_ray_dispatch_invocation_count: u32::default(),
-            shader_group_handle_alignment: u32::default(),
-            max_ray_hit_attribute_size: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -28541,16 +26459,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingPropertiesNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_group_handle_size: u32::default(),
-            max_recursion_depth: u32::default(),
-            max_shader_group_stride: u32::default(),
-            shader_group_base_alignment: u32::default(),
-            max_geometry_count: u64::default(),
-            max_instance_count: u64::default(),
-            max_triangle_count: u64::default(),
-            max_descriptor_set_acceleration_structures: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -28800,10 +26709,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingMaintenance1FeaturesKH
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ray_tracing_maintenance1: Bool32::default(),
-            ray_tracing_pipeline_trace_rays_indirect2: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -28851,10 +26757,7 @@ impl ::core::default::Default for DrmFormatModifierPropertiesListEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            drm_format_modifier_count: u32::default(),
-            p_drm_format_modifier_properties: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -28924,12 +26827,7 @@ impl ::core::default::Default for PhysicalDeviceImageDrmFormatModifierInfoEXT<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            drm_format_modifier: u64::default(),
-            sharing_mode: SharingMode::default(),
-            queue_family_index_count: u32::default(),
-            p_queue_family_indices: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -28978,10 +26876,7 @@ impl ::core::default::Default for ImageDrmFormatModifierListCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            drm_format_modifier_count: u32::default(),
-            p_drm_format_modifiers: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29018,11 +26913,7 @@ impl ::core::default::Default for ImageDrmFormatModifierExplicitCreateInfoEXT<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            drm_format_modifier: u64::default(),
-            drm_format_modifier_plane_count: u32::default(),
-            p_plane_layouts: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29062,9 +26953,7 @@ impl ::core::default::Default for ImageDrmFormatModifierPropertiesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            drm_format_modifier: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29096,9 +26985,7 @@ impl ::core::default::Default for ImageStencilUsageCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stencil_usage: ImageUsageFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29132,9 +27019,7 @@ impl ::core::default::Default for DeviceMemoryOverallocationCreateInfoAMD<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            overallocation_behavior: MemoryOverallocationBehaviorAMD::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29173,11 +27058,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMapFeaturesEXT<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            fragment_density_map: Bool32::default(),
-            fragment_density_map_dynamic: Bool32::default(),
-            fragment_density_map_non_subsampled_images: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29229,9 +27110,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            fragment_density_map_deferred: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29269,9 +27148,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMapOffsetFeatures
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            fragment_density_map_offset: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29314,11 +27191,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMapPropertiesEXT<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_fragment_density_texel_size: Extent2D::default(),
-            max_fragment_density_texel_size: Extent2D::default(),
-            fragment_density_invocations: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29374,12 +27247,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMap2PropertiesEXT
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            subsampled_loads: Bool32::default(),
-            subsampled_coarse_reconstruction_early_access: Bool32::default(),
-            max_subsampled_array_layers: u32::default(),
-            max_descriptor_set_subsampled_samplers: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29438,9 +27306,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMapOffsetProperti
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            fragment_density_offset_granularity: Extent2D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29480,9 +27346,7 @@ impl ::core::default::Default for RenderPassFragmentDensityMapCreateInfoEXT<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            fragment_density_map_attachment: AttachmentReference::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29521,10 +27385,7 @@ impl ::core::default::Default for RenderPassFragmentDensityMapOffsetEndInfoEXT<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            fragment_density_offset_count: u32::default(),
-            p_fragment_density_offsets: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29560,9 +27421,7 @@ impl ::core::default::Default for PhysicalDeviceScalarBlockLayoutFeatures<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            scalar_block_layout: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29597,9 +27456,7 @@ impl ::core::default::Default for SurfaceProtectedCapabilitiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            supports_protected: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29632,9 +27489,7 @@ impl ::core::default::Default for PhysicalDeviceUniformBufferStandardLayoutFeatu
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            uniform_buffer_standard_layout: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29675,9 +27530,7 @@ impl ::core::default::Default for PhysicalDeviceDepthClipEnableFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            depth_clip_enable: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29713,10 +27566,7 @@ impl ::core::default::Default for PipelineRasterizationDepthClipStateCreateInfoE
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineRasterizationDepthClipStateCreateFlagsEXT::default(),
-            depth_clip_enable: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29759,10 +27609,7 @@ impl ::core::default::Default for PhysicalDeviceMemoryBudgetPropertiesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            heap_budget: unsafe { ::core::mem::zeroed() },
-            heap_usage: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29804,9 +27651,7 @@ impl ::core::default::Default for PhysicalDeviceMemoryPriorityFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_priority: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29841,9 +27686,7 @@ impl ::core::default::Default for MemoryPriorityAllocateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            priority: f32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29876,9 +27719,7 @@ impl ::core::default::Default for PhysicalDevicePageableDeviceLocalMemoryFeature
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pageable_device_local_memory: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29921,11 +27762,7 @@ impl ::core::default::Default for PhysicalDeviceBufferDeviceAddressFeatures<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            buffer_device_address: Bool32::default(),
-            buffer_device_address_capture_replay: Bool32::default(),
-            buffer_device_address_multi_device: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -29978,11 +27815,7 @@ impl ::core::default::Default for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            buffer_device_address: Bool32::default(),
-            buffer_device_address_capture_replay: Bool32::default(),
-            buffer_device_address_multi_device: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30036,9 +27869,7 @@ impl ::core::default::Default for BufferDeviceAddressInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            buffer: Buffer::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30070,9 +27901,7 @@ impl ::core::default::Default for BufferOpaqueCaptureAddressCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            opaque_capture_address: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30105,9 +27934,7 @@ impl ::core::default::Default for BufferDeviceAddressCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            device_address: DeviceAddress::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30140,9 +27967,7 @@ impl ::core::default::Default for PhysicalDeviceImageViewImageFormatInfoEXT<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image_view_type: ImageViewType::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30180,10 +28005,7 @@ impl ::core::default::Default for FilterCubicImageViewImageFormatPropertiesEXT<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            filter_cubic: Bool32::default(),
-            filter_cubic_minmax: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30225,9 +28047,7 @@ impl ::core::default::Default for PhysicalDeviceImagelessFramebufferFeatures<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            imageless_framebuffer: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30266,10 +28086,7 @@ impl ::core::default::Default for FramebufferAttachmentsCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            attachment_image_info_count: u32::default(),
-            p_attachment_image_infos: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30312,15 +28129,7 @@ impl ::core::default::Default for FramebufferAttachmentImageInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ImageCreateFlags::default(),
-            usage: ImageUsageFlags::default(),
-            width: u32::default(),
-            height: u32::default(),
-            layer_count: u32::default(),
-            view_format_count: u32::default(),
-            p_view_formats: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30379,10 +28188,7 @@ impl ::core::default::Default for RenderPassAttachmentBeginInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            attachment_count: u32::default(),
-            p_attachments: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30416,9 +28222,7 @@ impl ::core::default::Default for PhysicalDeviceTextureCompressionASTCHDRFeature
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            texture_compression_astc_hdr: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30457,10 +28261,7 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrixFeaturesNV<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cooperative_matrix: Bool32::default(),
-            cooperative_matrix_robust_buffer_access: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30504,9 +28305,7 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrixPropertiesNV<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cooperative_matrix_supported_stages: ShaderStageFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30553,16 +28352,7 @@ impl ::core::default::Default for CooperativeMatrixPropertiesNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            m_size: u32::default(),
-            n_size: u32::default(),
-            k_size: u32::default(),
-            a_type: ComponentTypeNV::default(),
-            b_type: ComponentTypeNV::default(),
-            c_type: ComponentTypeNV::default(),
-            d_type: ComponentTypeNV::default(),
-            scope: ScopeNV::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30629,9 +28419,7 @@ impl ::core::default::Default for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ycbcr_image_arrays: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30668,11 +28456,7 @@ impl ::core::default::Default for ImageViewHandleInfoNVX<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image_view: ImageView::default(),
-            descriptor_type: DescriptorType::default(),
-            sampler: Sampler::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30715,10 +28499,7 @@ impl ::core::default::Default for ImageViewAddressPropertiesNVX<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_address: DeviceAddress::default(),
-            size: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30755,9 +28536,7 @@ impl ::core::default::Default for PresentFrameTokenGGP<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            frame_token: GgpFrameToken::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30813,11 +28592,7 @@ impl ::core::default::Default for PipelineCreationFeedbackCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_pipeline_creation_feedback: ::core::ptr::null_mut(),
-            pipeline_stage_creation_feedback_count: u32::default(),
-            p_pipeline_stage_creation_feedbacks: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30874,9 +28649,7 @@ impl ::core::default::Default for SurfaceFullScreenExclusiveInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            full_screen_exclusive: FullScreenExclusiveEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30910,9 +28683,7 @@ impl ::core::default::Default for SurfaceFullScreenExclusiveWin32InfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            hmonitor: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30950,9 +28721,7 @@ impl ::core::default::Default for SurfaceCapabilitiesFullScreenExclusiveEXT<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            full_screen_exclusive_supported: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -30989,9 +28758,7 @@ impl ::core::default::Default for PhysicalDevicePresentBarrierFeaturesNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_barrier: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31026,9 +28793,7 @@ impl ::core::default::Default for SurfaceCapabilitiesPresentBarrierNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_barrier_supported: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31061,9 +28826,7 @@ impl ::core::default::Default for SwapchainPresentBarrierCreateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_barrier_enable: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31097,10 +28860,7 @@ impl ::core::default::Default for PhysicalDevicePerformanceQueryFeaturesKHR<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            performance_counter_query_pools: Bool32::default(),
-            performance_counter_multiple_query_pools: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31147,9 +28907,7 @@ impl ::core::default::Default for PhysicalDevicePerformanceQueryPropertiesKHR<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            allow_command_buffer_query_copies: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31192,12 +28950,7 @@ impl ::core::default::Default for PerformanceCounterKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            unit: PerformanceCounterUnitKHR::default(),
-            scope: PerformanceCounterScopeKHR::default(),
-            storage: PerformanceCounterStorageKHR::default(),
-            uuid: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31259,12 +29012,7 @@ impl ::core::default::Default for PerformanceCounterDescriptionKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: PerformanceCounterDescriptionFlagsKHR::default(),
-            name: unsafe { ::core::mem::zeroed() },
-            category: unsafe { ::core::mem::zeroed() },
-            description: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31328,11 +29076,7 @@ impl ::core::default::Default for QueryPoolPerformanceCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            queue_family_index: u32::default(),
-            counter_index_count: u32::default(),
-            p_counter_indices: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31389,10 +29133,7 @@ impl ::core::default::Default for AcquireProfilingLockInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: AcquireProfilingLockFlagsKHR::default(),
-            timeout: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31429,9 +29170,7 @@ impl ::core::default::Default for PerformanceQuerySubmitInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            counter_pass_index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31465,9 +29204,7 @@ impl ::core::default::Default for HeadlessSurfaceCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: HeadlessSurfaceCreateFlagsEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31499,9 +29236,7 @@ impl ::core::default::Default for PhysicalDeviceCoverageReductionModeFeaturesNV<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            coverage_reduction_mode: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31540,10 +29275,7 @@ impl ::core::default::Default for PipelineCoverageReductionStateCreateInfoNV<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCoverageReductionStateCreateFlagsNV::default(),
-            coverage_reduction_mode: CoverageReductionModeNV::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31591,12 +29323,7 @@ impl ::core::default::Default for FramebufferMixedSamplesCombinationNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            coverage_reduction_mode: CoverageReductionModeNV::default(),
-            rasterization_samples: SampleCountFlags::default(),
-            depth_stencil_samples: SampleCountFlags::default(),
-            color_samples: SampleCountFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31646,9 +29373,7 @@ impl ::core::default::Default for PhysicalDeviceShaderIntegerFunctions2FeaturesI
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_integer_functions2: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31734,9 +29459,7 @@ impl ::core::default::Default for InitializePerformanceApiInfoINTEL<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_user_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31768,9 +29491,7 @@ impl ::core::default::Default for QueryPoolPerformanceQueryCreateInfoINTEL<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            performance_counters_sampling: QueryPoolSamplingModeINTEL::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31807,9 +29528,7 @@ impl ::core::default::Default for PerformanceMarkerInfoINTEL<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            marker: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31841,9 +29560,7 @@ impl ::core::default::Default for PerformanceStreamMarkerInfoINTEL<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            marker: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31877,11 +29594,7 @@ impl ::core::default::Default for PerformanceOverrideInfoINTEL<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: PerformanceOverrideTypeINTEL::default(),
-            enable: Bool32::default(),
-            parameter: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31923,9 +29636,7 @@ impl ::core::default::Default for PerformanceConfigurationAcquireInfoINTEL<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: PerformanceConfigurationTypeINTEL::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -31959,10 +29670,7 @@ impl ::core::default::Default for PhysicalDeviceShaderClockFeaturesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_subgroup_clock: Bool32::default(),
-            shader_device_clock: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -32001,9 +29709,7 @@ impl ::core::default::Default for PhysicalDeviceIndexTypeUint8Features<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            index_type_uint8: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -32038,10 +29744,7 @@ impl ::core::default::Default for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_sm_count: u32::default(),
-            shader_warps_per_sm: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -32083,9 +29786,7 @@ impl ::core::default::Default for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_sm_builtins: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -32122,11 +29823,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentShaderInterlockFeaturesE
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            fragment_shader_sample_interlock: Bool32::default(),
-            fragment_shader_pixel_interlock: Bool32::default(),
-            fragment_shader_shading_rate_interlock: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -32183,9 +29880,7 @@ impl ::core::default::Default for PhysicalDeviceSeparateDepthStencilLayoutsFeatu
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            separate_depth_stencil_layouts: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -32226,9 +29921,7 @@ impl ::core::default::Default for AttachmentReferenceStencilLayout<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            stencil_layout: ImageLayout::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -32262,10 +29955,7 @@ impl ::core::default::Default for PhysicalDevicePrimitiveTopologyListRestartFeat
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            primitive_topology_list_restart: Bool32::default(),
-            primitive_topology_patch_list_restart: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -32318,10 +30008,7 @@ impl ::core::default::Default for AttachmentDescriptionStencilLayout<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            stencil_initial_layout: ImageLayout::default(),
-            stencil_final_layout: ImageLayout::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -32359,9 +30046,7 @@ impl ::core::default::Default for PhysicalDevicePipelineExecutablePropertiesFeat
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_executable_info: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -32402,9 +30087,7 @@ impl ::core::default::Default for PipelineInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            pipeline: Pipeline::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -32451,12 +30134,7 @@ impl ::core::default::Default for PipelineExecutablePropertiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            stages: ShaderStageFlags::default(),
-            name: unsafe { ::core::mem::zeroed() },
-            description: unsafe { ::core::mem::zeroed() },
-            subgroup_size: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -32513,10 +30191,7 @@ impl ::core::default::Default for PipelineExecutableInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            pipeline: Pipeline::default(),
-            executable_index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -32583,12 +30258,7 @@ impl ::core::default::Default for PipelineExecutableStatisticKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            name: unsafe { ::core::mem::zeroed() },
-            description: unsafe { ::core::mem::zeroed() },
-            format: PipelineExecutableStatisticFormatKHR::default(),
-            value: PipelineExecutableStatisticValueKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -32661,13 +30331,7 @@ impl ::core::default::Default for PipelineExecutableInternalRepresentationKHR<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            name: unsafe { ::core::mem::zeroed() },
-            description: unsafe { ::core::mem::zeroed() },
-            is_text: Bool32::default(),
-            data_size: usize::default(),
-            p_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -32725,9 +30389,7 @@ impl ::core::default::Default for PhysicalDeviceShaderDemoteToHelperInvocationFe
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_demote_to_helper_invocation: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -32771,9 +30433,7 @@ impl ::core::default::Default for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            texel_buffer_alignment: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -32814,12 +30474,7 @@ impl ::core::default::Default for PhysicalDeviceTexelBufferAlignmentProperties<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            storage_texel_buffer_offset_alignment_bytes: DeviceSize::default(),
-            storage_texel_buffer_offset_single_texel_alignment: Bool32::default(),
-            uniform_texel_buffer_offset_alignment_bytes: DeviceSize::default(),
-            uniform_texel_buffer_offset_single_texel_alignment: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -32888,10 +30543,7 @@ impl ::core::default::Default for PhysicalDeviceSubgroupSizeControlFeatures<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            subgroup_size_control: Bool32::default(),
-            compute_full_subgroups: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -32934,12 +30586,7 @@ impl ::core::default::Default for PhysicalDeviceSubgroupSizeControlProperties<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_subgroup_size: u32::default(),
-            max_subgroup_size: u32::default(),
-            max_compute_workgroup_subgroups: u32::default(),
-            required_subgroup_size_stages: ShaderStageFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -32994,9 +30641,7 @@ impl ::core::default::Default for PipelineShaderStageRequiredSubgroupSizeCreateI
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            required_subgroup_size: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -33038,10 +30683,7 @@ impl ::core::default::Default for SubpassShadingPipelineCreateInfoHUAWEI<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            render_pass: RenderPass::default(),
-            subpass: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -33080,9 +30722,7 @@ impl ::core::default::Default for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_subpass_shading_workgroup_size_aspect_ratio: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -33126,12 +30766,7 @@ impl ::core::default::Default for PhysicalDeviceClusterCullingShaderPropertiesHU
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_work_group_count: unsafe { ::core::mem::zeroed() },
-            max_work_group_size: unsafe { ::core::mem::zeroed() },
-            max_output_cluster_count: u32::default(),
-            indirect_buffer_offset_alignment: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -33186,9 +30821,7 @@ impl ::core::default::Default for MemoryOpaqueCaptureAddressAllocateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            opaque_capture_address: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -33222,9 +30855,7 @@ impl ::core::default::Default for DeviceMemoryOpaqueCaptureAddressInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -33261,14 +30892,7 @@ impl ::core::default::Default for PhysicalDeviceLineRasterizationFeatures<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            rectangular_lines: Bool32::default(),
-            bresenham_lines: Bool32::default(),
-            smooth_lines: Bool32::default(),
-            stippled_rectangular_lines: Bool32::default(),
-            stippled_bresenham_lines: Bool32::default(),
-            stippled_smooth_lines: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -33328,9 +30952,7 @@ impl ::core::default::Default for PhysicalDeviceLineRasterizationProperties<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            line_sub_pixel_precision_bits: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -33370,12 +30992,7 @@ impl ::core::default::Default for PipelineRasterizationLineStateCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            line_rasterization_mode: LineRasterizationMode::default(),
-            stippled_line_enable: Bool32::default(),
-            line_stipple_factor: u32::default(),
-            line_stipple_pattern: u16::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -33430,9 +31047,7 @@ impl ::core::default::Default for PhysicalDevicePipelineCreationCacheControlFeat
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_creation_cache_control: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -33487,20 +31102,7 @@ impl ::core::default::Default for PhysicalDeviceVulkan11Features<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            storage_buffer16_bit_access: Bool32::default(),
-            uniform_and_storage_buffer16_bit_access: Bool32::default(),
-            storage_push_constant16: Bool32::default(),
-            storage_input_output16: Bool32::default(),
-            multiview: Bool32::default(),
-            multiview_geometry_shader: Bool32::default(),
-            multiview_tessellation_shader: Bool32::default(),
-            variable_pointers_storage_buffer: Bool32::default(),
-            variable_pointers: Bool32::default(),
-            protected_memory: Bool32::default(),
-            sampler_ycbcr_conversion: Bool32::default(),
-            shader_draw_parameters: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -33610,23 +31212,7 @@ impl ::core::default::Default for PhysicalDeviceVulkan11Properties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_uuid: unsafe { ::core::mem::zeroed() },
-            driver_uuid: unsafe { ::core::mem::zeroed() },
-            device_luid: unsafe { ::core::mem::zeroed() },
-            device_node_mask: u32::default(),
-            device_luid_valid: Bool32::default(),
-            subgroup_size: u32::default(),
-            subgroup_supported_stages: ShaderStageFlags::default(),
-            subgroup_supported_operations: SubgroupFeatureFlags::default(),
-            subgroup_quad_operations_in_all_stages: Bool32::default(),
-            point_clipping_behavior: PointClippingBehavior::default(),
-            max_multiview_view_count: u32::default(),
-            max_multiview_instance_index: u32::default(),
-            protected_no_fault: Bool32::default(),
-            max_per_set_descriptors: u32::default(),
-            max_memory_allocation_size: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -33787,55 +31373,7 @@ impl ::core::default::Default for PhysicalDeviceVulkan12Features<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            sampler_mirror_clamp_to_edge: Bool32::default(),
-            draw_indirect_count: Bool32::default(),
-            storage_buffer8_bit_access: Bool32::default(),
-            uniform_and_storage_buffer8_bit_access: Bool32::default(),
-            storage_push_constant8: Bool32::default(),
-            shader_buffer_int64_atomics: Bool32::default(),
-            shader_shared_int64_atomics: Bool32::default(),
-            shader_float16: Bool32::default(),
-            shader_int8: Bool32::default(),
-            descriptor_indexing: Bool32::default(),
-            shader_input_attachment_array_dynamic_indexing: Bool32::default(),
-            shader_uniform_texel_buffer_array_dynamic_indexing: Bool32::default(),
-            shader_storage_texel_buffer_array_dynamic_indexing: Bool32::default(),
-            shader_uniform_buffer_array_non_uniform_indexing: Bool32::default(),
-            shader_sampled_image_array_non_uniform_indexing: Bool32::default(),
-            shader_storage_buffer_array_non_uniform_indexing: Bool32::default(),
-            shader_storage_image_array_non_uniform_indexing: Bool32::default(),
-            shader_input_attachment_array_non_uniform_indexing: Bool32::default(),
-            shader_uniform_texel_buffer_array_non_uniform_indexing: Bool32::default(),
-            shader_storage_texel_buffer_array_non_uniform_indexing: Bool32::default(),
-            descriptor_binding_uniform_buffer_update_after_bind: Bool32::default(),
-            descriptor_binding_sampled_image_update_after_bind: Bool32::default(),
-            descriptor_binding_storage_image_update_after_bind: Bool32::default(),
-            descriptor_binding_storage_buffer_update_after_bind: Bool32::default(),
-            descriptor_binding_uniform_texel_buffer_update_after_bind: Bool32::default(),
-            descriptor_binding_storage_texel_buffer_update_after_bind: Bool32::default(),
-            descriptor_binding_update_unused_while_pending: Bool32::default(),
-            descriptor_binding_partially_bound: Bool32::default(),
-            descriptor_binding_variable_descriptor_count: Bool32::default(),
-            runtime_descriptor_array: Bool32::default(),
-            sampler_filter_minmax: Bool32::default(),
-            scalar_block_layout: Bool32::default(),
-            imageless_framebuffer: Bool32::default(),
-            uniform_buffer_standard_layout: Bool32::default(),
-            shader_subgroup_extended_types: Bool32::default(),
-            separate_depth_stencil_layouts: Bool32::default(),
-            host_query_reset: Bool32::default(),
-            timeline_semaphore: Bool32::default(),
-            buffer_device_address: Bool32::default(),
-            buffer_device_address_capture_replay: Bool32::default(),
-            buffer_device_address_multi_device: Bool32::default(),
-            vulkan_memory_model: Bool32::default(),
-            vulkan_memory_model_device_scope: Bool32::default(),
-            vulkan_memory_model_availability_visibility_chains: Bool32::default(),
-            shader_output_viewport_index: Bool32::default(),
-            shader_output_layer: Bool32::default(),
-            subgroup_broadcast_dynamic_id: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -34439,60 +31977,7 @@ impl ::core::default::Default for PhysicalDeviceVulkan12Properties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            driver_id: DriverId::default(),
-            driver_name: unsafe { ::core::mem::zeroed() },
-            driver_info: unsafe { ::core::mem::zeroed() },
-            conformance_version: ConformanceVersion::default(),
-            denorm_behavior_independence: ShaderFloatControlsIndependence::default(),
-            rounding_mode_independence: ShaderFloatControlsIndependence::default(),
-            shader_signed_zero_inf_nan_preserve_float16: Bool32::default(),
-            shader_signed_zero_inf_nan_preserve_float32: Bool32::default(),
-            shader_signed_zero_inf_nan_preserve_float64: Bool32::default(),
-            shader_denorm_preserve_float16: Bool32::default(),
-            shader_denorm_preserve_float32: Bool32::default(),
-            shader_denorm_preserve_float64: Bool32::default(),
-            shader_denorm_flush_to_zero_float16: Bool32::default(),
-            shader_denorm_flush_to_zero_float32: Bool32::default(),
-            shader_denorm_flush_to_zero_float64: Bool32::default(),
-            shader_rounding_mode_rte_float16: Bool32::default(),
-            shader_rounding_mode_rte_float32: Bool32::default(),
-            shader_rounding_mode_rte_float64: Bool32::default(),
-            shader_rounding_mode_rtz_float16: Bool32::default(),
-            shader_rounding_mode_rtz_float32: Bool32::default(),
-            shader_rounding_mode_rtz_float64: Bool32::default(),
-            max_update_after_bind_descriptors_in_all_pools: u32::default(),
-            shader_uniform_buffer_array_non_uniform_indexing_native: Bool32::default(),
-            shader_sampled_image_array_non_uniform_indexing_native: Bool32::default(),
-            shader_storage_buffer_array_non_uniform_indexing_native: Bool32::default(),
-            shader_storage_image_array_non_uniform_indexing_native: Bool32::default(),
-            shader_input_attachment_array_non_uniform_indexing_native: Bool32::default(),
-            robust_buffer_access_update_after_bind: Bool32::default(),
-            quad_divergent_implicit_lod: Bool32::default(),
-            max_per_stage_descriptor_update_after_bind_samplers: u32::default(),
-            max_per_stage_descriptor_update_after_bind_uniform_buffers: u32::default(),
-            max_per_stage_descriptor_update_after_bind_storage_buffers: u32::default(),
-            max_per_stage_descriptor_update_after_bind_sampled_images: u32::default(),
-            max_per_stage_descriptor_update_after_bind_storage_images: u32::default(),
-            max_per_stage_descriptor_update_after_bind_input_attachments: u32::default(),
-            max_per_stage_update_after_bind_resources: u32::default(),
-            max_descriptor_set_update_after_bind_samplers: u32::default(),
-            max_descriptor_set_update_after_bind_uniform_buffers: u32::default(),
-            max_descriptor_set_update_after_bind_uniform_buffers_dynamic: u32::default(),
-            max_descriptor_set_update_after_bind_storage_buffers: u32::default(),
-            max_descriptor_set_update_after_bind_storage_buffers_dynamic: u32::default(),
-            max_descriptor_set_update_after_bind_sampled_images: u32::default(),
-            max_descriptor_set_update_after_bind_storage_images: u32::default(),
-            max_descriptor_set_update_after_bind_input_attachments: u32::default(),
-            supported_depth_resolve_modes: ResolveModeFlags::default(),
-            supported_stencil_resolve_modes: ResolveModeFlags::default(),
-            independent_resolve_none: Bool32::default(),
-            independent_resolve: Bool32::default(),
-            filter_minmax_single_component_formats: Bool32::default(),
-            filter_minmax_image_component_mapping: Bool32::default(),
-            max_timeline_semaphore_value_difference: u64::default(),
-            framebuffer_integer_color_sample_counts: SampleCountFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -34955,23 +32440,7 @@ impl ::core::default::Default for PhysicalDeviceVulkan13Features<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            robust_image_access: Bool32::default(),
-            inline_uniform_block: Bool32::default(),
-            descriptor_binding_inline_uniform_block_update_after_bind: Bool32::default(),
-            pipeline_creation_cache_control: Bool32::default(),
-            private_data: Bool32::default(),
-            shader_demote_to_helper_invocation: Bool32::default(),
-            shader_terminate_invocation: Bool32::default(),
-            subgroup_size_control: Bool32::default(),
-            compute_full_subgroups: Bool32::default(),
-            synchronization2: Bool32::default(),
-            texture_compression_astc_hdr: Bool32::default(),
-            shader_zero_initialize_workgroup_memory: Bool32::default(),
-            dynamic_rendering: Bool32::default(),
-            shader_integer_dot_product: Bool32::default(),
-            maintenance4: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -35132,7 +32601,10 @@ unsafe impl Sync for PhysicalDeviceVulkan13Properties<'_> {}
 impl ::core::default::Default for PhysicalDeviceVulkan13Properties<'_> {
     #[inline]
     fn default() -> Self {
-        Self { s_type : Self :: STRUCTURE_TYPE , p_next : :: core :: ptr :: null_mut () , min_subgroup_size : u32 :: default () , max_subgroup_size : u32 :: default () , max_compute_workgroup_subgroups : u32 :: default () , required_subgroup_size_stages : ShaderStageFlags :: default () , max_inline_uniform_block_size : u32 :: default () , max_per_stage_descriptor_inline_uniform_blocks : u32 :: default () , max_per_stage_descriptor_update_after_bind_inline_uniform_blocks : u32 :: default () , max_descriptor_set_inline_uniform_blocks : u32 :: default () , max_descriptor_set_update_after_bind_inline_uniform_blocks : u32 :: default () , max_inline_uniform_total_size : u32 :: default () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () , storage_texel_buffer_offset_alignment_bytes : DeviceSize :: default () , storage_texel_buffer_offset_single_texel_alignment : Bool32 :: default () , uniform_texel_buffer_offset_alignment_bytes : DeviceSize :: default () , uniform_texel_buffer_offset_single_texel_alignment : Bool32 :: default () , max_buffer_size : DeviceSize :: default () , _marker : PhantomData , }
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            ..unsafe { ::core::mem::zeroed() }
+        }
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceVulkan13Properties<'a> {
@@ -35557,29 +33029,7 @@ impl ::core::default::Default for PhysicalDeviceVulkan14Features<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            global_priority_query: Bool32::default(),
-            shader_subgroup_rotate: Bool32::default(),
-            shader_subgroup_rotate_clustered: Bool32::default(),
-            shader_float_controls2: Bool32::default(),
-            shader_expect_assume: Bool32::default(),
-            rectangular_lines: Bool32::default(),
-            bresenham_lines: Bool32::default(),
-            smooth_lines: Bool32::default(),
-            stippled_rectangular_lines: Bool32::default(),
-            stippled_bresenham_lines: Bool32::default(),
-            stippled_smooth_lines: Bool32::default(),
-            vertex_attribute_instance_rate_divisor: Bool32::default(),
-            vertex_attribute_instance_rate_zero_divisor: Bool32::default(),
-            index_type_uint8: Bool32::default(),
-            dynamic_rendering_local_read: Bool32::default(),
-            maintenance5: Bool32::default(),
-            maintenance6: Bool32::default(),
-            pipeline_protected_access: Bool32::default(),
-            pipeline_robustness: Bool32::default(),
-            host_image_copy: Bool32::default(),
-            push_descriptor: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -35747,33 +33197,7 @@ impl ::core::default::Default for PhysicalDeviceVulkan14Properties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            line_sub_pixel_precision_bits: u32::default(),
-            max_vertex_attrib_divisor: u32::default(),
-            supports_non_zero_first_instance: Bool32::default(),
-            max_push_descriptors: u32::default(),
-            dynamic_rendering_local_read_depth_stencil_attachments: Bool32::default(),
-            dynamic_rendering_local_read_multisampled_attachments: Bool32::default(),
-            early_fragment_multisample_coverage_after_sample_counting: Bool32::default(),
-            early_fragment_sample_mask_test_before_sample_counting: Bool32::default(),
-            depth_stencil_swizzle_one_support: Bool32::default(),
-            polygon_mode_point_size: Bool32::default(),
-            non_strict_single_pixel_wide_lines_use_parallelogram: Bool32::default(),
-            non_strict_wide_lines_use_parallelogram: Bool32::default(),
-            block_texel_view_compatible_multiple_layers: Bool32::default(),
-            max_combined_image_sampler_descriptor_count: u32::default(),
-            fragment_shading_rate_clamp_combiner_inputs: Bool32::default(),
-            default_robustness_storage_buffers: PipelineRobustnessBufferBehavior::default(),
-            default_robustness_uniform_buffers: PipelineRobustnessBufferBehavior::default(),
-            default_robustness_vertex_inputs: PipelineRobustnessBufferBehavior::default(),
-            default_robustness_images: PipelineRobustnessImageBehavior::default(),
-            copy_src_layout_count: u32::default(),
-            p_copy_src_layouts: ::core::ptr::null_mut(),
-            copy_dst_layout_count: u32::default(),
-            p_copy_dst_layouts: ::core::ptr::null_mut(),
-            optimal_tiling_layout_uuid: unsafe { ::core::mem::zeroed() },
-            identical_memory_type_requirements: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -35978,9 +33402,7 @@ impl ::core::default::Default for PipelineCompilerControlCreateInfoAMD<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            compiler_control_flags: PipelineCompilerControlFlagsAMD::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -36022,9 +33444,7 @@ impl ::core::default::Default for PhysicalDeviceCoherentMemoryFeaturesAMD<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_coherent_memory: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -36113,12 +33533,7 @@ impl ::core::default::Default for PhysicalDeviceGpaFeaturesAMD<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            perf_counters: Bool32::default(),
-            streaming_perf_counters: Bool32::default(),
-            sq_thread_tracing: Bool32::default(),
-            clock_modes: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -36171,13 +33586,7 @@ impl ::core::default::Default for PhysicalDeviceGpaPropertiesAMD<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: PhysicalDeviceGpaPropertiesFlagsAMD::default(),
-            max_sqtt_se_buffer_size: DeviceSize::default(),
-            shader_engine_count: u32::default(),
-            perf_block_count: u32::default(),
-            p_perf_blocks: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -36226,9 +33635,7 @@ impl ::core::default::Default for PhysicalDeviceGpaProperties2AMD<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            revision_id: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -36301,22 +33708,7 @@ impl ::core::default::Default for GpaSampleBeginInfoAMD<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            sample_type: GpaSampleTypeAMD::default(),
-            sample_internal_operations: Bool32::default(),
-            cache_flush_on_counter_collection: Bool32::default(),
-            sq_shader_mask_enable: Bool32::default(),
-            sq_shader_mask: GpaSqShaderStageFlagsAMD::default(),
-            perf_counter_count: u32::default(),
-            p_perf_counters: ::core::ptr::null(),
-            streaming_perf_trace_sample_interval: u32::default(),
-            perf_counter_device_memory_limit: DeviceSize::default(),
-            sq_thread_trace_enable: Bool32::default(),
-            sq_thread_trace_suppress_instruction_tokens: Bool32::default(),
-            sq_thread_trace_device_memory_limit: DeviceSize::default(),
-            timing_pre_sample: PipelineStageFlags::default(),
-            timing_post_sample: PipelineStageFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -36427,11 +33819,7 @@ impl ::core::default::Default for GpaDeviceClockModeInfoAMD<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            clock_mode: GpaDeviceClockModeAMD::default(),
-            memory_clock_ratio_to_peak: f32::default(),
-            engine_clock_ratio_to_peak: f32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -36476,12 +33864,7 @@ impl ::core::default::Default for GpaDeviceGetClockInfoAMD<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_clock_ratio_to_peak: f32::default(),
-            engine_clock_ratio_to_peak: f32::default(),
-            memory_clock_frequency: u32::default(),
-            engine_clock_frequency: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -36528,9 +33911,7 @@ impl ::core::default::Default for GpaSessionCreateInfoAMD<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            secondary_copy_source: GpaSessionAMD::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -36579,13 +33960,7 @@ impl ::core::default::Default for PhysicalDeviceToolProperties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            name: unsafe { ::core::mem::zeroed() },
-            version: unsafe { ::core::mem::zeroed() },
-            purposes: ToolPurposeFlags::default(),
-            description: unsafe { ::core::mem::zeroed() },
-            layer: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -36666,10 +34041,7 @@ impl ::core::default::Default for SamplerCustomBorderColorCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            custom_border_color: ClearColorValue::default(),
-            format: Format::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -36708,9 +34080,7 @@ impl ::core::default::Default for PhysicalDeviceCustomBorderColorPropertiesEXT<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_custom_border_color_samplers: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -36751,10 +34121,7 @@ impl ::core::default::Default for PhysicalDeviceCustomBorderColorFeaturesEXT<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            custom_border_colors: Bool32::default(),
-            custom_border_color_without_format: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -36801,10 +34168,7 @@ impl ::core::default::Default for SamplerBorderColorComponentMappingCreateInfoEX
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            components: ComponentMapping::default(),
-            srgb: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -36844,10 +34208,7 @@ impl ::core::default::Default for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            border_color_swizzle: Bool32::default(),
-            border_color_swizzle_from_image: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -36955,15 +34316,7 @@ impl ::core::default::Default for AccelerationStructureGeometryTrianglesDataKHR<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            vertex_format: Format::default(),
-            vertex_data: DeviceOrHostAddressConstKHR::default(),
-            vertex_stride: DeviceSize::default(),
-            max_vertex: u32::default(),
-            index_type: IndexType::default(),
-            index_data: DeviceOrHostAddressConstKHR::default(),
-            transform_data: DeviceOrHostAddressConstKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -37037,10 +34390,7 @@ impl ::core::default::Default for AccelerationStructureGeometryAabbsDataKHR<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            data: DeviceOrHostAddressConstKHR::default(),
-            stride: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -37089,10 +34439,7 @@ impl ::core::default::Default for AccelerationStructureGeometryInstancesDataKHR<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            array_of_pointers: Bool32::default(),
-            data: DeviceOrHostAddressConstKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -37159,19 +34506,7 @@ impl ::core::default::Default for AccelerationStructureGeometryLinearSweptSphere
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            vertex_format: Format::default(),
-            vertex_data: DeviceOrHostAddressConstKHR::default(),
-            vertex_stride: DeviceSize::default(),
-            radius_format: Format::default(),
-            radius_data: DeviceOrHostAddressConstKHR::default(),
-            radius_stride: DeviceSize::default(),
-            index_type: IndexType::default(),
-            index_data: DeviceOrHostAddressConstKHR::default(),
-            index_stride: DeviceSize::default(),
-            indexing_mode: RayTracingLssIndexingModeNV::default(),
-            end_caps_mode: RayTracingLssPrimitiveEndCapsModeNV::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -37283,17 +34618,7 @@ impl ::core::default::Default for AccelerationStructureGeometrySpheresDataNV<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            vertex_format: Format::default(),
-            vertex_data: DeviceOrHostAddressConstKHR::default(),
-            vertex_stride: DeviceSize::default(),
-            radius_format: Format::default(),
-            radius_data: DeviceOrHostAddressConstKHR::default(),
-            radius_stride: DeviceSize::default(),
-            index_type: IndexType::default(),
-            index_data: DeviceOrHostAddressConstKHR::default(),
-            index_stride: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -37397,11 +34722,7 @@ impl ::core::default::Default for AccelerationStructureGeometryKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            geometry_type: GeometryTypeKHR::default(),
-            geometry: AccelerationStructureGeometryDataKHR::default(),
-            flags: GeometryFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -37474,17 +34795,7 @@ impl ::core::default::Default for AccelerationStructureBuildGeometryInfoKHR<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: AccelerationStructureTypeKHR::default(),
-            flags: BuildAccelerationStructureFlagsKHR::default(),
-            mode: BuildAccelerationStructureModeKHR::default(),
-            src_acceleration_structure: AccelerationStructureKHR::default(),
-            dst_acceleration_structure: AccelerationStructureKHR::default(),
-            geometry_count: u32::default(),
-            p_geometries: ::core::ptr::null(),
-            pp_geometries: ::core::ptr::null(),
-            scratch_data: DeviceOrHostAddressKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -37601,14 +34912,7 @@ impl ::core::default::Default for AccelerationStructureCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            create_flags: AccelerationStructureCreateFlagsKHR::default(),
-            buffer: Buffer::default(),
-            offset: DeviceSize::default(),
-            size: DeviceSize::default(),
-            ty: AccelerationStructureTypeKHR::default(),
-            device_address: DeviceAddress::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -37738,9 +35042,7 @@ impl ::core::default::Default for AccelerationStructureDeviceAddressInfoKHR<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            acceleration_structure: AccelerationStructureKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -37776,9 +35078,7 @@ impl ::core::default::Default for AccelerationStructureVersionInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_version_data: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -37812,11 +35112,7 @@ impl ::core::default::Default for CopyAccelerationStructureInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src: AccelerationStructureKHR::default(),
-            dst: AccelerationStructureKHR::default(),
-            mode: CopyAccelerationStructureModeKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -37871,11 +35167,7 @@ impl ::core::default::Default for CopyAccelerationStructureToMemoryInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src: AccelerationStructureKHR::default(),
-            dst: DeviceOrHostAddressKHR::default(),
-            mode: CopyAccelerationStructureModeKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -37931,11 +35223,7 @@ impl ::core::default::Default for CopyMemoryToAccelerationStructureInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src: DeviceOrHostAddressConstKHR::default(),
-            dst: AccelerationStructureKHR::default(),
-            mode: CopyAccelerationStructureModeKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -37979,10 +35267,7 @@ impl ::core::default::Default for RayTracingPipelineInterfaceCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            max_pipeline_ray_payload_size: u32::default(),
-            max_pipeline_ray_hit_attribute_size: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -38024,10 +35309,7 @@ impl ::core::default::Default for PipelineLibraryCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            library_count: u32::default(),
-            p_libraries: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -38061,9 +35343,7 @@ impl ::core::default::Default for PhysicalDeviceExtendedDynamicStateFeaturesEXT<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            extended_dynamic_state: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -38103,11 +35383,7 @@ impl ::core::default::Default for PhysicalDeviceExtendedDynamicState2FeaturesEXT
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            extended_dynamic_state2: Bool32::default(),
-            extended_dynamic_state2_logic_op: Bool32::default(),
-            extended_dynamic_state2_patch_control_points: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -38192,39 +35468,7 @@ impl ::core::default::Default for PhysicalDeviceExtendedDynamicState3FeaturesEXT
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            extended_dynamic_state3_tessellation_domain_origin: Bool32::default(),
-            extended_dynamic_state3_depth_clamp_enable: Bool32::default(),
-            extended_dynamic_state3_polygon_mode: Bool32::default(),
-            extended_dynamic_state3_rasterization_samples: Bool32::default(),
-            extended_dynamic_state3_sample_mask: Bool32::default(),
-            extended_dynamic_state3_alpha_to_coverage_enable: Bool32::default(),
-            extended_dynamic_state3_alpha_to_one_enable: Bool32::default(),
-            extended_dynamic_state3_logic_op_enable: Bool32::default(),
-            extended_dynamic_state3_color_blend_enable: Bool32::default(),
-            extended_dynamic_state3_color_blend_equation: Bool32::default(),
-            extended_dynamic_state3_color_write_mask: Bool32::default(),
-            extended_dynamic_state3_rasterization_stream: Bool32::default(),
-            extended_dynamic_state3_conservative_rasterization_mode: Bool32::default(),
-            extended_dynamic_state3_extra_primitive_overestimation_size: Bool32::default(),
-            extended_dynamic_state3_depth_clip_enable: Bool32::default(),
-            extended_dynamic_state3_sample_locations_enable: Bool32::default(),
-            extended_dynamic_state3_color_blend_advanced: Bool32::default(),
-            extended_dynamic_state3_provoking_vertex_mode: Bool32::default(),
-            extended_dynamic_state3_line_rasterization_mode: Bool32::default(),
-            extended_dynamic_state3_line_stipple_enable: Bool32::default(),
-            extended_dynamic_state3_depth_clip_negative_one_to_one: Bool32::default(),
-            extended_dynamic_state3_viewport_w_scaling_enable: Bool32::default(),
-            extended_dynamic_state3_viewport_swizzle: Bool32::default(),
-            extended_dynamic_state3_coverage_to_color_enable: Bool32::default(),
-            extended_dynamic_state3_coverage_to_color_location: Bool32::default(),
-            extended_dynamic_state3_coverage_modulation_mode: Bool32::default(),
-            extended_dynamic_state3_coverage_modulation_table_enable: Bool32::default(),
-            extended_dynamic_state3_coverage_modulation_table: Bool32::default(),
-            extended_dynamic_state3_coverage_reduction_mode: Bool32::default(),
-            extended_dynamic_state3_representative_fragment_test_enable: Bool32::default(),
-            extended_dynamic_state3_shading_rate_image_enable: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -38534,9 +35778,7 @@ impl ::core::default::Default for PhysicalDeviceExtendedDynamicState3PropertiesE
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            dynamic_primitive_topology_unrestricted: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -38661,9 +35903,7 @@ impl ::core::default::Default for RenderPassTransformBeginInfoQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            transform: SurfaceTransformFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -38696,9 +35936,7 @@ impl ::core::default::Default for CopyCommandTransformInfoQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            transform: SurfaceTransformFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -38734,10 +35972,7 @@ impl ::core::default::Default for CommandBufferInheritanceRenderPassTransformInf
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            transform: SurfaceTransformFlagsKHR::default(),
-            render_area: Rect2D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -38779,9 +36014,7 @@ impl ::core::default::Default for PhysicalDevicePartitionedAccelerationStructure
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            partitioned_acceleration_structure: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -38827,9 +36060,7 @@ impl ::core::default::Default for PhysicalDevicePartitionedAccelerationStructure
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_partition_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -38895,9 +36126,7 @@ impl ::core::default::Default for PartitionedAccelerationStructureFlagsNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            enable_partition_translation: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -38935,17 +36164,7 @@ pub struct PartitionedAccelerationStructureWriteInstanceDataNV {
 impl ::core::default::Default for PartitionedAccelerationStructureWriteInstanceDataNV {
     #[inline]
     fn default() -> Self {
-        Self {
-            transform: TransformMatrixKHR::default(),
-            explicit_aabb: unsafe { ::core::mem::zeroed() },
-            instance_id: u32::default(),
-            instance_mask: u32::default(),
-            instance_contribution_to_hit_group_index: u32::default(),
-            instance_flags: PartitionedAccelerationStructureInstanceFlagsNV::default(),
-            instance_index: u32::default(),
-            partition_index: u32::default(),
-            acceleration_structure: DeviceAddress::default(),
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PartitionedAccelerationStructureWriteInstanceDataNV {
@@ -39043,10 +36262,7 @@ pub struct PartitionedAccelerationStructureWritePartitionTranslationDataNV {
 impl ::core::default::Default for PartitionedAccelerationStructureWritePartitionTranslationDataNV {
     #[inline]
     fn default() -> Self {
-        Self {
-            partition_index: u32::default(),
-            partition_translation: unsafe { ::core::mem::zeroed() },
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PartitionedAccelerationStructureWritePartitionTranslationDataNV {
@@ -39080,10 +36296,7 @@ impl ::core::default::Default for WriteDescriptorSetPartitionedAccelerationStruc
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            acceleration_structure_count: u32::default(),
-            p_acceleration_structures: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -39125,13 +36338,7 @@ impl ::core::default::Default for PartitionedAccelerationStructureInstancesInput
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: BuildAccelerationStructureFlagsKHR::default(),
-            instance_count: u32::default(),
-            max_instance_per_partition_count: u32::default(),
-            partition_count: u32::default(),
-            max_instance_in_global_partition_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -39195,14 +36402,8 @@ impl ::core::default::Default for BuildPartitionedAccelerationStructureInfoNV<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
             input: PartitionedAccelerationStructureInstancesInputNV::default(),
-            src_acceleration_structure_data: DeviceAddress::default(),
-            dst_acceleration_structure_data: DeviceAddress::default(),
-            scratch_data: DeviceAddress::default(),
-            src_infos: DeviceAddress::default(),
-            src_infos_count: DeviceAddress::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -39266,9 +36467,7 @@ impl ::core::default::Default for PhysicalDeviceDiagnosticsConfigFeaturesNV<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            diagnostics_config: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -39303,9 +36502,7 @@ impl ::core::default::Default for DeviceDiagnosticsConfigCreateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DeviceDiagnosticsConfigFlagsNV::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -39338,9 +36535,7 @@ impl ::core::default::Default for PhysicalDeviceZeroInitializeWorkgroupMemoryFea
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_zero_initialize_workgroup_memory: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -39385,9 +36580,7 @@ impl ::core::default::Default for PhysicalDeviceShaderSubgroupUniformControlFlow
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_subgroup_uniform_control_flow: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -39435,11 +36628,7 @@ impl ::core::default::Default for PhysicalDeviceRobustness2FeaturesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            robust_buffer_access2: Bool32::default(),
-            robust_image_access2: Bool32::default(),
-            null_descriptor: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -39484,10 +36673,7 @@ impl ::core::default::Default for PhysicalDeviceRobustness2PropertiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            robust_storage_buffer_access_size_alignment: DeviceSize::default(),
-            robust_uniform_buffer_access_size_alignment: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -39534,9 +36720,7 @@ impl ::core::default::Default for PhysicalDeviceImageRobustnessFeatures<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            robust_image_access: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -39573,12 +36757,7 @@ impl ::core::default::Default for PhysicalDeviceWorkgroupMemoryExplicitLayoutFea
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            workgroup_memory_explicit_layout: Bool32::default(),
-            workgroup_memory_explicit_layout_scalar_block_layout: Bool32::default(),
-            workgroup_memory_explicit_layout8_bit_access: Bool32::default(),
-            workgroup_memory_explicit_layout16_bit_access: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -39667,23 +36846,7 @@ impl ::core::default::Default for PhysicalDevicePortabilitySubsetFeaturesKHR<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            constant_alpha_color_blend_factors: Bool32::default(),
-            events: Bool32::default(),
-            image_view_format_reinterpretation: Bool32::default(),
-            image_view_format_swizzle: Bool32::default(),
-            image_view2_d_on3_d_image: Bool32::default(),
-            multisample_array_image: Bool32::default(),
-            mutable_comparison_samplers: Bool32::default(),
-            point_polygons: Bool32::default(),
-            sampler_mip_lod_bias: Bool32::default(),
-            separate_stencil_mask_ref: Bool32::default(),
-            shader_sample_rate_interpolation_functions: Bool32::default(),
-            tessellation_isolines: Bool32::default(),
-            tessellation_point_mode: Bool32::default(),
-            triangle_fans: Bool32::default(),
-            vertex_attribute_access_beyond_stride: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -39812,9 +36975,7 @@ impl ::core::default::Default for PhysicalDevicePortabilitySubsetPropertiesKHR<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_vertex_input_binding_stride_alignment: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -39858,10 +37019,7 @@ impl ::core::default::Default for PhysicalDevice4444FormatsFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format_a4r4g4b4: Bool32::default(),
-            format_a4b4g4r4: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -39900,9 +37058,7 @@ impl ::core::default::Default for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            subpass_shading: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -39941,10 +37097,7 @@ impl ::core::default::Default for PhysicalDeviceClusterCullingShaderFeaturesHUAW
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            clusterculling_shader: Bool32::default(),
-            multiview_cluster_culling_shader: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -39990,9 +37143,7 @@ impl ::core::default::Default for PhysicalDeviceClusterCullingShaderVrsFeaturesH
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cluster_shading_rate: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -40031,11 +37182,7 @@ impl ::core::default::Default for BufferCopy2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_offset: DeviceSize::default(),
-            dst_offset: DeviceSize::default(),
-            size: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -40081,13 +37228,7 @@ impl ::core::default::Default for ImageCopy2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_subresource: ImageSubresourceLayers::default(),
-            src_offset: Offset3D::default(),
-            dst_subresource: ImageSubresourceLayers::default(),
-            dst_offset: Offset3D::default(),
-            extent: Extent3D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -40142,12 +37283,7 @@ impl ::core::default::Default for ImageBlit2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_subresource: ImageSubresourceLayers::default(),
-            src_offsets: unsafe { ::core::mem::zeroed() },
-            dst_subresource: ImageSubresourceLayers::default(),
-            dst_offsets: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -40199,14 +37335,7 @@ impl ::core::default::Default for BufferImageCopy2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            buffer_offset: DeviceSize::default(),
-            buffer_row_length: u32::default(),
-            buffer_image_height: u32::default(),
-            image_subresource: ImageSubresourceLayers::default(),
-            image_offset: Offset3D::default(),
-            image_extent: Extent3D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -40267,13 +37396,7 @@ impl ::core::default::Default for ImageResolve2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_subresource: ImageSubresourceLayers::default(),
-            src_offset: Offset3D::default(),
-            dst_subresource: ImageSubresourceLayers::default(),
-            dst_offset: Offset3D::default(),
-            extent: Extent3D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -40328,12 +37451,7 @@ impl ::core::default::Default for CopyBufferInfo2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_buffer: Buffer::default(),
-            dst_buffer: Buffer::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -40381,14 +37499,7 @@ impl ::core::default::Default for CopyImageInfo2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_image: Image::default(),
-            src_image_layout: ImageLayout::default(),
-            dst_image: Image::default(),
-            dst_image_layout: ImageLayout::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -40447,15 +37558,7 @@ impl ::core::default::Default for BlitImageInfo2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_image: Image::default(),
-            src_image_layout: ImageLayout::default(),
-            dst_image: Image::default(),
-            dst_image_layout: ImageLayout::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            filter: Filter::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -40517,13 +37620,7 @@ impl ::core::default::Default for CopyBufferToImageInfo2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_buffer: Buffer::default(),
-            dst_image: Image::default(),
-            dst_image_layout: ImageLayout::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -40575,13 +37672,7 @@ impl ::core::default::Default for CopyImageToBufferInfo2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_image: Image::default(),
-            src_image_layout: ImageLayout::default(),
-            dst_buffer: Buffer::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -40634,14 +37725,7 @@ impl ::core::default::Default for ResolveImageInfo2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_image: Image::default(),
-            src_image_layout: ImageLayout::default(),
-            dst_image: Image::default(),
-            dst_image_layout: ImageLayout::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -40695,10 +37779,7 @@ impl ::core::default::Default for PhysicalDeviceShaderImageAtomicInt64FeaturesEX
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_image_int64_atomics: Bool32::default(),
-            sparse_image_int64_atomics: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -40742,10 +37823,7 @@ impl ::core::default::Default for FragmentShadingRateAttachmentInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_fragment_shading_rate_attachment: ::core::ptr::null(),
-            shading_rate_attachment_texel_size: Extent2D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -40790,10 +37868,7 @@ impl ::core::default::Default for PipelineFragmentShadingRateStateCreateInfoKHR<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            fragment_size: Extent2D::default(),
-            combiner_ops: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -40837,11 +37912,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRateFeaturesKHR<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_fragment_shading_rate: Bool32::default(),
-            primitive_fragment_shading_rate: Bool32::default(),
-            attachment_fragment_shading_rate: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -40911,25 +37982,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRatePropertiesKHR
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_fragment_shading_rate_attachment_texel_size: Extent2D::default(),
-            max_fragment_shading_rate_attachment_texel_size: Extent2D::default(),
-            max_fragment_shading_rate_attachment_texel_size_aspect_ratio: u32::default(),
-            primitive_fragment_shading_rate_with_multiple_viewports: Bool32::default(),
-            layered_shading_rate_attachments: Bool32::default(),
-            fragment_shading_rate_non_trivial_combiner_ops: Bool32::default(),
-            max_fragment_size: Extent2D::default(),
-            max_fragment_size_aspect_ratio: u32::default(),
-            max_fragment_shading_rate_coverage_samples: u32::default(),
-            max_fragment_shading_rate_rasterization_samples: SampleCountFlags::default(),
-            fragment_shading_rate_with_shader_depth_stencil_writes: Bool32::default(),
-            fragment_shading_rate_with_sample_mask: Bool32::default(),
-            fragment_shading_rate_with_shader_sample_mask: Bool32::default(),
-            fragment_shading_rate_with_conservative_rasterization: Bool32::default(),
-            fragment_shading_rate_with_fragment_shader_interlock: Bool32::default(),
-            fragment_shading_rate_with_custom_sample_locations: Bool32::default(),
-            fragment_shading_rate_strict_multiply_combiner: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -41105,10 +38158,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRateKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            sample_counts: SampleCountFlags::default(),
-            fragment_size: Extent2D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -41145,9 +38195,7 @@ impl ::core::default::Default for PhysicalDeviceShaderTerminateInvocationFeature
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_terminate_invocation: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -41187,11 +38235,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRateEnumsFeatures
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            fragment_shading_rate_enums: Bool32::default(),
-            supersample_fragment_shading_rates: Bool32::default(),
-            no_invocation_fragment_shading_rates: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -41245,9 +38289,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentShadingRateEnumsProperti
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_fragment_shading_rate_invocation_count: SampleCountFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -41290,11 +38332,7 @@ impl ::core::default::Default for PipelineFragmentShadingRateEnumStateCreateInfo
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            shading_rate_type: FragmentShadingRateTypeNV::default(),
-            shading_rate: FragmentShadingRateNV::default(),
-            combiner_ops: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -41343,11 +38381,7 @@ impl ::core::default::Default for AccelerationStructureBuildSizesInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            acceleration_structure_size: DeviceSize::default(),
-            update_scratch_size: DeviceSize::default(),
-            build_scratch_size: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -41391,10 +38425,7 @@ impl ::core::default::Default for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image2_d_view_of3_d: Bool32::default(),
-            sampler2_d_view_of3_d: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -41434,9 +38465,7 @@ impl ::core::default::Default for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image_sliced_view_of3_d: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -41474,9 +38503,7 @@ impl ::core::default::Default for PhysicalDeviceAttachmentFeedbackLoopDynamicSta
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            attachment_feedback_loop_dynamic_state: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -41522,9 +38549,7 @@ impl ::core::default::Default for PhysicalDeviceLegacyVertexAttributesFeaturesEX
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            legacy_vertex_attributes: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -41562,9 +38587,7 @@ impl ::core::default::Default for PhysicalDeviceLegacyVertexAttributesProperties
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            native_unaligned_performance: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -41601,9 +38624,7 @@ impl ::core::default::Default for PhysicalDeviceMutableDescriptorTypeFeaturesEXT
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            mutable_descriptor_type: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -41638,11 +38659,7 @@ unsafe impl Sync for MutableDescriptorTypeListEXT<'_> {}
 impl ::core::default::Default for MutableDescriptorTypeListEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            descriptor_type_count: u32::default(),
-            p_descriptor_types: ::core::ptr::null(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> MutableDescriptorTypeListEXT<'a> {
@@ -41672,10 +38689,7 @@ impl ::core::default::Default for MutableDescriptorTypeCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            mutable_descriptor_type_list_count: u32::default(),
-            p_mutable_descriptor_type_lists: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -41713,9 +38727,7 @@ impl ::core::default::Default for PhysicalDeviceDepthClipControlFeaturesEXT<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            depth_clip_control: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -41750,9 +38762,7 @@ impl ::core::default::Default for PhysicalDeviceZeroInitializeDeviceMemoryFeatur
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            zero_initialize_device_memory: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -41792,8 +38802,7 @@ impl ::core::default::Default for BeginCustomResolveInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -41819,9 +38828,7 @@ impl ::core::default::Default for PhysicalDeviceCustomResolveFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            custom_resolve: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -41860,13 +38867,7 @@ impl ::core::default::Default for CustomResolveCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            custom_resolve: Bool32::default(),
-            color_attachment_count: u32::default(),
-            p_color_attachment_formats: ::core::ptr::null(),
-            depth_attachment_format: Format::default(),
-            stencil_attachment_format: Format::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -41918,10 +38919,7 @@ impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsFeaturesE
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_generated_commands: Bool32::default(),
-            dynamic_generated_pipeline_layout: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -41978,20 +38976,7 @@ impl ::core::default::Default for PhysicalDeviceDeviceGeneratedCommandsPropertie
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_indirect_pipeline_count: u32::default(),
-            max_indirect_shader_object_count: u32::default(),
-            max_indirect_sequence_count: u32::default(),
-            max_indirect_commands_token_count: u32::default(),
-            max_indirect_commands_token_offset: u32::default(),
-            max_indirect_commands_indirect_stride: u32::default(),
-            supported_indirect_commands_input_modes: IndirectCommandsInputModeFlagsEXT::default(),
-            supported_indirect_commands_shader_stages: ShaderStageFlags::default(),
-            supported_indirect_commands_shader_stages_pipeline_binding: ShaderStageFlags::default(),
-            supported_indirect_commands_shader_stages_shader_binding: ShaderStageFlags::default(),
-            device_generated_commands_transform_feedback: Bool32::default(),
-            device_generated_commands_multi_draw_indirect_count: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -42117,9 +39102,7 @@ impl ::core::default::Default for GeneratedCommandsPipelineInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline: Pipeline::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -42157,10 +39140,7 @@ impl ::core::default::Default for GeneratedCommandsShaderInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_count: u32::default(),
-            p_shaders: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -42201,12 +39181,7 @@ impl ::core::default::Default for GeneratedCommandsMemoryRequirementsInfoEXT<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            indirect_execution_set: IndirectExecutionSetEXT::default(),
-            indirect_commands_layout: IndirectCommandsLayoutEXT::default(),
-            max_sequence_count: u32::default(),
-            max_draw_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -42261,10 +39236,7 @@ impl ::core::default::Default for IndirectExecutionSetPipelineInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            initial_pipeline: Pipeline::default(),
-            max_pipeline_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -42302,10 +39274,7 @@ impl ::core::default::Default for IndirectExecutionSetShaderLayoutInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            set_layout_count: u32::default(),
-            p_set_layouts: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -42344,14 +39313,7 @@ impl ::core::default::Default for IndirectExecutionSetShaderInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            shader_count: u32::default(),
-            p_initial_shaders: ::core::ptr::null(),
-            p_set_layout_infos: ::core::ptr::null(),
-            max_shader_count: u32::default(),
-            push_constant_range_count: u32::default(),
-            p_push_constant_ranges: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -42428,10 +39390,7 @@ impl ::core::default::Default for IndirectExecutionSetCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: IndirectExecutionSetInfoTypeEXT::default(),
-            info: IndirectExecutionSetInfoEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -42477,18 +39436,7 @@ impl ::core::default::Default for GeneratedCommandsInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            shader_stages: ShaderStageFlags::default(),
-            indirect_execution_set: IndirectExecutionSetEXT::default(),
-            indirect_commands_layout: IndirectCommandsLayoutEXT::default(),
-            indirect_address: DeviceAddress::default(),
-            indirect_address_size: DeviceSize::default(),
-            preprocess_address: DeviceAddress::default(),
-            preprocess_size: DeviceSize::default(),
-            max_sequence_count: u32::default(),
-            sequence_count_address: DeviceAddress::default(),
-            max_draw_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -42572,10 +39520,7 @@ impl ::core::default::Default for WriteIndirectExecutionSetPipelineEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            index: u32::default(),
-            pipeline: Pipeline::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -42613,10 +39558,7 @@ impl ::core::default::Default for WriteIndirectExecutionSetShaderEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            index: u32::default(),
-            shader: ShaderEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -42658,14 +39600,7 @@ impl ::core::default::Default for IndirectCommandsLayoutCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: IndirectCommandsLayoutUsageFlagsEXT::default(),
-            shader_stages: ShaderStageFlags::default(),
-            indirect_stride: u32::default(),
-            pipeline_layout: PipelineLayout::default(),
-            token_count: u32::default(),
-            p_tokens: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -42731,11 +39666,7 @@ impl ::core::default::Default for IndirectCommandsLayoutTokenEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: IndirectCommandsTokenTypeEXT::default(),
-            data: IndirectCommandsTokenDataEXT::default(),
-            offset: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -42939,9 +39870,7 @@ impl ::core::default::Default for PipelineViewportDepthClipControlCreateInfoEXT<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            negative_one_to_one: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -42978,9 +39907,7 @@ impl ::core::default::Default for PhysicalDeviceDepthClampControlFeaturesEXT<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            depth_clamp_control: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -43019,10 +39946,7 @@ impl ::core::default::Default for PipelineViewportDepthClampControlCreateInfoEXT
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            depth_clamp_mode: DepthClampModeEXT::default(),
-            p_depth_clamp_range: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -43064,9 +39988,7 @@ impl ::core::default::Default for PhysicalDeviceVertexInputDynamicStateFeaturesE
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            vertex_input_dynamic_state: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -43104,9 +40026,7 @@ impl ::core::default::Default for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            external_memory_rdma: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -43144,9 +40064,7 @@ impl ::core::default::Default for PhysicalDeviceShaderRelaxedExtendedInstruction
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_relaxed_extended_instruction: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -43195,12 +40113,7 @@ impl ::core::default::Default for VertexInputBindingDescription2EXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            binding: u32::default(),
-            stride: u32::default(),
-            input_rate: VertexInputRate::default(),
-            divisor: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -43250,12 +40163,7 @@ impl ::core::default::Default for VertexInputAttributeDescription2EXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            location: u32::default(),
-            binding: u32::default(),
-            format: Format::default(),
-            offset: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -43302,9 +40210,7 @@ impl ::core::default::Default for PhysicalDeviceColorWriteEnableFeaturesEXT<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            color_write_enable: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -43340,10 +40246,7 @@ impl ::core::default::Default for PipelineColorWriteCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            attachment_count: u32::default(),
-            p_color_write_enables: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -43380,12 +40283,7 @@ impl ::core::default::Default for MemoryBarrier2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_stage_mask: PipelineStageFlags2::default(),
-            src_access_mask: AccessFlags2::default(),
-            dst_stage_mask: PipelineStageFlags2::default(),
-            dst_access_mask: AccessFlags2::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -43442,18 +40340,7 @@ impl ::core::default::Default for ImageMemoryBarrier2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_stage_mask: PipelineStageFlags2::default(),
-            src_access_mask: AccessFlags2::default(),
-            dst_stage_mask: PipelineStageFlags2::default(),
-            dst_access_mask: AccessFlags2::default(),
-            old_layout: ImageLayout::default(),
-            new_layout: ImageLayout::default(),
-            src_queue_family_index: u32::default(),
-            dst_queue_family_index: u32::default(),
-            image: Image::default(),
-            subresource_range: ImageSubresourceRange::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -43538,17 +40425,7 @@ impl ::core::default::Default for BufferMemoryBarrier2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_stage_mask: PipelineStageFlags2::default(),
-            src_access_mask: AccessFlags2::default(),
-            dst_stage_mask: PipelineStageFlags2::default(),
-            dst_access_mask: AccessFlags2::default(),
-            src_queue_family_index: u32::default(),
-            dst_queue_family_index: u32::default(),
-            buffer: Buffer::default(),
-            offset: DeviceSize::default(),
-            size: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -43621,10 +40498,7 @@ impl ::core::default::Default for MemoryBarrierAccessFlags3KHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_access_mask3: AccessFlags3KHR::default(),
-            dst_access_mask3: AccessFlags3KHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -43671,15 +40545,7 @@ impl ::core::default::Default for DependencyInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            dependency_flags: DependencyFlags::default(),
-            memory_barrier_count: u32::default(),
-            p_memory_barriers: ::core::ptr::null(),
-            buffer_memory_barrier_count: u32::default(),
-            p_buffer_memory_barriers: ::core::ptr::null(),
-            image_memory_barrier_count: u32::default(),
-            p_image_memory_barriers: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -43738,12 +40604,7 @@ impl ::core::default::Default for SemaphoreSubmitInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            semaphore: Semaphore::default(),
-            value: u64::default(),
-            stage_mask: PipelineStageFlags2::default(),
-            device_index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -43791,10 +40652,7 @@ impl ::core::default::Default for CommandBufferSubmitInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            command_buffer: CommandBuffer::default(),
-            device_mask: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -43837,15 +40695,7 @@ impl ::core::default::Default for SubmitInfo2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: SubmitFlags::default(),
-            wait_semaphore_info_count: u32::default(),
-            p_wait_semaphore_infos: ::core::ptr::null(),
-            command_buffer_info_count: u32::default(),
-            p_command_buffer_infos: ::core::ptr::null(),
-            signal_semaphore_info_count: u32::default(),
-            p_signal_semaphore_infos: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -43904,9 +40754,7 @@ impl ::core::default::Default for QueueFamilyCheckpointProperties2NV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            checkpoint_execution_stage_mask: PipelineStageFlags2::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -43943,10 +40791,7 @@ impl ::core::default::Default for CheckpointData2NV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            stage: PipelineStageFlags2::default(),
-            p_checkpoint_marker: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -43983,9 +40828,7 @@ impl ::core::default::Default for PhysicalDeviceSynchronization2Features<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            synchronization2: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -44020,10 +40863,7 @@ impl ::core::default::Default for PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            unified_image_layouts: Bool32::default(),
-            unified_image_layouts_video: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -44066,9 +40906,7 @@ impl ::core::default::Default for PhysicalDeviceHostImageCopyFeatures<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            host_image_copy: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -44107,14 +40945,7 @@ impl ::core::default::Default for PhysicalDeviceHostImageCopyProperties<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            copy_src_layout_count: u32::default(),
-            p_copy_src_layouts: ::core::ptr::null_mut(),
-            copy_dst_layout_count: u32::default(),
-            p_copy_dst_layouts: ::core::ptr::null_mut(),
-            optimal_tiling_layout_uuid: unsafe { ::core::mem::zeroed() },
-            identical_memory_type_requirements: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -44175,14 +41006,7 @@ impl ::core::default::Default for MemoryToImageCopy<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_host_pointer: ::core::ptr::null(),
-            memory_row_length: u32::default(),
-            memory_image_height: u32::default(),
-            image_subresource: ImageSubresourceLayers::default(),
-            image_offset: Offset3D::default(),
-            image_extent: Extent3D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -44244,14 +41068,7 @@ impl ::core::default::Default for ImageToMemoryCopy<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_host_pointer: ::core::ptr::null_mut(),
-            memory_row_length: u32::default(),
-            memory_image_height: u32::default(),
-            image_subresource: ImageSubresourceLayers::default(),
-            image_offset: Offset3D::default(),
-            image_extent: Extent3D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -44312,13 +41129,7 @@ impl ::core::default::Default for CopyMemoryToImageInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: HostImageCopyFlags::default(),
-            dst_image: Image::default(),
-            dst_image_layout: ImageLayout::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -44370,13 +41181,7 @@ impl ::core::default::Default for CopyImageToMemoryInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: HostImageCopyFlags::default(),
-            src_image: Image::default(),
-            src_image_layout: ImageLayout::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -44430,15 +41235,7 @@ impl ::core::default::Default for CopyImageToImageInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: HostImageCopyFlags::default(),
-            src_image: Image::default(),
-            src_image_layout: ImageLayout::default(),
-            dst_image: Image::default(),
-            dst_image_layout: ImageLayout::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -44499,12 +41296,7 @@ impl ::core::default::Default for HostImageLayoutTransitionInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image: Image::default(),
-            old_layout: ImageLayout::default(),
-            new_layout: ImageLayout::default(),
-            subresource_range: ImageSubresourceRange::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -44551,9 +41343,7 @@ impl ::core::default::Default for SubresourceHostMemcpySize<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            size: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -44587,10 +41377,7 @@ impl ::core::default::Default for HostImageCopyDevicePerformanceQuery<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            optimal_device_access: Bool32::default(),
-            identical_memory_layout: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -44630,11 +41417,7 @@ impl ::core::default::Default for PhysicalDevicePrimitivesGeneratedQueryFeatures
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            primitives_generated_query: Bool32::default(),
-            primitives_generated_query_with_rasterizer_discard: Bool32::default(),
-            primitives_generated_query_with_non_zero_streams: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -44693,9 +41476,7 @@ impl ::core::default::Default for PhysicalDeviceLegacyDitheringFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            legacy_dithering: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -44730,9 +41511,7 @@ impl ::core::default::Default for PhysicalDeviceMultisampledRenderToSingleSample
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            multisampled_render_to_single_sampled: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -44778,9 +41557,7 @@ impl ::core::default::Default for SurfaceCapabilitiesPresentId2KHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_id2_supported: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -44813,9 +41590,7 @@ impl ::core::default::Default for SurfaceCapabilitiesPresentWait2KHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_wait2_supported: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -44848,9 +41623,7 @@ impl ::core::default::Default for SubpassResolvePerformanceQueryEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            optimal: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -44884,10 +41657,7 @@ impl ::core::default::Default for MultisampledRenderToSingleSampledInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            multisampled_render_to_single_sampled_enable: Bool32::default(),
-            rasterization_samples: SampleCountFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -44931,9 +41701,7 @@ impl ::core::default::Default for PhysicalDevicePipelineProtectedAccessFeatures<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_protected_access: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -44971,9 +41739,7 @@ impl ::core::default::Default for QueueFamilyVideoPropertiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            video_codec_operations: VideoCodecOperationFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45009,9 +41775,7 @@ impl ::core::default::Default for QueueFamilyQueryResultStatusPropertiesKHR<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            query_result_status_support: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45046,10 +41810,7 @@ impl ::core::default::Default for VideoProfileListInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            profile_count: u32::default(),
-            p_profiles: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45086,9 +41847,7 @@ impl ::core::default::Default for PhysicalDeviceVideoFormatInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image_usage: ImageUsageFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45125,14 +41884,7 @@ impl ::core::default::Default for VideoFormatPropertiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format: Format::default(),
-            component_mapping: ComponentMapping::default(),
-            image_create_flags: ImageCreateFlags::default(),
-            image_type: ImageType::default(),
-            image_tiling: ImageTiling::default(),
-            image_usage_flags: ImageUsageFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45189,9 +41941,7 @@ impl ::core::default::Default for VideoEncodeQuantizationMapCapabilitiesKHR<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_quantization_map_extent: Extent2D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45226,10 +41976,7 @@ impl ::core::default::Default for VideoEncodeH264QuantizationMapCapabilitiesKHR<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_qp_delta: i32::default(),
-            max_qp_delta: i32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45272,10 +42019,7 @@ impl ::core::default::Default for VideoEncodeH265QuantizationMapCapabilitiesKHR<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_qp_delta: i32::default(),
-            max_qp_delta: i32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45318,10 +42062,7 @@ impl ::core::default::Default for VideoEncodeAV1QuantizationMapCapabilitiesKHR<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_q_index_delta: i32::default(),
-            max_q_index_delta: i32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45360,9 +42101,7 @@ impl ::core::default::Default for VideoFormatQuantizationMapPropertiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            quantization_map_texel_size: Extent2D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45396,9 +42135,7 @@ impl ::core::default::Default for VideoFormatH265QuantizationMapPropertiesKHR<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            compatible_ctb_sizes: VideoEncodeH265CtbSizeFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45438,9 +42175,7 @@ impl ::core::default::Default for VideoFormatAV1QuantizationMapPropertiesKHR<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            compatible_superblock_sizes: VideoEncodeAV1SuperblockSizeFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45483,12 +42218,7 @@ impl ::core::default::Default for VideoProfileInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            video_codec_operation: VideoCodecOperationFlagsKHR::default(),
-            chroma_subsampling: VideoChromaSubsamplingFlagsKHR::default(),
-            luma_bit_depth: VideoComponentBitDepthFlagsKHR::default(),
-            chroma_bit_depth: VideoComponentBitDepthFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45550,17 +42280,7 @@ impl ::core::default::Default for VideoCapabilitiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: VideoCapabilityFlagsKHR::default(),
-            min_bitstream_buffer_offset_alignment: DeviceSize::default(),
-            min_bitstream_buffer_size_alignment: DeviceSize::default(),
-            picture_access_granularity: Extent2D::default(),
-            min_coded_extent: Extent2D::default(),
-            max_coded_extent: Extent2D::default(),
-            max_dpb_slots: u32::default(),
-            max_active_reference_pictures: u32::default(),
-            std_header_version: ExtensionProperties::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45639,10 +42359,7 @@ impl ::core::default::Default for VideoSessionMemoryRequirementsKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_bind_index: u32::default(),
-            memory_requirements: MemoryRequirements::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45682,12 +42399,7 @@ impl ::core::default::Default for BindVideoSessionMemoryInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory_bind_index: u32::default(),
-            memory: DeviceMemory::default(),
-            memory_offset: DeviceSize::default(),
-            memory_size: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45737,12 +42449,7 @@ impl ::core::default::Default for VideoPictureResourceInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            coded_offset: Offset2D::default(),
-            coded_extent: Extent2D::default(),
-            base_array_layer: u32::default(),
-            image_view_binding: ImageView::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45790,10 +42497,7 @@ impl ::core::default::Default for VideoReferenceSlotInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            slot_index: i32::default(),
-            p_picture_resource: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45833,9 +42537,7 @@ impl ::core::default::Default for VideoDecodeCapabilitiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: VideoDecodeCapabilityFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45868,9 +42570,7 @@ impl ::core::default::Default for VideoDecodeUsageInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            video_usage_hints: VideoDecodeUsageFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45911,16 +42611,8 @@ impl ::core::default::Default for VideoDecodeInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: VideoDecodeFlagsKHR::default(),
-            src_buffer: Buffer::default(),
-            src_buffer_offset: DeviceSize::default(),
-            src_buffer_range: DeviceSize::default(),
             dst_picture_resource: VideoPictureResourceInfoKHR::default(),
-            p_setup_reference_slot: ::core::ptr::null(),
-            reference_slot_count: u32::default(),
-            p_reference_slots: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -45989,9 +42681,7 @@ impl ::core::default::Default for PhysicalDeviceVideoMaintenance1FeaturesKHR<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            video_maintenance1: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46029,9 +42719,7 @@ impl ::core::default::Default for PhysicalDeviceVideoMaintenance2FeaturesKHR<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            video_maintenance2: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46071,11 +42759,7 @@ impl ::core::default::Default for VideoInlineQueryInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            query_pool: QueryPool::default(),
-            first_query: u32::default(),
-            query_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46120,10 +42804,7 @@ impl ::core::default::Default for VideoDecodeH264ProfileInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_profile_idc: StdVideoH264ProfileIdc::default(),
-            picture_layout: VideoDecodeH264PictureLayoutFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46163,10 +42844,7 @@ impl ::core::default::Default for VideoDecodeH264CapabilitiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_level_idc: StdVideoH264LevelIdc::default(),
-            field_offset_granularity: Offset2D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46207,12 +42885,7 @@ impl ::core::default::Default for VideoDecodeH264SessionParametersAddInfoKHR<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_sps_count: u32::default(),
-            p_std_sp_ss: ::core::ptr::null(),
-            std_pps_count: u32::default(),
-            p_std_pp_ss: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46258,11 +42931,7 @@ impl ::core::default::Default for VideoDecodeH264SessionParametersCreateInfoKHR<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            max_std_sps_count: u32::default(),
-            max_std_pps_count: u32::default(),
-            p_parameters_add_info: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46313,10 +42982,7 @@ impl ::core::default::Default for VideoDecodeH264InlineSessionParametersInfoKHR<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_sps: ::core::ptr::null(),
-            p_std_pps: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46357,11 +43023,7 @@ impl ::core::default::Default for VideoDecodeH264PictureInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_picture_info: ::core::ptr::null(),
-            slice_count: u32::default(),
-            p_slice_offsets: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46400,9 +43062,7 @@ impl ::core::default::Default for VideoDecodeH264DpbSlotInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_reference_info: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46438,9 +43098,7 @@ impl ::core::default::Default for VideoDecodeH265ProfileInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_profile_idc: StdVideoH265ProfileIdc::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46474,9 +43132,7 @@ impl ::core::default::Default for VideoDecodeH265CapabilitiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_level_idc: StdVideoH265LevelIdc::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46514,14 +43170,7 @@ impl ::core::default::Default for VideoDecodeH265SessionParametersAddInfoKHR<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_vps_count: u32::default(),
-            p_std_vp_ss: ::core::ptr::null(),
-            std_sps_count: u32::default(),
-            p_std_sp_ss: ::core::ptr::null(),
-            std_pps_count: u32::default(),
-            p_std_pp_ss: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46574,12 +43223,7 @@ impl ::core::default::Default for VideoDecodeH265SessionParametersCreateInfoKHR<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            max_std_vps_count: u32::default(),
-            max_std_sps_count: u32::default(),
-            max_std_pps_count: u32::default(),
-            p_parameters_add_info: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46636,11 +43280,7 @@ impl ::core::default::Default for VideoDecodeH265InlineSessionParametersInfoKHR<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_vps: ::core::ptr::null(),
-            p_std_sps: ::core::ptr::null(),
-            p_std_pps: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46686,11 +43326,7 @@ impl ::core::default::Default for VideoDecodeH265PictureInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_picture_info: ::core::ptr::null(),
-            slice_segment_count: u32::default(),
-            p_slice_segment_offsets: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46729,9 +43365,7 @@ impl ::core::default::Default for VideoDecodeH265DpbSlotInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_reference_info: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46767,9 +43401,7 @@ impl ::core::default::Default for PhysicalDeviceVideoDecodeVP9FeaturesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            video_decode_vp9: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46804,9 +43436,7 @@ impl ::core::default::Default for VideoDecodeVP9ProfileInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_profile: StdVideoVP9Profile::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46840,9 +43470,7 @@ impl ::core::default::Default for VideoDecodeVP9CapabilitiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_level: StdVideoVP9Level::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46879,13 +43507,7 @@ impl ::core::default::Default for VideoDecodeVP9PictureInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_picture_info: ::core::ptr::null(),
-            reference_name_slot_indices: unsafe { ::core::mem::zeroed() },
-            uncompressed_header_offset: u32::default(),
-            compressed_header_offset: u32::default(),
-            tiles_offset: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46942,10 +43564,7 @@ impl ::core::default::Default for VideoDecodeAV1ProfileInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_profile: StdVideoAV1Profile::default(),
-            film_grain_support: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -46984,9 +43603,7 @@ impl ::core::default::Default for VideoDecodeAV1CapabilitiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_level: StdVideoAV1Level::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47019,9 +43636,7 @@ impl ::core::default::Default for VideoDecodeAV1SessionParametersCreateInfoKHR<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_sequence_header: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47061,9 +43676,7 @@ impl ::core::default::Default for VideoDecodeAV1InlineSessionParametersInfoKHR<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_sequence_header: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47105,14 +43718,7 @@ impl ::core::default::Default for VideoDecodeAV1PictureInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_picture_info: ::core::ptr::null(),
-            reference_name_slot_indices: unsafe { ::core::mem::zeroed() },
-            frame_header_offset: u32::default(),
-            tile_count: u32::default(),
-            p_tile_offsets: ::core::ptr::null(),
-            p_tile_sizes: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47170,9 +43776,7 @@ impl ::core::default::Default for VideoDecodeAV1DpbSlotInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_reference_info: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47216,17 +43820,7 @@ impl ::core::default::Default for VideoSessionCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            queue_family_index: u32::default(),
-            flags: VideoSessionCreateFlagsKHR::default(),
-            p_video_profile: ::core::ptr::null(),
-            picture_format: Format::default(),
-            max_coded_extent: Extent2D::default(),
-            reference_picture_format: Format::default(),
-            max_dpb_slots: u32::default(),
-            max_active_reference_pictures: u32::default(),
-            p_std_header_version: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47300,11 +43894,7 @@ impl ::core::default::Default for VideoSessionParametersCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: VideoSessionParametersCreateFlagsKHR::default(),
-            video_session_parameters_template: VideoSessionParametersKHR::default(),
-            video_session: VideoSessionKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47349,9 +43939,7 @@ impl ::core::default::Default for VideoSessionParametersUpdateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            update_sequence_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47383,9 +43971,7 @@ impl ::core::default::Default for VideoEncodeSessionParametersGetInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            video_session_parameters: VideoSessionParametersKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47421,9 +44007,7 @@ impl ::core::default::Default for VideoEncodeSessionParametersFeedbackInfoKHR<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            has_overrides: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47460,13 +44044,7 @@ impl ::core::default::Default for VideoBeginCodingInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: VideoBeginCodingFlagsKHR::default(),
-            video_session: VideoSessionKHR::default(),
-            video_session_parameters: VideoSessionParametersKHR::default(),
-            reference_slot_count: u32::default(),
-            p_reference_slots: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47517,9 +44095,7 @@ impl ::core::default::Default for VideoEndCodingInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: VideoEndCodingFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47551,9 +44127,7 @@ impl ::core::default::Default for VideoCodingControlInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: VideoCodingControlFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47587,11 +44161,7 @@ impl ::core::default::Default for VideoEncodeUsageInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            video_usage_hints: VideoEncodeUsageFlagsKHR::default(),
-            video_content_hints: VideoEncodeContentFlagsKHR::default(),
-            tuning_mode: VideoEncodeTuningModeKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47643,17 +44213,8 @@ impl ::core::default::Default for VideoEncodeInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: VideoEncodeFlagsKHR::default(),
-            dst_buffer: Buffer::default(),
-            dst_buffer_offset: DeviceSize::default(),
-            dst_buffer_range: DeviceSize::default(),
             src_picture_resource: VideoPictureResourceInfoKHR::default(),
-            p_setup_reference_slot: ::core::ptr::null(),
-            reference_slot_count: u32::default(),
-            p_reference_slots: ::core::ptr::null(),
-            preceding_externally_encoded_bytes: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47731,10 +44292,7 @@ impl ::core::default::Default for VideoEncodeQuantizationMapInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            quantization_map: ImageView::default(),
-            quantization_map_extent: Extent2D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47772,9 +44330,7 @@ impl ::core::default::Default for VideoEncodeQuantizationMapSessionParametersCre
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            quantization_map_texel_size: Extent2D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47813,9 +44369,7 @@ impl ::core::default::Default for PhysicalDeviceVideoEncodeQuantizationMapFeatur
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            video_encode_quantization_map: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47856,9 +44410,7 @@ impl ::core::default::Default for QueryPoolVideoEncodeFeedbackCreateInfoKHR<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            encode_feedback_flags: VideoEncodeFeedbackFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47895,9 +44447,7 @@ impl ::core::default::Default for VideoEncodeQualityLevelInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            quality_level: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47935,10 +44485,7 @@ impl ::core::default::Default for PhysicalDeviceVideoEncodeQualityLevelInfoKHR<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_video_profile: ::core::ptr::null(),
-            quality_level: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -47977,10 +44524,7 @@ impl ::core::default::Default for VideoEncodeQualityLevelPropertiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            preferred_rate_control_mode: VideoEncodeRateControlModeFlagsKHR::default(),
-            preferred_rate_control_layer_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -48028,14 +44572,7 @@ impl ::core::default::Default for VideoEncodeRateControlInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: VideoEncodeRateControlFlagsKHR::default(),
-            rate_control_mode: VideoEncodeRateControlModeFlagsKHR::default(),
-            layer_count: u32::default(),
-            p_layers: ::core::ptr::null(),
-            virtual_buffer_size_in_ms: u32::default(),
-            initial_virtual_buffer_size_in_ms: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -48099,12 +44636,7 @@ impl ::core::default::Default for VideoEncodeRateControlLayerInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            average_bitrate: u64::default(),
-            max_bitrate: u64::default(),
-            frame_rate_numerator: u32::default(),
-            frame_rate_denominator: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -48157,15 +44689,7 @@ impl ::core::default::Default for VideoEncodeCapabilitiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: VideoEncodeCapabilityFlagsKHR::default(),
-            rate_control_modes: VideoEncodeRateControlModeFlagsKHR::default(),
-            max_rate_control_layers: u32::default(),
-            max_bitrate: u64::default(),
-            max_quality_levels: u32::default(),
-            encode_input_picture_granularity: Extent2D::default(),
-            supported_encode_feedback_flags: VideoEncodeFeedbackFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -48249,21 +44773,7 @@ impl ::core::default::Default for VideoEncodeH264CapabilitiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: VideoEncodeH264CapabilityFlagsKHR::default(),
-            max_level_idc: StdVideoH264LevelIdc::default(),
-            max_slice_count: u32::default(),
-            max_p_picture_l0_reference_count: u32::default(),
-            max_b_picture_l0_reference_count: u32::default(),
-            max_l1_reference_count: u32::default(),
-            max_temporal_layer_count: u32::default(),
-            expect_dyadic_temporal_layer_pattern: Bool32::default(),
-            min_qp: i32::default(),
-            max_qp: i32::default(),
-            prefers_gop_remaining_frames: Bool32::default(),
-            requires_gop_remaining_frames: Bool32::default(),
-            std_syntax_flags: VideoEncodeH264StdFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -48373,17 +44883,7 @@ impl ::core::default::Default for VideoEncodeH264QualityLevelPropertiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            preferred_rate_control_flags: VideoEncodeH264RateControlFlagsKHR::default(),
-            preferred_gop_frame_count: u32::default(),
-            preferred_idr_period: u32::default(),
-            preferred_consecutive_b_frame_count: u32::default(),
-            preferred_temporal_layer_count: u32::default(),
-            preferred_constant_qp: VideoEncodeH264QpKHR::default(),
-            preferred_max_l0_reference_count: u32::default(),
-            preferred_max_l1_reference_count: u32::default(),
-            preferred_std_entropy_coding_mode_flag: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -48476,10 +44976,7 @@ impl ::core::default::Default for VideoEncodeH264SessionCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            use_max_level_idc: Bool32::default(),
-            max_level_idc: StdVideoH264LevelIdc::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -48520,12 +45017,7 @@ impl ::core::default::Default for VideoEncodeH264SessionParametersAddInfoKHR<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_sps_count: u32::default(),
-            p_std_sp_ss: ::core::ptr::null(),
-            std_pps_count: u32::default(),
-            p_std_pp_ss: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -48571,11 +45063,7 @@ impl ::core::default::Default for VideoEncodeH264SessionParametersCreateInfoKHR<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            max_std_sps_count: u32::default(),
-            max_std_pps_count: u32::default(),
-            p_parameters_add_info: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -48628,12 +45116,7 @@ impl ::core::default::Default for VideoEncodeH264SessionParametersGetInfoKHR<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            write_std_sps: Bool32::default(),
-            write_std_pps: Bool32::default(),
-            std_sps_id: u32::default(),
-            std_pps_id: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -48686,10 +45169,7 @@ impl ::core::default::Default for VideoEncodeH264SessionParametersFeedbackInfoKH
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            has_std_sps_overrides: Bool32::default(),
-            has_std_pps_overrides: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -48731,9 +45211,7 @@ impl ::core::default::Default for VideoEncodeH264DpbSlotInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_reference_info: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -48772,12 +45250,7 @@ impl ::core::default::Default for VideoEncodeH264PictureInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            nalu_slice_entry_count: u32::default(),
-            p_nalu_slice_entries: ::core::ptr::null(),
-            p_std_picture_info: ::core::ptr::null(),
-            generate_prefix_nalu: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -48824,9 +45297,7 @@ impl ::core::default::Default for VideoEncodeH264ProfileInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_profile_idc: StdVideoH264ProfileIdc::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -48861,10 +45332,7 @@ impl ::core::default::Default for VideoEncodeH264NaluSliceInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            constant_qp: i32::default(),
-            p_std_slice_header: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -48905,13 +45373,7 @@ impl ::core::default::Default for VideoEncodeH264RateControlInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: VideoEncodeH264RateControlFlagsKHR::default(),
-            gop_frame_count: u32::default(),
-            idr_period: u32::default(),
-            consecutive_b_frame_count: u32::default(),
-            temporal_layer_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -49022,12 +45484,7 @@ impl ::core::default::Default for VideoEncodeH264GopRemainingFrameInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            use_gop_remaining_frames: Bool32::default(),
-            gop_remaining_i: u32::default(),
-            gop_remaining_p: u32::default(),
-            gop_remaining_b: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -49081,14 +45538,7 @@ impl ::core::default::Default for VideoEncodeH264RateControlLayerInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            use_min_qp: Bool32::default(),
-            min_qp: VideoEncodeH264QpKHR::default(),
-            use_max_qp: Bool32::default(),
-            max_qp: VideoEncodeH264QpKHR::default(),
-            use_max_frame_size: Bool32::default(),
-            max_frame_size: VideoEncodeH264FrameSizeKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -49165,24 +45615,7 @@ impl ::core::default::Default for VideoEncodeH265CapabilitiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: VideoEncodeH265CapabilityFlagsKHR::default(),
-            max_level_idc: StdVideoH265LevelIdc::default(),
-            max_slice_segment_count: u32::default(),
-            max_tiles: Extent2D::default(),
-            ctb_sizes: VideoEncodeH265CtbSizeFlagsKHR::default(),
-            transform_block_sizes: VideoEncodeH265TransformBlockSizeFlagsKHR::default(),
-            max_p_picture_l0_reference_count: u32::default(),
-            max_b_picture_l0_reference_count: u32::default(),
-            max_l1_reference_count: u32::default(),
-            max_sub_layer_count: u32::default(),
-            expect_dyadic_temporal_sub_layer_pattern: Bool32::default(),
-            min_qp: i32::default(),
-            max_qp: i32::default(),
-            prefers_gop_remaining_frames: Bool32::default(),
-            requires_gop_remaining_frames: Bool32::default(),
-            std_syntax_flags: VideoEncodeH265StdFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -49310,16 +45743,7 @@ impl ::core::default::Default for VideoEncodeH265QualityLevelPropertiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            preferred_rate_control_flags: VideoEncodeH265RateControlFlagsKHR::default(),
-            preferred_gop_frame_count: u32::default(),
-            preferred_idr_period: u32::default(),
-            preferred_consecutive_b_frame_count: u32::default(),
-            preferred_sub_layer_count: u32::default(),
-            preferred_constant_qp: VideoEncodeH265QpKHR::default(),
-            preferred_max_l0_reference_count: u32::default(),
-            preferred_max_l1_reference_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -49404,10 +45828,7 @@ impl ::core::default::Default for VideoEncodeH265SessionCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            use_max_level_idc: Bool32::default(),
-            max_level_idc: StdVideoH265LevelIdc::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -49450,14 +45871,7 @@ impl ::core::default::Default for VideoEncodeH265SessionParametersAddInfoKHR<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_vps_count: u32::default(),
-            p_std_vp_ss: ::core::ptr::null(),
-            std_sps_count: u32::default(),
-            p_std_sp_ss: ::core::ptr::null(),
-            std_pps_count: u32::default(),
-            p_std_pp_ss: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -49510,12 +45924,7 @@ impl ::core::default::Default for VideoEncodeH265SessionParametersCreateInfoKHR<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            max_std_vps_count: u32::default(),
-            max_std_sps_count: u32::default(),
-            max_std_pps_count: u32::default(),
-            p_parameters_add_info: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -49575,14 +45984,7 @@ impl ::core::default::Default for VideoEncodeH265SessionParametersGetInfoKHR<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            write_std_vps: Bool32::default(),
-            write_std_sps: Bool32::default(),
-            write_std_pps: Bool32::default(),
-            std_vps_id: u32::default(),
-            std_sps_id: u32::default(),
-            std_pps_id: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -49646,11 +46048,7 @@ impl ::core::default::Default for VideoEncodeH265SessionParametersFeedbackInfoKH
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            has_std_vps_overrides: Bool32::default(),
-            has_std_sps_overrides: Bool32::default(),
-            has_std_pps_overrides: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -49699,11 +46097,7 @@ impl ::core::default::Default for VideoEncodeH265PictureInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            nalu_slice_segment_entry_count: u32::default(),
-            p_nalu_slice_segment_entries: ::core::ptr::null(),
-            p_std_picture_info: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -49746,10 +46140,7 @@ impl ::core::default::Default for VideoEncodeH265NaluSliceSegmentInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            constant_qp: i32::default(),
-            p_std_slice_segment_header: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -49794,13 +46185,7 @@ impl ::core::default::Default for VideoEncodeH265RateControlInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: VideoEncodeH265RateControlFlagsKHR::default(),
-            gop_frame_count: u32::default(),
-            idr_period: u32::default(),
-            consecutive_b_frame_count: u32::default(),
-            sub_layer_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -49911,12 +46296,7 @@ impl ::core::default::Default for VideoEncodeH265GopRemainingFrameInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            use_gop_remaining_frames: Bool32::default(),
-            gop_remaining_i: u32::default(),
-            gop_remaining_p: u32::default(),
-            gop_remaining_b: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -49970,14 +46350,7 @@ impl ::core::default::Default for VideoEncodeH265RateControlLayerInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            use_min_qp: Bool32::default(),
-            min_qp: VideoEncodeH265QpKHR::default(),
-            use_max_qp: Bool32::default(),
-            max_qp: VideoEncodeH265QpKHR::default(),
-            use_max_frame_size: Bool32::default(),
-            max_frame_size: VideoEncodeH265FrameSizeKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -50039,9 +46412,7 @@ impl ::core::default::Default for VideoEncodeH265ProfileInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_profile_idc: StdVideoH265ProfileIdc::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -50075,9 +46446,7 @@ impl ::core::default::Default for VideoEncodeH265DpbSlotInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_reference_info: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -50136,32 +46505,7 @@ impl ::core::default::Default for VideoEncodeAV1CapabilitiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: VideoEncodeAV1CapabilityFlagsKHR::default(),
-            max_level: StdVideoAV1Level::default(),
-            coded_picture_alignment: Extent2D::default(),
-            max_tiles: Extent2D::default(),
-            min_tile_size: Extent2D::default(),
-            max_tile_size: Extent2D::default(),
-            superblock_sizes: VideoEncodeAV1SuperblockSizeFlagsKHR::default(),
-            max_single_reference_count: u32::default(),
-            single_reference_name_mask: u32::default(),
-            max_unidirectional_compound_reference_count: u32::default(),
-            max_unidirectional_compound_group1_reference_count: u32::default(),
-            unidirectional_compound_reference_name_mask: u32::default(),
-            max_bidirectional_compound_reference_count: u32::default(),
-            max_bidirectional_compound_group1_reference_count: u32::default(),
-            max_bidirectional_compound_group2_reference_count: u32::default(),
-            bidirectional_compound_reference_name_mask: u32::default(),
-            max_temporal_layer_count: u32::default(),
-            max_spatial_layer_count: u32::default(),
-            max_operating_points: u32::default(),
-            min_q_index: u32::default(),
-            max_q_index: u32::default(),
-            prefers_gop_remaining_frames: Bool32::default(),
-            requires_gop_remaining_frames: Bool32::default(),
-            std_syntax_flags: VideoEncodeAV1StdFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -50354,23 +46698,7 @@ impl ::core::default::Default for VideoEncodeAV1QualityLevelPropertiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            preferred_rate_control_flags: VideoEncodeAV1RateControlFlagsKHR::default(),
-            preferred_gop_frame_count: u32::default(),
-            preferred_key_frame_period: u32::default(),
-            preferred_consecutive_bipredictive_frame_count: u32::default(),
-            preferred_temporal_layer_count: u32::default(),
-            preferred_constant_q_index: VideoEncodeAV1QIndexKHR::default(),
-            preferred_max_single_reference_count: u32::default(),
-            preferred_single_reference_name_mask: u32::default(),
-            preferred_max_unidirectional_compound_reference_count: u32::default(),
-            preferred_max_unidirectional_compound_group1_reference_count: u32::default(),
-            preferred_unidirectional_compound_reference_name_mask: u32::default(),
-            preferred_max_bidirectional_compound_reference_count: u32::default(),
-            preferred_max_bidirectional_compound_group1_reference_count: u32::default(),
-            preferred_max_bidirectional_compound_group2_reference_count: u32::default(),
-            preferred_bidirectional_compound_reference_name_mask: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -50521,9 +46849,7 @@ impl ::core::default::Default for PhysicalDeviceVideoEncodeAV1FeaturesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            video_encode_av1: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -50559,10 +46885,7 @@ impl ::core::default::Default for VideoEncodeAV1SessionCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            use_max_level: Bool32::default(),
-            max_level: StdVideoAV1Level::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -50603,12 +46926,7 @@ impl ::core::default::Default for VideoEncodeAV1SessionParametersCreateInfoKHR<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_sequence_header: ::core::ptr::null(),
-            p_std_decoder_model_info: ::core::ptr::null(),
-            std_operating_point_count: u32::default(),
-            p_std_operating_points: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -50665,9 +46983,7 @@ impl ::core::default::Default for VideoEncodeAV1DpbSlotInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_std_reference_info: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -50709,15 +47025,7 @@ impl ::core::default::Default for VideoEncodeAV1PictureInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            prediction_mode: VideoEncodeAV1PredictionModeKHR::default(),
-            rate_control_group: VideoEncodeAV1RateControlGroupKHR::default(),
-            constant_q_index: u32::default(),
-            p_std_picture_info: ::core::ptr::null(),
-            reference_name_slot_indices: unsafe { ::core::mem::zeroed() },
-            primary_reference_cdf_only: Bool32::default(),
-            generate_obu_extension_header: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -50786,9 +47094,7 @@ impl ::core::default::Default for VideoEncodeAV1ProfileInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            std_profile: StdVideoAV1Profile::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -50826,13 +47132,7 @@ impl ::core::default::Default for VideoEncodeAV1RateControlInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: VideoEncodeAV1RateControlFlagsKHR::default(),
-            gop_frame_count: u32::default(),
-            key_frame_period: u32::default(),
-            consecutive_bipredictive_frame_count: u32::default(),
-            temporal_layer_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -50946,12 +47246,7 @@ impl ::core::default::Default for VideoEncodeAV1GopRemainingFrameInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            use_gop_remaining_frames: Bool32::default(),
-            gop_remaining_intra: u32::default(),
-            gop_remaining_predictive: u32::default(),
-            gop_remaining_bipredictive: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -51005,14 +47300,7 @@ impl ::core::default::Default for VideoEncodeAV1RateControlLayerInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            use_min_q_index: Bool32::default(),
-            min_q_index: VideoEncodeAV1QIndexKHR::default(),
-            use_max_q_index: Bool32::default(),
-            max_q_index: VideoEncodeAV1QIndexKHR::default(),
-            use_max_frame_size: Bool32::default(),
-            max_frame_size: VideoEncodeAV1FrameSizeKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -51074,9 +47362,7 @@ impl ::core::default::Default for PhysicalDeviceInheritedViewportScissorFeatures
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            inherited_viewport_scissor2_d: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -51116,11 +47402,7 @@ impl ::core::default::Default for CommandBufferInheritanceViewportScissorInfoNV<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            viewport_scissor2_d: Bool32::default(),
-            viewport_depth_count: u32::default(),
-            p_viewport_depths: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -51167,9 +47449,7 @@ impl ::core::default::Default for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ycbcr2plane444_formats: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -51208,10 +47488,7 @@ impl ::core::default::Default for PhysicalDeviceProvokingVertexFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            provoking_vertex_last: Bool32::default(),
-            transform_feedback_preserves_provoking_vertex: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -51256,10 +47533,7 @@ impl ::core::default::Default for PhysicalDeviceProvokingVertexPropertiesEXT<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            provoking_vertex_mode_per_pipeline: Bool32::default(),
-            transform_feedback_preserves_triangle_fan_provoking_vertex: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -51308,9 +47582,7 @@ impl ::core::default::Default for PipelineRasterizationProvokingVertexStateCreat
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            provoking_vertex_mode: ProvokingVertexModeEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -51351,13 +47623,7 @@ impl ::core::default::Default for VideoEncodeIntraRefreshCapabilitiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            intra_refresh_modes: VideoEncodeIntraRefreshModeFlagsKHR::default(),
-            max_intra_refresh_cycle_duration: u32::default(),
-            max_intra_refresh_active_reference_pictures: u32::default(),
-            partition_independent_intra_refresh_regions: Bool32::default(),
-            non_rectangular_intra_refresh_regions: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -51428,9 +47694,7 @@ impl ::core::default::Default for VideoEncodeSessionIntraRefreshCreateInfoKHR<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            intra_refresh_mode: VideoEncodeIntraRefreshModeFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -51471,10 +47735,7 @@ impl ::core::default::Default for VideoEncodeIntraRefreshInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            intra_refresh_cycle_duration: u32::default(),
-            intra_refresh_index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -51512,9 +47773,7 @@ impl ::core::default::Default for VideoReferenceIntraRefreshInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            dirty_intra_refresh_regions: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -51547,9 +47806,7 @@ impl ::core::default::Default for PhysicalDeviceVideoEncodeIntraRefreshFeaturesK
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            video_encode_intra_refresh: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -51588,10 +47845,7 @@ impl ::core::default::Default for CuModuleCreateInfoNVX<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            data_size: usize::default(),
-            p_data: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -51624,9 +47878,7 @@ impl ::core::default::Default for CuModuleTexturingModeCreateInfoNVX<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            use64bit_texturing: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -51660,10 +47912,7 @@ impl ::core::default::Default for CuFunctionCreateInfoNVX<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            module: CuModuleNVX::default(),
-            p_name: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -51719,20 +47968,7 @@ impl ::core::default::Default for CuLaunchInfoNVX<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            function: CuFunctionNVX::default(),
-            grid_dim_x: u32::default(),
-            grid_dim_y: u32::default(),
-            grid_dim_z: u32::default(),
-            block_dim_x: u32::default(),
-            block_dim_y: u32::default(),
-            block_dim_z: u32::default(),
-            shared_mem_bytes: u32::default(),
-            param_count: usize::default(),
-            p_params: ::core::ptr::null(),
-            extra_count: usize::default(),
-            p_extras: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -51814,12 +48050,7 @@ impl ::core::default::Default for PhysicalDeviceDescriptorBufferFeaturesEXT<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            descriptor_buffer: Bool32::default(),
-            descriptor_buffer_capture_replay: Bool32::default(),
-            descriptor_buffer_image_layout_ignored: Bool32::default(),
-            descriptor_buffer_push_descriptors: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -51910,41 +48141,7 @@ impl ::core::default::Default for PhysicalDeviceDescriptorBufferPropertiesEXT<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            combined_image_sampler_descriptor_single_array: Bool32::default(),
-            bufferless_push_descriptors: Bool32::default(),
-            allow_sampler_image_view_post_submit_creation: Bool32::default(),
-            descriptor_buffer_offset_alignment: DeviceSize::default(),
-            max_descriptor_buffer_bindings: u32::default(),
-            max_resource_descriptor_buffer_bindings: u32::default(),
-            max_sampler_descriptor_buffer_bindings: u32::default(),
-            max_embedded_immutable_sampler_bindings: u32::default(),
-            max_embedded_immutable_samplers: u32::default(),
-            buffer_capture_replay_descriptor_data_size: usize::default(),
-            image_capture_replay_descriptor_data_size: usize::default(),
-            image_view_capture_replay_descriptor_data_size: usize::default(),
-            sampler_capture_replay_descriptor_data_size: usize::default(),
-            acceleration_structure_capture_replay_descriptor_data_size: usize::default(),
-            sampler_descriptor_size: usize::default(),
-            combined_image_sampler_descriptor_size: usize::default(),
-            sampled_image_descriptor_size: usize::default(),
-            storage_image_descriptor_size: usize::default(),
-            uniform_texel_buffer_descriptor_size: usize::default(),
-            robust_uniform_texel_buffer_descriptor_size: usize::default(),
-            storage_texel_buffer_descriptor_size: usize::default(),
-            robust_storage_texel_buffer_descriptor_size: usize::default(),
-            uniform_buffer_descriptor_size: usize::default(),
-            robust_uniform_buffer_descriptor_size: usize::default(),
-            storage_buffer_descriptor_size: usize::default(),
-            robust_storage_buffer_descriptor_size: usize::default(),
-            input_attachment_descriptor_size: usize::default(),
-            acceleration_structure_descriptor_size: usize::default(),
-            max_sampler_descriptor_buffer_range: DeviceSize::default(),
-            max_resource_descriptor_buffer_range: DeviceSize::default(),
-            sampler_descriptor_buffer_address_space_size: DeviceSize::default(),
-            resource_descriptor_buffer_address_space_size: DeviceSize::default(),
-            descriptor_buffer_address_space_size: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -52226,9 +48423,7 @@ impl ::core::default::Default for PhysicalDeviceDescriptorBufferDensityMapProper
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            combined_image_sampler_density_map_descriptor_size: usize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -52271,11 +48466,7 @@ impl ::core::default::Default for DescriptorAddressInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            address: DeviceAddress::default(),
-            range: DeviceSize::default(),
-            format: Format::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -52318,10 +48509,7 @@ impl ::core::default::Default for DescriptorBufferBindingInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            address: DeviceAddress::default(),
-            usage: BufferUsageFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -52358,9 +48546,7 @@ impl ::core::default::Default for DescriptorBufferBindingPushDescriptorBufferHan
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            buffer: Buffer::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -52429,10 +48615,7 @@ impl ::core::default::Default for DescriptorGetInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: DescriptorType::default(),
-            data: DescriptorDataEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -52469,9 +48652,7 @@ impl ::core::default::Default for BufferCaptureDescriptorDataInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            buffer: Buffer::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -52503,9 +48684,7 @@ impl ::core::default::Default for ImageCaptureDescriptorDataInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image: Image::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -52537,9 +48716,7 @@ impl ::core::default::Default for ImageViewCaptureDescriptorDataInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image_view: ImageView::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -52572,9 +48749,7 @@ impl ::core::default::Default for SamplerCaptureDescriptorDataInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            sampler: Sampler::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -52607,10 +48782,7 @@ impl ::core::default::Default for AccelerationStructureCaptureDescriptorDataInfo
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            acceleration_structure: AccelerationStructureKHR::default(),
-            acceleration_structure_nv: AccelerationStructureNV::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -52654,9 +48826,7 @@ impl ::core::default::Default for OpaqueCaptureDescriptorDataCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            opaque_capture_descriptor_data: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -52710,9 +48880,7 @@ impl ::core::default::Default for PhysicalDeviceShaderIntegerDotProductFeatures<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_integer_dot_product: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -52778,7 +48946,10 @@ unsafe impl Sync for PhysicalDeviceShaderIntegerDotProductProperties<'_> {}
 impl ::core::default::Default for PhysicalDeviceShaderIntegerDotProductProperties<'_> {
     #[inline]
     fn default() -> Self {
-        Self { s_type : Self :: STRUCTURE_TYPE , p_next : :: core :: ptr :: null_mut () , integer_dot_product8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product64_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating8_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating4x8_bit_packed_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating16_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating32_bit_mixed_signedness_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_signed_accelerated : Bool32 :: default () , integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated : Bool32 :: default () , _marker : PhantomData , }
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            ..unsafe { ::core::mem::zeroed() }
+        }
     }
 }
 unsafe impl<'a> TaggedStructure<'a> for PhysicalDeviceShaderIntegerDotProductProperties<'a> {
@@ -53083,14 +49254,7 @@ impl ::core::default::Default for PhysicalDeviceDrmPropertiesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            has_primary: Bool32::default(),
-            has_render: Bool32::default(),
-            primary_major: i64::default(),
-            primary_minor: i64::default(),
-            render_major: i64::default(),
-            render_minor: i64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -53148,9 +49312,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentShaderBarycentricFeature
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            fragment_shader_barycentric: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -53191,9 +49353,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentShaderBarycentricPropert
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            tri_strip_vertex_order_independent_of_provoking_vertex: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -53236,11 +49396,7 @@ impl ::core::default::Default for PhysicalDeviceShaderFmaFeaturesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_fma_float16: Bool32::default(),
-            shader_fma_float32: Bool32::default(),
-            shader_fma_float64: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -53285,10 +49441,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ray_tracing_motion_blur: Bool32::default(),
-            ray_tracing_motion_blur_pipeline_trace_rays_indirect: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -53335,9 +49488,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingValidationFeaturesNV<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ray_tracing_validation: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -53376,10 +49527,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingLinearSweptSpheresFeat
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            spheres: Bool32::default(),
-            linear_swept_spheres: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -53434,9 +49582,7 @@ impl ::core::default::Default for AccelerationStructureGeometryMotionTrianglesDa
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            vertex_data: DeviceOrHostAddressConstKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -53474,10 +49620,7 @@ impl ::core::default::Default for AccelerationStructureMotionInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            max_instances: u32::default(),
-            flags: AccelerationStructureMotionInfoFlagsNV::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -53702,10 +49845,7 @@ impl ::core::default::Default for MemoryGetRemoteAddressInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -53743,10 +49883,7 @@ impl ::core::default::Default for ImportMemoryBufferCollectionFUCHSIA<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            collection: BufferCollectionFUCHSIA::default(),
-            index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -53785,10 +49922,7 @@ impl ::core::default::Default for BufferCollectionImageCreateInfoFUCHSIA<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            collection: BufferCollectionFUCHSIA::default(),
-            index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -53828,10 +49962,7 @@ impl ::core::default::Default for BufferCollectionBufferCreateInfoFUCHSIA<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            collection: BufferCollectionFUCHSIA::default(),
-            index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -53870,9 +50001,7 @@ impl ::core::default::Default for BufferCollectionCreateInfoFUCHSIA<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            collection_token: zx_handle_t::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -53914,19 +50043,8 @@ impl ::core::default::Default for BufferCollectionPropertiesFUCHSIA<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_type_bits: u32::default(),
-            buffer_count: u32::default(),
-            create_info_index: u32::default(),
-            sysmem_pixel_format: u64::default(),
-            format_features: FormatFeatureFlags::default(),
             sysmem_color_space_index: SysmemColorSpaceFUCHSIA::default(),
-            sampler_ycbcr_conversion_components: ComponentMapping::default(),
-            suggested_ycbcr_model: SamplerYcbcrModelConversion::default(),
-            suggested_ycbcr_range: SamplerYcbcrRange::default(),
-            suggested_x_chroma_offset: ChromaLocation::default(),
-            suggested_y_chroma_offset: ChromaLocation::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -54019,11 +50137,9 @@ impl ::core::default::Default for BufferConstraintsInfoFUCHSIA<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
             create_info: BufferCreateInfo::default(),
-            required_format_features: FormatFeatureFlags::default(),
             buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -54071,9 +50187,7 @@ impl ::core::default::Default for SysmemColorSpaceFUCHSIA<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            color_space: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -54110,14 +50224,8 @@ impl ::core::default::Default for ImageFormatConstraintsInfoFUCHSIA<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
             image_create_info: ImageCreateInfo::default(),
-            required_format_features: FormatFeatureFlags::default(),
-            flags: ImageFormatConstraintsFlagsFUCHSIA::default(),
-            sysmem_pixel_format: u64::default(),
-            color_space_count: u32::default(),
-            p_color_spaces: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -54176,12 +50284,8 @@ impl ::core::default::Default for ImageConstraintsInfoFUCHSIA<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            format_constraints_count: u32::default(),
-            p_format_constraints: ::core::ptr::null(),
             buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA::default(),
-            flags: ImageConstraintsInfoFlagsFUCHSIA::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -54234,13 +50338,7 @@ impl ::core::default::Default for BufferCollectionConstraintsInfoFUCHSIA<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            min_buffer_count: u32::default(),
-            max_buffer_count: u32::default(),
-            min_buffer_count_for_camping: u32::default(),
-            min_buffer_count_for_dedicated_slack: u32::default(),
-            min_buffer_count_for_shared_slack: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -54315,10 +50413,7 @@ impl ::core::default::Default for CudaModuleCreateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            data_size: usize::default(),
-            p_data: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -54358,10 +50453,7 @@ impl ::core::default::Default for CudaFunctionCreateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            module: CudaModuleNV::default(),
-            p_name: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -54423,20 +50515,7 @@ impl ::core::default::Default for CudaLaunchInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            function: CudaFunctionNV::default(),
-            grid_dim_x: u32::default(),
-            grid_dim_y: u32::default(),
-            grid_dim_z: u32::default(),
-            block_dim_x: u32::default(),
-            block_dim_y: u32::default(),
-            block_dim_z: u32::default(),
-            shared_mem_bytes: u32::default(),
-            param_count: usize::default(),
-            p_params: ::core::ptr::null(),
-            extra_count: usize::default(),
-            p_extras: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -54517,9 +50596,7 @@ impl ::core::default::Default for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format_rgba10x6_without_y_cb_cr_sampler: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -54560,11 +50637,7 @@ impl ::core::default::Default for FormatProperties3<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            linear_tiling_features: FormatFeatureFlags2::default(),
-            optimal_tiling_features: FormatFeatureFlags2::default(),
-            buffer_features: FormatFeatureFlags2::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -54608,10 +50681,7 @@ impl ::core::default::Default for DrmFormatModifierPropertiesList2EXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            drm_format_modifier_count: u32::default(),
-            p_drm_format_modifier_properties: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -54685,16 +50755,7 @@ impl ::core::default::Default for AndroidHardwareBufferFormatProperties2ANDROID<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format: Format::default(),
-            external_format: u64::default(),
-            format_features: FormatFeatureFlags2::default(),
-            sampler_ycbcr_conversion_components: ComponentMapping::default(),
-            suggested_ycbcr_model: SamplerYcbcrModelConversion::default(),
-            suggested_ycbcr_range: SamplerYcbcrRange::default(),
-            suggested_x_chroma_offset: ChromaLocation::default(),
-            suggested_y_chroma_offset: ChromaLocation::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -54776,13 +50837,7 @@ impl ::core::default::Default for PipelineRenderingCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            view_mask: u32::default(),
-            color_attachment_count: u32::default(),
-            p_color_attachment_formats: ::core::ptr::null(),
-            depth_attachment_format: Format::default(),
-            stencil_attachment_format: Format::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -54838,16 +50893,7 @@ impl ::core::default::Default for RenderingInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: RenderingFlags::default(),
-            render_area: Rect2D::default(),
-            layer_count: u32::default(),
-            view_mask: u32::default(),
-            color_attachment_count: u32::default(),
-            p_color_attachments: ::core::ptr::null(),
-            p_depth_attachment: ::core::ptr::null(),
-            p_stencil_attachment: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -54915,8 +50961,7 @@ impl ::core::default::Default for RenderingEndInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -54965,16 +51010,7 @@ impl ::core::default::Default for RenderingAttachmentInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image_view: ImageView::default(),
-            image_layout: ImageLayout::default(),
-            resolve_mode: ResolveModeFlags::default(),
-            resolve_image_view: ImageView::default(),
-            resolve_image_layout: ImageLayout::default(),
-            load_op: AttachmentLoadOp::default(),
-            store_op: AttachmentStoreOp::default(),
-            clear_value: ClearValue::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55043,11 +51079,7 @@ impl ::core::default::Default for RenderingFragmentShadingRateAttachmentInfoKHR<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image_view: ImageView::default(),
-            image_layout: ImageLayout::default(),
-            shading_rate_attachment_texel_size: Extent2D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55095,10 +51127,7 @@ impl ::core::default::Default for RenderingFragmentDensityMapAttachmentInfoEXT<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image_view: ImageView::default(),
-            image_layout: ImageLayout::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55137,9 +51166,7 @@ impl ::core::default::Default for PhysicalDeviceDynamicRenderingFeatures<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            dynamic_rendering: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55179,15 +51206,7 @@ impl ::core::default::Default for CommandBufferInheritanceRenderingInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: RenderingFlags::default(),
-            view_mask: u32::default(),
-            color_attachment_count: u32::default(),
-            p_color_attachment_formats: ::core::ptr::null(),
-            depth_attachment_format: Format::default(),
-            stencil_attachment_format: Format::default(),
-            rasterization_samples: SampleCountFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55251,11 +51270,7 @@ impl ::core::default::Default for AttachmentSampleCountInfoAMD<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            color_attachment_count: u32::default(),
-            p_color_attachment_samples: ::core::ptr::null(),
-            depth_stencil_attachment_samples: SampleCountFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55302,10 +51317,7 @@ impl ::core::default::Default for MultiviewPerViewAttributesInfoNVX<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            per_view_attributes: Bool32::default(),
-            per_view_attributes_position_x_only: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55348,9 +51360,7 @@ impl ::core::default::Default for PhysicalDeviceImageViewMinLodFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_lod: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55385,9 +51395,7 @@ impl ::core::default::Default for ImageViewMinLodCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            min_lod: f32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55422,11 +51430,7 @@ impl ::core::default::Default for PhysicalDeviceRasterizationOrderAttachmentAcce
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            rasterization_order_color_attachment_access: Bool32::default(),
-            rasterization_order_depth_attachment_access: Bool32::default(),
-            rasterization_order_stencil_attachment_access: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55491,9 +51495,7 @@ impl ::core::default::Default for PhysicalDeviceLinearColorAttachmentFeaturesNV<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            linear_color_attachment: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55531,9 +51533,7 @@ impl ::core::default::Default for PhysicalDeviceGraphicsPipelineLibraryFeaturesE
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            graphics_pipeline_library: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55571,9 +51571,7 @@ impl ::core::default::Default for PhysicalDevicePipelineBinaryFeaturesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_binaries: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55608,9 +51606,7 @@ impl ::core::default::Default for DevicePipelineBinaryInternalCacheControlKHR<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            disable_internal_cache: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55648,13 +51644,7 @@ impl ::core::default::Default for PhysicalDevicePipelineBinaryPropertiesKHR<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_binary_internal_cache: Bool32::default(),
-            pipeline_binary_internal_cache_control: Bool32::default(),
-            pipeline_binary_prefers_internal_cache: Bool32::default(),
-            pipeline_binary_precompiled_internal_cache: Bool32::default(),
-            pipeline_binary_compressed_data: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55725,10 +51715,7 @@ impl ::core::default::Default for PhysicalDeviceGraphicsPipelineLibraryPropertie
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            graphics_pipeline_library_fast_linking: Bool32::default(),
-            graphics_pipeline_library_independent_interpolation_decoration: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55777,9 +51764,7 @@ impl ::core::default::Default for GraphicsPipelineLibraryCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: GraphicsPipelineLibraryFlagsEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55814,9 +51799,7 @@ impl ::core::default::Default
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            data_graph_neural_accelerator_statistics: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55863,9 +51846,7 @@ impl ::core::default::Default for DataGraphPipelineNeuralStatisticsCreateInfoARM
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            allow_neural_statistics: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55902,9 +51883,7 @@ impl ::core::default::Default for DataGraphPipelineSessionNeuralStatisticsCreate
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            mode: NeuralAcceleratorStatisticsModeARM::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55941,9 +51920,7 @@ impl ::core::default::Default for PhysicalDeviceDescriptorSetHostMappingFeatures
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            descriptor_set_host_mapping: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -55985,10 +51962,7 @@ impl ::core::default::Default for DescriptorSetBindingReferenceVALVE<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            descriptor_set_layout: DescriptorSetLayout::default(),
-            binding: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -56026,10 +52000,7 @@ impl ::core::default::Default for DescriptorSetLayoutHostMappingInfoVALVE<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            descriptor_offset: usize::default(),
-            descriptor_size: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -56069,11 +52040,7 @@ impl ::core::default::Default for PhysicalDeviceNestedCommandBufferFeaturesEXT<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            nested_command_buffer: Bool32::default(),
-            nested_command_buffer_rendering: Bool32::default(),
-            nested_command_buffer_simultaneous_use: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -56127,9 +52094,7 @@ impl ::core::default::Default for PhysicalDeviceNestedCommandBufferPropertiesEXT
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_command_buffer_nesting_level: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -56169,9 +52134,7 @@ impl ::core::default::Default for PhysicalDeviceShaderModuleIdentifierFeaturesEX
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_module_identifier: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -56209,9 +52172,7 @@ impl ::core::default::Default for PhysicalDeviceShaderModuleIdentifierProperties
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_module_identifier_algorithm_uuid: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -56252,10 +52213,7 @@ impl ::core::default::Default for PipelineShaderStageModuleIdentifierCreateInfoE
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            identifier_size: u32::default(),
-            p_identifier: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -56304,10 +52262,7 @@ impl ::core::default::Default for ShaderModuleIdentifierEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            identifier_size: u32::default(),
-            identifier: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -56346,11 +52301,7 @@ impl ::core::default::Default for ImageCompressionControlEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ImageCompressionFlagsEXT::default(),
-            compression_control_plane_count: u32::default(),
-            p_fixed_rate_flags: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -56394,9 +52345,7 @@ impl ::core::default::Default for PhysicalDeviceImageCompressionControlFeaturesE
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image_compression_control: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -56435,10 +52384,7 @@ impl ::core::default::Default for ImageCompressionPropertiesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image_compression_flags: ImageCompressionFlagsEXT::default(),
-            image_compression_fixed_rate_flags: ImageCompressionFixedRateFlagsEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -56484,9 +52430,7 @@ impl ::core::default::Default for PhysicalDeviceImageCompressionControlSwapchain
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image_compression_control_swapchain: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -56532,9 +52476,7 @@ impl ::core::default::Default for ImageSubresource2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image_subresource: ImageSubresource::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -56566,9 +52508,7 @@ impl ::core::default::Default for SubresourceLayout2<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            subresource_layout: SubresourceLayout::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -56600,9 +52540,7 @@ impl ::core::default::Default for RenderPassCreationControlEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            disallow_merging: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -56651,9 +52589,7 @@ impl ::core::default::Default for RenderPassCreationFeedbackCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_render_pass_feedback: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -56694,11 +52630,7 @@ impl fmt::Debug for RenderPassSubpassFeedbackInfoEXT {
 impl ::core::default::Default for RenderPassSubpassFeedbackInfoEXT {
     #[inline]
     fn default() -> Self {
-        Self {
-            subpass_merge_status: SubpassMergeStatusEXT::default(),
-            description: unsafe { ::core::mem::zeroed() },
-            post_merge_index: u32::default(),
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl RenderPassSubpassFeedbackInfoEXT {
@@ -56742,9 +52674,7 @@ impl ::core::default::Default for RenderPassSubpassFeedbackCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_subpass_feedback: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -56781,9 +52711,7 @@ impl ::core::default::Default for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            subpass_merge_feedback: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -56850,19 +52778,7 @@ impl ::core::default::Default for MicromapBuildInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: MicromapTypeEXT::default(),
-            flags: BuildMicromapFlagsEXT::default(),
-            mode: BuildMicromapModeEXT::default(),
-            dst_micromap: MicromapEXT::default(),
-            usage_counts_count: u32::default(),
-            p_usage_counts: ::core::ptr::null(),
-            pp_usage_counts: ::core::ptr::null(),
-            data: DeviceOrHostAddressConstKHR::default(),
-            scratch_data: DeviceOrHostAddressKHR::default(),
-            triangle_array: DeviceOrHostAddressConstKHR::default(),
-            triangle_array_stride: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -56946,14 +52862,7 @@ impl ::core::default::Default for AccelerationStructureGeometryMicromapDataKHR<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            usage_counts_count: u32::default(),
-            p_usage_counts: ::core::ptr::null(),
-            pp_usage_counts: ::core::ptr::null(),
-            data: DeviceAddress::default(),
-            triangle_array: DeviceAddress::default(),
-            triangle_array_stride: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -57017,14 +52926,7 @@ impl ::core::default::Default for MicromapCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            create_flags: MicromapCreateFlagsEXT::default(),
-            buffer: Buffer::default(),
-            offset: DeviceSize::default(),
-            size: DeviceSize::default(),
-            ty: MicromapTypeEXT::default(),
-            device_address: DeviceAddress::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -57081,9 +52983,7 @@ impl ::core::default::Default for MicromapVersionInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_version_data: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -57117,11 +53017,7 @@ impl ::core::default::Default for CopyMicromapInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src: MicromapEXT::default(),
-            dst: MicromapEXT::default(),
-            mode: CopyMicromapModeEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -57176,11 +53072,7 @@ impl ::core::default::Default for CopyMicromapToMemoryInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src: MicromapEXT::default(),
-            dst: DeviceOrHostAddressKHR::default(),
-            mode: CopyMicromapModeEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -57235,11 +53127,7 @@ impl ::core::default::Default for CopyMemoryToMicromapInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src: DeviceOrHostAddressConstKHR::default(),
-            dst: MicromapEXT::default(),
-            mode: CopyMicromapModeEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -57283,11 +53171,7 @@ impl ::core::default::Default for MicromapBuildSizesInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            micromap_size: DeviceSize::default(),
-            build_scratch_size: DeviceSize::default(),
-            discardable: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -57410,9 +53294,7 @@ impl ::core::default::Default for PhysicalDeviceOpacityMicromapFeaturesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            micromap: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -57449,11 +53331,7 @@ impl ::core::default::Default for PhysicalDeviceOpacityMicromapFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            micromap: Bool32::default(),
-            micromap_capture_replay: Bool32::default(),
-            micromap_host_commands: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -57501,12 +53379,7 @@ impl ::core::default::Default for PhysicalDeviceOpacityMicromapPropertiesKHR<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_opacity2_state_subdivision_level: u32::default(),
-            max_opacity4_state_subdivision_level: u32::default(),
-            max_opacity_lossy4_state_subdivision_level: u32::default(),
-            max_micromap_triangles: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -57569,10 +53442,7 @@ impl ::core::default::Default for PhysicalDeviceOpacityMicromapPropertiesEXT<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_opacity2_state_subdivision_level: u32::default(),
-            max_opacity4_state_subdivision_level: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -57624,13 +53494,7 @@ impl ::core::default::Default for AccelerationStructureTrianglesOpacityMicromapK
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            index_type: IndexType::default(),
-            index_buffer: DeviceAddress::default(),
-            index_stride: DeviceSize::default(),
-            base_triangle: u32::default(),
-            micromap: AccelerationStructureKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -57715,16 +53579,7 @@ impl ::core::default::Default for AccelerationStructureTrianglesOpacityMicromapE
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            index_type: IndexType::default(),
-            index_buffer: DeviceOrHostAddressConstKHR::default(),
-            index_stride: DeviceSize::default(),
-            base_triangle: u32::default(),
-            usage_counts_count: u32::default(),
-            p_usage_counts: ::core::ptr::null(),
-            pp_usage_counts: ::core::ptr::null(),
-            micromap: MicromapEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -57802,9 +53657,7 @@ impl ::core::default::Default for PhysicalDeviceDisplacementMicromapFeaturesNV<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            displacement_micromap: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -57850,9 +53703,7 @@ impl ::core::default::Default for PhysicalDeviceDisplacementMicromapPropertiesNV
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_displacement_micromap_subdivision_level: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -57955,24 +53806,7 @@ impl ::core::default::Default for AccelerationStructureTrianglesDisplacementMicr
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            displacement_bias_and_scale_format: Format::default(),
-            displacement_vector_format: Format::default(),
-            displacement_bias_and_scale_buffer: DeviceOrHostAddressConstKHR::default(),
-            displacement_bias_and_scale_stride: DeviceSize::default(),
-            displacement_vector_buffer: DeviceOrHostAddressConstKHR::default(),
-            displacement_vector_stride: DeviceSize::default(),
-            displaced_micromap_primitive_flags: DeviceOrHostAddressConstKHR::default(),
-            displaced_micromap_primitive_flags_stride: DeviceSize::default(),
-            index_type: IndexType::default(),
-            index_buffer: DeviceOrHostAddressConstKHR::default(),
-            index_stride: DeviceSize::default(),
-            base_triangle: u32::default(),
-            usage_counts_count: u32::default(),
-            p_usage_counts: ::core::ptr::null(),
-            pp_usage_counts: ::core::ptr::null(),
-            micromap: MicromapEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58102,9 +53936,7 @@ impl ::core::default::Default for PipelinePropertiesIdentifierEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_identifier: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58136,9 +53968,7 @@ impl ::core::default::Default for PhysicalDevicePipelinePropertiesFeaturesEXT<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_properties_identifier: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58176,9 +54006,7 @@ impl ::core::default::Default for PhysicalDeviceShaderEarlyAndLateFragmentTestsF
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_early_and_late_fragment_tests: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58224,9 +54052,7 @@ impl ::core::default::Default for ExternalMemoryAcquireUnmodifiedEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            acquire_unmodified_memory: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58262,9 +54088,7 @@ impl ::core::default::Default for ExportMetalObjectCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            export_object_type: ExportMetalObjectTypeFlagsEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58302,8 +54126,7 @@ impl ::core::default::Default for ExportMetalObjectsInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58329,9 +54152,7 @@ impl ::core::default::Default for ExportMetalDeviceInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            mtl_device: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58365,10 +54186,7 @@ impl ::core::default::Default for ExportMetalCommandQueueInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            queue: Queue::default(),
-            mtl_command_queue: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58407,10 +54225,7 @@ impl ::core::default::Default for ExportMetalBufferInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            mtl_buffer: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58448,9 +54263,7 @@ impl ::core::default::Default for ImportMetalBufferInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            mtl_buffer: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58487,13 +54300,7 @@ impl ::core::default::Default for ExportMetalTextureInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image: Image::default(),
-            image_view: ImageView::default(),
-            buffer_view: BufferView::default(),
-            plane: ImageAspectFlags::default(),
-            mtl_texture: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58547,10 +54354,7 @@ impl ::core::default::Default for ImportMetalTextureInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            plane: ImageAspectFlags::default(),
-            mtl_texture: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58589,10 +54393,7 @@ impl ::core::default::Default for ExportMetalIOSurfaceInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image: Image::default(),
-            io_surface: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58630,9 +54431,7 @@ impl ::core::default::Default for ImportMetalIOSurfaceInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            io_surface: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58667,11 +54466,7 @@ impl ::core::default::Default for ExportMetalSharedEventInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            semaphore: Semaphore::default(),
-            event: Event::default(),
-            mtl_shared_event: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58714,9 +54509,7 @@ impl ::core::default::Default for ImportMetalSharedEventInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            mtl_shared_event: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58750,9 +54543,7 @@ impl ::core::default::Default for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            non_seamless_cube_map: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58790,9 +54581,7 @@ impl ::core::default::Default for PhysicalDevicePipelineRobustnessFeatures<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_robustness: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58830,12 +54619,7 @@ impl ::core::default::Default for PipelineRobustnessCreateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            storage_buffers: PipelineRobustnessBufferBehavior::default(),
-            uniform_buffers: PipelineRobustnessBufferBehavior::default(),
-            vertex_inputs: PipelineRobustnessBufferBehavior::default(),
-            images: PipelineRobustnessImageBehavior::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58889,12 +54673,7 @@ impl ::core::default::Default for PhysicalDevicePipelineRobustnessProperties<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            default_robustness_storage_buffers: PipelineRobustnessBufferBehavior::default(),
-            default_robustness_uniform_buffers: PipelineRobustnessBufferBehavior::default(),
-            default_robustness_vertex_inputs: PipelineRobustnessBufferBehavior::default(),
-            default_robustness_images: PipelineRobustnessImageBehavior::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -58960,11 +54739,7 @@ impl ::core::default::Default for ImageViewSampleWeightCreateInfoQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            filter_center: Offset2D::default(),
-            filter_size: Extent2D::default(),
-            num_phases: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59007,9 +54782,7 @@ impl ::core::default::Default for PhysicalDeviceShaderMultipleWaitQueuesFeatures
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_multiple_wait_queues: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59050,9 +54823,7 @@ impl ::core::default::Default for PhysicalDeviceShaderMultipleWaitQueuesProperti
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_shader_wait_queues: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59091,11 +54862,7 @@ impl ::core::default::Default for PhysicalDeviceImageProcessingFeaturesQCOM<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            texture_sample_weighted: Bool32::default(),
-            texture_box_filter: Bool32::default(),
-            texture_block_match: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59143,12 +54910,7 @@ impl ::core::default::Default for PhysicalDeviceImageProcessingPropertiesQCOM<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_weight_filter_phases: u32::default(),
-            max_weight_filter_dimension: Extent2D::default(),
-            max_block_match_region: Extent2D::default(),
-            max_box_filter_block_size: Extent2D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59200,9 +54962,7 @@ impl ::core::default::Default for PhysicalDeviceTilePropertiesFeaturesQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            tile_properties: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59239,11 +54999,7 @@ impl ::core::default::Default for TilePropertiesQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            tile_size: Extent3D::default(),
-            apron_size: Extent2D::default(),
-            origin: Offset2D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59285,9 +55041,7 @@ impl ::core::default::Default for TileMemoryBindInfoQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59320,9 +55074,7 @@ impl ::core::default::Default for PhysicalDeviceAmigoProfilingFeaturesSEC<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            amigo_profiling: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59358,10 +55110,7 @@ impl ::core::default::Default for AmigoProfilingSubmitInfoSEC<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            first_draw_timestamp: u64::default(),
-            swap_buffer_timestamp: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59399,9 +55148,7 @@ impl ::core::default::Default for PhysicalDeviceAttachmentFeedbackLoopLayoutFeat
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            attachment_feedback_loop_layout: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59445,9 +55192,7 @@ impl ::core::default::Default for AttachmentFeedbackLoopInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            feedback_loop_enable: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59480,9 +55225,7 @@ impl ::core::default::Default for PhysicalDeviceAddressBindingReportFeaturesEXT<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            report_address_binding: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59520,9 +55263,7 @@ impl ::core::default::Default for RenderingAttachmentFlagsInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: RenderingAttachmentFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59557,11 +55298,7 @@ impl ::core::default::Default for ResolveImageModeInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ResolveImageFlagsKHR::default(),
-            resolve_mode: ResolveModeFlags::default(),
-            stencil_resolve_mode: ResolveModeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59607,12 +55344,7 @@ impl ::core::default::Default for DeviceAddressBindingCallbackDataEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: DeviceAddressBindingFlagsEXT::default(),
-            base_address: DeviceAddress::default(),
-            size: DeviceSize::default(),
-            binding_type: DeviceAddressBindingTypeEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59663,9 +55395,7 @@ impl ::core::default::Default for PhysicalDeviceOpticalFlowFeaturesNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            optical_flow: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59709,19 +55439,7 @@ impl ::core::default::Default for PhysicalDeviceOpticalFlowPropertiesNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            supported_output_grid_sizes: OpticalFlowGridSizeFlagsNV::default(),
-            supported_hint_grid_sizes: OpticalFlowGridSizeFlagsNV::default(),
-            hint_supported: Bool32::default(),
-            cost_supported: Bool32::default(),
-            bidirectional_flow_supported: Bool32::default(),
-            global_flow_supported: Bool32::default(),
-            min_width: u32::default(),
-            min_height: u32::default(),
-            max_width: u32::default(),
-            max_height: u32::default(),
-            max_num_regions_of_interest: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59810,9 +55528,7 @@ impl ::core::default::Default for OpticalFlowImageFormatInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            usage: OpticalFlowUsageFlagsNV::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59846,9 +55562,7 @@ impl ::core::default::Default for OpticalFlowImageFormatPropertiesNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format: Format::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59888,17 +55602,7 @@ impl ::core::default::Default for OpticalFlowSessionCreateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            width: u32::default(),
-            height: u32::default(),
-            image_format: Format::default(),
-            flow_vector_format: Format::default(),
-            cost_format: Format::default(),
-            output_grid_size: OpticalFlowGridSizeFlagsNV::default(),
-            hint_grid_size: OpticalFlowGridSizeFlagsNV::default(),
-            performance_level: OpticalFlowPerformanceLevelNV::default(),
-            flags: OpticalFlowSessionCreateFlagsNV::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -59972,11 +55676,7 @@ impl ::core::default::Default for OpticalFlowSessionCreatePrivateDataInfoNV<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            id: u32::default(),
-            size: u32::default(),
-            p_private_data: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -60025,11 +55725,7 @@ impl ::core::default::Default for OpticalFlowExecuteInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: OpticalFlowExecuteFlagsNV::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -60068,10 +55764,7 @@ impl ::core::default::Default for PhysicalDeviceFaultFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_fault: Bool32::default(),
-            device_fault_vendor_binary: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -60141,11 +55834,7 @@ impl fmt::Debug for DeviceFaultVendorInfoKHR {
 impl ::core::default::Default for DeviceFaultVendorInfoKHR {
     #[inline]
     fn default() -> Self {
-        Self {
-            description: unsafe { ::core::mem::zeroed() },
-            vendor_fault_code: u64::default(),
-            vendor_fault_data: u64::default(),
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl DeviceFaultVendorInfoKHR {
@@ -60208,14 +55897,7 @@ impl ::core::default::Default for DeviceFaultInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: DeviceFaultFlagsKHR::default(),
-            group_id: u64::default(),
-            description: unsafe { ::core::mem::zeroed() },
-            fault_address_info: DeviceFaultAddressInfoKHR::default(),
-            instruction_address_info: DeviceFaultAddressInfoKHR::default(),
-            vendor_info: DeviceFaultVendorInfoKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -60282,10 +55964,7 @@ impl ::core::default::Default for DeviceFaultDebugInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            vendor_binary_size: u32::default(),
-            p_vendor_binary_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -60320,11 +55999,7 @@ impl ::core::default::Default for DeviceFaultCountsEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            address_info_count: u32::default(),
-            vendor_info_count: u32::default(),
-            vendor_binary_size: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -60381,12 +56056,7 @@ impl ::core::default::Default for DeviceFaultInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            description: unsafe { ::core::mem::zeroed() },
-            p_address_infos: ::core::ptr::null_mut(),
-            p_vendor_infos: ::core::ptr::null_mut(),
-            p_vendor_binary_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -60442,19 +56112,7 @@ pub struct DeviceFaultVendorBinaryHeaderVersionOneKHR {
 impl ::core::default::Default for DeviceFaultVendorBinaryHeaderVersionOneKHR {
     #[inline]
     fn default() -> Self {
-        Self {
-            header_size: u32::default(),
-            header_version: DeviceFaultVendorBinaryHeaderVersionKHR::default(),
-            vendor_id: u32::default(),
-            device_id: u32::default(),
-            driver_version: u32::default(),
-            pipeline_cache_uuid: unsafe { ::core::mem::zeroed() },
-            application_name_offset: u32::default(),
-            application_version: u32::default(),
-            engine_name_offset: u32::default(),
-            engine_version: u32::default(),
-            api_version: u32::default(),
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl DeviceFaultVendorBinaryHeaderVersionOneKHR {
@@ -60538,12 +56196,7 @@ impl ::core::default::Default for PhysicalDeviceFaultFeaturesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_fault: Bool32::default(),
-            device_fault_vendor_binary: Bool32::default(),
-            device_fault_report_masked: Bool32::default(),
-            device_fault_device_lost_on_masked: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -60595,9 +56248,7 @@ impl ::core::default::Default for PhysicalDeviceFaultPropertiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_device_fault_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -60630,9 +56281,7 @@ impl ::core::default::Default for PhysicalDevicePipelineLibraryGroupHandlesFeatu
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_library_group_handles: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -60675,11 +56324,7 @@ impl ::core::default::Default for DepthBiasInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            depth_bias_constant_factor: f32::default(),
-            depth_bias_clamp: f32::default(),
-            depth_bias_slope_factor: f32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -60722,10 +56367,7 @@ impl ::core::default::Default for DepthBiasRepresentationInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            depth_bias_representation: DepthBiasRepresentationEXT::default(),
-            depth_bias_exact: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -60847,11 +56489,7 @@ impl ::core::default::Default for DecompressMemoryInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            decompression_method: MemoryDecompressionMethodFlagsEXT::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -60894,11 +56532,7 @@ impl ::core::default::Default for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_core_mask: u64::default(),
-            shader_core_count: u32::default(),
-            shader_warps_per_core: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -60945,9 +56579,7 @@ impl ::core::default::Default for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_core_builtins: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -60993,17 +56625,7 @@ impl ::core::default::Default for FrameBoundaryEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: FrameBoundaryFlagsEXT::default(),
-            frame_id: u64::default(),
-            image_count: u32::default(),
-            p_images: ::core::ptr::null(),
-            buffer_count: u32::default(),
-            p_buffers: ::core::ptr::null(),
-            tag_name: u64::default(),
-            tag_size: usize::default(),
-            p_tag: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61067,9 +56689,7 @@ impl ::core::default::Default for PhysicalDeviceFrameBoundaryFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            frame_boundary: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61104,9 +56724,7 @@ impl ::core::default::Default for PhysicalDeviceDynamicRenderingUnusedAttachment
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            dynamic_rendering_unused_attachments: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61152,9 +56770,7 @@ impl ::core::default::Default for PhysicalDeviceInternallySynchronizedQueuesFeat
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            internally_synchronized_queues: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61195,9 +56811,7 @@ impl ::core::default::Default for SurfacePresentModeKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_mode: PresentModeKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61234,13 +56848,7 @@ impl ::core::default::Default for SurfacePresentScalingCapabilitiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            supported_present_scaling: PresentScalingFlagsKHR::default(),
-            supported_present_gravity_x: PresentGravityFlagsKHR::default(),
-            supported_present_gravity_y: PresentGravityFlagsKHR::default(),
-            min_scaled_image_extent: Extent2D::default(),
-            max_scaled_image_extent: Extent2D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61303,10 +56911,7 @@ impl ::core::default::Default for SurfacePresentModeCompatibilityKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_mode_count: u32::default(),
-            p_present_modes: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61340,9 +56945,7 @@ impl ::core::default::Default for PhysicalDeviceSwapchainMaintenance1FeaturesKHR
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            swapchain_maintenance1: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61381,10 +56984,7 @@ impl ::core::default::Default for SwapchainPresentFenceInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain_count: u32::default(),
-            p_fences: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61419,10 +57019,7 @@ impl ::core::default::Default for SwapchainPresentModesCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            present_mode_count: u32::default(),
-            p_present_modes: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61457,10 +57054,7 @@ impl ::core::default::Default for SwapchainPresentModeInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain_count: u32::default(),
-            p_present_modes: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61496,11 +57090,7 @@ impl ::core::default::Default for SwapchainPresentScalingCreateInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            scaling_behavior: PresentScalingFlagsKHR::default(),
-            present_gravity_x: PresentGravityFlagsKHR::default(),
-            present_gravity_y: PresentGravityFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61545,11 +57135,7 @@ impl ::core::default::Default for ReleaseSwapchainImagesInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            swapchain: SwapchainKHR::default(),
-            image_index_count: u32::default(),
-            p_image_indices: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61590,12 +57176,7 @@ impl ::core::default::Default for PhysicalDeviceDepthBiasControlFeaturesEXT<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            depth_bias_control: Bool32::default(),
-            least_representable_value_force_unorm_representation: Bool32::default(),
-            float_representation: Bool32::default(),
-            depth_bias_exact: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61649,9 +57230,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderFeatu
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ray_tracing_invocation_reorder: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61692,9 +57271,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderFeatu
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ray_tracing_invocation_reorder: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61736,11 +57313,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderPrope
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ray_tracing_invocation_reorder_reordering_hint:
-                RayTracingInvocationReorderModeEXT::default(),
-            max_shader_binding_table_record_index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61789,10 +57362,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingInvocationReorderPrope
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ray_tracing_invocation_reorder_reordering_hint:
-                RayTracingInvocationReorderModeEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61833,9 +57403,7 @@ impl ::core::default::Default for PhysicalDeviceExtendedSparseAddressSpaceFeatur
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            extended_sparse_address_space: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61878,11 +57446,7 @@ impl ::core::default::Default for PhysicalDeviceExtendedSparseAddressSpaceProper
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            extended_sparse_address_space_size: DeviceSize::default(),
-            extended_sparse_image_usage_flags: ImageUsageFlags::default(),
-            extended_sparse_buffer_usage_flags: BufferUsageFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61952,10 +57516,7 @@ impl ::core::default::Default for DirectDriverLoadingInfoLUNARG<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: DirectDriverLoadingFlagsLUNARG::default(),
-            pfn_get_instance_proc_addr: PFN_vkGetInstanceProcAddrLUNARG::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -61997,11 +57558,7 @@ impl ::core::default::Default for DirectDriverLoadingListLUNARG<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            mode: DirectDriverLoadingModeLUNARG::default(),
-            driver_count: u32::default(),
-            p_drivers: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -62040,9 +57597,7 @@ impl ::core::default::Default for PhysicalDeviceMultiviewPerViewViewportsFeature
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            multiview_per_view_viewports: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -62083,9 +57638,7 @@ impl ::core::default::Default for PhysicalDeviceRayTracingPositionFetchFeaturesK
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ray_tracing_position_fetch: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -62124,10 +57677,7 @@ impl ::core::default::Default for DeviceImageSubresourceInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_create_info: ::core::ptr::null(),
-            p_subresource: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -62166,11 +57716,7 @@ impl ::core::default::Default for PhysicalDeviceShaderCorePropertiesARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pixel_rate: u32::default(),
-            texel_rate: u32::default(),
-            fma_rate: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -62213,9 +57759,7 @@ impl ::core::default::Default for PhysicalDeviceMultiviewPerViewRenderAreasFeatu
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            multiview_per_view_render_areas: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -62260,10 +57804,7 @@ impl ::core::default::Default for MultiviewPerViewRenderAreasRenderPassBeginInfo
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            per_view_render_area_count: u32::default(),
-            p_per_view_render_areas: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -62302,9 +57843,7 @@ impl ::core::default::Default for QueryLowLatencySupportNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_queried_low_latency_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -62340,12 +57879,7 @@ impl ::core::default::Default for MemoryMapInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: MemoryMapFlags::default(),
-            memory: DeviceMemory::default(),
-            offset: DeviceSize::default(),
-            size: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -62393,10 +57927,7 @@ impl ::core::default::Default for MemoryUnmapInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: MemoryUnmapFlags::default(),
-            memory: DeviceMemory::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -62433,9 +57964,7 @@ impl ::core::default::Default for PhysicalDeviceShaderObjectFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_object: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -62470,10 +57999,7 @@ impl ::core::default::Default for PhysicalDeviceShaderObjectPropertiesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_binary_uuid: unsafe { ::core::mem::zeroed() },
-            shader_binary_version: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -62523,20 +58049,7 @@ impl ::core::default::Default for ShaderCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: ShaderCreateFlagsEXT::default(),
-            stage: ShaderStageFlags::default(),
-            next_stage: ShaderStageFlags::default(),
-            code_type: ShaderCodeTypeEXT::default(),
-            code_size: usize::default(),
-            p_code: ::core::ptr::null(),
-            p_name: ::core::ptr::null(),
-            set_layout_count: u32::default(),
-            p_set_layouts: ::core::ptr::null(),
-            push_constant_range_count: u32::default(),
-            p_push_constant_ranges: ::core::ptr::null(),
-            p_specialization_info: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -62621,11 +58134,7 @@ impl ::core::default::Default for PhysicalDeviceShaderTileImageFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_tile_image_color_read_access: Bool32::default(),
-            shader_tile_image_depth_read_access: Bool32::default(),
-            shader_tile_image_stencil_read_access: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -62681,11 +58190,7 @@ impl ::core::default::Default for PhysicalDeviceShaderTileImagePropertiesEXT<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_tile_image_coherent_read_accelerated: Bool32::default(),
-            shader_tile_image_read_sample_from_pixel_rate_invocation: Bool32::default(),
-            shader_tile_image_read_from_helper_invocation: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -62744,9 +58249,7 @@ impl ::core::default::Default for ImportScreenBufferInfoQNX<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            buffer: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -62780,10 +58283,7 @@ impl ::core::default::Default for ScreenBufferPropertiesQNX<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            allocation_size: DeviceSize::default(),
-            memory_type_bits: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -62828,17 +58328,7 @@ impl ::core::default::Default for ScreenBufferFormatPropertiesQNX<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format: Format::default(),
-            external_format: u64::default(),
-            screen_usage: u64::default(),
-            format_features: FormatFeatureFlags::default(),
-            sampler_ycbcr_conversion_components: ComponentMapping::default(),
-            suggested_ycbcr_model: SamplerYcbcrModelConversion::default(),
-            suggested_ycbcr_range: SamplerYcbcrRange::default(),
-            suggested_x_chroma_offset: ChromaLocation::default(),
-            suggested_y_chroma_offset: ChromaLocation::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -62917,9 +58407,7 @@ impl ::core::default::Default for ExternalFormatQNX<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            external_format: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -62953,9 +58441,7 @@ impl ::core::default::Default for PhysicalDeviceExternalMemoryScreenBufferFeatur
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            screen_buffer_import: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -62997,10 +58483,7 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrixFeaturesKHR<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cooperative_matrix: Bool32::default(),
-            cooperative_matrix_robust_buffer_access: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -63055,17 +58538,7 @@ impl ::core::default::Default for CooperativeMatrixPropertiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            m_size: u32::default(),
-            n_size: u32::default(),
-            k_size: u32::default(),
-            a_type: ComponentTypeKHR::default(),
-            b_type: ComponentTypeKHR::default(),
-            c_type: ComponentTypeKHR::default(),
-            result_type: ComponentTypeKHR::default(),
-            saturating_accumulation: Bool32::default(),
-            scope: ScopeKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -63137,9 +58610,7 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrixPropertiesKHR<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cooperative_matrix_supported_stages: ShaderStageFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -63179,9 +58650,7 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrixConversionFeatu
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cooperative_matrix_conversion: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -63232,15 +58701,7 @@ impl ::core::default::Default for PhysicalDeviceShaderEnqueuePropertiesAMDX<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_execution_graph_depth: u32::default(),
-            max_execution_graph_shader_output_nodes: u32::default(),
-            max_execution_graph_shader_payload_size: u32::default(),
-            max_execution_graph_shader_payload_count: u32::default(),
-            execution_graph_dispatch_address_alignment: u32::default(),
-            max_execution_graph_workgroup_count: unsafe { ::core::mem::zeroed() },
-            max_execution_graph_workgroups: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -63331,10 +58792,7 @@ impl ::core::default::Default for PhysicalDeviceShaderEnqueueFeaturesAMDX<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_enqueue: Bool32::default(),
-            shader_mesh_enqueue: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -63388,15 +58846,7 @@ impl ::core::default::Default for ExecutionGraphPipelineCreateInfoAMDX<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCreateFlags::default(),
-            stage_count: u32::default(),
-            p_stages: ::core::ptr::null(),
-            p_library_info: ::core::ptr::null(),
-            layout: PipelineLayout::default(),
-            base_pipeline_handle: Pipeline::default(),
-            base_pipeline_index: i32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -63461,10 +58911,7 @@ impl ::core::default::Default for PipelineShaderStageNodeCreateInfoAMDX<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_name: ::core::ptr::null(),
-            index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -63523,11 +58970,7 @@ impl ::core::default::Default for ExecutionGraphPipelineScratchSizeAMDX<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_size: DeviceSize::default(),
-            max_size: DeviceSize::default(),
-            size_granularity: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -63656,9 +59099,7 @@ impl ::core::default::Default for PhysicalDeviceAntiLagFeaturesAMD<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            anti_lag: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -63694,11 +59135,7 @@ impl ::core::default::Default for AntiLagDataAMD<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            mode: AntiLagModeAMD::default(),
-            max_fps: u32::default(),
-            p_presentation_info: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -63744,10 +59181,7 @@ impl ::core::default::Default for AntiLagPresentationInfoAMD<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            stage: AntiLagStageAMD::default(),
-            frame_index: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -63784,9 +59218,7 @@ impl ::core::default::Default for BindMemoryStatus<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_result: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -63820,9 +59252,7 @@ impl ::core::default::Default for PhysicalDeviceTileMemoryHeapFeaturesQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            tile_memory_heap: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -63858,10 +59288,7 @@ impl ::core::default::Default for PhysicalDeviceTileMemoryHeapPropertiesQCOM<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            queue_submit_boundary: Bool32::default(),
-            tile_buffer_transfers: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -63903,9 +59330,7 @@ impl ::core::default::Default for TileMemorySizeInfoQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            size: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -63941,10 +59366,7 @@ impl ::core::default::Default for TileMemoryRequirementsQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            size: DeviceSize::default(),
-            alignment: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -63988,15 +59410,7 @@ impl ::core::default::Default for BindDescriptorSetsInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stage_flags: ShaderStageFlags::default(),
-            layout: PipelineLayout::default(),
-            first_set: u32::default(),
-            descriptor_set_count: u32::default(),
-            p_descriptor_sets: ::core::ptr::null(),
-            dynamic_offset_count: u32::default(),
-            p_dynamic_offsets: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64054,13 +59468,7 @@ impl ::core::default::Default for PushConstantsInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            layout: PipelineLayout::default(),
-            stage_flags: ShaderStageFlags::default(),
-            offset: u32::default(),
-            size: u32::default(),
-            p_values: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64112,13 +59520,7 @@ impl ::core::default::Default for PushDescriptorSetInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stage_flags: ShaderStageFlags::default(),
-            layout: PipelineLayout::default(),
-            set: u32::default(),
-            descriptor_write_count: u32::default(),
-            p_descriptor_writes: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64169,12 +59571,7 @@ impl ::core::default::Default for PushDescriptorSetWithTemplateInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            descriptor_update_template: DescriptorUpdateTemplate::default(),
-            layout: PipelineLayout::default(),
-            set: u32::default(),
-            p_data: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64229,14 +59626,7 @@ impl ::core::default::Default for SetDescriptorBufferOffsetsInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stage_flags: ShaderStageFlags::default(),
-            layout: PipelineLayout::default(),
-            first_set: u32::default(),
-            set_count: u32::default(),
-            p_buffer_indices: ::core::ptr::null(),
-            p_offsets: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64292,11 +59682,7 @@ impl ::core::default::Default for BindDescriptorBufferEmbeddedSamplersInfoEXT<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stage_flags: ShaderStageFlags::default(),
-            layout: PipelineLayout::default(),
-            set: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64339,9 +59725,7 @@ impl ::core::default::Default for PhysicalDeviceCubicClampFeaturesQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cubic_range_clamp: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64375,9 +59759,7 @@ impl ::core::default::Default for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ycbcr_degamma: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64413,10 +59795,7 @@ impl ::core::default::Default for SamplerYcbcrConversionYcbcrDegammaCreateInfoQC
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            enable_y_degamma: Bool32::default(),
-            enable_cb_cr_degamma: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64458,9 +59837,7 @@ impl ::core::default::Default for PhysicalDeviceCubicWeightsFeaturesQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            selectable_cubic_weights: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64495,9 +59872,7 @@ impl ::core::default::Default for SamplerCubicWeightsCreateInfoQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            cubic_weights: CubicFilterWeightsQCOM::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64530,9 +59905,7 @@ impl ::core::default::Default for BlitImageCubicWeightsInfoQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            cubic_weights: CubicFilterWeightsQCOM::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64565,9 +59938,7 @@ impl ::core::default::Default for PhysicalDeviceImageProcessing2FeaturesQCOM<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            texture_block_match2: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64605,9 +59976,7 @@ impl ::core::default::Default for PhysicalDeviceImageProcessing2PropertiesQCOM<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_block_match_window: Extent2D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64645,10 +60014,7 @@ impl ::core::default::Default for SamplerBlockMatchWindowCreateInfoQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            window_extent: Extent2D::default(),
-            window_compare_mode: BlockMatchWindowCompareModeQCOM::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64692,11 +60058,7 @@ impl ::core::default::Default for PhysicalDeviceImageProcessing3FeaturesQCOM<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image_gather_linear: Bool32::default(),
-            image_gather_extended_modes: Bool32::default(),
-            block_match_extended_clamp_to_edge: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64747,9 +60109,7 @@ impl ::core::default::Default for PhysicalDeviceDescriptorPoolOverallocationFeat
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            descriptor_pool_overallocation: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64790,9 +60150,7 @@ impl ::core::default::Default for PhysicalDeviceLayeredDriverPropertiesMSFT<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            underlying_api: LayeredDriverUnderlyingApiMSFT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64830,10 +60188,7 @@ impl ::core::default::Default for PhysicalDevicePerStageDescriptorSetFeaturesNV<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            per_stage_descriptor_set: Bool32::default(),
-            dynamic_pipeline_layout: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64876,9 +60231,7 @@ impl ::core::default::Default for PhysicalDeviceExternalFormatResolveFeaturesAND
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            external_format_resolve: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64921,11 +60274,7 @@ impl ::core::default::Default for PhysicalDeviceExternalFormatResolvePropertiesA
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            null_color_attachment_with_external_format_resolve: Bool32::default(),
-            external_format_resolve_chroma_offset_x: ChromaLocation::default(),
-            external_format_resolve_chroma_offset_y: ChromaLocation::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -64982,9 +60331,7 @@ impl ::core::default::Default for AndroidHardwareBufferFormatResolvePropertiesAN
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            color_attachment_format: Format::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65023,11 +60370,7 @@ impl ::core::default::Default for LatencySleepModeInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            low_latency_mode: Bool32::default(),
-            low_latency_boost: Bool32::default(),
-            minimum_interval_us: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65070,10 +60413,7 @@ impl ::core::default::Default for LatencySleepInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            signal_semaphore: Semaphore::default(),
-            value: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65111,10 +60451,7 @@ impl ::core::default::Default for SetLatencyMarkerInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            present_id: u64::default(),
-            marker: LatencyMarkerNV::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65152,10 +60489,7 @@ impl ::core::default::Default for GetLatencyMarkerInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            timing_count: u32::default(),
-            p_timings: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65201,22 +60535,7 @@ impl ::core::default::Default for LatencyTimingsFrameReportNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_id: u64::default(),
-            input_sample_time_us: u64::default(),
-            sim_start_time_us: u64::default(),
-            sim_end_time_us: u64::default(),
-            render_submit_start_time_us: u64::default(),
-            render_submit_end_time_us: u64::default(),
-            present_start_time_us: u64::default(),
-            present_end_time_us: u64::default(),
-            driver_start_time_us: u64::default(),
-            driver_end_time_us: u64::default(),
-            os_render_queue_start_time_us: u64::default(),
-            os_render_queue_end_time_us: u64::default(),
-            gpu_render_start_time_us: u64::default(),
-            gpu_render_end_time_us: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65313,9 +60632,7 @@ impl ::core::default::Default for OutOfBandQueueTypeInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            queue_type: OutOfBandQueueTypeNV::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65347,9 +60664,7 @@ impl ::core::default::Default for LatencySubmissionPresentIdNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            present_id: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65383,9 +60698,7 @@ impl ::core::default::Default for SwapchainLatencyCreateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            latency_mode_enable: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65419,10 +60732,7 @@ impl ::core::default::Default for LatencySurfaceCapabilitiesNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            present_mode_count: u32::default(),
-            p_present_modes: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65460,9 +60770,7 @@ impl ::core::default::Default for PhysicalDeviceCudaKernelLaunchFeaturesNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cuda_kernel_launch_features: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65506,10 +60814,7 @@ impl ::core::default::Default for PhysicalDeviceCudaKernelLaunchPropertiesNV<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            compute_capability_minor: u32::default(),
-            compute_capability_major: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65554,9 +60859,7 @@ impl ::core::default::Default for DeviceQueueShaderCoreControlCreateInfoARM<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_core_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65591,9 +60894,7 @@ impl ::core::default::Default for PhysicalDeviceSchedulingControlsFeaturesARM<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            scheduling_controls: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65631,9 +60932,7 @@ impl ::core::default::Default for PhysicalDeviceSchedulingControlsPropertiesARM<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            scheduling_controls_flags: PhysicalDeviceSchedulingControlsFlagsARM::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65677,11 +60976,7 @@ impl ::core::default::Default
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            scheduling_controls_max_warps_count: u32::default(),
-            scheduling_controls_max_queued_batches_count: u32::default(),
-            scheduling_controls_max_work_group_batch_size: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65743,11 +61038,7 @@ impl ::core::default::Default for DispatchParametersARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            work_group_batch_size: u32::default(),
-            max_queued_work_group_batches: u32::default(),
-            max_warps_per_shader_core: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65789,9 +61080,7 @@ impl ::core::default::Default for PhysicalDeviceRelaxedLineRasterizationFeatures
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            relaxed_line_rasterization: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65832,9 +61121,7 @@ impl ::core::default::Default for PhysicalDeviceRenderPassStripedFeaturesARM<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            render_pass_striped: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65873,10 +61160,7 @@ impl ::core::default::Default for PhysicalDeviceRenderPassStripedPropertiesARM<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            render_pass_stripe_granularity: Extent2D::default(),
-            max_render_pass_stripes: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65921,9 +61205,7 @@ impl ::core::default::Default for RenderPassStripeInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stripe_area: Rect2D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65956,10 +61238,7 @@ impl ::core::default::Default for RenderPassStripeBeginInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stripe_info_count: u32::default(),
-            p_stripe_infos: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -65995,10 +61274,7 @@ impl ::core::default::Default for RenderPassStripeSubmitInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stripe_semaphore_info_count: u32::default(),
-            p_stripe_semaphore_infos: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66035,9 +61311,7 @@ impl ::core::default::Default for PhysicalDevicePipelineOpacityMicromapFeaturesA
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_opacity_micromap: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66075,9 +61349,7 @@ impl ::core::default::Default for PhysicalDeviceShaderMaximalReconvergenceFeatur
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_maximal_reconvergence: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66119,10 +61391,7 @@ impl ::core::default::Default for PhysicalDeviceShaderSubgroupRotateFeatures<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_subgroup_rotate: Bool32::default(),
-            shader_subgroup_rotate_clustered: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66168,9 +61437,7 @@ impl ::core::default::Default for PhysicalDeviceShaderExpectAssumeFeatures<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_expect_assume: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66205,9 +61472,7 @@ impl ::core::default::Default for PhysicalDeviceShaderFloatControls2Features<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_float_controls2: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66245,9 +61510,7 @@ impl ::core::default::Default for PhysicalDeviceDynamicRenderingLocalReadFeature
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            dynamic_rendering_local_read: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66286,10 +61549,7 @@ impl ::core::default::Default for RenderingAttachmentLocationInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            color_attachment_count: u32::default(),
-            p_color_attachment_locations: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66327,12 +61587,7 @@ impl ::core::default::Default for RenderingInputAttachmentIndexInfo<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            color_attachment_count: u32::default(),
-            p_color_attachment_input_indices: ::core::ptr::null(),
-            p_depth_input_attachment_index: ::core::ptr::null(),
-            p_stencil_input_attachment_index: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66383,9 +61638,7 @@ impl ::core::default::Default for PhysicalDeviceShaderQuadControlFeaturesKHR<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_quad_control: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66423,9 +61676,7 @@ impl ::core::default::Default for PhysicalDeviceShaderAtomicFloat16VectorFeature
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_float16_vector_atomics: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66468,11 +61719,7 @@ impl ::core::default::Default for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            memory_map_placed: Bool32::default(),
-            memory_map_range_placed: Bool32::default(),
-            memory_unmap_reserve: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66517,9 +61764,7 @@ impl ::core::default::Default for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            min_placed_memory_map_alignment: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66559,9 +61804,7 @@ impl ::core::default::Default for MemoryMapPlacedInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_placed_address: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66596,11 +61839,7 @@ impl ::core::default::Default for PhysicalDeviceShaderBfloat16FeaturesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_b_float16_type: Bool32::default(),
-            shader_b_float16_dot_product: Bool32::default(),
-            shader_b_float16_cooperative_matrix: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66648,9 +61887,7 @@ impl ::core::default::Default for PhysicalDeviceRawAccessChainsFeaturesNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_raw_access_chains: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66685,9 +61922,7 @@ impl ::core::default::Default for PhysicalDeviceCommandBufferInheritanceFeatures
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            command_buffer_inheritance: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66725,9 +61960,7 @@ impl ::core::default::Default for PhysicalDeviceImageAlignmentControlFeaturesMES
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            image_alignment_control: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66765,9 +61998,7 @@ impl ::core::default::Default for PhysicalDeviceImageAlignmentControlPropertiesM
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            supported_image_alignment_mask: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66804,9 +62035,7 @@ impl ::core::default::Default for ImageAlignmentControlCreateInfoMESA<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            maximum_requested_alignment: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66839,9 +62068,7 @@ impl ::core::default::Default for PhysicalDeviceShaderReplicatedCompositesFeatur
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_replicated_composites: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66882,9 +62109,7 @@ impl ::core::default::Default for PhysicalDevicePresentModeFifoLatestReadyFeatur
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_mode_fifo_latest_ready: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -66952,15 +62177,7 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrix2FeaturesNV<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cooperative_matrix_workgroup_scope: Bool32::default(),
-            cooperative_matrix_flexible_dimensions: Bool32::default(),
-            cooperative_matrix_reductions: Bool32::default(),
-            cooperative_matrix_conversions: Bool32::default(),
-            cooperative_matrix_per_element_operations: Bool32::default(),
-            cooperative_matrix_tensor_addressing: Bool32::default(),
-            cooperative_matrix_block_loads: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -67043,11 +62260,7 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrix2PropertiesNV<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cooperative_matrix_workgroup_scope_max_workgroup_size: u32::default(),
-            cooperative_matrix_flexible_dimensions_max_dimension: u32::default(),
-            cooperative_matrix_workgroup_scope_reserved_shared_memory: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -67115,18 +62328,7 @@ impl ::core::default::Default for CooperativeMatrixFlexibleDimensionsPropertiesN
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            m_granularity: u32::default(),
-            n_granularity: u32::default(),
-            k_granularity: u32::default(),
-            a_type: ComponentTypeKHR::default(),
-            b_type: ComponentTypeKHR::default(),
-            c_type: ComponentTypeKHR::default(),
-            result_type: ComponentTypeKHR::default(),
-            saturating_accumulation: Bool32::default(),
-            scope: ScopeKHR::default(),
-            workgroup_invocations: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -67204,9 +62406,7 @@ impl ::core::default::Default for PhysicalDeviceCooperativeMatrixDecodeVectorFea
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cooperative_matrix_decode_vector: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -67250,9 +62450,7 @@ impl ::core::default::Default for PhysicalDeviceHdrVividFeaturesHUAWEI<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            hdr_vivid: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -67286,9 +62484,7 @@ impl ::core::default::Default for PhysicalDeviceVertexAttributeRobustnessFeature
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            vertex_attribute_robustness: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -67333,9 +62529,7 @@ impl ::core::default::Default for PhysicalDeviceDenseGeometryFormatFeaturesAMDX<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            dense_geometry_format: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -67403,15 +62597,7 @@ impl ::core::default::Default for AccelerationStructureDenseGeometryFormatTriang
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            compressed_data: DeviceOrHostAddressConstKHR::default(),
-            data_size: DeviceSize::default(),
-            num_triangles: u32::default(),
-            num_vertices: u32::default(),
-            max_primitive_index: u32::default(),
-            max_geometry_index: u32::default(),
-            format: CompressedTriangleFormatAMDX::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -67483,9 +62669,7 @@ impl ::core::default::Default for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            depth_clamp_zero_one: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -67524,10 +62708,7 @@ impl ::core::default::Default for PhysicalDeviceCooperativeVectorFeaturesNV<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cooperative_vector: Bool32::default(),
-            cooperative_vector_training: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -67572,14 +62753,7 @@ impl ::core::default::Default for CooperativeVectorPropertiesNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            input_type: ComponentTypeKHR::default(),
-            input_interpretation: ComponentTypeKHR::default(),
-            matrix_interpretation: ComponentTypeKHR::default(),
-            bias_interpretation: ComponentTypeKHR::default(),
-            result_type: ComponentTypeKHR::default(),
-            transpose: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -67639,12 +62813,7 @@ impl ::core::default::Default for PhysicalDeviceCooperativeVectorPropertiesNV<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            cooperative_vector_supported_stages: ShaderStageFlags::default(),
-            cooperative_vector_training_float16_accumulation: Bool32::default(),
-            cooperative_vector_training_float32_accumulation: Bool32::default(),
-            max_cooperative_vector_components: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -67741,20 +62910,7 @@ impl ::core::default::Default for ConvertCooperativeVectorMatrixInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_size: usize::default(),
-            src_data: DeviceOrHostAddressConstKHR::default(),
-            p_dst_size: ::core::ptr::null_mut(),
-            dst_data: DeviceOrHostAddressKHR::default(),
-            src_component_type: ComponentTypeKHR::default(),
-            dst_component_type: ComponentTypeKHR::default(),
-            num_rows: u32::default(),
-            num_columns: u32::default(),
-            src_layout: CooperativeVectorMatrixLayoutNV::default(),
-            src_stride: usize::default(),
-            dst_layout: CooperativeVectorMatrixLayoutNV::default(),
-            dst_stride: usize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -67854,22 +63010,7 @@ impl ::core::default::Default for PhysicalDeviceTileShadingFeaturesQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            tile_shading: Bool32::default(),
-            tile_shading_fragment_stage: Bool32::default(),
-            tile_shading_color_attachments: Bool32::default(),
-            tile_shading_depth_attachments: Bool32::default(),
-            tile_shading_stencil_attachments: Bool32::default(),
-            tile_shading_input_attachments: Bool32::default(),
-            tile_shading_sampled_attachments: Bool32::default(),
-            tile_shading_per_tile_draw: Bool32::default(),
-            tile_shading_per_tile_dispatch: Bool32::default(),
-            tile_shading_dispatch_tile: Bool32::default(),
-            tile_shading_apron: Bool32::default(),
-            tile_shading_anisotropic_apron: Bool32::default(),
-            tile_shading_atomic_ops: Bool32::default(),
-            tile_shading_image_processing: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -67977,12 +63118,7 @@ impl ::core::default::Default for PhysicalDeviceTileShadingPropertiesQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_apron_size: u32::default(),
-            prefer_non_coherent: Bool32::default(),
-            tile_granularity: Extent2D::default(),
-            max_tile_shading_rate: Extent2D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68032,10 +63168,7 @@ impl ::core::default::Default for RenderPassTileShadingCreateInfoQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: TileShadingRenderPassFlagsQCOM::default(),
-            tile_apron_size: Extent2D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68075,8 +63208,7 @@ impl ::core::default::Default for PerTileBeginInfoQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68101,8 +63233,7 @@ impl ::core::default::Default for PerTileEndInfoQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68127,8 +63258,7 @@ impl ::core::default::Default for DispatchTileInfoQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68154,9 +63284,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMapLayeredPropert
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_fragment_density_map_layers: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68193,9 +63321,7 @@ impl ::core::default::Default for PhysicalDeviceFragmentDensityMapLayeredFeature
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            fragment_density_map_layered: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68236,9 +63362,7 @@ impl ::core::default::Default for PipelineFragmentDensityMapLayeredCreateInfoVAL
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            max_fragment_density_map_layers: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68276,10 +63400,7 @@ impl ::core::default::Default for SetPresentConfigNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            num_frames_per_batch: u32::default(),
-            present_config_feedback: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68317,9 +63438,7 @@ impl ::core::default::Default for PhysicalDevicePresentMeteringFeaturesNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            present_metering: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68354,9 +63473,7 @@ impl ::core::default::Default for ExternalComputeQueueDeviceCreateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            reserved_external_queues: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68390,9 +63507,7 @@ impl ::core::default::Default for ExternalComputeQueueCreateInfoNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            preferred_queue: Queue::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68424,9 +63539,7 @@ impl ::core::default::Default for ExternalComputeQueueDataParamsNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            device_index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68459,10 +63572,7 @@ impl ::core::default::Default for PhysicalDeviceExternalComputeQueuePropertiesNV
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            external_data_size: u32::default(),
-            max_external_queues: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68509,9 +63619,7 @@ impl ::core::default::Default for PhysicalDeviceShaderUniformBufferUnsizedArrayF
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_uniform_buffer_unsized_array: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68560,12 +63668,7 @@ impl ::core::default::Default for PhysicalDeviceShaderMixedFloatDotProductFeatur
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_mixed_float_dot_product_float16_acc_float32: Bool32::default(),
-            shader_mixed_float_dot_product_float16_acc_float16: Bool32::default(),
-            shader_mixed_float_dot_product_b_float16_acc: Bool32::default(),
-            shader_mixed_float_dot_product_float8_acc_float32: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68637,9 +63740,7 @@ impl ::core::default::Default for PhysicalDevicePrimitiveRestartIndexFeaturesEXT
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            primitive_restart_index: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68677,9 +63778,7 @@ impl ::core::default::Default for PhysicalDeviceFormatPackFeaturesARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format_pack: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68713,9 +63812,7 @@ impl ::core::default::Default for PhysicalDeviceThrottleHintFeaturesSEC<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            throttle_hint: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68749,9 +63846,7 @@ impl ::core::default::Default for ThrottleHintSubmitInfoSEC<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            throttle_hint: ThrottleHintTypeSEC::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68789,14 +63884,7 @@ impl ::core::default::Default for TensorDescriptionARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            tiling: TensorTilingARM::default(),
-            format: Format::default(),
-            dimension_count: u32::default(),
-            p_dimensions: ::core::ptr::null(),
-            p_strides: ::core::ptr::null(),
-            usage: TensorUsageFlagsARM::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68856,13 +63944,7 @@ impl ::core::default::Default for TensorCreateInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: TensorCreateFlagsARM::default(),
-            p_description: ::core::ptr::null(),
-            sharing_mode: SharingMode::default(),
-            queue_family_index_count: u32::default(),
-            p_queue_family_indices: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68912,11 +63994,7 @@ impl ::core::default::Default for TensorViewCreateInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: TensorViewCreateFlagsARM::default(),
-            tensor: TensorARM::default(),
-            format: Format::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68958,9 +64036,7 @@ impl ::core::default::Default for TensorMemoryRequirementsInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            tensor: TensorARM::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -68994,11 +64070,7 @@ impl ::core::default::Default for BindTensorMemoryInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            tensor: TensorARM::default(),
-            memory: DeviceMemory::default(),
-            memory_offset: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -69041,10 +64113,7 @@ impl ::core::default::Default for WriteDescriptorSetTensorARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            tensor_view_count: u32::default(),
-            p_tensor_views: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -69079,10 +64148,7 @@ impl ::core::default::Default for TensorFormatPropertiesARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            optimal_tiling_tensor_features: FormatFeatureFlags2::default(),
-            linear_tiling_tensor_features: FormatFeatureFlags2::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -69138,21 +64204,7 @@ impl ::core::default::Default for PhysicalDeviceTensorPropertiesARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_tensor_dimension_count: u32::default(),
-            max_tensor_elements: u64::default(),
-            max_per_dimension_tensor_elements: u64::default(),
-            max_tensor_stride: i64::default(),
-            max_tensor_size: u64::default(),
-            max_tensor_shader_access_array_length: u32::default(),
-            max_tensor_shader_access_size: u32::default(),
-            max_descriptor_set_storage_tensors: u32::default(),
-            max_per_stage_descriptor_set_storage_tensors: u32::default(),
-            max_descriptor_set_update_after_bind_storage_tensors: u32::default(),
-            max_per_stage_descriptor_update_after_bind_storage_tensors: u32::default(),
-            shader_storage_tensor_array_non_uniform_indexing_native: Bool32::default(),
-            shader_tensor_supported_stages: ShaderStageFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -69279,15 +64331,7 @@ impl ::core::default::Default for TensorMemoryBarrierARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_stage_mask: PipelineStageFlags2::default(),
-            src_access_mask: AccessFlags2::default(),
-            dst_stage_mask: PipelineStageFlags2::default(),
-            dst_access_mask: AccessFlags2::default(),
-            src_queue_family_index: u32::default(),
-            dst_queue_family_index: u32::default(),
-            tensor: TensorARM::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -69351,10 +64395,7 @@ impl ::core::default::Default for TensorDependencyInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            tensor_memory_barrier_count: u32::default(),
-            p_tensor_memory_barriers: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -69396,14 +64437,7 @@ impl ::core::default::Default for PhysicalDeviceTensorFeaturesARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            tensor_non_packed: Bool32::default(),
-            shader_tensor_access: Bool32::default(),
-            shader_storage_tensor_array_dynamic_indexing: Bool32::default(),
-            shader_storage_tensor_array_non_uniform_indexing: Bool32::default(),
-            descriptor_binding_storage_tensor_update_after_bind: Bool32::default(),
-            tensors: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -69474,9 +64508,7 @@ impl ::core::default::Default for DeviceTensorMemoryRequirementsARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_create_info: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -69511,12 +64543,7 @@ impl ::core::default::Default for CopyTensorInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_tensor: TensorARM::default(),
-            dst_tensor: TensorARM::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -69562,12 +64589,7 @@ impl ::core::default::Default for TensorCopyARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            dimension_count: u32::default(),
-            p_src_offset: ::core::ptr::null(),
-            p_dst_offset: ::core::ptr::null(),
-            p_extent: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -69612,9 +64634,7 @@ impl ::core::default::Default for MemoryDedicatedAllocateInfoTensorARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            tensor: TensorARM::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -69649,11 +64669,7 @@ impl ::core::default::Default for PhysicalDeviceDescriptorBufferTensorProperties
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            tensor_capture_replay_descriptor_data_size: usize::default(),
-            tensor_view_capture_replay_descriptor_data_size: usize::default(),
-            tensor_descriptor_size: usize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -69708,9 +64724,7 @@ impl ::core::default::Default for PhysicalDeviceDescriptorBufferTensorFeaturesAR
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            descriptor_buffer_tensor_descriptors: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -69751,9 +64765,7 @@ impl ::core::default::Default for TensorCaptureDescriptorDataInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            tensor: TensorARM::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -69785,9 +64797,7 @@ impl ::core::default::Default for TensorViewCaptureDescriptorDataInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            tensor_view: TensorViewARM::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -69820,9 +64830,7 @@ impl ::core::default::Default for DescriptorGetTensorInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            tensor_view: TensorViewARM::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -69856,10 +64864,7 @@ impl ::core::default::Default for FrameBoundaryTensorsARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            tensor_count: u32::default(),
-            p_tensors: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -69898,11 +64903,7 @@ impl ::core::default::Default for PhysicalDeviceExternalTensorInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: TensorCreateFlagsARM::default(),
-            p_description: ::core::ptr::null(),
-            handle_type: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -69944,9 +64945,7 @@ impl ::core::default::Default for ExternalTensorPropertiesARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            external_memory_properties: ExternalMemoryProperties::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -69981,9 +64980,7 @@ impl ::core::default::Default for ExternalMemoryTensorCreateInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            handle_types: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -70017,10 +65014,7 @@ impl ::core::default::Default for PhysicalDeviceShaderFloat8FeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_float8: Bool32::default(),
-            shader_float8_cooperative_matrix: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -70063,10 +65057,7 @@ impl ::core::default::Default for SurfaceCreateInfoOHOS<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: SurfaceCreateFlagsOHOS::default(),
-            window: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -70107,13 +65098,7 @@ impl ::core::default::Default for PhysicalDeviceDataGraphFeaturesARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            data_graph: Bool32::default(),
-            data_graph_update_after_bind: Bool32::default(),
-            data_graph_specialization_constants: Bool32::default(),
-            data_graph_descriptor_buffer: Bool32::default(),
-            data_graph_shader_module: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -70172,11 +65157,7 @@ impl ::core::default::Default for DataGraphPipelineConstantTensorSemiStructuredS
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            dimension: u32::default(),
-            zero_count: u32::default(),
-            group_size: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -70226,10 +65207,7 @@ impl ::core::default::Default for DataGraphPipelineConstantARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            id: u32::default(),
-            p_constant_data: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -70268,11 +65246,7 @@ impl ::core::default::Default for DataGraphPipelineResourceInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            descriptor_set: u32::default(),
-            binding: u32::default(),
-            array_element: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -70314,9 +65288,7 @@ impl ::core::default::Default for DataGraphPipelineResourceInfoImageLayoutARM<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            layout: ImageLayout::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -70353,9 +65325,7 @@ impl ::core::default::Default for DataGraphPipelineCompilerControlCreateInfoARM<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_vendor_options: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -70403,12 +65373,7 @@ impl ::core::default::Default for DataGraphPipelineCreateInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: PipelineCreateFlags2::default(),
-            layout: PipelineLayout::default(),
-            resource_info_count: u32::default(),
-            p_resource_infos: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -70458,13 +65423,7 @@ impl ::core::default::Default for DataGraphPipelineShaderModuleCreateInfoARM<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            module: ShaderModule::default(),
-            p_name: ::core::ptr::null(),
-            p_specialization_info: ::core::ptr::null(),
-            constant_count: u32::default(),
-            p_constants: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -70526,10 +65485,7 @@ impl ::core::default::Default for DataGraphPipelineSessionCreateInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            flags: DataGraphPipelineSessionCreateFlagsARM::default(),
-            data_graph_pipeline: Pipeline::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -70567,9 +65523,7 @@ impl ::core::default::Default for DataGraphPipelineSessionBindPointRequirementsI
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            session: DataGraphPipelineSessionARM::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -70604,11 +65558,7 @@ impl ::core::default::Default for DataGraphPipelineSessionBindPointRequirementAR
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            bind_point: DataGraphPipelineSessionBindPointARM::default(),
-            bind_point_type: DataGraphPipelineSessionBindPointTypeARM::default(),
-            num_objects: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -70656,11 +65606,7 @@ impl ::core::default::Default for DataGraphPipelineSessionMemoryRequirementsInfo
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            session: DataGraphPipelineSessionARM::default(),
-            bind_point: DataGraphPipelineSessionBindPointARM::default(),
-            object_index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -70707,13 +65653,7 @@ impl ::core::default::Default for BindDataGraphPipelineSessionMemoryInfoARM<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            session: DataGraphPipelineSessionARM::default(),
-            bind_point: DataGraphPipelineSessionBindPointARM::default(),
-            object_index: u32::default(),
-            memory: DeviceMemory::default(),
-            memory_offset: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -70766,9 +65706,7 @@ impl ::core::default::Default for DataGraphPipelineInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            data_graph_pipeline: Pipeline::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -70803,12 +65741,7 @@ impl ::core::default::Default for DataGraphPipelinePropertyQueryResultARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            property: DataGraphPipelinePropertyARM::default(),
-            is_text: Bool32::default(),
-            data_size: usize::default(),
-            p_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -70853,10 +65786,7 @@ impl ::core::default::Default for DataGraphPipelineIdentifierCreateInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            identifier_size: u32::default(),
-            p_identifier: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -70894,9 +65824,7 @@ impl ::core::default::Default for DataGraphPipelineDispatchInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: DataGraphPipelineDispatchFlagsARM::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -70953,11 +65881,7 @@ impl fmt::Debug for PhysicalDeviceDataGraphOperationSupportARM {
 impl ::core::default::Default for PhysicalDeviceDataGraphOperationSupportARM {
     #[inline]
     fn default() -> Self {
-        Self {
-            operation_type: PhysicalDeviceDataGraphOperationTypeARM::default(),
-            name: unsafe { ::core::mem::zeroed() },
-            version: u32::default(),
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl PhysicalDeviceDataGraphOperationSupportARM {
@@ -71002,10 +65926,7 @@ impl ::core::default::Default for QueueFamilyDataGraphPropertiesARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            engine: PhysicalDeviceDataGraphProcessingEngineARM::default(),
-            operation: PhysicalDeviceDataGraphOperationSupportARM::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71043,10 +65964,7 @@ impl ::core::default::Default for PhysicalDeviceQueueFamilyDataGraphProcessingEn
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            queue_family_index: u32::default(),
-            engine_type: PhysicalDeviceDataGraphProcessingEngineTypeARM::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71090,10 +66008,7 @@ impl ::core::default::Default for QueueFamilyDataGraphProcessingEngineProperties
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            foreign_semaphore_handle_types: ExternalSemaphoreHandleTypeFlags::default(),
-            foreign_memory_handle_types: ExternalMemoryHandleTypeFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71138,10 +66053,7 @@ impl ::core::default::Default for DataGraphProcessingEngineCreateInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            processing_engine_count: u32::default(),
-            p_processing_engines: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71184,9 +66096,7 @@ impl ::core::default::Default for PhysicalDevicePipelineCacheIncrementalModeFeat
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            pipeline_cache_incremental_mode: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71230,9 +66140,7 @@ impl ::core::default::Default for DataGraphPipelineBuiltinModelCreateInfoQCOM<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_operation: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71269,9 +66177,7 @@ impl ::core::default::Default for PhysicalDeviceDataGraphModelFeaturesQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            data_graph_model: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71306,9 +66212,7 @@ impl ::core::default::Default for PhysicalDeviceShaderUntypedPointersFeaturesKHR
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_untyped_pointers: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71346,9 +66250,7 @@ impl ::core::default::Default for PhysicalDeviceVideoEncodeRgbConversionFeatures
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            video_encode_rgb_conversion: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71392,12 +66294,7 @@ impl ::core::default::Default for VideoEncodeRgbConversionCapabilitiesVALVE<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            rgb_models: VideoEncodeRgbModelConversionFlagsVALVE::default(),
-            rgb_ranges: VideoEncodeRgbRangeCompressionFlagsVALVE::default(),
-            x_chroma_offsets: VideoEncodeRgbChromaOffsetFlagsVALVE::default(),
-            y_chroma_offsets: VideoEncodeRgbChromaOffsetFlagsVALVE::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71452,9 +66349,7 @@ impl ::core::default::Default for VideoEncodeProfileRgbConversionInfoVALVE<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            perform_encode_rgb_conversion: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71491,12 +66386,7 @@ impl ::core::default::Default for VideoEncodeSessionRgbConversionCreateInfoVALVE
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            rgb_model: VideoEncodeRgbModelConversionFlagsVALVE::default(),
-            rgb_range: VideoEncodeRgbRangeCompressionFlagsVALVE::default(),
-            x_chroma_offset: VideoEncodeRgbChromaOffsetFlagsVALVE::default(),
-            y_chroma_offset: VideoEncodeRgbChromaOffsetFlagsVALVE::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71554,9 +66444,7 @@ impl ::core::default::Default for PhysicalDeviceShader64BitIndexingFeaturesEXT<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader64_bit_indexing: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71594,9 +66482,7 @@ impl ::core::default::Default for NativeBufferUsageOHOS<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ohos_native_buffer_usage: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71630,10 +66516,7 @@ impl ::core::default::Default for NativeBufferPropertiesOHOS<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            allocation_size: DeviceSize::default(),
-            memory_type_bits: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71677,16 +66560,7 @@ impl ::core::default::Default for NativeBufferFormatPropertiesOHOS<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format: Format::default(),
-            external_format: u64::default(),
-            format_features: FormatFeatureFlags::default(),
-            sampler_ycbcr_conversion_components: ComponentMapping::default(),
-            suggested_ycbcr_model: SamplerYcbcrModelConversion::default(),
-            suggested_ycbcr_range: SamplerYcbcrRange::default(),
-            suggested_x_chroma_offset: ChromaLocation::default(),
-            suggested_y_chroma_offset: ChromaLocation::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71760,9 +66634,7 @@ impl ::core::default::Default for ImportNativeBufferInfoOHOS<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            buffer: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71795,9 +66667,7 @@ impl ::core::default::Default for MemoryGetNativeBufferInfoOHOS<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory: DeviceMemory::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71829,9 +66699,7 @@ impl ::core::default::Default for ExternalFormatOHOS<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            external_format: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71869,10 +66737,7 @@ impl ::core::default::Default for PerfHintInfoQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            ty: PerfHintTypeQCOM::default(),
-            scale: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71909,9 +66774,7 @@ impl ::core::default::Default for PhysicalDeviceQueuePerfHintFeaturesQCOM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            queue_perf_hint: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71946,9 +66809,7 @@ impl ::core::default::Default for PhysicalDeviceQueuePerfHintPropertiesQCOM<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            supported_queues: QueueFlags::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -71985,9 +66846,7 @@ impl ::core::default::Default for PhysicalDevicePerformanceCountersByRegionFeatu
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            performance_counters_by_region: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -72032,13 +66891,7 @@ impl ::core::default::Default for PhysicalDevicePerformanceCountersByRegionPrope
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_per_region_performance_counters: u32::default(),
-            performance_counter_region_size: Extent2D::default(),
-            row_stride_alignment: u32::default(),
-            region_alignment: u32::default(),
-            identity_transform_order: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -72101,9 +66954,7 @@ impl ::core::default::Default for PerformanceCounterARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            counter_id: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -72146,10 +66997,7 @@ impl ::core::default::Default for PerformanceCounterDescriptionARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: PerformanceCounterDescriptionFlagsARM::default(),
-            name: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -72193,13 +67041,7 @@ impl ::core::default::Default for RenderPassPerformanceCountersByRegionBeginInfo
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            counter_address_count: u32::default(),
-            p_counter_addresses: ::core::ptr::null(),
-            serialize_regions: Bool32::default(),
-            counter_index_count: u32::default(),
-            p_counter_indices: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -72250,10 +67092,7 @@ impl ::core::default::Default for ComputeOccupancyPriorityParametersNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            occupancy_priority: f32::default(),
-            occupancy_throttling: f32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -72290,9 +67129,7 @@ impl ::core::default::Default for PhysicalDeviceComputeOccupancyPriorityFeatures
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            compute_occupancy_priority: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -72330,9 +67167,7 @@ impl ::core::default::Default for PhysicalDeviceShaderLongVectorFeaturesEXT<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            long_vector: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -72367,9 +67202,7 @@ impl ::core::default::Default for PhysicalDeviceShaderLongVectorPropertiesEXT<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_vector_components: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -72406,9 +67239,7 @@ impl ::core::default::Default for PhysicalDeviceTextureCompressionASTC3DFeatures
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            texture_compression_astc_3d: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -72449,9 +67280,7 @@ impl ::core::default::Default for PhysicalDeviceShaderSubgroupPartitionedFeature
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_subgroup_partitioned: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -72489,11 +67318,7 @@ unsafe impl Sync for HostAddressRangeEXT<'_> {}
 impl ::core::default::Default for HostAddressRangeEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            address: ::core::ptr::null_mut(),
-            size: usize::default(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> HostAddressRangeEXT<'a> {
@@ -72519,11 +67344,7 @@ unsafe impl Sync for HostAddressRangeConstEXT<'_> {}
 impl ::core::default::Default for HostAddressRangeConstEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            address: ::core::ptr::null(),
-            size: usize::default(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> HostAddressRangeConstEXT<'a> {
@@ -72553,10 +67374,7 @@ impl ::core::default::Default for TexelBufferDescriptorInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            format: Format::default(),
-            address_range: DeviceAddressRangeEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -72594,10 +67412,7 @@ impl ::core::default::Default for ImageDescriptorInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_view: ::core::ptr::null(),
-            layout: ImageLayout::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -72660,10 +67475,7 @@ impl ::core::default::Default for ResourceDescriptorInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            ty: DescriptorType::default(),
-            data: ResourceDescriptorDataEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -72702,11 +67514,7 @@ impl ::core::default::Default for BindHeapInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            heap_range: DeviceAddressRangeEXT::default(),
-            reserved_range_offset: DeviceSize::default(),
-            reserved_range_size: DeviceSize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -72749,10 +67557,7 @@ impl ::core::default::Default for PushDataInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            offset: u32::default(),
-            data: HostAddressRangeConstEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -72789,14 +67594,7 @@ unsafe impl Sync for DescriptorMappingSourceConstantOffsetEXT<'_> {}
 impl ::core::default::Default for DescriptorMappingSourceConstantOffsetEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            heap_offset: u32::default(),
-            heap_array_stride: u32::default(),
-            p_embedded_sampler: ::core::ptr::null(),
-            sampler_heap_offset: u32::default(),
-            sampler_heap_array_stride: u32::default(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> DescriptorMappingSourceConstantOffsetEXT<'a> {
@@ -72849,19 +67647,7 @@ unsafe impl Sync for DescriptorMappingSourcePushIndexEXT<'_> {}
 impl ::core::default::Default for DescriptorMappingSourcePushIndexEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            heap_offset: u32::default(),
-            push_offset: u32::default(),
-            heap_index_stride: u32::default(),
-            heap_array_stride: u32::default(),
-            p_embedded_sampler: ::core::ptr::null(),
-            use_combined_image_sampler_index: Bool32::default(),
-            sampler_heap_offset: u32::default(),
-            sampler_push_offset: u32::default(),
-            sampler_heap_index_stride: u32::default(),
-            sampler_heap_array_stride: u32::default(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> DescriptorMappingSourcePushIndexEXT<'a> {
@@ -72944,21 +67730,7 @@ unsafe impl Sync for DescriptorMappingSourceIndirectIndexEXT<'_> {}
 impl ::core::default::Default for DescriptorMappingSourceIndirectIndexEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            heap_offset: u32::default(),
-            push_offset: u32::default(),
-            address_offset: u32::default(),
-            heap_index_stride: u32::default(),
-            heap_array_stride: u32::default(),
-            p_embedded_sampler: ::core::ptr::null(),
-            use_combined_image_sampler_index: Bool32::default(),
-            sampler_heap_offset: u32::default(),
-            sampler_push_offset: u32::default(),
-            sampler_address_offset: u32::default(),
-            sampler_heap_index_stride: u32::default(),
-            sampler_heap_array_stride: u32::default(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> DescriptorMappingSourceIndirectIndexEXT<'a> {
@@ -73049,19 +67821,7 @@ unsafe impl Sync for DescriptorMappingSourceIndirectIndexArrayEXT<'_> {}
 impl ::core::default::Default for DescriptorMappingSourceIndirectIndexArrayEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            heap_offset: u32::default(),
-            push_offset: u32::default(),
-            address_offset: u32::default(),
-            heap_index_stride: u32::default(),
-            p_embedded_sampler: ::core::ptr::null(),
-            use_combined_image_sampler_index: Bool32::default(),
-            sampler_heap_offset: u32::default(),
-            sampler_push_offset: u32::default(),
-            sampler_address_offset: u32::default(),
-            sampler_heap_index_stride: u32::default(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> DescriptorMappingSourceIndirectIndexArrayEXT<'a> {
@@ -73163,19 +67923,7 @@ unsafe impl Sync for DescriptorMappingSourceShaderRecordIndexEXT<'_> {}
 impl ::core::default::Default for DescriptorMappingSourceShaderRecordIndexEXT<'_> {
     #[inline]
     fn default() -> Self {
-        Self {
-            heap_offset: u32::default(),
-            shader_record_offset: u32::default(),
-            heap_index_stride: u32::default(),
-            heap_array_stride: u32::default(),
-            p_embedded_sampler: ::core::ptr::null(),
-            use_combined_image_sampler_index: Bool32::default(),
-            sampler_heap_offset: u32::default(),
-            sampler_shader_record_offset: u32::default(),
-            sampler_heap_index_stride: u32::default(),
-            sampler_heap_array_stride: u32::default(),
-            _marker: PhantomData,
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl<'a> DescriptorMappingSourceShaderRecordIndexEXT<'a> {
@@ -73313,14 +68061,7 @@ impl ::core::default::Default for DescriptorSetAndBindingMappingEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            descriptor_set: u32::default(),
-            first_binding: u32::default(),
-            binding_count: u32::default(),
-            resource_mask: SpirvResourceTypeFlagsEXT::default(),
-            source: DescriptorMappingSourceEXT::default(),
-            source_data: DescriptorMappingSourceDataEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -73378,10 +68119,7 @@ impl ::core::default::Default for ShaderDescriptorSetAndBindingMappingInfoEXT<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            mapping_count: u32::default(),
-            p_mappings: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -73420,9 +68158,7 @@ impl ::core::default::Default for SamplerCustomBorderColorIndexCreateInfoEXT<'_>
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            index: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -73456,9 +68192,7 @@ impl ::core::default::Default for OpaqueCaptureDataCreateInfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_data: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -73493,10 +68227,7 @@ impl ::core::default::Default for IndirectCommandsLayoutPushDataTokenNV<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            push_data_offset: u32::default(),
-            push_data_size: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -73538,9 +68269,7 @@ impl ::core::default::Default for SubsampledImageFormatPropertiesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            subsampled_image_descriptor_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -73576,9 +68305,7 @@ impl ::core::default::Default for PhysicalDeviceShaderSplitBarrierFeaturesEXT<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_split_barrier: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -73616,9 +68343,7 @@ impl ::core::default::Default for PhysicalDeviceShaderSplitBarrierPropertiesEXT<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            split_barrier_reserved_shared_memory: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -73659,10 +68384,7 @@ impl ::core::default::Default for PhysicalDeviceDescriptorHeapFeaturesEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            descriptor_heap: Bool32::default(),
-            descriptor_heap_capture_replay: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -73720,27 +68442,7 @@ impl ::core::default::Default for PhysicalDeviceDescriptorHeapPropertiesEXT<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            sampler_heap_alignment: DeviceSize::default(),
-            resource_heap_alignment: DeviceSize::default(),
-            max_sampler_heap_size: DeviceSize::default(),
-            max_resource_heap_size: DeviceSize::default(),
-            min_sampler_heap_reserved_range: DeviceSize::default(),
-            min_sampler_heap_reserved_range_with_embedded: DeviceSize::default(),
-            min_resource_heap_reserved_range: DeviceSize::default(),
-            sampler_descriptor_size: DeviceSize::default(),
-            image_descriptor_size: DeviceSize::default(),
-            buffer_descriptor_size: DeviceSize::default(),
-            sampler_descriptor_alignment: DeviceSize::default(),
-            image_descriptor_alignment: DeviceSize::default(),
-            buffer_descriptor_alignment: DeviceSize::default(),
-            max_push_data_size: DeviceSize::default(),
-            image_capture_replay_opaque_data_size: usize::default(),
-            max_descriptor_heap_embedded_samplers: u32::default(),
-            sampler_ycbcr_conversion_count: u32::default(),
-            sparse_descriptor_heaps: Bool32::default(),
-            protected_descriptor_heaps: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -73887,10 +68589,7 @@ impl ::core::default::Default for CommandBufferInheritanceDescriptorHeapInfoEXT<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            p_sampler_heap_bind_info: ::core::ptr::null(),
-            p_resource_heap_bind_info: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -73940,11 +68639,7 @@ impl ::core::default::Default for PhysicalDeviceDescriptorHeapTensorPropertiesAR
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            tensor_descriptor_size: DeviceSize::default(),
-            tensor_descriptor_alignment: DeviceSize::default(),
-            tensor_capture_replay_opaque_data_size: usize::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -73994,9 +68689,7 @@ impl ::core::default::Default for PhysicalDeviceShaderInstrumentationFeaturesARM
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_instrumentation: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -74035,10 +68728,7 @@ impl ::core::default::Default for PhysicalDeviceShaderInstrumentationPropertiesA
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            num_metrics: u32::default(),
-            per_basic_block_granularity: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -74079,8 +68769,7 @@ impl ::core::default::Default for ShaderInstrumentationCreateInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -74117,10 +68806,7 @@ impl ::core::default::Default for ShaderInstrumentationMetricDescriptionARM<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            name: unsafe { ::core::mem::zeroed() },
-            description: unsafe { ::core::mem::zeroed() },
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -74224,12 +68910,7 @@ impl ::core::default::Default for DeviceMemoryCopyKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_range: DeviceAddressRangeKHR::default(),
-            src_flags: AddressCommandFlagsKHR::default(),
-            dst_range: DeviceAddressRangeKHR::default(),
-            dst_flags: AddressCommandFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -74277,10 +68958,7 @@ impl ::core::default::Default for CopyDeviceMemoryInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -74320,16 +68998,7 @@ impl ::core::default::Default for DeviceMemoryImageCopyKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            address_range: DeviceAddressRangeKHR::default(),
-            address_flags: AddressCommandFlagsKHR::default(),
-            address_row_length: u32::default(),
-            address_image_height: u32::default(),
-            image_subresource: ImageSubresourceLayers::default(),
-            image_layout: ImageLayout::default(),
-            image_offset: Offset3D::default(),
-            image_extent: Extent3D::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -74398,11 +69067,7 @@ impl ::core::default::Default for CopyDeviceMemoryImageInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            image: Image::default(),
-            region_count: u32::default(),
-            p_regions: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -74441,10 +69106,7 @@ impl ::core::default::Default for MemoryRangeBarriersInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            memory_range_barrier_count: u32::default(),
-            p_memory_range_barriers: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -74488,16 +69150,7 @@ impl ::core::default::Default for MemoryRangeBarrierKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            src_stage_mask: PipelineStageFlags2::default(),
-            src_access_mask: AccessFlags2::default(),
-            dst_stage_mask: PipelineStageFlags2::default(),
-            dst_access_mask: AccessFlags2::default(),
-            src_queue_family_index: u32::default(),
-            dst_queue_family_index: u32::default(),
-            address_range: DeviceAddressRangeKHR::default(),
-            address_flags: AddressCommandFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -74564,9 +69217,7 @@ impl ::core::default::Default for PhysicalDeviceDeviceAddressCommandsFeaturesKHR
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            device_address_commands: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -74606,11 +69257,7 @@ impl ::core::default::Default for ConditionalRenderingBeginInfo2EXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            address_range: DeviceAddressRangeKHR::default(),
-            address_flags: AddressCommandFlagsKHR::default(),
-            flags: ConditionalRenderingFlagsEXT::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -74655,12 +69302,7 @@ impl ::core::default::Default for AccelerationStructureCreateInfo2KHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            create_flags: AccelerationStructureCreateFlagsKHR::default(),
-            address_range: DeviceAddressRangeKHR::default(),
-            address_flags: AddressCommandFlagsKHR::default(),
-            ty: AccelerationStructureTypeKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -74709,11 +69351,7 @@ impl ::core::default::Default for BindIndexBuffer3InfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            address_range: DeviceAddressRangeKHR::default(),
-            address_flags: AddressCommandFlagsKHR::default(),
-            index_type: IndexType::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -74757,11 +69395,7 @@ impl ::core::default::Default for BindVertexBuffer3InfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            set_stride: Bool32::default(),
-            address_range: StridedDeviceAddressRangeKHR::default(),
-            address_flags: AddressCommandFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -74805,11 +69439,7 @@ impl ::core::default::Default for DrawIndirect2InfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            address_range: StridedDeviceAddressRangeKHR::default(),
-            address_flags: AddressCommandFlagsKHR::default(),
-            draw_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -74855,13 +69485,7 @@ impl ::core::default::Default for DrawIndirectCount2InfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            address_range: StridedDeviceAddressRangeKHR::default(),
-            address_flags: AddressCommandFlagsKHR::default(),
-            count_address_range: DeviceAddressRangeKHR::default(),
-            count_address_flags: AddressCommandFlagsKHR::default(),
-            max_draw_count: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -74914,10 +69538,7 @@ impl ::core::default::Default for DispatchIndirect2InfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            address_range: DeviceAddressRangeKHR::default(),
-            address_flags: AddressCommandFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -74955,10 +69576,7 @@ impl ::core::default::Default for BindTransformFeedbackBuffer2InfoEXT<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            address_range: DeviceAddressRangeKHR::default(),
-            address_flags: AddressCommandFlagsKHR::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -74998,12 +69616,7 @@ impl ::core::default::Default for MemoryMarkerInfoAMD<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            stage: PipelineStageFlags2KHR::default(),
-            dst_range: DeviceAddressRangeKHR::default(),
-            dst_flags: AddressCommandFlagsKHR::default(),
-            marker: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -75050,9 +69663,7 @@ impl ::core::default::Default for PhysicalDeviceShaderConstantDataFeaturesKHR<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_constant_data: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -75090,9 +69701,7 @@ impl ::core::default::Default for PhysicalDeviceShaderAbortFeaturesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            shader_abort: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -75126,9 +69735,7 @@ impl ::core::default::Default for PhysicalDeviceShaderAbortPropertiesKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            max_shader_abort_message_size: u64::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -75163,10 +69770,7 @@ impl ::core::default::Default for DeviceFaultShaderAbortMessageInfoKHR<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            message_data_size: u64::default(),
-            p_message_data: ::core::ptr::null_mut(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -75202,10 +69806,7 @@ impl fmt::Debug for DataGraphTOSANameQualityARM {
 impl ::core::default::Default for DataGraphTOSANameQualityARM {
     #[inline]
     fn default() -> Self {
-        Self {
-            name: unsafe { ::core::mem::zeroed() },
-            quality_flags: DataGraphTOSAQualityFlagsARM::default(),
-        }
+        unsafe { ::core::mem::zeroed() }
     }
 }
 impl DataGraphTOSANameQualityARM {
@@ -75245,13 +69846,7 @@ impl ::core::default::Default for QueueFamilyDataGraphTOSAPropertiesARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            profile_count: u32::default(),
-            p_profiles: ::core::ptr::null(),
-            extension_count: u32::default(),
-            p_extensions: ::core::ptr::null(),
-            level: DataGraphTOSALevelARM::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -75298,11 +69893,7 @@ impl ::core::default::Default for DataGraphPipelineSingleNodeConnectionARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            set: u32::default(),
-            binding: u32::default(),
-            connection: DataGraphPipelineNodeConnectionTypeARM::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -75345,9 +69936,7 @@ impl ::core::default::Default for PhysicalDeviceDataGraphOpticalFlowFeaturesARM<
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            data_graph_optical_flow: Bool32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -75392,16 +69981,7 @@ impl ::core::default::Default for QueueFamilyDataGraphOpticalFlowPropertiesARM<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            supported_output_grid_sizes: DataGraphOpticalFlowGridSizeFlagsARM::default(),
-            supported_hint_grid_sizes: DataGraphOpticalFlowGridSizeFlagsARM::default(),
-            hint_supported: Bool32::default(),
-            cost_supported: Bool32::default(),
-            min_width: u32::default(),
-            min_height: u32::default(),
-            max_width: u32::default(),
-            max_height: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -75475,9 +70055,7 @@ impl ::core::default::Default for DataGraphOpticalFlowImageFormatInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null(),
-            usage: DataGraphOpticalFlowImageUsageFlagsARM::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -75515,9 +70093,7 @@ impl ::core::default::Default for DataGraphOpticalFlowImageFormatPropertiesARM<'
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            format: Format::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -75552,11 +70128,7 @@ impl ::core::default::Default for DataGraphPipelineSingleNodeCreateInfoARM<'_> {
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            node_type: DataGraphPipelineNodeTypeARM::default(),
-            connection_count: u32::default(),
-            p_connections: ::core::ptr::null(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -75610,17 +70182,7 @@ impl ::core::default::Default for DataGraphPipelineOpticalFlowCreateInfoARM<'_> 
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            width: u32::default(),
-            height: u32::default(),
-            image_format: Format::default(),
-            flow_vector_format: Format::default(),
-            cost_format: Format::default(),
-            output_grid_size: DataGraphOpticalFlowGridSizeFlagsARM::default(),
-            hint_grid_size: DataGraphOpticalFlowGridSizeFlagsARM::default(),
-            performance_level: DataGraphOpticalFlowPerformanceLevelARM::default(),
-            flags: DataGraphOpticalFlowCreateFlagsARM::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
@@ -75704,10 +70266,7 @@ impl ::core::default::Default for DataGraphPipelineOpticalFlowDispatchInfoARM<'_
     fn default() -> Self {
         Self {
             s_type: Self::STRUCTURE_TYPE,
-            p_next: ::core::ptr::null_mut(),
-            flags: DataGraphOpticalFlowExecuteFlagsARM::default(),
-            mean_flow_l1_norm_hint: u32::default(),
-            _marker: PhantomData,
+            ..unsafe { ::core::mem::zeroed() }
         }
     }
 }
