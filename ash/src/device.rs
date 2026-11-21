@@ -5,6 +5,7 @@ use crate::RawPtr;
 use crate::VkResult;
 use alloc::vec::Vec;
 use core::ffi;
+use core::fmt;
 use core::mem;
 use core::mem::{size_of, size_of_val}; // TODO: Remove when bumping MSRV to 1.80
 use core::ptr;
@@ -66,6 +67,14 @@ impl Device {
     #[inline]
     pub fn handle(&self) -> vk::Device {
         self.handle
+    }
+}
+
+impl fmt::Debug for Device {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("Device")
+            .field("handle", &self.handle)
+            .finish_non_exhaustive()
     }
 }
 

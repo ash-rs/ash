@@ -328,6 +328,12 @@ impl Default for Entry {
     }
 }
 
+impl fmt::Debug for Entry {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("Entry").finish_non_exhaustive()
+    }
+}
+
 impl crate::StaticFn {
     pub fn load_checked<F>(mut _f: F) -> Result<Self, MissingEntryPoint>
     where

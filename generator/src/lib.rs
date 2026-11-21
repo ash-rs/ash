@@ -1440,6 +1440,14 @@ pub fn generate_extension_commands<'a>(
                 }
             }
 
+            impl ::core::fmt::Debug for Device {
+                fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+                    f.debug_struct("Device")
+                        .field("handle", &self.handle)
+                        .finish_non_exhaustive()
+                }
+            }
+
             #table
         })
     });

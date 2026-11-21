@@ -7,6 +7,7 @@ use crate::RawPtr;
 use crate::VkResult;
 use alloc::vec::Vec;
 use core::ffi;
+use core::fmt;
 use core::mem;
 use core::ptr;
 
@@ -59,6 +60,14 @@ impl Instance {
     #[inline]
     pub fn handle(&self) -> vk::Instance {
         self.handle
+    }
+}
+
+impl fmt::Debug for Instance {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("Instance")
+            .field("handle", &self.handle)
+            .finish_non_exhaustive()
     }
 }
 
