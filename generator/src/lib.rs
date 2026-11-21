@@ -1900,35 +1900,34 @@ fn derive_default(
         .any(|member| is_structure_type(member.vkxml_field));
     let lifetime = has_lifetime.then(|| quote!(<'_>));
 
-    let zeroed = zeroed_initializer();
+    let initializer = if contains_structure_type {
+        quote!(init_tagged_structure())
+    } else {
+        zeroed_initializer()
+    };
 
-    // Zero-initialization doesn't set the s_type of this or nested (owned) structures,
+    // Zero-initialization doesn't set the s_type of nested (owned) structures,
     // initialize those explicitly
-    let stype_members = contains_structure_type
-        .then(|| quote!(s_type: Self::STRUCTURE_TYPE))
-        .into_iter()
-        .chain(
-            members
-                .iter()
-                .filter(|m| m.vkxml_field.reference.is_none())
-                .filter_map(|m| {
-                    let t = name_to_tokens(&m.vkxml_field.basetype);
-                    has_struct_type.contains(&t).then(|| {
-                        let i = m.vkxml_field.param_ident();
-                        quote!(#i: #t::new())
-                    })
-                }),
-        )
+    let stype_members = members
+        .iter()
+        .filter(|m| m.vkxml_field.reference.is_none())
+        .filter_map(|m| {
+            let t = name_to_tokens(&m.vkxml_field.basetype);
+            has_struct_type.contains(&t).then(|| {
+                let i = m.vkxml_field.param_ident();
+                quote!(#i: #t::new())
+            })
+        })
         .collect::<Vec<_>>();
     let initializer = if !stype_members.is_empty() {
         quote! {
             Self {
                 #(#stype_members,)*
-                ..#zeroed
+                ..#initializer
             }
         }
     } else {
-        zeroed
+        initializer
     };
 
     Some(new_and_default(&name, lifetime, provisional, initializer))
@@ -3746,7 +3745,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
         use super::native::*;
         use super::platform_types::*;
         use super::{
-            wrap_c_str_slice_until_nul, write_c_str_slice_with_nul, CStrTooLargeForStaticArray, Extends,
+            init_tagged_structure, wrap_c_str_slice_until_nul, write_c_str_slice_with_nul, CStrTooLargeForStaticArray, Extends,
             Handle, LayerSettingValue, Packed24_5_3, Packed24_8, Packed9_9_6_4_4, TaggedStructure,
         };
         use core::ffi::*;

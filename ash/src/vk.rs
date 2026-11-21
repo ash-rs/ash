@@ -131,6 +131,20 @@ pub unsafe trait TaggedStructure<'a>: Sized {
     }
 }
 
+/// `const`-initializes a tagged structure with all-zeroes, filling only its own
+/// [`BaseOutStructure::s_type`] field. The `s_type` of nested structures is not initialized.
+///
+/// Only to be used on generated Vulkan structures, all of whose fields are valid when zeroed.
+pub(crate) const fn init_tagged_structure<'a, T: TaggedStructure<'a>>() -> T {
+    // SAFETY: Only called on generated Vulkan structures, all of whose fields are valid when
+    // zeroed
+    let mut slf = unsafe { core::mem::zeroed() };
+    // SAFETY: All implementers of `TaggedStructure` are required to have the `BaseOutStructure` layout
+    let slf_base = unsafe { &mut *<*mut _>::cast::<BaseOutStructure<'_>>(&mut slf) };
+    slf_base.s_type = T::STRUCTURE_TYPE;
+    slf
+}
+
 /// Implemented for every structure that extends base structure `B`. Concretely that means struct
 /// `B` is listed in its array of [`structextends` in the Vulkan registry][1].
 ///
