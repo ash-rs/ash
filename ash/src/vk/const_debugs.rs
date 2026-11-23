@@ -113,6 +113,8 @@ impl fmt::Debug for AccelerationStructureTypeKHR {
             Self::BOTTOM_LEVEL => Some("BOTTOM_LEVEL"),
             Self::GENERIC => Some("GENERIC"),
             Self::OPACITY_MICROMAP => Some("OPACITY_MICROMAP"),
+            #[cfg(feature = "provisional")]
+            Self::MID_LEVEL_AMDX => Some("MID_LEVEL_AMDX"),
             _ => None,
         };
         if let Some(x) = name {
@@ -5183,6 +5185,11 @@ impl fmt::Debug for PipelineCreateFlags2 {
                 PipelineCreateFlags2::TYPE_64_INDEXING_EXT.0,
                 "TYPE_64_INDEXING_EXT",
             ),
+            #[cfg(feature = "provisional")]
+            (
+                PipelineCreateFlags2::RAY_TRACING_ALLOW_MULTI_LEVEL_ACCELERATION_STRUCTURES_AMDX.0,
+                "RAY_TRACING_ALLOW_MULTI_LEVEL_ACCELERATION_STRUCTURES_AMDX",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -8892,6 +8899,10 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_COMPUTE_OCCUPANCY_PRIORITY_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_COMPUTE_OCCUPANCY_PRIORITY_FEATURES_NV")
             }
+            #[cfg(feature = "provisional")]
+            Self::PHYSICAL_DEVICE_MULTI_LEVEL_ACCELERATION_STRUCTURE_FEATURES_AMDX => {
+                Some("PHYSICAL_DEVICE_MULTI_LEVEL_ACCELERATION_STRUCTURE_FEATURES_AMDX")
+            }
             Self::PHYSICAL_DEVICE_PIPELINE_LIBRARY_GROUP_HANDLES_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_PIPELINE_LIBRARY_GROUP_HANDLES_FEATURES_KHR")
             }
@@ -8955,6 +8966,9 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_PRIMITIVE_RESTART_INDEX_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_PRIMITIVE_RESTART_INDEX_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_VERTEX_ADDRESS_BINDING_UNRESTRICTED_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_VERTEX_ADDRESS_BINDING_UNRESTRICTED_FEATURES_EXT")
             }
             Self::PHYSICAL_DEVICE_MAINTENANCE_12_FEATURES_KHR => {
                 Some("PHYSICAL_DEVICE_MAINTENANCE_12_FEATURES_KHR")

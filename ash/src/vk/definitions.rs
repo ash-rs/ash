@@ -63,7 +63,7 @@ pub const API_VERSION_1_3: u32 = make_api_version(0, 1, 3, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_API_VERSION_1_4.html>"]
 pub const API_VERSION_1_4: u32 = make_api_version(0, 1, 4, 0);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION.html>"]
-pub const HEADER_VERSION: u32 = 367;
+pub const HEADER_VERSION: u32 = 369;
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 4, HEADER_VERSION);
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkSampleMask.html>"]
@@ -17231,7 +17231,7 @@ pub struct MetalSurfaceCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub flags: MetalSurfaceCreateFlagsEXT,
-    pub p_layer: *const CAMetalLayer,
+    pub p_layer: *mut CAMetalLayer,
     pub _marker: PhantomData<&'a ()>,
 }
 unsafe impl Send for MetalSurfaceCreateInfoEXT<'_> {}
@@ -17243,7 +17243,7 @@ impl ::core::default::Default for MetalSurfaceCreateInfoEXT<'_> {
             s_type: Self::STRUCTURE_TYPE,
             p_next: ::core::ptr::null(),
             flags: MetalSurfaceCreateFlagsEXT::default(),
-            p_layer: ::core::ptr::null(),
+            p_layer: ::core::ptr::null_mut(),
             _marker: PhantomData,
         }
     }
@@ -17258,7 +17258,7 @@ impl<'a> MetalSurfaceCreateInfoEXT<'a> {
         self
     }
     #[inline]
-    pub fn layer(mut self, layer: *const CAMetalLayer) -> Self {
+    pub fn layer(mut self, layer: *mut CAMetalLayer) -> Self {
         self.p_layer = layer;
         self
     }
@@ -75615,6 +75615,54 @@ impl<'a> PhysicalDeviceDeviceAddressCommandsFeaturesKHR<'a> {
 #[repr(C)]
 #[cfg_attr(feature = "debug", derive(Debug))]
 #[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceVertexAddressBindingUnrestrictedFeaturesEXT.html>"]
+#[must_use]
+pub struct PhysicalDeviceVertexAddressBindingUnrestrictedFeaturesEXT<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub vertex_address_binding_unrestricted: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+unsafe impl Send for PhysicalDeviceVertexAddressBindingUnrestrictedFeaturesEXT<'_> {}
+unsafe impl Sync for PhysicalDeviceVertexAddressBindingUnrestrictedFeaturesEXT<'_> {}
+impl ::core::default::Default for PhysicalDeviceVertexAddressBindingUnrestrictedFeaturesEXT<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            vertex_address_binding_unrestricted: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+unsafe impl<'a> TaggedStructure<'a>
+    for PhysicalDeviceVertexAddressBindingUnrestrictedFeaturesEXT<'a>
+{
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_VERTEX_ADDRESS_BINDING_UNRESTRICTED_FEATURES_EXT;
+}
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
+    for PhysicalDeviceVertexAddressBindingUnrestrictedFeaturesEXT<'_>
+{
+}
+unsafe impl Extends<DeviceCreateInfo<'_>>
+    for PhysicalDeviceVertexAddressBindingUnrestrictedFeaturesEXT<'_>
+{
+}
+impl<'a> PhysicalDeviceVertexAddressBindingUnrestrictedFeaturesEXT<'a> {
+    #[inline]
+    pub fn vertex_address_binding_unrestricted(
+        mut self,
+        vertex_address_binding_unrestricted: bool,
+    ) -> Self {
+        self.vertex_address_binding_unrestricted = vertex_address_binding_unrestricted.into();
+        self
+    }
+}
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
 #[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkConditionalRenderingBeginInfo2EXT.html>"]
 #[must_use]
 pub struct ConditionalRenderingBeginInfo2EXT<'a> {
@@ -76754,6 +76802,62 @@ impl<'a> DataGraphPipelineOpticalFlowDispatchInfoARM<'a> {
     #[inline]
     pub fn mean_flow_l1_norm_hint(mut self, mean_flow_l1_norm_hint: u32) -> Self {
         self.mean_flow_l1_norm_hint = mean_flow_l1_norm_hint;
+        self
+    }
+}
+#[cfg(feature = "provisional")]
+#[repr(C)]
+#[cfg_attr(feature = "debug", derive(Debug))]
+#[derive(Copy, Clone)]
+#[doc = "<https://docs.vulkan.org/refpages/latest/refpages/source/VkPhysicalDeviceMultiLevelAccelerationStructureFeaturesAMDX.html>"]
+#[must_use]
+pub struct PhysicalDeviceMultiLevelAccelerationStructureFeaturesAMDX<'a> {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub multi_level_acceleration_structure: Bool32,
+    pub _marker: PhantomData<&'a ()>,
+}
+#[cfg(feature = "provisional")]
+unsafe impl Send for PhysicalDeviceMultiLevelAccelerationStructureFeaturesAMDX<'_> {}
+#[cfg(feature = "provisional")]
+unsafe impl Sync for PhysicalDeviceMultiLevelAccelerationStructureFeaturesAMDX<'_> {}
+#[cfg(feature = "provisional")]
+impl ::core::default::Default for PhysicalDeviceMultiLevelAccelerationStructureFeaturesAMDX<'_> {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: ::core::ptr::null_mut(),
+            multi_level_acceleration_structure: Bool32::default(),
+            _marker: PhantomData,
+        }
+    }
+}
+#[cfg(feature = "provisional")]
+unsafe impl<'a> TaggedStructure<'a>
+    for PhysicalDeviceMultiLevelAccelerationStructureFeaturesAMDX<'a>
+{
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PHYSICAL_DEVICE_MULTI_LEVEL_ACCELERATION_STRUCTURE_FEATURES_AMDX;
+}
+#[cfg(feature = "provisional")]
+unsafe impl Extends<PhysicalDeviceFeatures2<'_>>
+    for PhysicalDeviceMultiLevelAccelerationStructureFeaturesAMDX<'_>
+{
+}
+#[cfg(feature = "provisional")]
+unsafe impl Extends<DeviceCreateInfo<'_>>
+    for PhysicalDeviceMultiLevelAccelerationStructureFeaturesAMDX<'_>
+{
+}
+#[cfg(feature = "provisional")]
+impl<'a> PhysicalDeviceMultiLevelAccelerationStructureFeaturesAMDX<'a> {
+    #[inline]
+    pub fn multi_level_acceleration_structure(
+        mut self,
+        multi_level_acceleration_structure: bool,
+    ) -> Self {
+        self.multi_level_acceleration_structure = multi_level_acceleration_structure.into();
         self
     }
 }

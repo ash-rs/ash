@@ -5605,6 +5605,23 @@ impl StructureType {
     pub const COMPUTE_OCCUPANCY_PRIORITY_PARAMETERS_NV: Self = Self(1_000_645_000);
     pub const PHYSICAL_DEVICE_COMPUTE_OCCUPANCY_PRIORITY_FEATURES_NV: Self = Self(1_000_645_001);
 }
+#[doc = "Generated from 'VK_AMDX_multi_level_acceleration_structure'"]
+#[cfg(feature = "provisional")]
+impl AccelerationStructureTypeKHR {
+    pub const MID_LEVEL_AMDX: Self = Self(1_000_648_000);
+}
+#[doc = "Generated from 'VK_AMDX_multi_level_acceleration_structure'"]
+#[cfg(feature = "provisional")]
+impl PipelineCreateFlags2 {
+    pub const RAY_TRACING_ALLOW_MULTI_LEVEL_ACCELERATION_STRUCTURES_AMDX: Self =
+        Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_AMDX_multi_level_acceleration_structure'"]
+#[cfg(feature = "provisional")]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MULTI_LEVEL_ACCELERATION_STRUCTURE_FEATURES_AMDX: Self =
+        Self(1_000_648_000);
+}
 #[doc = "Generated from 'VK_KHR_pipeline_library_group_handles'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_LIBRARY_GROUP_HANDLES_FEATURES_KHR: Self =
@@ -5750,6 +5767,11 @@ impl StructureType {
 #[doc = "Generated from 'VK_EXT_primitive_restart_index'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_PRIMITIVE_RESTART_INDEX_FEATURES_EXT: Self = Self(1_000_678_000);
+}
+#[doc = "Generated from 'VK_EXT_vertex_address_binding_unrestricted'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_VERTEX_ADDRESS_BINDING_UNRESTRICTED_FEATURES_EXT: Self =
+        Self(1_000_679_000);
 }
 #[doc = "Generated from 'VK_KHR_maintenance12'"]
 impl StructureType {
@@ -10870,6 +10892,11 @@ pub type PFN_vkCmdSetComputeOccupancyPriorityNV = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_parameters: *const ComputeOccupancyPriorityParametersNV<'_>,
 );
+#[cfg(feature = "provisional")]
+pub const AMDX_MULTI_LEVEL_ACCELERATION_STRUCTURE_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_AMDX_multi_level_acceleration_structure\0") };
+#[cfg(feature = "provisional")]
+pub const AMDX_MULTI_LEVEL_ACCELERATION_STRUCTURE_SPEC_VERSION: u32 = 1u32;
 pub const KHR_PIPELINE_LIBRARY_GROUP_HANDLES_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_pipeline_library_group_handles\0") };
 pub const KHR_PIPELINE_LIBRARY_GROUP_HANDLES_SPEC_VERSION: u32 = 1u32;
@@ -10906,6 +10933,21 @@ pub type PFN_vkGetPhysicalDeviceUbmPresentationSupportSEC = unsafe extern "syste
     queue_family_index: u32,
     device: *mut ubm_device,
 ) -> Bool32;
+pub const NV_INTERNAL_HANDLE_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_NV_internal_handle\0") };
+pub const NV_INTERNAL_HANDLE_SPEC_VERSION: u32 = 1u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceInternalHandleNV =
+    unsafe extern "system" fn(physical_device: PhysicalDevice, p_handle: *mut InternalHandleNV);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDeviceInternalHandleNV =
+    unsafe extern "system" fn(device: crate::vk::Device, p_handle: *mut InternalHandleNV);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetQueueInternalHandleNV =
+    unsafe extern "system" fn(queue: Queue, p_handle: *mut InternalHandleNV);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetCommandBufferInternalHandleNV =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, p_handle: *mut InternalHandleNV);
 pub const KHR_EXTENDED_FLAGS_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_extended_flags\0") };
 pub const KHR_EXTENDED_FLAGS_SPEC_VERSION: u32 = 1u32;
@@ -10931,6 +10973,9 @@ pub const EXT_PRIMITIVE_RESTART_INDEX_SPEC_VERSION: u32 = 1u32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetPrimitiveRestartIndexEXT =
     unsafe extern "system" fn(command_buffer: CommandBuffer, primitive_restart_index: u32);
+pub const EXT_VERTEX_ADDRESS_BINDING_UNRESTRICTED_NAME: &CStr =
+    unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_EXT_vertex_address_binding_unrestricted\0") };
+pub const EXT_VERTEX_ADDRESS_BINDING_UNRESTRICTED_SPEC_VERSION: u32 = 1u32;
 pub const KHR_MAINTENANCE12_NAME: &CStr =
     unsafe { CStr::from_bytes_with_nul_unchecked(b"VK_KHR_maintenance12\0") };
 pub const KHR_MAINTENANCE12_SPEC_VERSION: u32 = 1u32;

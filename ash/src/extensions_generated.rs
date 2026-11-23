@@ -1031,6 +1031,14 @@ pub mod amdx {
             crate::vk::AMDX_DENSE_GEOMETRY_FORMAT_SPEC_VERSION as SPEC_VERSION,
         };
     }
+    #[doc = "VK_AMDX_multi_level_acceleration_structure"]
+    #[cfg(feature = "provisional")]
+    pub mod multi_level_acceleration_structure {
+        pub use {
+            crate::vk::AMDX_MULTI_LEVEL_ACCELERATION_STRUCTURE_NAME as NAME,
+            crate::vk::AMDX_MULTI_LEVEL_ACCELERATION_STRUCTURE_SPEC_VERSION as SPEC_VERSION,
+        };
+    }
 }
 #[doc = "Extensions tagged ANDROID"]
 pub mod android {
@@ -11323,6 +11331,13 @@ pub mod ext {
                 }
             }
         }
+    }
+    #[doc = "VK_EXT_vertex_address_binding_unrestricted"]
+    pub mod vertex_address_binding_unrestricted {
+        pub use {
+            crate::vk::EXT_VERTEX_ADDRESS_BINDING_UNRESTRICTED_NAME as NAME,
+            crate::vk::EXT_VERTEX_ADDRESS_BINDING_UNRESTRICTED_SPEC_VERSION as SPEC_VERSION,
+        };
     }
     #[doc = "VK_EXT_image_tiling_control"]
     pub mod image_tiling_control {
@@ -24779,6 +24794,173 @@ pub mod nv {
                         let val = _f(cname);
                         if val.is_null() {
                             cmd_set_compute_occupancy_priority_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+    }
+    #[doc = "VK_NV_internal_handle"]
+    pub mod internal_handle {
+        use crate::vk::*;
+        use core::ffi::*;
+        pub use {
+            crate::vk::NV_INTERNAL_HANDLE_NAME as NAME,
+            crate::vk::NV_INTERNAL_HANDLE_SPEC_VERSION as SPEC_VERSION,
+        };
+        #[doc = "VK_NV_internal_handle instance-level functions"]
+        #[derive(Clone)]
+        pub struct Instance {
+            pub(crate) fp: InstanceFn,
+            pub(crate) handle: crate::vk::Instance,
+        }
+        impl Instance {
+            pub fn load(entry: &crate::Entry, instance: &crate::Instance) -> Self {
+                let handle = instance.handle;
+                let fp = InstanceFn::load(|name| unsafe {
+                    core::mem::transmute(entry.get_instance_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &InstanceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn instance(&self) -> crate::vk::Instance {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_NV_internal_handle instance-level function pointers"]
+        pub struct InstanceFn {
+            pub get_physical_device_internal_handle_nv: PFN_vkGetPhysicalDeviceInternalHandleNV,
+        }
+        unsafe impl Send for InstanceFn {}
+        unsafe impl Sync for InstanceFn {}
+        impl InstanceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    get_physical_device_internal_handle_nv: unsafe {
+                        unsafe extern "system" fn get_physical_device_internal_handle_nv(
+                            _physical_device: PhysicalDevice,
+                            _p_handle: *mut InternalHandleNV,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_physical_device_internal_handle_nv)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetPhysicalDeviceInternalHandleNV\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_physical_device_internal_handle_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                }
+            }
+        }
+        #[doc = "VK_NV_internal_handle device-level functions"]
+        #[derive(Clone)]
+        pub struct Device {
+            pub(crate) fp: DeviceFn,
+            pub(crate) handle: crate::vk::Device,
+        }
+        impl Device {
+            pub fn load(instance: &crate::Instance, device: &crate::Device) -> Self {
+                let handle = device.handle;
+                let fp = DeviceFn::load(|name| unsafe {
+                    core::mem::transmute(instance.get_device_proc_addr(handle, name.as_ptr()))
+                });
+                Self { handle, fp }
+            }
+            #[inline]
+            pub fn fp(&self) -> &DeviceFn {
+                &self.fp
+            }
+            #[inline]
+            pub fn device(&self) -> crate::vk::Device {
+                self.handle
+            }
+        }
+        #[derive(Clone)]
+        #[doc = "Raw VK_NV_internal_handle device-level function pointers"]
+        pub struct DeviceFn {
+            pub get_device_internal_handle_nv: PFN_vkGetDeviceInternalHandleNV,
+            pub get_queue_internal_handle_nv: PFN_vkGetQueueInternalHandleNV,
+            pub get_command_buffer_internal_handle_nv: PFN_vkGetCommandBufferInternalHandleNV,
+        }
+        unsafe impl Send for DeviceFn {}
+        unsafe impl Sync for DeviceFn {}
+        impl DeviceFn {
+            pub fn load<F: FnMut(&CStr) -> *const c_void>(mut f: F) -> Self {
+                Self::load_erased(&mut f)
+            }
+            fn load_erased(_f: &mut dyn FnMut(&CStr) -> *const c_void) -> Self {
+                Self {
+                    get_device_internal_handle_nv: unsafe {
+                        unsafe extern "system" fn get_device_internal_handle_nv(
+                            _device: crate::vk::Device,
+                            _p_handle: *mut InternalHandleNV,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_device_internal_handle_nv)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkGetDeviceInternalHandleNV\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_device_internal_handle_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_queue_internal_handle_nv: unsafe {
+                        unsafe extern "system" fn get_queue_internal_handle_nv(
+                            _queue: Queue,
+                            _p_handle: *mut InternalHandleNV,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_queue_internal_handle_nv)
+                            ))
+                        }
+                        let cname =
+                            CStr::from_bytes_with_nul_unchecked(b"vkGetQueueInternalHandleNV\0");
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_queue_internal_handle_nv
+                        } else {
+                            ::core::mem::transmute(val)
+                        }
+                    },
+                    get_command_buffer_internal_handle_nv: unsafe {
+                        unsafe extern "system" fn get_command_buffer_internal_handle_nv(
+                            _command_buffer: CommandBuffer,
+                            _p_handle: *mut InternalHandleNV,
+                        ) {
+                            panic!(concat!(
+                                "Unable to load ",
+                                stringify!(get_command_buffer_internal_handle_nv)
+                            ))
+                        }
+                        let cname = CStr::from_bytes_with_nul_unchecked(
+                            b"vkGetCommandBufferInternalHandleNV\0",
+                        );
+                        let val = _f(cname);
+                        if val.is_null() {
+                            get_command_buffer_internal_handle_nv
                         } else {
                             ::core::mem::transmute(val)
                         }
